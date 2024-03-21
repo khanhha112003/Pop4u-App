@@ -6,13 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".Activity.MainActivity">
 
-    <TextView
+    <Button
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="17.5sp"
+        android:fontFamily="@font/inter_semibold"
+        android:textColor="@drawable/button_small_text_text_color"
+        android:text="Xem"
+        android:background="@drawable/button_small_text_background"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
