@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:queryHint="Tìm kiếm"
-            android:queryBackground="@color/md_theme_inversePrimary_mediumContrast"
+            android:queryBackground="@color/transparent"
             android:iconifiedByDefault="false"
             android:layout_alignParentStart="true"
             android:background="@drawable/search_bar_bg"
@@ -45,7 +45,7 @@
             android:dividerHeight="1dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp">
+            android:padding="16dp">
 
         </ListView>
 </LinearLayout>
