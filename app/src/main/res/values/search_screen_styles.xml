@@ -3,6 +3,6 @@
     <style name="SearchScreenToolbarTitle">
         <item name="android:fontFamily">@font/inter_semibold</item>
         <item name="android:fontWeight">800</item>
-        <item name="android:textSize">35sp</item>
+        <item name="android:textSize">30sp</item>
     </style>
 </resources>
