@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Pop4u_App</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="view_all_button_content">XEM</string>
+    <string name="home_title">Trang chủ</string>
+    <string name="home_title_sub_head1">Mới ra mắt</string>
+    <string name="home_title_sub_head2">Sale</string>
+    <string name="home_title_sub_head3">Nghệ sĩ nổi bật</string>
+    <string name="home_title_sub_head4">Đề xuất</string>
 </resources>
