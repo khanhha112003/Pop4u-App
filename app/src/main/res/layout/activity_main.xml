@@ -7,14 +7,26 @@
     tools:context=".Activity.MainActivity">
 
     <Button
+        android:id="@+id/btn01"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="17.5sp"
         android:fontFamily="@font/inter_semibold"
-        android:textColor="@drawable/button_small_text_text_color"
+        android:textColor="@drawable/button_no_filled_text_color"
         android:text="Xem"
-        android:background="@drawable/button_small_text_background"/>
+        android:background="@drawable/button_small_text_state_background"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/btn01"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="17.5sp"
+        android:fontFamily="@font/inter_semibold"
+        android:textColor="@drawable/button_filled_text_color"
+        android:text="@string/view_all_button_content"
+        android:background="@drawable/button_small_text_filled_state_background"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
