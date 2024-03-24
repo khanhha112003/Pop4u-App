@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignUp.SignUp_3"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/txtInfor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Thông tin tài khoản"
+        android:textColor="@color/md_theme_onSurface"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.062"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtNoteInfor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter"
+        android:text="Bạn hãy cho Pop4u biết một số thông tin cần thiết."
+        android:textColor="@color/md_theme_outline"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtInfor" />
+
+    <EditText
+        android:id="@+id/edtFullname"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="44dp"
+        android:background="@drawable/shape_edit_text"
+        android:hint="Họ và tên"
+        android:padding="15dp"
+        android:textColorHint="@color/md_theme_outline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNoteInfor" />
+
+    <EditText
+        android:id="@+id/edtPhone"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shape_edit_text"
+        android:hint="Số điện thoại"
+        android:padding="15dp"
+        android:textColorHint="@color/md_theme_outline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtFullname" />
+
+    <EditText
+        android:id="@+id/edtDatebirth"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shape_edit_text"
+        android:hint="Ngày sinh"
+        android:padding="15dp"
+        android:textColorHint="@color/md_theme_outline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtPhone" />
+
+    <Spinner
+        android:id="@+id/edtGender"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shape_edit_text"
+        android:hint="Số điện thoại"
+        android:padding="15dp"
+        android:textColorHint="@color/md_theme_outline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtDatebirth" />
+
+    <Button
+        android:id="@+id/btnConfirm"
+        android:layout_width="180dp"
+        android:layout_height="56dp"
+        android:background="@drawable/button_small_filled_norm_background"
+        android:text="Xác thực email"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.434"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="508dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

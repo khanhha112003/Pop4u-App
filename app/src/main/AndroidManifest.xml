@@ -13,7 +13,16 @@
         android:theme="@style/Theme.Pop4u_App"
         tools:targetApi="31">
         <activity
-            android:name=".Activity.SignUp_1"
+            android:name=".SignUp.SignUp_4"
+            android:exported="false" />
+        <activity
+            android:name=".SignUp.SignUp_3"
+            android:exported="false" />
+        <activity
+            android:name=".SignUp.SignUp_2"
+            android:exported="false" />
+        <activity
+            android:name=".SignUp.SignUp_1"
             android:exported="false" />
         <activity
             android:name=".Activity.LoginPage"
