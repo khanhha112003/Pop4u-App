@@ -13,6 +13,12 @@
         android:theme="@style/Theme.Pop4u_App"
         tools:targetApi="31">
         <activity
+            android:name=".Activity.SignUp_1"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.LoginPage"
+            android:exported="false" />
+        <activity
             android:name=".SearchScreen.SearchDashboardActivity"
             android:exported="false" />
         <activity
@@ -27,6 +33,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
