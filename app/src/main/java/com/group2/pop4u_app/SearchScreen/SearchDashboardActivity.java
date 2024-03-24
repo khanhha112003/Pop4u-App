@@ -5,8 +5,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.SearchView;
 
 import com.group2.pop4u_app.R;
@@ -15,6 +13,7 @@ import com.group2.pop4u_app.databinding.SearchScreenActivitySearchDashboardBindi
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class SearchDashboardActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
     SearchScreenActivitySearchDashboardBinding binding;
@@ -28,6 +27,13 @@ public class SearchDashboardActivity extends AppCompatActivity implements Search
         setToolbar();
         setListArtist();
         setSearchBar();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        binding.svQuerySearchBox.setQuery("", false);
+        binding.svQuerySearchBox.clearFocus();
     }
 
     private void setToolbar() {
@@ -66,9 +72,13 @@ public class SearchDashboardActivity extends AppCompatActivity implements Search
 
     @Override
     public boolean onQueryTextChange(String s) {
-        Intent myIntent = new Intent(getApplicationContext(), QuerySearchActivity.class);
-        myIntent.putExtra("start_character", s);
-        startActivity(myIntent);
+        if (!Objects.equals(s, "")) {
+            Intent myIntent = new Intent(getApplicationContext(), QuerySearchActivity.class);
+            myIntent.putExtra("start_character", s);
+            startActivity(myIntent);
+        } else {
+            return false;
+        }
         return true;
     }
 }
