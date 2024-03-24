@@ -9,4 +9,14 @@
     <string name="home_title_sub_head3">Nghệ sĩ nổi bật</string>
     <string name="home_title_sub_head4">Đề xuất</string>
     <string name="search_screen_cancel_search_text">Hủy</string>
+    <string name="search_screen_highlight_artists_label">Nghệ sĩ nổi bật</string>
+    <string name="search_screen_list_category_title_text">Danh mục sản phẩm</string>
+    <string name="just_image">just_image</string>
+    <string name="placeholder">Placeholder</string>
+    <string name="search_dashboard_category_all">Tất cả</string>
+    <string name="search_dashboard_category_album">Album</string>
+    <string name="search_dashboard_category_photobook">Photobook</string>
+    <string name="search_dashboard_category_merch">Merch</string>
+    <string name="search_dashboard_category_vinyl">Vinyl</string>
+    <string name="search_dashboard_category_lightstick">Lightstick</string>
 </resources>

@@ -12,14 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pop4u_App"
         tools:targetApi="31">
+<!--        <activity-->
+<!--            android:name=".SearchScreen.SearchDashboardActivity"-->
+<!--            android:exported="false" />-->
         <activity
-            android:name=".SearchScreen.SearchDashboardActivity"
+            android:name=".SearchScreen.QuerySearchActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".SearchScreen.QuerySearchActivity"
+            android:name=".SearchScreen.SearchDashboardActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
