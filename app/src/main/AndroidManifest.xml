@@ -21,6 +21,24 @@
 <!--        <activity-->
 <!--            android:name=".SearchScreen.SearchDashboardActivity"-->
 <!--            android:exported="false" />-->
+
+        <activity
+            android:name=".AddressScreen.PickAddress"
+            android:exported="false" />
+        <activity
+            android:name=".AddressScreen.AddAddress"
+            android:exported="false" />
+        <activity
+            android:name=".VoucherScreen.InputVoucher"
+            android:exported="false" />
+        <activity
+            android:name=".VoucherScreen.ShowVoucher"
+            android:exported="false" />
+
+        <activity
+            android:name=".CartScreen.Cart"
+            android:exported="false" />
+
         <activity
             android:name=".SearchScreen.QuerySearchActivity"
             android:exported="false" />
