@@ -83,6 +83,7 @@
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
                     app:layout_constraintStart_toEndOf="@id/txtProductArtist">
                     <TextView
+                        android:id="@+id/txtProductLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter_medium"
@@ -162,6 +163,7 @@
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@color/md_theme_errorContainer">
                 <TextView
+                    android:id="@+id/txtSalePercent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="7.5dp"
