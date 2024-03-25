@@ -41,16 +41,15 @@
         android:id="@+id/edtEmail"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/shape_edit_text"
         android:hint="Email của bạn"
+        android:inputType="textEmailAddress"
         android:padding="15dp"
         android:textColorHint="@color/md_theme_outline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtNoteCreateAcc"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@+id/txtNoteCreateAcc" />
 
     <EditText
         android:id="@+id/edtPass"
@@ -60,11 +59,27 @@
         android:background="@drawable/shape_edit_text"
         android:hint="Mật khẩu"
         android:padding="15dp"
+        android:inputType="textPassword"
+        android:textColorHint="@color/md_theme_outline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/edtEmail"
+        app:layout_constraintTop_toBottomOf="@+id/edtEmail" />
+
+    <EditText
+        android:id="@+id/edtConfirmPass"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shape_edit_text"
+        android:hint="Nhập lại mật khẩu"
+        android:inputType="textPassword"
+        android:padding="15dp"
         android:textColorHint="@color/md_theme_outline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/edtEmail"
-        app:layout_constraintTop_toBottomOf="@+id/edtEmail" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtPass" />
 
     <Button
         android:id="@+id/btnSignUp"
@@ -75,9 +90,8 @@
         android:text="Tạo tài khoản"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtPass"
+        app:layout_constraintTop_toBottomOf="@+id/edtConfirmPass"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

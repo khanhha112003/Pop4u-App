@@ -43,7 +43,7 @@
         android:layout_marginTop="45dp"
         android:background="@drawable/shape_edit_text"
         android:hint="Mã xác thực"
-        android:inputType="text"
+        android:inputType="numberSigned"
         android:padding="15dp"
         android:textColorHint="@color/md_theme_outline"
         app:layout_constraintEnd_toEndOf="parent"

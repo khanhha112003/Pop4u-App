@@ -1,5 +1,6 @@
 package com.group2.pop4u_app.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.group2.pop4u_app.R;
+import com.group2.pop4u_app.SignUp.SignUp_1;
 import com.group2.pop4u_app.databinding.ActivityLoginPageBinding;
 
 public class LoginPage extends AppCompatActivity {
@@ -27,32 +29,45 @@ public class LoginPage extends AppCompatActivity {
         binding = ActivityLoginPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        addEvents();
 
+
+    }
+
+    private void addEvents() {
         binding.btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 String email = binding.edtEmail.getText().toString();
                 String password = binding.edtPass.getText().toString();
 
                 if (!isValidEmail(email)) {
-                    // If the email is invalid
                     Toast.makeText(LoginPage.this, "Bạn đã nhập sai email. Vui lòng nhập lại", Toast.LENGTH_SHORT).show();
                 } else if (!isValidPassword(password)) {
-                    // If the password is invalid but the email is valid
-                    Toast.makeText(LoginPage.this, "Bạn đã nhập sai mật khẩu. Vui lòng nhập lại", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginPage.this, "Mật khẩu phải chứa ít nhất 8 ký tự, bao gồm chữ hoa, số và ký tự đặc biệt", Toast.LENGTH_SHORT).show();
                 } else {
-                    // If both are valid
                     Toast.makeText(LoginPage.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        binding.textView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginPage.this, SignUp_1.class);
+                startActivity(intent);
             }
         });
     }
 
     private boolean isValidEmail(String email) {
-        return email.contains("@");
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     private boolean isValidPassword(String password) {
-        return password.matches(".*[a-zA-Z]+.*") && password.matches(".*[0-9]+.*");
+        // Password regex pattern
+        String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+        return password.matches(passwordPattern);
     }
+
 }
