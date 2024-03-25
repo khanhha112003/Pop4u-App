@@ -48,7 +48,7 @@ public class HistorySearchAdapter extends BaseAdapter {
         ViewHolder holder;
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.history_search_item, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.search_screen_history_search_item, parent, false);
             holder = new ViewHolder();
             holder.historySearchContext = convertView.findViewById(R.id.txt_history_search_content);
             holder.copyHistorySearch = convertView.findViewById(R.id.btn_copy_history_search);
