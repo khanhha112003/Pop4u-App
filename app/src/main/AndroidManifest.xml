@@ -12,21 +12,56 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pop4u_App"
         tools:targetApi="31">
+        <activity
+        android:name=".SplashScreen.OnBoarding1"
+        android:exported="false" />
+        <activity
+            android:name=".SplashScreen.SplashScr"
+            android:exported="false" />
 <!--        <activity-->
 <!--            android:name=".SearchScreen.SearchDashboardActivity"-->
 <!--            android:exported="false" />-->
+
         <activity
-            android:name=".SearchScreen.QuerySearchActivity"
+            android:name=".AddressScreen.PickAddress"
             android:exported="false" />
+        <activity
+            android:name=".AddressScreen.AddAddress"
+            android:exported="false" />
+        <activity
+            android:name=".VoucherScreen.InputVoucher"
+            android:exported="false" />
+        <activity
+            android:name=".VoucherScreen.ShowVoucher"
+            android:exported="false" />
+
+        <activity
+            android:name=".CartScreen.Cart"
+            android:exported="false" />
+
         <activity
             android:name=".Activity.MainActivity"
             android:exported="false" />
         <activity
             android:name=".SearchScreen.SearchDashboardActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".SignUp.SignUp_4"
+            android:exported="false" />
+        <activity
+            android:name=".SignUp.SignUp_3"
+            android:exported="false" />
+        <activity
+            android:name=".SignUp.SignUp_2"
+            android:exported="false" />
+        <activity
+            android:name=".SignUp.SignUp_1"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.LoginPage"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
