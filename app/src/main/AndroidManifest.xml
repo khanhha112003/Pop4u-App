@@ -29,18 +29,18 @@
         <activity
             android:name=".CartScreen.Cart"
             android:exported="false" />
+
         <activity
-            android:name=".SearchScreen.SearchDashboardActivity"
+            android:name=".SearchScreen.QuerySearchActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".SearchScreen.QuerySearchActivity"
+            android:name=".SearchScreen.SearchDashboardActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
