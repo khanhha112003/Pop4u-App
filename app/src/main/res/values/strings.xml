@@ -9,4 +9,17 @@
     <string name="home_title_sub_head3">Nghệ sĩ nổi bật</string>
     <string name="home_title_sub_head4">Đề xuất</string>
     <string name="search_screen_cancel_search_text">Hủy</string>
+
+    //BoardingSrcTitle
+    <string name="boardingsrc"></string>
+    <string name= "BoardTitle1">Thoả thích đu Idol với giá ưu đãi</string>
+    <string name= "BoardTitle2">Miễn phí ship cho đơn hàng trên 500K</string>
+    <string name= "BoardTitle3">Miễn phí đổi trả cho các tình yêu</string>
+    <string name= "BoardTitle4">Bảo vệ môi trường là bảo vệ Idol</string>
+
+    //BoardingSrcDecr
+    <string name= "BoardDes1">Tải app để dùng ngay các voucher hấp dẫn, đu Idol không mỏi mệt cùng pop4u.</string>
+    <string name= "BoardDes2">Chỉ cần trên 500.000VND, pop4u chiêu đãi bạn phí ship nhé!</string>
+    <string name= "BoardDes3">Tình yêu sẽ được đổi trả sản phẩm trong vòng 7 ngày kể từ ngày nhận hàng.</string>
+    <string name= "BoardDes4">Cùng pop4u bảo vệ môi trường sống cho chúng ta và cả Idol nhé!</string>
 </resources>
