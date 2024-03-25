@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SplashScreen.OnBoarding1">
+
+    <Button
+        android:id="@+id/btnSkip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/inter_semibold"
+        android:paddingTop="30dp"
+        android:text="Bỏ qua"
+        android:textColor="@color/md_theme_primaryFixed_mediumContrast"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="MissingConstraints" />
+
+
+    <ImageView
+        android:id="@+id/SplSrcNmIcon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/splash_src_pop4u_name"
+        app:layout_constraintBottom_toTopOf="@+id/sliceViewpager"
+        app:layout_constraintEnd_toEndOf="@+id/btnSkip"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/sliceViewpager"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_below="@+id/SplSrcNmIcon"
+        tools:ignore="MissingConstraints,SpeakableTextPresentCheck"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="131dp" />
+
+
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sliceViewpager"
+        android:background="@color/transparent"
+        android:text="next"
+        android:textColor="@color/md_theme_primaryFixedDim_mediumContrast"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/indicator_layout"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sliceViewpager"
+        android:background="@color/transparent"
+        android:text="back"
+        android:textColor="@color/md_theme_primaryFixedDim_mediumContrast"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sliceViewpager"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <LinearLayout
+        android:id="@+id/indicator_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sliceViewpager"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/sliceViewpager"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="203dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
