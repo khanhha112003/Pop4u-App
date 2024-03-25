@@ -17,7 +17,7 @@
         android:textColor="@color/md_theme_onSurface"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.062"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,7 +25,7 @@
         android:id="@+id/txtNoteInfor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/inter"
         android:text="Bạn hãy cho Pop4u biết một số thông tin cần thiết."
         android:textColor="@color/md_theme_outline"
@@ -38,8 +38,8 @@
     <EditText
         android:id="@+id/edtFullname"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginTop="44dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="45dp"
         android:background="@drawable/shape_edit_text"
         android:hint="Họ và tên"
         android:padding="15dp"
@@ -52,7 +52,7 @@
     <EditText
         android:id="@+id/edtPhone"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="70dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/shape_edit_text"
         android:hint="Số điện thoại"
@@ -66,7 +66,7 @@
     <EditText
         android:id="@+id/edtDatebirth"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="70dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/shape_edit_text"
         android:hint="Ngày sinh"
@@ -80,7 +80,7 @@
     <Spinner
         android:id="@+id/edtGender"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="70dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/shape_edit_text"
         android:hint="Số điện thoại"
@@ -93,14 +93,14 @@
 
     <Button
         android:id="@+id/btnConfirm"
-        android:layout_width="180dp"
-        android:layout_height="56dp"
+        android:layout_width="267dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/button_small_filled_norm_background"
         android:text="Xác thực email"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.434"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="508dp" />
+        app:layout_constraintTop_toBottomOf="@+id/edtGender" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

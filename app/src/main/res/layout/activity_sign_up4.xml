@@ -25,7 +25,7 @@
         android:id="@+id/txtNoteArtist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/inter"
         android:text="Chọn những nghệ sĩ mà bạn yêu thích để Pop4u chọn lọc tốt hơn cho bạn."
         android:textColor="@color/md_theme_outline"
