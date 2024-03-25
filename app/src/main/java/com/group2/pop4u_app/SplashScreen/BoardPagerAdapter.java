@@ -49,13 +49,13 @@ public class BoardPagerAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return view == (LinearLayout)object;
+        return view == object;
     }
 
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.boarding_layout, container, false);
 
         ImageView sliceTitleImage = view.findViewById(R.id.onboardimg1);
@@ -63,8 +63,8 @@ public class BoardPagerAdapter extends PagerAdapter {
         TextView sliceDescription = view.findViewById(R.id.BoardSrcDes);
 
         sliceTitleImage.setImageResource(BoardImages[position]);
-        sliceHeading.setText(BoardHeadings[position]);
-        sliceDescription.setText(Descriptions[position]);
+        sliceHeading.setText(context.getString(BoardHeadings[position]));
+        sliceDescription.setText(context.getString(Descriptions[position]));
 
         container.addView(view);
         return view;
@@ -72,6 +72,6 @@ public class BoardPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView((LinearLayout) object);
+        container.removeView((View) object);
     }
 }

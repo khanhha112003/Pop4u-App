@@ -8,11 +8,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.group2.pop4u_app.R;
@@ -21,15 +17,13 @@ public class OnBoarding1 extends AppCompatActivity {
 
     ViewPager mSliceViewpager;
     LinearLayout mDotLayout;
-    Button skipbtn,backtn,nextbtn;
+    Button skipbtn, backtn, nextbtn;
     TextView[] dots;
     BoardPagerAdapter boardPagerAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_on_boarding1);
 
         skipbtn = findViewById(R.id.btnSkip);
@@ -37,87 +31,70 @@ public class OnBoarding1 extends AppCompatActivity {
         backtn = findViewById(R.id.btnBack);
 
         backtn.setOnClickListener(view -> {
-
-            if (getitem(0) > 0)
-                mSliceViewpager.setCurrentItem(getitem(-1), true);
-        });
-        nextbtn.setOnClickListener(view -> {
-
-            if (getitem(0) < 3)
-                mSliceViewpager.setCurrentItem(getitem(1), true);
-            else {
-                Intent intent = new Intent(OnBoarding1.this, SplashScr.class );
-                startActivity(intent);
-                finish();
+            int currentItem = mSliceViewpager.getCurrentItem();
+            if (currentItem > 0) {
+                mSliceViewpager.setCurrentItem(currentItem - 1, true);
             }
         });
-        skipbtn.setOnClickListener(view -> {
 
-                Intent intent = new Intent(OnBoarding1.this, SplashScr.class );
-                startActivity(intent);
-                finish();
+        nextbtn.setOnClickListener(view -> {
+            int currentItem = mSliceViewpager.getCurrentItem();
+            if (currentItem < boardPagerAdapter.getCount() - 1) {
+                mSliceViewpager.setCurrentItem(currentItem + 1, true);
+            } else {
+                startNextActivity(SplashScr.class);
+            }
         });
 
+        skipbtn.setOnClickListener(view -> startNextActivity(SplashScr.class));
 
-
-        mSliceViewpager = (ViewPager) findViewById(R.id.sliceViewpager);
-        mDotLayout = (LinearLayout) findViewById(R.id.indicator_layout);
+        mSliceViewpager = findViewById(R.id.sliceViewpager);
+        mDotLayout = findViewById(R.id.indicator_layout);
 
         boardPagerAdapter = new BoardPagerAdapter(this);
-
         mSliceViewpager.setAdapter(boardPagerAdapter);
 
-        setUpIndicator(0);
         mSliceViewpager.addOnPageChangeListener(viewListener);
-
+        setUpIndicator(0);
     }
 
-    public void  setUpIndicator(int i){
-        dots = new TextView[4];
+    private void startNextActivity(Class<?> cls) {
+        Intent intent = new Intent(OnBoarding1.this, cls);
+        startActivity(intent);
+        finish();
+    }
+
+    public void setUpIndicator(int position) {
+        dots = new TextView[boardPagerAdapter.getCount()];
         mDotLayout.removeAllViews();
 
-        for ( i = 0 ;i< dots.length;i ++){
-
+        for (int i = 0; i < boardPagerAdapter.getCount(); i++) {
             dots[i] = new TextView(this);
-            dots[i].setText(Html.fromHtml("&#8226"));
+            dots[i].setText(Html.fromHtml("&#8226;"));
             dots[i].setTextSize(35);
-            dots[i].setTextColor(getResources().getColor(R.color.md_theme_secondaryFixed_mediumContrast,getApplicationContext().getTheme()));
+            dots[i].setTextColor(getResources().getColor(R.color.md_theme_inversePrimary_mediumContrast, getTheme()));
             mDotLayout.addView(dots[i]);
         }
 
-        dots[i].setTextColor(getResources().getColor(R.color.md_theme_primary_highContrast,getApplicationContext().getTheme()));
-
+        if (dots.length > 0) {
+            dots[position].setTextColor(getResources().getColor(R.color.md_theme_onTertiaryFixedVariant, getTheme()));
+        }
     }
 
     ViewPager.OnPageChangeListener viewListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
         }
 
         @Override
         public void onPageSelected(int position) {
-
             setUpIndicator(position);
-            if (position >0){
-
-                backtn.setVisibility(View.VISIBLE);
-
-            }else {
-                backtn.setVisibility(View.INVISIBLE);
-            }
-
+            backtn.setVisibility(position > 0 ? View.VISIBLE : View.INVISIBLE);
         }
 
         @Override
         public void onPageScrollStateChanged(int state) {
-
         }
     };
-
-    private int getitem(int i){
-        return  mSliceViewpager.getCurrentItem() + i;
-
-    }
-
 }
+

@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/onboard_src_img1"
-        android:layout_marginTop="200dp"/>
+        android:layout_marginTop="100dp"/>
     <TextView
         android:id="@+id/BoardSrcTitle"
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
         android:text="@string/BoardTitle1"
         android:fontFamily="@font/inter_semibold"
         android:textSize="28sp"
-        android:textColor="@color/md_theme_onPrimaryFixedVariant"
+        android:textColor="@color/md_theme_primary_mediumContrast"
         android:textStyle="bold"
         android:gravity="center"/>
 
