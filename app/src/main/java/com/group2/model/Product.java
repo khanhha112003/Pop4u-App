@@ -8,8 +8,8 @@ public class Product {
     String productName;
     String productArtistName;
     String productLabel;
-    Double productPrice;
-    Double productComparingPrice;
+    int productPrice;
+    int productComparingPrice;
     int productSalePercent;
     Double productRating;
     int productRatingCount;
@@ -17,7 +17,7 @@ public class Product {
     int productStock;
     String productDescription;
 
-    public Product(int productID, String productName, int productImage1, String productArtistName, String productLabel, Double productPrice, Double productComparingPrice, int productSalePercent, Double productRating, int productRatingCount, int productSoldAmount, int productStock, String productDescription) {
+    public Product(int productID, String productName, int productImage1, String productArtistName, String productLabel, int productPrice, int productComparingPrice, int productSalePercent, Double productRating, int productRatingCount, int productSoldAmount, int productStock, String productDescription) {
         this.productID = productID;
         this.productName = productName;
         this.productImage1 = productImage1;
@@ -57,19 +57,19 @@ public class Product {
         this.productLabel = productLabel;
     }
 
-    public Double getProductPrice() {
+    public int getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(Double productPrice) {
+    public void setProductPrice(int productPrice) {
         this.productPrice = productPrice;
     }
 
-    public Double getProductComparingPrice() {
+    public int getProductComparingPrice() {
         return productComparingPrice;
     }
 
-    public void setProductComparingPrice(Double productComparingPrice) {
+    public void setProductComparingPrice(int productComparingPrice) {
         this.productComparingPrice = productComparingPrice;
     }
 
@@ -136,4 +136,5 @@ public class Product {
     public void setProductArtistName(String productArtistName) {
         this.productArtistName = productArtistName;
     }
+
 }

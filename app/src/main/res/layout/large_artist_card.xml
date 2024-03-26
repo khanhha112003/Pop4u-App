@@ -7,17 +7,17 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cdvArtistImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:cardCornerRadius="50dp"
+        app:cardCornerRadius="100dp"
         app:cardElevation="0dp">
 
         <ImageView
             android:id="@+id/imvArtistAvatar"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="1"
+            android:layout_height="match_parent"
             android:src="@drawable/img"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

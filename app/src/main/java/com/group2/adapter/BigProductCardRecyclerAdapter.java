@@ -39,7 +39,7 @@ public class BigProductCardRecyclerAdapter extends RecyclerView.Adapter<BigProdu
         holder.txtRating.setText(String.valueOf(productList.get(position).getProductRating()));
         holder.txtSalePercent.setText("-" + String.valueOf(productList.get(position).getProductSalePercent()) + "%");
         holder.txtProductArtist.setText(productList.get(position).getProductArtistName());
-        holder.txtProductPrice.setText(String.valueOf(productList.get(position).getProductPrice()));
+        holder.txtProductPrice.setText(String.valueOf(productList.get(position).getProductPrice()) + "₫");
         holder.txtProductName.setText(productList.get(position).getProductName());
     }
 
