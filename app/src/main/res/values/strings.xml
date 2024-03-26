@@ -2,12 +2,19 @@
     <string name="app_name">Pop4u_App</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="view_all_button_content">XEM</string>
+    <string name="view_all_button_content">Xem</string>
     <string name="home_title">Trang chủ</string>
     <string name="home_title_sub_head1">Mới ra mắt</string>
     <string name="home_title_sub_head2">Sale</string>
     <string name="home_title_sub_head3">Nghệ sĩ nổi bật</string>
     <string name="home_title_sub_head4">Đề xuất</string>
+    <string name="action_bar_favorite_action">S.phẩm yêu thích</string>
+    <string name="action_bar_order_action">Đơn hàng của tôi</string>
+    <string name="title_activity_all_artist">AllArtistActivity</string>
+    <string name="large_text">
+        "Material is the metaphor.\n\n"
+    </string>
+    <string name="action_settings">Settings</string>
     <string name="search_screen_cancel_search_text">Hủy</string>
     <string name="search_screen_highlight_artists_label">Nghệ sĩ nổi bật</string>
     <string name="search_screen_list_category_title_text">Danh mục sản phẩm</string>

@@ -3,12 +3,164 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Activity.HomepageFragment">
-
-    <!-- TODO: Update blank fragment layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ctr01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+            <TextView
+                android:id="@+id/txtHomepageHead1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnViewAll01"
+                android:text="@string/home_title_sub_head1"
+                android:textColor="@color/md_theme_onSurface"
+                android:textSize="27.5dp"
+                android:fontFamily="@font/inter_semibold"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"/>
+
+            <Button
+                android:id="@+id/btnViewAll01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/view_all_button_content"
+                android:fontFamily="@font/inter_semibold"
+                android:textSize="17.5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textColor="@drawable/button_no_filled_text_color"
+                android:background="@drawable/button_small_text_state_background"
+                app:layout_constraintStart_toEndOf="@+id/txtHomepageHead1"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rccNewReleasedProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/ctr01"
+            android:layout_marginTop="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:paddingStart="20dp"
+            />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ctr02"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/rccNewReleasedProduct"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+            <TextView
+                android:id="@+id/txtHomepageHead2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnViewAll02"
+                android:text="@string/home_title_sub_head2"
+                android:textColor="@color/md_theme_error"
+                android:textSize="27.5dp"
+                android:fontFamily="@font/inter_semibold"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"/>
+            <Button
+                android:id="@+id/btnViewAll02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/view_all_button_content"
+                android:fontFamily="@font/inter_semibold"
+                android:textSize="17.5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textColor="@drawable/button_no_filled_text_color"
+                android:background="@drawable/button_small_text_state_background"
+                app:layout_constraintStart_toEndOf="@+id/txtHomepageHead2"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rccHotArtist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/ctr02"
+            android:layout_marginTop="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:paddingStart="20dp"
+            />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ctr03"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/rccHotArtist"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+            <TextView
+                android:id="@+id/txtHomepageHead3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnViewAll03"
+                android:text="@string/home_title_sub_head3"
+                android:textColor="@color/md_theme_onSurface"
+                android:textSize="27.5dp"
+                android:fontFamily="@font/inter_semibold"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"/>
+
+            <Button
+                android:id="@+id/btnViewAll03"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/view_all_button_content"
+                android:fontFamily="@font/inter_semibold"
+                android:textSize="17.5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textColor="@drawable/button_no_filled_text_color"
+                android:background="@drawable/button_small_text_state_background"
+                app:layout_constraintStart_toEndOf="@+id/txtHomepageHead3"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/txtHomepageHead4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ctr03"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="25dp"
+            android:text="@string/home_title_sub_head4"
+            android:textColor="@color/md_theme_onSurface"
+            android:textSize="27.5dp"
+            android:fontFamily="@font/inter_semibold"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"/>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

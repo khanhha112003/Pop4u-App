@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="@string/action_bar_favorite_action"
+        android:icon="@drawable/favorite_icon_24"
+        app:showAsAction="ifRoom"/>
+    <item android:icon="@drawable/quick_reorder_icon_24"
+        android:title="@string/action_bar_order_action"
+        app:showAsAction="ifRoom"/>
+</menu>

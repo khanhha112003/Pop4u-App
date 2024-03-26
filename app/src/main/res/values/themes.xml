@@ -6,4 +6,13 @@
     </style>
 
     <style name="Theme.Pop4u_App" parent="Base.Theme.Pop4u_App" />
+
+    <style name="Theme.Pop4u_App.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Pop4u_App.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Pop4u_App.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
