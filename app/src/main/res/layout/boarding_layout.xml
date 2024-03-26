@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/onboardimg1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/onboard_src_img1"
+        android:layout_marginTop="100dp"/>
+    <TextView
+        android:id="@+id/BoardSrcTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/onboardimg1"
+        android:paddingTop="20dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="40dp"
+        android:text="@string/BoardTitle1"
+        android:fontFamily="@font/inter_semibold"
+        android:textSize="28sp"
+        android:textColor="@color/md_theme_primary_mediumContrast"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/BoardSrcDes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/BoardSrcTitle"
+        android:paddingTop="10dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="40dp"
+        android:text="@string/BoardDes1"
+        android:fontFamily="@font/inter"
+        android:textSize="20sp"
+        android:textColor="@color/md_theme_outline_mediumContrast"
+        android:gravity="center"/>
+
+
+</RelativeLayout>
