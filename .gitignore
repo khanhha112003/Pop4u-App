@@ -1,6 +1,6 @@
 *.iml
 .gradle
-/local.properties
+.idea
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
@@ -12,4 +12,12 @@
 /captures
 .externalNativeBuild
 .cxx
-local.properties
+*.lock
+/app/src/native/
+/app/src/.tmp/
+/app/src/android/
+/app/src/build-scan-data/
+/app/src/caches/
+/app/src/daemon/
+/app/src/jdks/
+/app/src/wrapper/
