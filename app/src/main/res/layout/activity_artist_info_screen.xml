@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ArtistInfoScreen.ArtistInfoScreen">
+    
+    <ImageView
+        android:id="@+id/imvArtistAvatar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_1"
+        android:adjustViewBounds="true"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="1"
+        android:src="@drawable/rectangle_6496"
+        app:layout_constraintStart_toStartOf="@id/imvArtistAvatar"
+        app:layout_constraintTop_toTopOf="@id/imvArtistAvatar"
+        app:layout_constraintEnd_toEndOf="@id/imvArtistAvatar"/>
+
+    <TextView
+        android:id="@+id/txtArtistName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/txtArtistYearDebut"
+        android:layout_width="wrap_content"
+        android:text="Lana Del Rey"
+        android:fontFamily="@font/inter_semibold"
+        android:textSize="40sp"
+        android:textColor="@color/md_theme_onSurface"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/txtArtistYearDebut"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/imvArtistAvatar"
+        android:layout_marginBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ra mat nam 2012"
+        android:textSize="17.5sp"
+        android:fontFamily="@font/inter_semibold"
+        android:textColor="@color/md_theme_error"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/crd01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imvArtistAvatar"
+        app:cardCornerRadius="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        app:cardElevation="0dp"
+        android:backgroundTint="@color/md_theme_surfaceContainer">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:fontFamily="@font/inter"
+            android:textColor="@color/md_theme_onSurface"
+            android:text="Elizabeth Woolridge Grant (sinh ngày 21 tháng 6 năm 1985) Elizabeth Woolridge Grant (sinh ngày 21 tháng 6 năm 1985) Elizabeth Woolridge Grant (sinh ngày 21 tháng 6 năm 1985) Elizabeth Woolridge Grant (sinh ngày 21 tháng 6 năm 1985)"/>
+    </androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/txt01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/crd01"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:textColor="@color/md_theme_onSurface"
+        android:text="@string/product_list_of_artist"
+        android:fontFamily="@font/inter_semibold"
+        android:textSize="27.5sp"
+        android:gravity="center"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt01"
+        android:layout_marginTop="20dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
