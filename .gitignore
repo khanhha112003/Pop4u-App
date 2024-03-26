@@ -16,7 +16,6 @@
 *.lock
 local.properties
 /app/src/native/
-/app/src/androidTest/
 /app/src/.tmp/
 /app/src/android/
 /app/src/build-scan-data/
