@@ -1,6 +1,7 @@
 package com.group2.pop4u_app.home;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -31,6 +32,12 @@ public class HomeScreen extends AppCompatActivity {
         setContentView(binding.getRoot());
         addEvents();
         loadRecommendProduct();
+        setToolbar();
+    }
+
+    private void setToolbar() {
+        Toolbar topMainToolBar = binding.tlbTopMainToolbar;
+        setSupportActionBar(topMainToolBar);
     }
 
     private void loadRecommendProduct() {

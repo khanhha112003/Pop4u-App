@@ -7,6 +7,17 @@
     tools:context="com.group2.pop4u_app.home.HomeScreen"
     android:background="@color/md_theme_surface">
 
+  <androidx.appcompat.widget.Toolbar
+      android:id="@+id/tlbTopMainToolbar"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/md_theme_surface"
+      android:elevation="4dp"
+      android:theme="@style/Widget.Material3.ActionBar.Solid"
+      app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
   <androidx.constraintlayout.widget.ConstraintLayout
       android:id="@+id/ctr01"
       android:layout_width="match_parent"
