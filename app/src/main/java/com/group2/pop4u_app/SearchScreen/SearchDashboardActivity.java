@@ -3,7 +3,9 @@ package com.group2.pop4u_app.SearchScreen;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.SearchView;
 
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.SearchScreenActivitySearchDashboardBinding;
@@ -11,8 +13,9 @@ import com.group2.pop4u_app.databinding.SearchScreenActivitySearchDashboardBindi
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
-public class SearchDashboardActivity extends AppCompatActivity {
+public class SearchDashboardActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
     SearchScreenActivitySearchDashboardBinding binding;
 
     ListArtistAdapter artistsAdapter;
@@ -23,6 +26,14 @@ public class SearchDashboardActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         setToolbar();
         setListArtist();
+        setSearchBar();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        binding.svQuerySearchBox.setQuery("", false);
+        binding.svQuerySearchBox.clearFocus();
     }
 
     private void setToolbar() {
@@ -47,5 +58,27 @@ public class SearchDashboardActivity extends AppCompatActivity {
         artistsAdapter = new ListArtistAdapter(this, testData);
         binding.rvListArtist.setAdapter(artistsAdapter);
         binding.rvListArtist.setLayoutManager(llm);
+    }
+
+    private void setSearchBar() {
+        binding.svQuerySearchBox.setOnQueryTextListener(this);
+    }
+
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        if (!Objects.equals(s, "")) {
+            Intent myIntent = new Intent(getApplicationContext(), QuerySearchActivity.class);
+            myIntent.putExtra("start_character", s);
+            startActivity(myIntent);
+        } else {
+            return false;
+        }
+        return true;
     }
 }
