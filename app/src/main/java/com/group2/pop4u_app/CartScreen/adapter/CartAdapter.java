@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,7 +23,9 @@ import java.util.ArrayList;
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
     Context context;
     ArrayList<CartItem> carts;
+    private OnQuantityChangeListener quantityChangeListener;
 
+    private boolean isAllSelected = false;
     public CartAdapter(Context context, ArrayList<CartItem> carts) {
         this.context = context;
         this.carts = carts;
@@ -44,6 +47,24 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
         holder.price.setText(carts.get(position).getPrice());
         holder.quantity.setText(carts.get(position).getQuantity());
     }
+    public interface OnQuantityChangeListener {
+        void onQuantityDecrease(int position);
+        void onQuantityIncrease(int position);
+    }
+    public void setOnQuantityChangeListener(OnQuantityChangeListener listener) {
+        this.quantityChangeListener = listener;
+    }
+    public void selectAllItems(boolean isSelected) {
+        isAllSelected = isSelected;
+        for (CartItem item : carts) {
+            item.setChecked(isSelected);
+        }
+        notifyDataSetChanged();
+    }
+
+    public boolean isAllSelected() {
+        return isAllSelected;
+    }
 
     @Override
     public int getItemCount() {
@@ -55,6 +76,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
         TextView price;
         TextView quantity;
         CheckBox checkbox;
+        ImageButton btnDecrease;
+        ImageButton btnIncrease;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             thumb = itemView.findViewById(R.id.thumb);
@@ -63,7 +86,28 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
             price = itemView.findViewById(R.id.pricebuy);
             quantity = itemView.findViewById(R.id.quantity);
             checkbox = itemView.findViewById(R.id.checkbox);
+            btnDecrease = itemView.findViewById(R.id.btnDecrease);
+            btnIncrease = itemView.findViewById(R.id.btnIncrease);
 
+            btnDecrease.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && quantityChangeListener != null) {
+                        quantityChangeListener.onQuantityDecrease(position);
+                    }
+                }
+            });
+
+            btnIncrease.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && quantityChangeListener != null) {
+                        quantityChangeListener.onQuantityIncrease(position);
+                    }
+                }
+            });
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -25,7 +25,10 @@ public class Cart extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         customAndLoadData();
-
+        binding.checkboxSelectAll.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            adapter.selectAllItems(isChecked);
+            calculateTotalPrice();
+        });
     }
     private void customAndLoadData() {
         LinearLayoutManager layoutManager = new LinearLayoutManager
@@ -42,5 +45,48 @@ public class Cart extends AppCompatActivity {
 
         adapter = new CartAdapter(getApplicationContext(), carts);
         binding.rvCart.setAdapter(adapter);
+
+        adapter.setOnQuantityChangeListener(new CartAdapter.OnQuantityChangeListener() {
+            @Override
+            public void onQuantityDecrease(int position) {
+                // Xử lý giảm số lượng sản phẩm
+                decreaseQuantity(position);
+            }
+
+            @Override
+            public void onQuantityIncrease(int position) {
+                // Xử lý tăng số lượng sản phẩm
+                increaseQuantity(position);
+            }
+        });
+    }
+
+    // Xử lý giảm số lượng sản phẩm
+    private void decreaseQuantity(int position) {
+        CartItem item = carts.get(position);
+        int currentQuantity = Integer.parseInt(item.getQuantity());
+        if (currentQuantity > 1) {
+            currentQuantity--;
+            item.setQuantity(String.valueOf(currentQuantity));
+            adapter.notifyItemChanged(position);
+        }
+    }
+
+    // Xử lý tăng số lượng sản phẩm
+    private void increaseQuantity(int position) {
+        CartItem item = carts.get(position);
+        int currentQuantity = Integer.parseInt(item.getQuantity());
+        currentQuantity++;
+        item.setQuantity(String.valueOf(currentQuantity));
+        adapter.notifyItemChanged(position);
+    }
+    private void calculateTotalPrice() {
+        double totalPrice = 0;
+        for (CartItem item : carts) {
+            if (item.isChecked()) {
+                totalPrice += Double.parseDouble(item.getPrice()) * Integer.parseInt(item.getQuantity());
+            }
+        }
+        binding.textView.setText(String.valueOf(totalPrice));
     }
 }

@@ -6,6 +6,7 @@ public class CartItem {
     String option;
     String price;
     String quantity;
+    private boolean isChecked;
 
 
     public CartItem(int thumb, String name, String option, String price, String quantity) {
@@ -14,8 +15,15 @@ public class CartItem {
         this.option = option;
         this.price = price;
         this.quantity = quantity;
+        this.isChecked = false;
+    }
+    public boolean isChecked() {
+        return isChecked;
     }
 
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
     public int getThumb() {
         return thumb;
     }
