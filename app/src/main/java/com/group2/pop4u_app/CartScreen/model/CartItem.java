@@ -4,12 +4,12 @@ public class CartItem {
     int thumb;
     String name;
     String option;
-    String price;
-    String quantity;
+    int price;
+    int quantity;
     private boolean isChecked;
 
 
-    public CartItem(int thumb, String name, String option, String price, String quantity) {
+    public CartItem(int thumb, String name, String option,  int price,  int quantity) {
         this.thumb = thumb;
         this.name = name;
         this.option = option;
@@ -48,19 +48,19 @@ public class CartItem {
         this.option = option;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice( int price) {
         this.price = price;
     }
 
-    public String getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity( int quantity) {
         this.quantity = quantity;
     }
 

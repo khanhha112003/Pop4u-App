@@ -1,31 +1,30 @@
 package com.group2.pop4u_app.CartScreen.adapter;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.CheckBox;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.group2.pop4u_app.CartScreen.model.CartItem;
 import com.group2.pop4u_app.R;
-import com.group2.pop4u_app.databinding.ActivityCartScreenBinding;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
+public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     Context context;
     ArrayList<CartItem> carts;
-    private OnQuantityChangeListener quantityChangeListener;
+    public OnTotalPriceChangeListener totalPriceChangeListener;
+    public OnQuantityChangeListener quantityChangeListener;
 
-    private boolean isAllSelected = false;
     public CartAdapter(Context context, ArrayList<CartItem> carts) {
         this.context = context;
         this.carts = carts;
@@ -41,35 +40,68 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.thumb.setImageResource(carts.get(position).getThumb());
-        holder.name.setText(carts.get(position).getName());
-        holder.option.setText(carts.get(position).getOption());
-        holder.price.setText(carts.get(position).getPrice());
-        holder.quantity.setText(carts.get(position).getQuantity());
+        CartItem item = carts.get(position);
+        holder.thumb.setImageResource(item.getThumb());
+        holder.name.setText(item.getName());
+        holder.option.setText(item.getOption());
+        DecimalFormat df = new DecimalFormat("#,###"); // Sử dụng "#,###" nếu không muốn hiển thị phần thập phân
+        String formattedPrice = df.format(item.getPrice());
+        holder.price.setText(formattedPrice);
+        holder.quantity.setText(String.valueOf(item.getQuantity()));
+        holder.checkbox.setChecked(item.isChecked());
+
+        holder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                item.setChecked(isChecked);
+                calculateTotalPrice();
+                // Kiểm tra xem có ít nhất một checkbox cá nhân không được chọn
+                boolean atLeastOneUnchecked = false;
+                for (CartItem cartItem : carts) {
+                    if (!cartItem.isChecked()) {
+                        atLeastOneUnchecked = true;
+                        break;
+                    }
+                }
+
+                // Nếu có ít nhất một checkbox cá nhân không được chọn, hãy làm cho checkbox "Chọn tất cả" không được chọn
+                if (atLeastOneUnchecked && totalPriceChangeListener != null) {
+                    totalPriceChangeListener.onAtLeastOneUnchecked();
+                }
+            }
+        });
     }
-    public interface OnQuantityChangeListener {
-        void onQuantityDecrease(int position);
-        void onQuantityIncrease(int position);
+    private void calculateTotalPrice() {
+        double totalPrice = 0;
+        for (CartItem item : carts) {
+            if (item.isChecked()) {
+                totalPrice += item.getPrice() * item.getQuantity();
+            }
+        }
+        if (totalPriceChangeListener != null) {
+            totalPriceChangeListener.onTotalPriceChange(totalPrice);
+        }
     }
+
     public void setOnQuantityChangeListener(OnQuantityChangeListener listener) {
         this.quantityChangeListener = listener;
     }
+
+    public void setOnTotalPriceChangeListener(OnTotalPriceChangeListener listener) {
+        this.totalPriceChangeListener = listener;
+    }
     public void selectAllItems(boolean isSelected) {
-        isAllSelected = isSelected;
         for (CartItem item : carts) {
             item.setChecked(isSelected);
         }
         notifyDataSetChanged();
     }
-
-    public boolean isAllSelected() {
-        return isAllSelected;
-    }
-
     @Override
     public int getItemCount() {
-        return carts.size();}
-    public class ViewHolder extends RecyclerView.ViewHolder{
+        return carts.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView thumb;
         TextView name;
         TextView option;
@@ -78,6 +110,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
         CheckBox checkbox;
         ImageButton btnDecrease;
         ImageButton btnIncrease;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             thumb = itemView.findViewById(R.id.thumb);
@@ -108,17 +141,17 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
                     }
                 }
             });
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    removeItem(getAdapterPosition());
-                }
-            });
+
+
         }
     }
-    private void removeItem(int pos){
-        carts.remove(pos);
-        notifyItemRemoved(pos);
+    public interface OnTotalPriceChangeListener {
+        void onTotalPriceChange(double totalPrice);
+        void onAtLeastOneUnchecked();
     }
-}
+    public interface OnQuantityChangeListener {
+        void onQuantityDecrease(int position);
+        void onQuantityIncrease(int position);
+    }
 
+}

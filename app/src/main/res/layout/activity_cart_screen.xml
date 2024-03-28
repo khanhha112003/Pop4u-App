@@ -5,15 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CartScreen.Cart"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:orientation="horizontal"
-        >
-
+        android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,34 +48,37 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
+        android:orientation="horizontal"
+        android:weightSum="10">
         <LinearLayout
-            android:layout_width="200dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:orientation="vertical">
-
+            android:orientation="vertical"
+            android:layout_weight="6">
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Tổng thanh toán"
                 android:textSize="22sp" />
-
             <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
+                android:id="@+id/totalPrice"
+                android:layout_width="400dp"
                 android:layout_height="wrap_content"
-                android:text="400.000"
+                android:text="0"
                 android:textColor="@color/md_theme_error"
-                android:textSize="30sp" />
+                android:textSize="28sp" />
         </LinearLayout>
-
         <Button
-            android:layout_width="150dp"
+            android:id="@+id/btnMuangay"
+            android:layout_weight="4"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Mua ngay" />
+            android:text="Mua ngay"
+            android:fontFamily="@font/inter_semibold"
+            android:backgroundTint="@color/md_theme_onPrimaryFixedVariant"
+            android:layout_marginEnd="10dp"/>
     </LinearLayout>
 </LinearLayout>
