@@ -22,7 +22,7 @@
             android:name=".SearchScreen.QuerySearchActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.MainActivity"
+            android:name=".home.ProductListCategory"
             android:exported="false" />
         <activity
             android:name=".home.HomeScreen"
@@ -32,9 +32,10 @@
             android:exported="false" />
         <activity
             android:name=".SplashScreen.SplashScr"
-            android:exported="false" /> <!-- <activity -->
-        <!-- android:name=".SearchScreen.SearchDashboardActivity" -->
-        <!-- android:exported="false" /> -->
+            android:exported="false" />
+         <activity
+         android:name=".SearchScreen.SearchDashboardActivity"
+         android:exported="false" />
         <activity
             android:name=".AddressScreen.PickAddress"
             android:exported="false" />
@@ -51,9 +52,6 @@
             android:name=".home.ProductListCategory"
             android:exported="false" />
         <activity
-            android:name=".SearchScreen.SearchDashboardActivity"
-            android:exported="false" />
-        <activity
             android:name=".SignUp.SignUp_4"
             android:exported="false" />
         <activity
@@ -65,8 +63,11 @@
         <activity
             android:name=".SignUp.SignUp_1"
             android:exported="false" />
-        <activity
+       <activity
             android:name=".CartScreen.Cart"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
