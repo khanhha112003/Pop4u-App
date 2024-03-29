@@ -34,22 +34,52 @@ public class SignUp_1 extends AppCompatActivity {
             public void onClick(View v) {
                 String email = binding.edtEmail.getText().toString();
                 String password = binding.edtPass.getText().toString();
-                String confirmPassword = binding.edtConfirmPass.getText().toString();
+                String confirmPassword = binding.edtConfirmPass.getText().toString(); // Make sure this matches your XML
 
+                // Reset errors
+                binding.edtEmail.setError(null);
+                binding.edtPass.setError(null);
+                binding.edtConfirmPass.setError(null);
+
+                boolean cancel = false;
+                View focusView = null;
+
+                // Check for a valid email address.
                 if (!isValidEmail(email)) {
-                    Toast.makeText(SignUp_1.this, "Email không hợp lệ. Vui lòng nhập lại", Toast.LENGTH_SHORT).show();
-                } else if (!isValidPassword(password)) {
-                    Toast.makeText(SignUp_1.this, "Mật khẩu phải chứa ít nhất 8 ký tự bao gồm chữ hoa, số và ký tự đặc biệt.", Toast.LENGTH_SHORT).show();
-                } else if (!password.equals(confirmPassword)) {
-                    Toast.makeText(SignUp_1.this, "Mật khẩu nhập lại không khớp. Vui lòng nhập lại", Toast.LENGTH_SHORT).show();
+                    binding.edtEmail.setError("Email không hợp lệ.");
+                    focusView = binding.edtEmail;
+                    cancel = true;
+                }
+
+                // Check for a valid password.
+                if (!isValidPassword(password)) {
+                    binding.edtPass.setError("Mật khẩu phải chứa ít nhất 8 ký tự bao gồm chữ hoa, số và ký tự đặc biệt.");
+                    if (focusView == null) {
+                        focusView = binding.edtPass;
+                    }
+                    cancel = true;
+                }
+
+                // Check for matching passwords.
+                if (!password.equals(confirmPassword)) {
+                    binding.edtConfirmPass.setError("Mật khẩu nhập lại không khớp.");
+                    if (focusView == null) {
+                        focusView = binding.edtConfirmPass;
+                    }
+                    cancel = true;
+                }
+
+                if (cancel) {
+                    // There was an error; don't attempt login and focus the first
+                    // form field with an error.
+                    focusView.requestFocus();
                 } else {
+                    // Show a success message or continue with your sign-up process
                     Intent intent = new Intent(SignUp_1.this, SignUp_2.class);
                     startActivity(intent);
-
                 }
             }
         });
-
     }
 
     private boolean isValidEmail(String email) {
