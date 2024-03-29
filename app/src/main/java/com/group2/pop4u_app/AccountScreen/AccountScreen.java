@@ -1,4 +1,4 @@
-package com.group2.pop4u_app.Activity;
+package com.group2.pop4u_app.AccountScreen;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,12 +27,20 @@ public class AccountScreen extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         loadData();
+        addEvents();
+    }
+
+    private void addEvents() {
     }
 
     private void loadData() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        binding.rcvAccountSetting.setLayoutManager(linearLayoutManager);
+        LinearLayoutManager linearLayoutManagerAccount = new LinearLayoutManager(this);
+        binding.rcvAccountSetting.setLayoutManager(linearLayoutManagerAccount);
         binding.rcvAccountSetting.setHasFixedSize(true);
+
+        LinearLayoutManager linearLayoutManagerSystem = new LinearLayoutManager(this);
+        binding.rcvSystemSetting.setLayoutManager(linearLayoutManagerSystem);
+        binding.rcvSystemSetting.setHasFixedSize(true);
 
         settingAccountItems = new ArrayList<>();
         settingAccountItems.add(new SettingItem("1", R.drawable.contacts, "Thông tin cá nhân"));
@@ -41,5 +49,13 @@ public class AccountScreen extends AppCompatActivity {
         settingAccountItems.add(new SettingItem("1", R.drawable.account_balance_wallet, "Phương thức thanh toán"));
         settingAccountListAdapter = new SettingListAdapter(this, settingAccountItems);
         binding.rcvAccountSetting.setAdapter(settingAccountListAdapter);
+
+        settingSystemItems = new ArrayList<>();
+        settingSystemItems.add(new SettingItem("notification", R.drawable.notifications_unread, "Tùy chỉnh thông báo"));
+        settingSystemItems.add(new SettingItem("language", R.drawable.globe, "Ngôn ngữ"));
+        settingSystemItems.add(new SettingItem("termsAndPolicy", R.drawable.lists, "Chính sách"));
+        settingSystemItems.add(new SettingItem("helpAndReport", R.drawable.help, "Giúp đỡ và khiếu nại"));
+        settingSystemListAdapter = new SettingListAdapter(this, settingSystemItems);
+        binding.rcvSystemSetting.setAdapter(settingSystemListAdapter);
     }
 }

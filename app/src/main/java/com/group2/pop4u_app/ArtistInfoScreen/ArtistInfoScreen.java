@@ -1,5 +1,6 @@
 package com.group2.pop4u_app.ArtistInfoScreen;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -12,6 +13,7 @@ public class ArtistInfoScreen extends AppCompatActivity {
     ActivityArtistInfoScreenBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        EdgeToEdge.enable(this);
         super.onCreate(savedInstanceState);
         binding = ActivityArtistInfoScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

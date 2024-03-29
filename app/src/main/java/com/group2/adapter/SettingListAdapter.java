@@ -1,6 +1,7 @@
 package com.group2.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.group2.model.SettingItem;
-import com.group2.pop4u_app.Activity.AccountScreen;
+import com.group2.pop4u_app.AccountScreen.SettingScreen;
 import com.group2.pop4u_app.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SettingListAdapter extends RecyclerView.Adapter<SettingListAdapter.ViewHolder> {
-    Activity activity;
-    List<SettingItem> settingItemList;
+    static Activity activity;
+    static List<SettingItem> settingItemList;
 
     public SettingListAdapter(Activity activity, List<SettingItem> settingItemList) {
         this.activity = activity;
@@ -32,7 +32,9 @@ public class SettingListAdapter extends RecyclerView.Adapter<SettingListAdapter.
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.setting_item_layout, parent, false);
 
-        return new SettingListAdapter.ViewHolder(view);
+        return new SettingListAdapter.ViewHolder(view) {
+
+        };
     }
 
     @Override
@@ -46,7 +48,7 @@ public class SettingListAdapter extends RecyclerView.Adapter<SettingListAdapter.
         return settingItemList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView txtSettingTitle;
         ImageView imvSettingIcon;
 
@@ -55,6 +57,18 @@ public class SettingListAdapter extends RecyclerView.Adapter<SettingListAdapter.
 
             txtSettingTitle = (TextView) view.findViewById(R.id.txtSettingTitle);
             imvSettingIcon = (ImageView) view.findViewById(R.id.imvSettingIcon);
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            addEvents();
+        }
+
+        private void addEvents() {
+            Intent intent = new Intent(activity, SettingScreen.class);
+            intent.putExtra("clikedSettingItem", settingItemList.get(getAdapterPosition()));
+
         }
     }
 }

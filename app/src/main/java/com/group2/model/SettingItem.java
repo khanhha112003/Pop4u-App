@@ -1,6 +1,8 @@
 package com.group2.model;
 
-public class SettingItem {
+import java.io.Serializable;
+
+public class SettingItem implements Serializable {
     String settingID;
     int settingIcon;
     String settingTitle;
