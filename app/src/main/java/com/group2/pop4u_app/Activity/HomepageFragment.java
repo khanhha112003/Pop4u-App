@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.ViewSwitcher;
 
 import com.group2.adapter.ArtistHorizontalListAdapter;
 import com.group2.adapter.BigProductCardRecyclerAdapter;
@@ -96,9 +99,28 @@ public class HomepageFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        loadBanners();
         initData();
         addViewAllButtonEvent();
         addItemClickEvents();
+    }
+
+    private void loadBanners() {
+        int homeBannerImageList[] = {R.drawable.img, R.drawable.img_1, R.drawable.img_2};
+        int count = homeBannerImageList.length;
+        int currentIndex = 0;
+
+        binding.imsHomeBanner.setFactory(new ViewSwitcher.ViewFactory() {
+            @Override
+            public View makeView() {
+                ImageView imageView= new ImageView(getContext());
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+                return imageView;
+            }
+        });
+        binding.imsHomeBanner.setImageResource(homeBannerImageList[0]);
+
     }
 
     private void addItemClickEvents() {
@@ -194,7 +216,6 @@ public class HomepageFragment extends Fragment {
         featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
         featuredArtistAdapter = new ArtistHorizontalListAdapter(requireActivity(), featuredArtistArrayList);
         binding.rccHotArtist.setAdapter(featuredArtistAdapter);
-
 
     }
 }
