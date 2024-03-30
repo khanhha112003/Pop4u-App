@@ -3,12 +3,125 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.AccountFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Activity.AccountFragment"
+    android:background="@color/white">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:scrollbars="none">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cdvAccountAvatar"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="@color/md_theme_surfaceContainer"
+                app:cardCornerRadius="80dp"
+                app:cardElevation="0dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp">
+                <ImageView
+                    android:id="@+id/imvUserAccountAvatar"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:src="@drawable/img_1"
+                    android:scaleType="centerCrop"/>
+            </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/txtUserFullName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/cdvAccountAvatar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="10dp"
+                android:text="Thanh Luc Nguyen"
+                android:fontFamily="@font/inter_semibold"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColor="@color/md_theme_onSurface"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"/>
+            <TextView
+                android:id="@+id/txtUserEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/txtUserFullName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="5dp"
+                android:text="luc15200309@gmail.com"
+                android:fontFamily="@font/inter"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:textColor="@color/md_theme_outline"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cdvAccountSetting"
+                app:cardBackgroundColor="@color/md_theme_surfaceContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/txtUserEmail"
+                android:layout_marginTop="25dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="16dp">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvAccountSetting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp" />
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cdvSystemSetting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/md_theme_surfaceContainer"
+                app:layout_constraintTop_toBottomOf="@id/cdvAccountSetting"
+                android:layout_marginTop="25dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="16dp">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvSystemSetting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp" />
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/btnSignOut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/btn_sign_out"
+                android:fontFamily="@font/inter_semibold"
+                android:textSize="14sp"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="@drawable/button_small_text_filled_state_background"
+                android:textColor="@drawable/button_filled_text_color"
+                app:layout_constraintTop_toBottomOf="@+id/cdvSystemSetting"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 </FrameLayout>

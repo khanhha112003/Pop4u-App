@@ -21,7 +21,7 @@ public class BigProductCardRecyclerAdapter extends RecyclerView.Adapter<BigProdu
     Activity activity;
     List<Product> productList;
 
-    View.OnClickListener onClickListener;
+    OnClickListener onClickListener;
 
     public BigProductCardRecyclerAdapter(Activity activity, List<Product> productList) {
         this.activity = activity;
@@ -51,22 +51,26 @@ public class BigProductCardRecyclerAdapter extends RecyclerView.Adapter<BigProdu
         holder.txtProductPrice.setText(String.valueOf(product.getProductPrice()) + "₫");
         holder.txtProductName.setText(product.getProductName());
 
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (onClickListener != null) {
-//                    if (bigProOnClickListener != null) {
-//                        bigProOnClickListener.bigProOnClick(holder.getAdapterPosition(), product);
-//                    }
-//                }
-//            }
-//        });
-
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onClickListener != null) {
+                    onClickListener.onClick(position, product);
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return productList.size();
+    }
+
+    public void setOnClickListener(OnClickListener onClickListener){
+        this.onClickListener = onClickListener;
+    }
+    public interface OnClickListener{
+        void onClick(int position, Product product);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -88,14 +92,4 @@ public class BigProductCardRecyclerAdapter extends RecyclerView.Adapter<BigProdu
             crdSalePercent = view.findViewById(R.id.crdSalePercent);
         }
     }
-
-//    private BigProOnClickListener bigProOnClickListener;
-//    public void setOnClickListener(BigProOnClickListener bigProOnClickListener) {
-//        this.bigProOnClickListener = bigProOnClickListener;
-//    }
-//
-//    public interface BigProOnClickListener {
-//        void bigProOnClick(int position, Product artist);
-//    }
-
 }

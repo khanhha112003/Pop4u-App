@@ -21,6 +21,9 @@ public class SettingListAdapter extends RecyclerView.Adapter<SettingListAdapter.
     static Activity activity;
     static List<SettingItem> settingItemList;
 
+    private OnClickListener onClickListener;
+
+
     public SettingListAdapter(Activity activity, List<SettingItem> settingItemList) {
         this.activity = activity;
         this.settingItemList = settingItemList;
@@ -32,15 +35,23 @@ public class SettingListAdapter extends RecyclerView.Adapter<SettingListAdapter.
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.setting_item_layout, parent, false);
 
-        return new SettingListAdapter.ViewHolder(view) {
-
-        };
+        return new SettingListAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.imvSettingIcon.setImageResource(settingItemList.get(position).getSettingIcon());
-        holder.txtSettingTitle.setText(settingItemList.get(position).getSettingTitle());
+        SettingItem settingItem = settingItemList.get(position);
+        holder.imvSettingIcon.setImageResource(settingItem.getSettingIcon());
+        holder.txtSettingTitle.setText(settingItem.getSettingTitle());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onClickListener != null) {
+                    onClickListener.onClick(position, settingItem);
+                }
+            }
+        });
     }
 
     @Override
@@ -48,7 +59,15 @@ public class SettingListAdapter extends RecyclerView.Adapter<SettingListAdapter.
         return settingItemList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public void setOnClickListener(OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
+
+    public interface OnClickListener {
+        void onClick(int position, SettingItem settingItem);
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView txtSettingTitle;
         ImageView imvSettingIcon;
 
@@ -57,18 +76,6 @@ public class SettingListAdapter extends RecyclerView.Adapter<SettingListAdapter.
 
             txtSettingTitle = (TextView) view.findViewById(R.id.txtSettingTitle);
             imvSettingIcon = (ImageView) view.findViewById(R.id.imvSettingIcon);
-            view.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            addEvents();
-        }
-
-        private void addEvents() {
-            Intent intent = new Intent(activity, SettingScreen.class);
-            intent.putExtra("clikedSettingItem", settingItemList.get(getAdapterPosition()));
-
         }
     }
 }

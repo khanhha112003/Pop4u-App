@@ -26,8 +26,8 @@ public class AccountScreen extends AppCompatActivity {
         binding = ActivityAccountScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        loadData();
-        addEvents();
+//        loadData();
+//        addEvents();
     }
 
     private void addEvents() {
