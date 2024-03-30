@@ -88,4 +88,19 @@
         android:textColor="@color/md_theme_primary"
         />
 
+    <!-- Start button -->
+    <Button
+        android:id="@+id/btnStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/md_theme_onTertiaryFixedVariant"
+        android:text="Start"
+        android:textColor="@color/md_theme_background_mediumContrast"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/indicator_layout"
+        app:layout_constraintStart_toStartOf="@+id/indicator_layout"
+        app:layout_constraintTop_toTopOf="@+id/indicator_layout"
+        tools:ignore="MissingConstraints"
+       android:background="@drawable/button_small_filled_norm_background"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

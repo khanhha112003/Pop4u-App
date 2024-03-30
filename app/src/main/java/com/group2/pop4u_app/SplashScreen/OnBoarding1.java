@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,9 +19,10 @@ public class OnBoarding1 extends AppCompatActivity {
 
     ViewPager mSliceViewpager;
     LinearLayout mDotLayout;
-    Button skipbtn, backtn, nextbtn;
+    Button skipbtn, backtn, nextbtn, startBtn;
     TextView[] dots;
     BoardPagerAdapter boardPagerAdapter;
+    Animation startanim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,11 @@ public class OnBoarding1 extends AppCompatActivity {
         skipbtn = findViewById(R.id.btnSkip);
         nextbtn = findViewById(R.id.btnNext);
         backtn = findViewById(R.id.btnBack);
+        startBtn = findViewById(R.id.btnStart);
+        startanim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.startbtn_anim);
+
+        backtn.setVisibility(View.INVISIBLE);
+        startBtn.setVisibility(View.INVISIBLE);
 
         backtn.setOnClickListener(view -> {
             int currentItem = mSliceViewpager.getCurrentItem();
@@ -42,11 +50,16 @@ public class OnBoarding1 extends AppCompatActivity {
             if (currentItem < boardPagerAdapter.getCount() - 1) {
                 mSliceViewpager.setCurrentItem(currentItem + 1, true);
             } else {
-                startNextActivity(SplashScr.class);
+                startBtn.setVisibility(View.VISIBLE);
+                backtn.setVisibility(View.INVISIBLE);
+                nextbtn.setVisibility(View.INVISIBLE);
+                skipbtn.setVisibility(View.INVISIBLE);
             }
         });
 
         skipbtn.setOnClickListener(view -> startNextActivity(SplashScr.class));
+
+        startBtn.setOnClickListener(view -> startNextActivity(SplashScr.class));
 
         mSliceViewpager = findViewById(R.id.sliceViewpager);
         mDotLayout = findViewById(R.id.indicator_layout);
@@ -90,6 +103,11 @@ public class OnBoarding1 extends AppCompatActivity {
         public void onPageSelected(int position) {
             setUpIndicator(position);
             backtn.setVisibility(position > 0 ? View.VISIBLE : View.INVISIBLE);
+            startBtn.setVisibility(position == boardPagerAdapter.getCount() - 1 ? View.VISIBLE : View.INVISIBLE);
+            startBtn.setAnimation(startanim);
+            nextbtn.setVisibility(position == boardPagerAdapter.getCount() - 1 ? View.INVISIBLE : View.VISIBLE);
+            skipbtn.setVisibility(position == boardPagerAdapter.getCount() - 1 ? View.INVISIBLE : View.VISIBLE);
+            mDotLayout.setVisibility(position == boardPagerAdapter.getCount() - 1 ? View.INVISIBLE : View.VISIBLE);
         }
 
         @Override
@@ -97,4 +115,3 @@ public class OnBoarding1 extends AppCompatActivity {
         }
     };
 }
-

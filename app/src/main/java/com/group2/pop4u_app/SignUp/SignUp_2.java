@@ -9,18 +9,19 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.group2.pop4u_app.R;
+import com.group2.pop4u_app.databinding.ActivitySignUp2Binding;
 
 public class SignUp_2 extends AppCompatActivity {
+
+    ActivitySignUp2Binding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_sign_up2);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+        binding = ActivitySignUp2Binding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+
     }
 }
