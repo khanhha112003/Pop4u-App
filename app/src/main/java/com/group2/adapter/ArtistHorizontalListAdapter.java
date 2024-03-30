@@ -1,6 +1,7 @@
 package com.group2.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.group2.model.Artist;
+import com.group2.pop4u_app.ArtistInfoScreen.ArtistInfoScreen;
 import com.group2.pop4u_app.R;
 
 import java.util.List;
@@ -47,13 +49,32 @@ public class ArtistHorizontalListAdapter extends RecyclerView.Adapter<ArtistHori
 
     @Override
     public void onBindViewHolder(@NonNull ArtistHorizontalListAdapter.ViewHolder holder, int position) {
-        holder.imvArtistAvatar.setImageResource(artistList.get(position).getArtistAvatar());
-        holder.txtArtistName.setText(artistList.get(position).getArtistName());
+        Artist artist = artistList.get(position);
+        holder.imvArtistAvatar.setImageResource(artist.getArtistAvatar());
+        holder.txtArtistName.setText(artist.getArtistName());
 
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (artistHorOnClickListener != null) {
+//                    artistHorOnClickListener.artistHorOnClick(holder.getAdapterPosition(), artist);
+//                }
+//            }
+//        });
     }
 
     @Override
     public int getItemCount() {
         return artistList.size();
     }
+
+//    private ArtistHorOnClickListener artistHorOnClickListener;
+//    public void setOnClickListener(ArtistHorOnClickListener artistHorOnClickListener) {
+//        this.artistHorOnClickListener = artistHorOnClickListener;
+//    }
+//
+//    public interface ArtistHorOnClickListener {
+//        void artistHorOnClick(int position, Artist artist);
+//    }
+
 }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.group2.adapter.BigProductCardRecyclerAdapter;
 import com.group2.model.Product;
+import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.ActivityProductListCategoryBinding;
 
