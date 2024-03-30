@@ -19,6 +19,8 @@ public class SaleProductCardRecyclerAdapter extends RecyclerView.Adapter<SalePro
     Activity activity;
     List<Product> productList;
 
+    OnClickListener onClickListener;
+
     public SaleProductCardRecyclerAdapter(Activity activity, List<Product> productList) {
         this.activity = activity;
         this.productList = productList;
@@ -41,11 +43,27 @@ public class SaleProductCardRecyclerAdapter extends RecyclerView.Adapter<SalePro
         holder.txtProductSalePercent.setText("-" + String.valueOf(product.getProductSalePercent()) + "%");
         holder.txtProductSaleSoldAmount.setText("Đã bán " + String.valueOf(product.getProductSoldAmount()));
         holder.txtProductPrice.setText(String.valueOf(product.getProductPrice()) + "₫");
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onClickListener != null) {
+                    onClickListener.onClick(position, product);
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return productList.size();
+    }
+
+    public void setOnClickListener(OnClickListener onClickListener){
+        this.onClickListener = onClickListener;
+    }
+    public interface OnClickListener{
+        void onClick(int position, Product product);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

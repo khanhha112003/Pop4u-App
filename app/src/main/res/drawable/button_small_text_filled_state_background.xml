@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_focused="true"
+    <item android:state_hovered="true"
         android:drawable="@color/md_theme_outline">
     </item>
-
     <item android:state_pressed="true"
         android:drawable="@color/md_theme_outline">
     </item>
-
-    <item android:drawable="@color/md_theme_primary">
+    <item android:state_enabled="true"
+        android:drawable="@color/md_theme_primary">
     </item>
-
 </selector>

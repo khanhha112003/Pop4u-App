@@ -25,6 +25,16 @@
     <string name="product_list_of_artist">Sản phẩm</string>
     <string name="product_list_relevant">Sản phẩm tương tự</string>
     <string name="action_settings">Settings</string>
+    <string name="btn_sign_out">Đăng xuất</string>
+    <string name="btn_change_avatar">Đổi ảnh</string>
+    <string name="last_name">Họ và tên lót</string>
+    <string name="first_name">Tên</string>
+    <string name="birthdate">Ngày sinh</string>
+    <string name="sex">Giới tính</string>
+    <string name="email">Email</string>
+    <string name="phone_number">Số điện thoại</string>
+    <string name="btn_del_acc">Xóa tài khoản</string>
+    <string name="btn_save_user_info">Xác nhận lưu thông tin</string>
     <string name="search_screen_cancel_search_text">Hủy</string>
     <string name="search_screen_highlight_artists_label">Nghệ sĩ nổi bật</string>
     <string name="search_screen_list_category_title_text">Danh mục sản phẩm</string>

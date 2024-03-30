@@ -83,6 +83,7 @@
                 android:maxLines="2"
                 android:text="BLACKPINK THE GAME PHOTOCARD COLLECTION LOVELY VALENTINE'S EDITION"
                 android:textSize="17.5sp"
+                android:textColor="@color/md_theme_onSurface"
                 android:fontFamily="@font/inter_semibold"
                 android:ellipsize="end"        />
 
