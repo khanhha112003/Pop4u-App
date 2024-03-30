@@ -2,8 +2,6 @@ package com.group2.model;
 
 public class Product {
     int productID;
-
-
     int productImage1;
     String productName;
     String productArtistName;

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 
+import com.group2.pop4u_app.Activity.MainActivity;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentSearchDashboardBinding;
 
@@ -46,7 +47,25 @@ public class SearchDashboardFragment extends Fragment implements SearchView.OnQu
         setToolbar();
         setListArtist();
         setSearchBar();
+
         return binding.getRoot();
+    }
+
+    @Override
+    public void onStart() {
+        setTabHandler();
+        super.onStart();
+    }
+
+    private void setTabHandler() {
+        View albumCard = getView().findViewById(binding.searchDashboardCategoryCardAlbum.getId());
+        albumCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity ma = (MainActivity) getContext();
+                ma.replaceFragment(new AlbumCategoryFragment());
+            }
+        });
     }
 
     @Override
