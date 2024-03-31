@@ -68,6 +68,14 @@ public class MiniProductCardRecyclerAdapter extends RecyclerView.Adapter<MiniPro
         return productList.size();
     }
 
+    public void setOnClickListener(OnClickListener onClickListener){
+        this.onClickListener = onClickListener;
+    }
+
+    public interface OnClickListener{
+        void onClick(int position, Product product);
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtProductName, txtProductArtist, txtProductPrice, txtSalePercent;
         ImageView imvProductImage;
@@ -85,14 +93,6 @@ public class MiniProductCardRecyclerAdapter extends RecyclerView.Adapter<MiniPro
             crdSalePercent = (CardView) view.findViewById(R.id.crdSalePercent);
 
         }
-    }
-
-    public void setOnClickListener(MiniProductCardRecyclerAdapter.OnClickListener onClickListener) {
-        this.onClickListener = onClickListener;
-    }
-
-    public interface OnClickListener {
-        void onClick(int position, Product product);
     }
 
 

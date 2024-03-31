@@ -1,4 +1,4 @@
-package com.group2.pop4u_app.CartScreen.model;
+package com.group2.model;
 
 public class CartItem {
     int thumb;

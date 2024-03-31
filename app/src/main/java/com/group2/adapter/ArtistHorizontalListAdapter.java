@@ -1,7 +1,6 @@
 package com.group2.adapter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.group2.model.Artist;
-import com.group2.pop4u_app.ArtistInfoScreen.ArtistInfoScreen;
 import com.group2.pop4u_app.R;
 
 import java.util.List;
@@ -20,6 +18,8 @@ import java.util.List;
 public class ArtistHorizontalListAdapter extends RecyclerView.Adapter<ArtistHorizontalListAdapter.ViewHolder> {
     Activity activity;
     List<Artist> artistList;
+
+    OnClickListener onClickListener;
 
     public ArtistHorizontalListAdapter(Activity activity, List<Artist> artistList) {
         this.activity = activity;
@@ -53,14 +53,14 @@ public class ArtistHorizontalListAdapter extends RecyclerView.Adapter<ArtistHori
         holder.imvArtistAvatar.setImageResource(artist.getArtistAvatar());
         holder.txtArtistName.setText(artist.getArtistName());
 
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (artistHorOnClickListener != null) {
-//                    artistHorOnClickListener.artistHorOnClick(holder.getAdapterPosition(), artist);
-//                }
-//            }
-//        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onClickListener != null) {
+                    onClickListener.onClick(position, artist);
+                }
+            }
+        });
     }
 
     @Override
@@ -68,13 +68,11 @@ public class ArtistHorizontalListAdapter extends RecyclerView.Adapter<ArtistHori
         return artistList.size();
     }
 
-//    private ArtistHorOnClickListener artistHorOnClickListener;
-//    public void setOnClickListener(ArtistHorOnClickListener artistHorOnClickListener) {
-//        this.artistHorOnClickListener = artistHorOnClickListener;
-//    }
-//
-//    public interface ArtistHorOnClickListener {
-//        void artistHorOnClick(int position, Artist artist);
-//    }
+    public void setOnClickListener(OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
+    public interface OnClickListener{
+        void onClick(int position, Artist artist);
+    }
 
 }

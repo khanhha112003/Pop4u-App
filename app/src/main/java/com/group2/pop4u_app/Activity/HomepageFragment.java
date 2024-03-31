@@ -24,6 +24,7 @@ import com.group2.model.Artist;
 import com.group2.model.Product;
 import com.group2.pop4u_app.ArtistInfoScreen.ArtistInfoScreen;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetHorizontalRecycler;
+import com.group2.pop4u_app.ProductDetailScreen.ProductDetailScreen;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentHomepageBinding;
 import com.group2.pop4u_app.home.AllArtist;
@@ -124,14 +125,45 @@ public class HomepageFragment extends Fragment {
     }
 
     private void addItemClickEvents() {
-//        artistHorizontalListAdapter.setOnClickListener(new ArtistHorizontalListAdapter.ArtistHorOnClickListener() {
-//            @Override
-//            public void artistHorOnClick(int position, Artist artist) {
-//                Intent intent = new Intent(getActivity().getBaseContext(), ArtistInfoScreen.class);
-//                intent.putExtra("artistID", "Sinh nawm 102897423");
-//                getActivity().startActivity(intent);
-//            }
-//        });
+        saleProductAdapter.setOnClickListener(new SaleProductCardRecyclerAdapter.OnClickListener() {
+            @Override
+            public void onClick(int position, Product product) {
+                openProduct(product);
+            }
+        });
+
+        rcmProductAdapter.setOnClickListener(new BigProductCardRecyclerAdapter.OnClickListener() {
+            @Override
+            public void onClick(int position, Product product) {
+                openProduct(product);
+            }
+        });
+
+        featuredArtistAdapter.setOnClickListener(new ArtistHorizontalListAdapter.OnClickListener() {
+            @Override
+            public void onClick(int position, Artist artist) {
+                openArtist(artist);
+            }
+        });
+
+        newProductAdapter.setOnClickListener(new MiniProductCardRecyclerAdapter.OnClickListener() {
+            @Override
+            public void onClick(int position, Product product) {
+                openProduct(product);
+            }
+        });
+    }
+
+    private void openProduct(Product product) {
+        Intent intent = new Intent(requireActivity(), ProductDetailScreen.class);
+        intent.putExtra("productID", product.getProductID());
+        startActivity(intent);
+    }
+
+    private void openArtist(Artist artist) {
+        Intent intent = new Intent(requireActivity(), ArtistInfoScreen.class);
+        intent.putExtra("artistID", artist.getArtistID());
+        startActivity(intent);
     }
 
     private void addViewAllButtonEvent() {
