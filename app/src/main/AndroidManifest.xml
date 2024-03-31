@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Pop4u_App"
         tools:targetApi="31">
         <activity
+            android:name=".Activity.MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".home.AllArtist"
             android:exported="false" />
         <activity
@@ -50,7 +53,8 @@
             android:exported="false" />
         <activity
             android:name=".home.ProductListCategory"
-            android:exported="false" />
+            android:exported="false"
+            tools:ignore="DuplicateActivity" />
         <activity
             android:name=".SignUp.SignUp_4"
             android:exported="false" />
@@ -63,11 +67,11 @@
         <activity
             android:name=".SignUp.SignUp_1"
             android:exported="false" />
-       <activity
+        <activity
             android:name=".CartScreen.Cart"
             android:exported="false" />
         <activity
-            android:name=".Activity.MainActivity"
+            android:name=".OrderScreen.OrderScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
