@@ -1,6 +1,7 @@
 package com.group2.pop4u_app.CartScreen;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,11 +12,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.view.View;
 import android.widget.Toast;
 
-import com.group2.pop4u_app.CartScreen.adapter.CartAdapter;
-import com.group2.pop4u_app.CartScreen.model.CartItem;
+import com.group2.adapter.BigProductCardRecyclerAdapter;
+import com.group2.adapter.CartAdapter;
+import com.group2.adapter.MiniProductCardRecyclerAdapter;
+import com.group2.model.Artist;
+import com.group2.model.CartItem;
+import com.group2.model.Product;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.ActivityCartScreenBinding;
 
@@ -27,12 +31,15 @@ public class Cart extends AppCompatActivity {
     ActivityCartScreenBinding binding;
     CartAdapter adapter;
     ArrayList<CartItem> carts;
+    MiniProductCardRecyclerAdapter miniProductCardRecyclerAdapter;
+    ArrayList<Product> productArrayList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityCartScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         customAndLoadData();
+        loadRecommendProduct();
         binding.checkboxSelectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -166,5 +173,30 @@ public class Cart extends AppCompatActivity {
         // Hiển thị tổng thanh toán đã được định dạng trong TextView totalPrice
         binding.totalPrice.setText(formattedTotalPrice);
     }
+    private void loadRecommendProduct() {
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        binding.rcvRelateProduct.setLayoutManager(gridLayoutManager);
+        binding.rcvRelateProduct.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        binding.rcvRelateProduct.setLayoutManager(layoutManager);
+        binding.rcvRelateProduct.setHasFixedSize(true);
 
+        productArrayList = new ArrayList<>();
+        productArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
+        productArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
+        productArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
+        productArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
+        productArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
+        productArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
+        productArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
+        productArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
+        productArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
+        productArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
+        productArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
+        productArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
+        productArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
+
+        miniProductCardRecyclerAdapter = new MiniProductCardRecyclerAdapter(this, productArrayList);
+        binding.rcvRelateProduct.setAdapter(miniProductCardRecyclerAdapter);
+    }
 }

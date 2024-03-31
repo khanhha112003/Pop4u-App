@@ -1,4 +1,4 @@
-package com.group2.pop4u_app.AddressScreen.model;
+package com.group2.model;
 
 public class Address {
     String cus_name;

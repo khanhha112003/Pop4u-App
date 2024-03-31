@@ -37,12 +37,29 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="0dp"
-    android:layout_weight="1">
+    android:layout_weight="1"
+    android:orientation="vertical">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="20dp" />
+    <TextView
+        android:id="@+id/txtHomepageHead3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/btnViewAll03"
+        android:text="Sản phẩm liên quan"
+        android:textColor="@color/md_theme_onSurface"
+        android:textSize="27.5dp"
+        android:fontFamily="@font/inter_semibold"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvRelateProduct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:paddingStart="20dp"
         />
 </LinearLayout>
     <LinearLayout
