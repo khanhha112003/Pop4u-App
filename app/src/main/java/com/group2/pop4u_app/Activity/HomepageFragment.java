@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ViewSwitcher;
 
 import com.group2.adapter.ArtistHorizontalListAdapter;
+import com.group2.adapter.BannerAdapter;
 import com.group2.adapter.BigProductCardRecyclerAdapter;
 import com.group2.adapter.MiniProductCardRecyclerAdapter;
 import com.group2.adapter.SaleProductCardRecyclerAdapter;
@@ -48,6 +50,8 @@ public class HomepageFragment extends Fragment {
     ArtistHorizontalListAdapter artistHorizontalListAdapter;
     ArrayList<Artist> featuredArtistArrayList;
     ArtistHorizontalListAdapter featuredArtistAdapter;
+    ViewPager mSliceViewpager;
+    BannerAdapter bannerAdapter;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -100,29 +104,29 @@ public class HomepageFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        loadBanners();
         initData();
         addViewAllButtonEvent();
         addItemClickEvents();
+        setupBanner();
     }
 
-    private void loadBanners() {
-        int homeBannerImageList[] = {R.drawable.img, R.drawable.img_1, R.drawable.img_2};
-        int count = homeBannerImageList.length;
-        int currentIndex = 0;
-
-        binding.imsHomeBanner.setFactory(new ViewSwitcher.ViewFactory() {
-            @Override
-            public View makeView() {
-                ImageView imageView= new ImageView(getContext());
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
-                return imageView;
-            }
-        });
-        binding.imsHomeBanner.setImageResource(homeBannerImageList[0]);
-
+    private void setupBanner() {
+        mSliceViewpager = binding.imsHomeBanner; // Initialize mSliceViewpager using binding
+        bannerAdapter = new BannerAdapter(requireContext());
+        mSliceViewpager.setAdapter(bannerAdapter);
+        mSliceViewpager.addOnPageChangeListener(viewListener);
     }
+
+    ViewPager.OnPageChangeListener viewListener = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        }
+        public void onPageSelected(int position) {
+        }
+        @Override
+        public void onPageScrollStateChanged(int state) {
+        }
+    };
 
     private void addItemClickEvents() {
         saleProductAdapter.setOnClickListener(new SaleProductCardRecyclerAdapter.OnClickListener() {

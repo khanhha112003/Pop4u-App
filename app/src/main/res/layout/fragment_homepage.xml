@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             
-            <ImageSwitcher
+            <androidx.viewpager.widget.ViewPager
                 android:id="@+id/imsHomeBanner"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -24,6 +24,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintDimensionRatio="16:9"/>
+            
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ctr01"
