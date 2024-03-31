@@ -10,11 +10,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import com.group2.adapter.ArtistHorizontalListAdapter;
@@ -52,6 +55,8 @@ public class HomepageFragment extends Fragment {
     ArtistHorizontalListAdapter featuredArtistAdapter;
     ViewPager mSliceViewpager;
     BannerAdapter bannerAdapter;
+    LinearLayout mDotLayout;
+    TextView[] dots;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -112,9 +117,27 @@ public class HomepageFragment extends Fragment {
 
     private void setupBanner() {
         mSliceViewpager = binding.imsHomeBanner; // Initialize mSliceViewpager using binding
+        mDotLayout = binding.BannerIndicators;
         bannerAdapter = new BannerAdapter(requireContext());
         mSliceViewpager.setAdapter(bannerAdapter);
         mSliceViewpager.addOnPageChangeListener(viewListener);
+        setUpIndicator(0);
+    }
+    public void setUpIndicator(int position) {
+        dots = new TextView[bannerAdapter.getCount()];
+        mDotLayout.removeAllViews();
+
+        for (int i = 0; i < bannerAdapter.getCount(); i++) {
+            dots[i] = new TextView(requireContext());
+            dots[i].setText(Html.fromHtml("&#8226;"));
+            dots[i].setTextSize(35);
+            dots[i].setTextColor(getResources().getColor(R.color.md_theme_inversePrimary_mediumContrast, requireContext().getTheme()));
+            mDotLayout.addView(dots[i]);
+        }
+
+        if (dots.length > 0) {
+            dots[position].setTextColor(getResources().getColor(R.color.md_theme_onTertiaryFixedVariant, requireContext().getTheme()));
+        }
     }
 
     ViewPager.OnPageChangeListener viewListener = new ViewPager.OnPageChangeListener() {
@@ -122,6 +145,8 @@ public class HomepageFragment extends Fragment {
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         }
         public void onPageSelected(int position) {
+            setUpIndicator(position);
+            mDotLayout.setVisibility(View.VISIBLE);
         }
         @Override
         public void onPageScrollStateChanged(int state) {
