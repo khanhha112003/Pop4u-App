@@ -1,4 +1,4 @@
-package com.group2.pop4u_app.PaymentScreen.model;
+package com.group2.model;
 
 public class Order {
     int o_thumb;

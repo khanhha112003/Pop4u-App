@@ -52,7 +52,7 @@
          android:name=".SearchScreen.SearchDashboardActivity"
          android:exported="false" />
         <activity
-            android:name=".AddressScreen.PickAddress"
+            android:name=".CartScreen.Cart"
             android:exported="false" />
         <activity
             android:name=".AddressScreen.AddAddress"
@@ -76,7 +76,10 @@
             android:name=".SignUp.SignUp_1"
             android:exported="false" />
        <activity
-            android:name=".CartScreen.Cart"
+            android:name=".PaymentScreen.Payment"
+            android:exported="false" />
+        <activity
+            android:name=".AddressScreen.PickAddress"
             android:exported="false" />
         <activity
             android:name=".home.HomeScreen"

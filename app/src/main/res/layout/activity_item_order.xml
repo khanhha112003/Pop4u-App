@@ -9,11 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <CheckBox
-            android:id="@+id/checkbox"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"/>
         <ImageView
             android:id="@+id/o_thumb"
             android:layout_width="100dp"
@@ -62,7 +57,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:weightSum="10">
             <TextView
                 android:id="@+id/o_pricebuy"
                 android:layout_width="wrap_content"
@@ -71,17 +67,19 @@
                 android:textSize="18sp"
                 android:textColor="#F44336"
                 android:fontFamily="@font/inter"
+                android:layout_weight="6"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="100dp"
-                android:text="Số lượng: "/>
+                android:text="Số lượng: "
+                android:layout_weight="2"/>
             <TextView
                 android:id="@+id/o_quantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2"/>
+                android:text="2"
+                android:layout_weight="2"/>
         </LinearLayout>
         </LinearLayout>
     </LinearLayout>
