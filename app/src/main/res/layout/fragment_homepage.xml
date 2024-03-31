@@ -121,11 +121,21 @@
                 app:layout_constraintTop_toBottomOf="@+id/ctr02"
                 android:layout_marginTop="25dp"
                 app:layout_constraintStart_toStartOf="parent" />
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/frgProductOfWeek"
+                android:layout_marginTop="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/rccSaleProducts"/>
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ctr03"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/rccSaleProducts"
+                app:layout_constraintTop_toBottomOf="@+id/frgProductOfWeek"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginTop="25dp"

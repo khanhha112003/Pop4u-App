@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -30,6 +32,7 @@ import com.group2.pop4u_app.databinding.FragmentHomepageBinding;
 import com.group2.pop4u_app.home.AllArtist;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
 import com.group2.pop4u_app.home.ProductListCategory;
+import com.group2.pop4u_app.home.ProductOfWeekFragment;
 
 import java.util.ArrayList;
 
@@ -104,6 +107,15 @@ public class HomepageFragment extends Fragment {
         initData();
         addViewAllButtonEvent();
         addItemClickEvents();
+        loadProductOfWeek();
+    }
+
+    private void loadProductOfWeek() {
+        FragmentManager fragmentManager = getChildFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frgProductOfWeek, new ProductOfWeekFragment());
+        fragmentTransaction.commit();
+
     }
 
     private void loadBanners() {
