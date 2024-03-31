@@ -16,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.SignUp.SignUp_1;
 import com.group2.pop4u_app.databinding.ActivityLoginPageBinding;
+import com.group2.pop4u_app.home.HomeScreen;
 
 public class LoginPage extends AppCompatActivity {
 
@@ -41,12 +42,36 @@ public class LoginPage extends AppCompatActivity {
                 String email = binding.edtEmail.getText().toString();
                 String password = binding.edtPass.getText().toString();
 
+                // Reset errors
+                binding.edtEmail.setError(null);
+                binding.edtPass.setError(null);
+
+                boolean cancel = false;
+                View focusView = null;
+
+                // Check for a valid email address.
                 if (!isValidEmail(email)) {
-                    Toast.makeText(LoginPage.this, "Bạn đã nhập sai email. Vui lòng nhập lại", Toast.LENGTH_SHORT).show();
-                } else if (!isValidPassword(password)) {
-                    Toast.makeText(LoginPage.this, "Mật khẩu phải chứa ít nhất 8 ký tự, bao gồm chữ hoa, số và ký tự đặc biệt", Toast.LENGTH_SHORT).show();
+                    binding.edtEmail.setError("Bạn đã nhập sai email. Vui lòng nhập lại");
+                    focusView = binding.edtEmail;
+                    cancel = true;
+                }
+
+                // Check for a valid password.
+                if (!isValidPassword(password)) {
+                    binding.edtPass.setError("Mật khẩu phải chứa ít nhất 8 ký tự, bao gồm chữ hoa, số và ký tự đặc biệt");
+                    if (focusView == null) {
+                        focusView = binding.edtPass;
+                    }
+                    cancel = true;
+                }
+
+                if (cancel) {
+                    focusView.requestFocus();
                 } else {
-                    Toast.makeText(LoginPage.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                    // Navigate to HomePage
+                    Intent intent = new Intent(LoginPage.this, HomeScreen.class); // Adjust this to your HomePage activity
+                    startActivity(intent);
+                    finish(); // Optional: If you don't want users to return to the login screen when pressing back
                 }
             }
         });

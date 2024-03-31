@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Pop4u_App</string>
     <!-- TODO: Remove or change this placeholder text -->
+    <string name="ordered_fragment">Đã đặt</string>
+    <string name="processing_fragment">Đang xử lý</string>
+    <string name="successful_order_fragment">Thành công</string>
+    <string name="canceled_order_fragment">Đã hủy</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="view_all_button_content">Xem</string>
     <string name="home_title">Trang chủ</string>
@@ -14,7 +18,27 @@
     <string name="large_text">
         "Material is the metaphor.\n\n"
     </string>
+    <string name="benefit_01">Freeship đơn từ 500K • Hoàn trả miễn phí</string>
+    <string name="benefit_02">Dự kiến nhận hàng vào Thứ </string>
+    <string name="benefit_03">Tặng kèm card ngẫu nhiên</string>
+    <string name="add_to_favorite_btn">Thêm vào d.sách yêu thích</string>
+    <string name="year_debut">Ra mắt vào năm </string>
+    <string name="view_artist_btn">Xem thông tin nghệ sĩ</string>
+    <string name="product_des_headline">Chi tiết sản phẩm</string>
+    <string name="product_des">* Số lượng mua tối đa cùng một lúc là 50.\n* Thành phần có thể thay đổi một chút trong quá trình sản xuất.\n* Nếu bạn thanh toán chung cho các sản phẩm đặt trước và sản phẩm thông thường, chúng sẽ được giao theo đợt theo sản phẩm đặt trước với ngày giao hàng muộn hơn.\n\nBao gồm:\n</string>
+    <string name="product_list_of_artist">Sản phẩm</string>
+    <string name="product_list_relevant">Sản phẩm tương tự</string>
     <string name="action_settings">Settings</string>
+    <string name="btn_sign_out">Đăng xuất</string>
+    <string name="btn_change_avatar">Đổi ảnh</string>
+    <string name="last_name">Họ và tên lót</string>
+    <string name="first_name">Tên</string>
+    <string name="birthdate">Ngày sinh</string>
+    <string name="sex">Giới tính</string>
+    <string name="email">Email</string>
+    <string name="phone_number">Số điện thoại</string>
+    <string name="btn_del_acc">Xóa tài khoản</string>
+    <string name="btn_save_user_info">Xác nhận lưu thông tin</string>
     <string name="search_screen_cancel_search_text">Hủy</string>
     <string name="search_screen_highlight_artists_label">Nghệ sĩ nổi bật</string>
     <string name="search_screen_list_category_title_text">Danh mục sản phẩm</string>

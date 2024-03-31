@@ -1,18 +1,13 @@
 package com.group2.pop4u_app.home;
 
-import androidx.annotation.DimenRes;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.view.View;
 
 import com.group2.adapter.ArtistVerticalListAdapter;
 import com.group2.model.Artist;
+import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.ActivityAllArtistBinding;
 

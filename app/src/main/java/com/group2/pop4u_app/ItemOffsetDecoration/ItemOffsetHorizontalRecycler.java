@@ -1,4 +1,4 @@
-package com.group2.pop4u_app.home;
+package com.group2.pop4u_app.ItemOffsetDecoration;
 
 import android.content.Context;
 import android.graphics.Rect;
@@ -8,16 +8,15 @@ import androidx.annotation.DimenRes;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ItemOffsetDecoration extends RecyclerView.ItemDecoration {
-
+public class ItemOffsetHorizontalRecycler extends RecyclerView.ItemDecoration {
     private int mItemOffset;
     private RecyclerView parent;
 
-    public ItemOffsetDecoration(int itemOffset) {
+    public ItemOffsetHorizontalRecycler(int itemOffset) {
         mItemOffset = itemOffset;
     }
 
-    public ItemOffsetDecoration(@NonNull Context context, @DimenRes int itemOffsetId) {
+    public ItemOffsetHorizontalRecycler(@NonNull Context context, @DimenRes int itemOffsetId) {
         this(context.getResources().getDimensionPixelSize(itemOffsetId));
     }
 
@@ -26,12 +25,15 @@ public class ItemOffsetDecoration extends RecyclerView.ItemDecoration {
                                RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
         int index = parent.getChildLayoutPosition(view);
-        boolean isLeft = (index % 2 == 0);
+        int lastIndex = parent.getAdapter().getItemCount() - 1;
+        boolean isLast = (lastIndex == index);
         outRect.set(
-                isLeft ? mItemOffset : mItemOffset / 2,
+                mItemOffset,
                 0,
-                isLeft ? mItemOffset / 2 : mItemOffset,
+                isLast ? mItemOffset : 0,
                 mItemOffset
         );
     }
+
+
 }

@@ -19,6 +19,8 @@ public class ArtistHorizontalListAdapter extends RecyclerView.Adapter<ArtistHori
     Activity activity;
     List<Artist> artistList;
 
+    OnClickListener onClickListener;
+
     public ArtistHorizontalListAdapter(Activity activity, List<Artist> artistList) {
         this.activity = activity;
         this.artistList = artistList;
@@ -47,13 +49,30 @@ public class ArtistHorizontalListAdapter extends RecyclerView.Adapter<ArtistHori
 
     @Override
     public void onBindViewHolder(@NonNull ArtistHorizontalListAdapter.ViewHolder holder, int position) {
-        holder.imvArtistAvatar.setImageResource(artistList.get(position).getArtistAvatar());
-        holder.txtArtistName.setText(artistList.get(position).getArtistName());
+        Artist artist = artistList.get(position);
+        holder.imvArtistAvatar.setImageResource(artist.getArtistAvatar());
+        holder.txtArtistName.setText(artist.getArtistName());
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onClickListener != null) {
+                    onClickListener.onClick(position, artist);
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return artistList.size();
     }
+
+    public void setOnClickListener(OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
+    public interface OnClickListener{
+        void onClick(int position, Artist artist);
+    }
+
 }
