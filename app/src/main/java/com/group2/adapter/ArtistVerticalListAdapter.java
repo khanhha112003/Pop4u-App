@@ -18,6 +18,7 @@ import java.util.List;
 public class ArtistVerticalListAdapter extends RecyclerView.Adapter<ArtistVerticalListAdapter.ViewHolder> {
     Activity activity;
     List<Artist> artistList;
+    OnClickListener onClickListener;
 
     public ArtistVerticalListAdapter(Activity activity, List<Artist> artistList) {
         this.activity = activity;
@@ -34,14 +35,32 @@ public class ArtistVerticalListAdapter extends RecyclerView.Adapter<ArtistVertic
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.imvArtistAvatar.setImageResource(artistList.get(position).getArtistAvatar());
-        holder.txtArtistName.setText(artistList.get(position).getArtistName());
-        holder.txtArtistYearDebut.setText("Ra mắt năm " + String.valueOf(artistList.get(position).getArtistYearDebut()));
+        Artist artist = artistList.get(position);
+        holder.imvArtistAvatar.setImageResource(artist.getArtistAvatar());
+        holder.txtArtistName.setText(artist.getArtistName());
+        holder.txtArtistYearDebut.setText("Ra mắt năm " + String.valueOf(artist.getArtistYearDebut()));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onClickListener != null) {
+                    onClickListener.onClick(position, artist);
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return artistList.size();
+    }
+
+    public void setOnClickListener(OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
+
+    public interface OnClickListener{
+        void onClick(int position, Artist artist);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
