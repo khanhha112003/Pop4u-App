@@ -48,9 +48,9 @@
         <activity
             android:name=".SplashScreen.SplashScr"
             android:exported="false" />
-         <activity
-         android:name=".SearchScreen.SearchDashboardActivity"
-         android:exported="false" />
+        <activity
+            android:name=".SearchScreen.SearchDashboardActivity"
+            android:exported="false" />
         <activity
             android:name=".CartScreen.Cart"
             android:exported="false" />
@@ -75,7 +75,7 @@
         <activity
             android:name=".SignUp.SignUp_1"
             android:exported="false" />
-       <activity
+        <activity
             android:name=".PaymentScreen.Payment"
             android:exported="false" />
         <activity
