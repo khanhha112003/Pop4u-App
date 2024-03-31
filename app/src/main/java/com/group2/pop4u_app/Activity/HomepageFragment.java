@@ -2,6 +2,7 @@ package com.group2.pop4u_app.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
+import android.os.Looper;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +38,8 @@ import com.group2.pop4u_app.home.AllArtist;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
 import com.group2.pop4u_app.home.ProductListCategory;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.ArrayList;
 
 /**
@@ -56,6 +60,7 @@ public class HomepageFragment extends Fragment {
     ViewPager mSliceViewpager;
     BannerAdapter bannerAdapter;
     LinearLayout mDotLayout;
+    int currentPage = 0;
     TextView[] dots;
 
 
@@ -63,6 +68,7 @@ public class HomepageFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private Timer timer;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -114,6 +120,8 @@ public class HomepageFragment extends Fragment {
         addItemClickEvents();
         setupBanner();
     }
+    private static final long DELAY_MS = 0;
+    private static final long PERIOD_MS = 5000;
 
     private void setupBanner() {
         mSliceViewpager = binding.imsHomeBanner; // Initialize mSliceViewpager using binding
@@ -122,6 +130,28 @@ public class HomepageFragment extends Fragment {
         mSliceViewpager.setAdapter(bannerAdapter);
         mSliceViewpager.addOnPageChangeListener(viewListener);
         setUpIndicator(0);
+        startAutoSwipe();
+    }
+    private void startAutoSwipe() {
+        final Handler handler = new Handler();
+        final Runnable update = new Runnable() {
+            public void run() {
+                if (currentPage == bannerAdapter.getCount() - 1) {
+                    currentPage = 0;
+                } else {
+                    currentPage++;
+                }
+                mSliceViewpager.setCurrentItem(currentPage, true);
+            }
+        };
+
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(update);
+            }
+        }, DELAY_MS, PERIOD_MS);
     }
     public void setUpIndicator(int position) {
         dots = new TextView[bannerAdapter.getCount()];
@@ -152,6 +182,13 @@ public class HomepageFragment extends Fragment {
         public void onPageScrollStateChanged(int state) {
         }
     };
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (timer != null) {
+            timer.cancel();
+        }
+    }
 
     private void addItemClickEvents() {
         saleProductAdapter.setOnClickListener(new SaleProductCardRecyclerAdapter.OnClickListener() {
