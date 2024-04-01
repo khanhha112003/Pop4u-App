@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import com.group2.pop4u_app.Activity.MainActivity;
 import com.group2.pop4u_app.R;
 
 public class OnBoarding1 extends AppCompatActivity {
@@ -57,9 +58,9 @@ public class OnBoarding1 extends AppCompatActivity {
             }
         });
 
-        skipbtn.setOnClickListener(view -> startNextActivity(SplashScr.class));
+        skipbtn.setOnClickListener(view -> startNextActivity(MainActivity.class));
 
-        startBtn.setOnClickListener(view -> startNextActivity(SplashScr.class));
+        startBtn.setOnClickListener(view -> startNextActivity(MainActivity.class));
 
         mSliceViewpager = findViewById(R.id.sliceViewpager);
         mDotLayout = findViewById(R.id.indicator_layout);
