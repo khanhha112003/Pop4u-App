@@ -1,4 +1,4 @@
-package com.group2.pop4u_app.CartScreen.adapter;
+package com.group2.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,7 +13,7 @@ import android.widget.CheckBox;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.group2.pop4u_app.CartScreen.model.CartItem;
+import com.group2.model.CartItem;
 import com.group2.pop4u_app.R;
 
 import java.text.DecimalFormat;

@@ -5,9 +5,14 @@
     android:orientation="horizontal"
     android:padding="10dp"
     >
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <RadioButton
         android:layout_width="50dp"
         android:layout_height="50dp"/>
+    </RadioGroup>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,23 +26,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Khánh Hà"
+            android:textSize="18sp"
             android:fontFamily="@font/inter_semibold"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=" | "
+                android:textSize="18sp"
                 android:textStyle="bold"/>
             <TextView
                 android:id="@+id/cus_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0123456788"
+                android:textSize="18sp"
                 android:fontFamily="@font/inter_semibold"/>
         </LinearLayout>
         <TextView
             android:id="@+id/cus_address"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
+            android:textSize="18sp"
             android:text="669 QL1A, khu phố 3, Thủ Đức, Thành phố Hồ Chí Minh"
             android:fontFamily="@font/inter"/>
     </LinearLayout>

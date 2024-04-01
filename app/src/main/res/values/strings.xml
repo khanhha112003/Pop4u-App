@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Pop4u_App</string>
     <!-- TODO: Remove or change this placeholder text -->
+    <string name="ordered_fragment">Đã đặt</string>
+    <string name="processing_fragment">Đang xử lý</string>
+    <string name="successful_order_fragment">Thành công</string>
+    <string name="canceled_order_fragment">Đã hủy</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="view_all_button_content">Xem</string>
     <string name="home_title">Trang chủ</string>

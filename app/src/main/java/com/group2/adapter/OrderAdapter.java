@@ -1,10 +1,9 @@
-package com.group2.pop4u_app.PaymentScreen.adapter;
+package com.group2.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,8 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.group2.pop4u_app.CartScreen.adapter.CartAdapter;
-import com.group2.pop4u_app.PaymentScreen.model.Order;
+import com.group2.model.Order;
 import com.group2.pop4u_app.R;
 
 import java.util.ArrayList;
