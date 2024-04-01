@@ -24,6 +24,7 @@ import com.group2.adapter.CartAdapter;
 import com.group2.adapter.MiniProductCardRecyclerAdapter;
 import com.group2.model.CartItem;
 import com.group2.model.Product;
+import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentCartBinding;
 
@@ -39,7 +40,7 @@ public class CartFragment extends Fragment {
     FragmentCartBinding binding;
     CartAdapter adapter;
     ArrayList<CartItem> carts;
-    MiniProductCardRecyclerAdapter miniProductCardRecyclerAdapter;
+    MiniProductCardRecyclerAdapter BigProductCardRecyclerAdapter;
     ArrayList<Product> productArrayList;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -229,6 +230,7 @@ public class CartFragment extends Fragment {
         binding.totalPrice.setText(formattedTotalPrice);
     }
     private void loadRecommendProduct() {
+        productArrayList = new ArrayList<>();
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         binding.rcRelativeProduct.setLayoutManager(gridLayoutManager);
         binding.rcRelativeProduct.setHasFixedSize(true);
@@ -249,7 +251,10 @@ public class CartFragment extends Fragment {
         productArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
         productArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
 
-        miniProductCardRecyclerAdapter = new MiniProductCardRecyclerAdapter(requireActivity(), productArrayList);
-        binding.rcRelativeProduct.setAdapter(miniProductCardRecyclerAdapter);
+        BigProductCardRecyclerAdapter = new MiniProductCardRecyclerAdapter(requireActivity(), productArrayList);
+        ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(getContext(), R.dimen.item_offset);
+        binding.rcRelativeProduct.addItemDecoration(itemDecoration);
+        binding.rcRelativeProduct.setAdapter(BigProductCardRecyclerAdapter);
+        binding.rcRelativeProduct.setNestedScrollingEnabled(false);
     }
 }
