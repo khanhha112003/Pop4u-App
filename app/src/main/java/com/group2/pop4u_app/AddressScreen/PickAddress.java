@@ -4,8 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.group2.pop4u_app.AddressScreen.adapter.AddressAdapter;
-import com.group2.pop4u_app.AddressScreen.model.Address;
+import com.group2.adapter.AddressAdapter;
+import com.group2.model.Address;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.ActivityPickAddressBinding;
 

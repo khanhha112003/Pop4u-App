@@ -3,11 +3,9 @@ package com.group2.pop4u_app.CartScreen;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.CompoundButton;
 
-import com.group2.pop4u_app.CartScreen.model.CartItem;
-import com.group2.pop4u_app.R;
+import com.group2.model.CartItem;
 import com.group2.pop4u_app.databinding.ActivityItemCartBinding;
 
 public class Item_Cart extends AppCompatActivity {

@@ -1,7 +1,9 @@
-package com.group2.pop4u_app.Activity;
+package com.group2.pop4u_app.AccountScreen;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -9,14 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.group2.pop4u_app.R;
+import com.group2.pop4u_app.databinding.FragmentAccountPersonalInfoBinding;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CartFragment#newInstance} factory method to
+ * Use the {@link AccountPersonalInfoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CartFragment extends Fragment {
+public class AccountPersonalInfoFragment extends Fragment {
 
+    FragmentAccountPersonalInfoBinding binding;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -26,7 +30,7 @@ public class CartFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public CartFragment() {
+    public AccountPersonalInfoFragment() {
         // Required empty public constructor
     }
 
@@ -36,11 +40,11 @@ public class CartFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment CartFragment.
+     * @return A new instance of fragment AccountPersonalInfoFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CartFragment newInstance(String param1, String param2) {
-        CartFragment fragment = new CartFragment();
+    public static AccountPersonalInfoFragment newInstance(String param1, String param2) {
+        AccountPersonalInfoFragment fragment = new AccountPersonalInfoFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,6 +65,37 @@ public class CartFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cart, container, false);
+        binding = FragmentAccountPersonalInfoBinding.inflate(inflater,container,false);
+        return binding.getRoot();
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        addUserAccountEvents();
+    }
+
+    private void addUserAccountEvents() {
+        binding.btnChangeUserAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        binding.btnSaveInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        binding.btnDeleteAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+    }
+
 }

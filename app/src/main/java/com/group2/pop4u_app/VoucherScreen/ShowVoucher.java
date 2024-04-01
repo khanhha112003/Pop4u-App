@@ -3,13 +3,10 @@ package com.group2.pop4u_app.VoucherScreen;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Toast;
 
 import com.group2.pop4u_app.R;
-import com.group2.pop4u_app.VoucherScreen.adapter.VoucherAdapter;
-import com.group2.pop4u_app.VoucherScreen.model.ItemVoucher;
+import com.group2.adapter.VoucherAdapter;
+import com.group2.model.ItemVoucher;
 import com.group2.pop4u_app.databinding.ActivityShowVoucherBinding;
 
 import java.util.ArrayList;

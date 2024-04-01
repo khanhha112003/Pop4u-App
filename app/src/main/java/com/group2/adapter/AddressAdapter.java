@@ -1,4 +1,4 @@
-package com.group2.pop4u_app.VoucherScreen.adapter;
+package com.group2.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,37 +6,37 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.group2.model.Address;
 import com.group2.pop4u_app.R;
-import com.group2.pop4u_app.VoucherScreen.model.ItemVoucher;
+
 
 import java.util.List;
 
-public class VoucherAdapter extends BaseAdapter {
+public class AddressAdapter extends BaseAdapter {
     Activity context;
     int item_list;
-    List<ItemVoucher> voucherList;
+    List<Address> addressList;
 
     //Constructor
 
 
-    public VoucherAdapter(Activity context, int item_list, List<ItemVoucher> voucherList) {
+    public AddressAdapter(Activity context, int item_list, List<Address> addressList) {
         this.context = context;
         this.item_list = item_list;
-        this.voucherList = voucherList;
+        this.addressList = addressList;
     }
 
 
     @Override
     public int getCount() {
-        return voucherList.size();
+        return addressList.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return voucherList.get(i);
+        return addressList.get(i);
     }
 
     @Override
@@ -46,30 +46,33 @@ public class VoucherAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        ViewHolder holder;
+        AddressAdapter.ViewHolder holder;
         if(view ==null) {
-            holder = new ViewHolder();
+            holder = new AddressAdapter.ViewHolder();
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(item_list, null);
 
 
-            holder.voucher_id = view.findViewById(R.id.voucher_id);
-            holder.voucher_description = view.findViewById(R.id.voucher_description);
+            holder.cus_name = view.findViewById(R.id.cus_name);
+            holder.cus_phone = view.findViewById(R.id.cus_phone);
+            holder.cus_address = view.findViewById(R.id.cus_address);
             view.setTag(holder);
         }else{
-            holder = (ViewHolder)  view.getTag();
+            holder = (AddressAdapter.ViewHolder)  view.getTag();
 
         }
         //Lien ket du lieu
-        ItemVoucher b = voucherList.get(i);
-        holder.voucher_id.setText(b.getVoucher_id());
-        holder.voucher_description.setText(b.getVoucher_description());
+        Address b = addressList.get(i);
+        holder.cus_name.setText(b.getCus_name());
+        holder.cus_phone.setText(b.getCus_phone());
+        holder.cus_address.setText(b.getCus_address());
 
         return view;
     }
     public static class  ViewHolder{
-        TextView voucher_id, voucher_description;
+        TextView cus_name, cus_phone, cus_address;
     }
 }
+
 
 

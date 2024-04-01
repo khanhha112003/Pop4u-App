@@ -1,4 +1,4 @@
-package com.group2.pop4u_app.VoucherScreen.model;
+package com.group2.model;
 
 public class ItemVoucher {
     String voucher_id;
