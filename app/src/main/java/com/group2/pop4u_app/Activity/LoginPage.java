@@ -22,7 +22,6 @@ public class LoginPage extends AppCompatActivity {
 
     ActivityLoginPageBinding binding;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
