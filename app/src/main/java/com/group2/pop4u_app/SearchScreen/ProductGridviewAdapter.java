@@ -46,7 +46,7 @@ public class ProductGridviewAdapter extends BaseAdapter {
 
 
     private static class ViewHolder {
-        TextView txtProductName, txtProductArtist, txtProductPrice, txtProductLabel, txtRating, txtSalePercent;
+        TextView txtProductName, txtProductArtist, txtProductPrice, txtLabel, txtRating, txtSalePercent;
         ImageView imvMediumProductImage;
 
         CardView crdSalePercent;
@@ -56,7 +56,7 @@ public class ProductGridviewAdapter extends BaseAdapter {
             txtProductName = (TextView) view.findViewById(R.id.txtProductName);
             txtProductPrice = (TextView) view.findViewById(R.id.txtProductPrice);
             imvMediumProductImage = (ImageView) view.findViewById(R.id.imvMediumProductImage);
-            txtProductLabel = view.findViewById(R.id.txtProductLabel);
+            txtLabel = view.findViewById(R.id.txtLabel);
             txtRating = view.findViewById(R.id.txtRating);
             txtSalePercent = view.findViewById(R.id.txtSalePercent);
             crdSalePercent = view.findViewById(R.id.crdSalePercent);

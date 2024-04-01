@@ -59,11 +59,19 @@ public class SearchDashboardFragment extends Fragment implements SearchView.OnQu
 
     private void setTabHandler() {
         View albumCard = getView().findViewById(binding.searchDashboardCategoryCardAlbum.getId());
+        View merchCard = getView().findViewById(binding.searchDashboardCategoryCardMerch.getId());
         albumCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 MainActivity ma = (MainActivity) getContext();
-                ma.replaceFragment(new AlbumCategoryFragment());
+                ma.replaceFragment(new AlbumFragment());
+            }
+        });
+        merchCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity ma = (MainActivity) getContext();
+                ma.replaceFragment(new MerchFragment());
             }
         });
     }

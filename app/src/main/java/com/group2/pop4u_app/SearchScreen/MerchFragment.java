@@ -3,31 +3,28 @@ package com.group2.pop4u_app.SearchScreen;
 import android.content.Context;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 
 import com.group2.model.Product;
 import com.group2.pop4u_app.R;
-import com.group2.pop4u_app.databinding.FragmentAlbumCategoryBinding;
-import com.group2.pop4u_app.databinding.FragmentSearchDashboardBinding;
+import com.group2.pop4u_app.databinding.FragmentMerchBinding;
 
 import java.util.ArrayList;
 
-public class AlbumCategoryFragment extends Fragment {
-    FragmentAlbumCategoryBinding binding;
+public class MerchFragment extends Fragment {
+    FragmentMerchBinding binding;
     ProductGridviewAdapter adapter;
 
-    public AlbumCategoryFragment() {
+    public MerchFragment() {
     }
 
 
-    public static AlbumCategoryFragment newInstance(String param1, String param2) {
-        AlbumCategoryFragment fragment = new AlbumCategoryFragment();
+    public static AlbumFragment newInstance(String param1, String param2) {
+        AlbumFragment fragment = new AlbumFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -58,14 +55,14 @@ public class AlbumCategoryFragment extends Fragment {
         productArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
 
         adapter = new ProductGridviewAdapter(context, productArrayList);
-        binding.gvAlbumCategory.setAdapter(adapter);
+        binding.gvMerch.setAdapter(adapter);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentAlbumCategoryBinding.inflate(inflater,container,false);
+        binding = FragmentMerchBinding.inflate(inflater,container,false);
         setGridViewAdapter(getContext());
         return binding.getRoot();
     }
