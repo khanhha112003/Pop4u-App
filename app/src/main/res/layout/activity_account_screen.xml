@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AccountScreen.AccountScreen">
+    tools:context="com.group2.adapter.AccountScreen.AccountScreen">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cdvAcntAvatar"

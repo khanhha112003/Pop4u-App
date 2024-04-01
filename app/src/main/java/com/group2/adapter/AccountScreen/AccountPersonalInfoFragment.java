@@ -1,4 +1,4 @@
-package com.group2.pop4u_app.AccountScreen;
+package com.group2.adapter.AccountScreen;
 
 import android.os.Bundle;
 
@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentAccountPersonalInfoBinding;
 
 /**
