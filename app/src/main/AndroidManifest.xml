@@ -84,6 +84,10 @@
             android:name=".home.HomeScreen"
             android:exported="false" />
         <activity
+            android:name=".PaymentScreen.Payment"
+            android:exported="false" />
+
+        <activity
             android:name=".Activity.MainActivity"
             android:exported="true">
             <intent-filter>

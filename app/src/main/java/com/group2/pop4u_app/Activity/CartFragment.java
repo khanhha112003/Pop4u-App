@@ -1,5 +1,6 @@
 package com.group2.pop4u_app.Activity;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -17,14 +18,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
+import com.group2.adapter.BigProductCardRecyclerAdapter;
 import com.group2.adapter.CartAdapter;
 import com.group2.adapter.MiniProductCardRecyclerAdapter;
 import com.group2.model.CartItem;
 import com.group2.model.Product;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
+import com.group2.pop4u_app.PaymentScreen.Payment;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentCartBinding;
 
@@ -40,7 +44,7 @@ public class CartFragment extends Fragment {
     FragmentCartBinding binding;
     CartAdapter adapter;
     ArrayList<CartItem> carts;
-    MiniProductCardRecyclerAdapter BigProductCardRecyclerAdapter;
+    BigProductCardRecyclerAdapter bigProductCardRecyclerAdapter;
     ArrayList<Product> productArrayList;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -96,6 +100,7 @@ public class CartFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         customAndLoadData();
         loadRecommendProduct();
+        addEvents();
         binding.checkboxSelectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -251,10 +256,19 @@ public class CartFragment extends Fragment {
         productArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
         productArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
 
-        BigProductCardRecyclerAdapter = new MiniProductCardRecyclerAdapter(requireActivity(), productArrayList);
+        bigProductCardRecyclerAdapter = new BigProductCardRecyclerAdapter(  requireActivity(), productArrayList);
         ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(getContext(), R.dimen.item_offset);
         binding.rcRelativeProduct.addItemDecoration(itemDecoration);
-        binding.rcRelativeProduct.setAdapter(BigProductCardRecyclerAdapter);
+        binding.rcRelativeProduct.setAdapter(bigProductCardRecyclerAdapter);
         binding.rcRelativeProduct.setNestedScrollingEnabled(false);
+    }
+    private void addEvents(){
+        binding.btnMuangay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), Payment.class);
+                startActivity(intent);
+            }
+        });
     }
 }
