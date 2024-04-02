@@ -18,10 +18,10 @@
             android:name=".ProductDetailScreen.ProductDetailScreen"
             android:exported="false" />
         <activity
-            android:name="com.group2.adapter.AccountScreen.SettingScreen"
+            android:name=".AccountScreen.SettingScreen"
             android:exported="false" />
         <activity
-            android:name="com.group2.adapter.AccountScreen.AccountScreen"
+            android:name=".AccountScreen.AccountScreen"
             android:exported="false" />
         <activity
             android:name=".home.ProductListCategory"

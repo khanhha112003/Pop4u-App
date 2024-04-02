@@ -1,4 +1,4 @@
-package com.group2.adapter.AccountScreen;
+package com.group2.pop4u_app.AccountScreen;
 
 import android.os.Bundle;
 
