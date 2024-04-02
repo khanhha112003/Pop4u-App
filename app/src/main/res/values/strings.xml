@@ -16,6 +16,25 @@
     <string name="action_bar_order_action">Đơn hàng của tôi</string>
     <string name="product_of_week_title">Có Gì Tuần Này 😎</string>
     <string name="filter_product">Lọc sản phẩm</string>
+    <string name="sort_by">Sắp xếp theo</string>
+    <string name="sort_by_as_price">Giá tăng dần</string>
+    <string name="sort_by_de_price">Giá giảm dần</string>
+    <string name="filter_by_price_range">Khoảng giá</string>
+    <string name="filter_by_category">Danh mục</string>
+    <string name="filter_by_tag">Thẻ sản phẩm</string>
+    <string name="filter_by_tag_sale">Đang giảm giá</string>
+    <string name="filter_by_tag_featured">Nổi bật</string>
+    <string name="filter_by_tag_new">Mới ra mắt</string>
+    <string name="filter_by_tag_hot">Bán chạy</string>
+    <string name="filter_by_year_release">Năm ra mắt</string>
+    <string name="slide_year_description">Chọn khoản thời gian năm</string>
+    <string name="price_under_500K">Dưới 500N</string>
+    <string name="price_under_1M">Từ 500N - 1TR</string>
+    <string name="price_under_1_5M">Từ 1TR - 1.5TR</string>
+    <string name="price_under_2M">Từ 1.5TR - 2TR</string>
+    <string name="price_over_2M">Trên 2TR</string>
+    <string name="apply_filter">Áp dụng</string>
+    <string name="reset_filter">Reset</string>
     <string name="title_activity_all_artist">AllArtistActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
@@ -64,4 +83,9 @@
     <string name="BoardDes2">Chỉ cần trên 500.000VND, pop4u chiêu đãi bạn phí ship nhé!</string>
     <string name="BoardDes3">Tình yêu sẽ được đổi trả sản phẩm trong vòng 7 ngày kể từ ngày nhận hàng.</string>
     <string name="BoardDes4">Cùng pop4u bảo vệ môi trường sống cho chúng ta và cả Idol nhé!</string>
+    
+    <array name="initial_slider_year">
+        <item>2020</item>
+        <item>2024</item>
+    </array>
 </resources>

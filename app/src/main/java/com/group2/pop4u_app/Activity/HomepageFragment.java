@@ -170,7 +170,7 @@ public class HomepageFragment extends Fragment {
         mDotLayout.removeAllViews();
 
         for (int i = 0; i < bannerAdapter.getCount(); i++) {
-            dots[i] = new TextView(requireContext());
+            dots[i] = new TextView(getContext());
             dots[i].setText(Html.fromHtml("&#8226;"));
             dots[i].setTextSize(35);
             dots[i].setTextColor(getResources().getColor(R.color.md_theme_inversePrimary_mediumContrast, requireContext().getTheme()));
