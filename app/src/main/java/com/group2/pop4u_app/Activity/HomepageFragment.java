@@ -7,6 +7,8 @@ import android.os.Handler;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager.widget.ViewPager;
@@ -37,6 +39,7 @@ import com.group2.pop4u_app.databinding.FragmentHomepageBinding;
 import com.group2.pop4u_app.home.AllArtist;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
 import com.group2.pop4u_app.home.ProductListCategory;
+import com.group2.pop4u_app.home.ProductOfWeekFragment;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -118,7 +121,16 @@ public class HomepageFragment extends Fragment {
         initData();
         addViewAllButtonEvent();
         addItemClickEvents();
+        loadProductOfWeek();
         setupBanner();
+    }
+
+    private void loadProductOfWeek() {
+        FragmentManager fragmentManager = getChildFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frgProductOfWeek, new ProductOfWeekFragment());
+        fragmentTransaction.commit();
+
     }
     private static final long DELAY_MS = 0;
     private static final long PERIOD_MS = 5000;
@@ -158,7 +170,7 @@ public class HomepageFragment extends Fragment {
         mDotLayout.removeAllViews();
 
         for (int i = 0; i < bannerAdapter.getCount(); i++) {
-            dots[i] = new TextView(requireContext());
+            dots[i] = new TextView(getContext());
             dots[i].setText(Html.fromHtml("&#8226;"));
             dots[i].setTextSize(35);
             dots[i].setTextColor(getResources().getColor(R.color.md_theme_inversePrimary_mediumContrast, requireContext().getTheme()));
@@ -238,6 +250,8 @@ public class HomepageFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(requireActivity(), ProductListCategory.class);
                 intent.putExtra("recyclerID", "newProduct");
+                intent.putExtra("recyclerName", "Mới ra mắt");
+
                 startActivity(intent);
             }
         });
@@ -247,6 +261,7 @@ public class HomepageFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(requireActivity(), AllArtist.class);
                 intent.putExtra("recyclerID", "hotArtist");
+                intent.putExtra("recyclerName", "Nghệ sĩ nổi bật");
                 startActivity(intent);
             }
         });
@@ -256,6 +271,7 @@ public class HomepageFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(requireActivity(), ProductListCategory.class);
                 intent.putExtra("recyclerID", "saleProduct");
+                intent.putExtra("recyclerName", "Sale");
                 startActivity(intent);
             }
         });

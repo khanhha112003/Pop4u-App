@@ -30,7 +30,7 @@
         android:orientation="horizontal"
         android:padding="8dp">
         <android.widget.SearchView
-            android:id="@+id/sv_query_search_box"
+            android:id="@+id/editTextSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:queryHint="Tìm kiếm"
