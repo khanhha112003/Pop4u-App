@@ -70,8 +70,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="84dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="80dp"
                 android:text="Chọn tất cả"
                 app:layout_constraintStart_toEndOf="@+id/checkboxSelectAll"
                 app:layout_constraintTop_toTopOf="parent"
@@ -136,7 +136,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Tổng thanh toán"
-                            android:textSize="22sp" />
+                            android:textSize="20sp"
+                            android:fontFamily="@font/inter_semibold"/>
                         <TextView
                             android:id="@+id/totalPrice"
                             android:layout_width="400dp"

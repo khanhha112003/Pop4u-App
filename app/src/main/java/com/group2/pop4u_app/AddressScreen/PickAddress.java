@@ -2,11 +2,15 @@ package com.group2.pop4u_app.AddressScreen;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.group2.adapter.AddressAdapter;
 import com.group2.model.Address;
+import com.group2.pop4u_app.PaymentScreen.Payment;
 import com.group2.pop4u_app.R;
+import com.group2.pop4u_app.VoucherScreen.ShowVoucher;
 import com.group2.pop4u_app.databinding.ActivityPickAddressBinding;
 
 
@@ -23,6 +27,7 @@ ActivityPickAddressBinding binding;
         setContentView(binding.getRoot());
         initData();
         loadData();
+        addEvents();
     }
     private  void initData(){
         addresses = new ArrayList<>();
@@ -35,5 +40,13 @@ ActivityPickAddressBinding binding;
         adapter = new AddressAdapter(PickAddress.this, R.layout.activity_item_address, addresses);
         binding.lvAddress.setAdapter(adapter);
     }
-
+    private void addEvents() {
+        binding.btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PickAddress.this, AddAddress.class);
+                startActivity(intent);
+            }
+        });
+    }
 }
