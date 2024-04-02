@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -12,7 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 
+import com.group2.adapter.ArtistHorizontalListAdapter;
+import com.group2.model.Artist;
 import com.group2.pop4u_app.Activity.MainActivity;
+import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
+import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetHorizontalRecycler;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentSearchDashboardBinding;
 
@@ -24,8 +29,11 @@ import java.util.Objects;
 public class SearchDashboardFragment extends Fragment implements SearchView.OnQueryTextListener  {
 
     FragmentSearchDashboardBinding binding;
-    ListArtistAdapter artistsAdapter;
+    ArrayList<Artist> featuredArtistArrayList;
+    ArtistHorizontalListAdapter featuredArtistAdapter;
     Boolean isNotTypingSearch;
+
+    ArrayList<Artist> artistHorizontalList;
     public SearchDashboardFragment() {}
 
     public static SearchDashboardFragment newInstance() {
@@ -45,8 +53,9 @@ public class SearchDashboardFragment extends Fragment implements SearchView.OnQu
                              Bundle savedInstanceState) {
         binding = FragmentSearchDashboardBinding.inflate(inflater,container,false);
         setToolbar();
-        setListArtist();
+       //setListArtist();
         setSearchBar();
+        initData();
 
         return binding.getRoot();
     }
@@ -58,23 +67,25 @@ public class SearchDashboardFragment extends Fragment implements SearchView.OnQu
     }
 
     private void setTabHandler() {
-        View albumCard = getView().findViewById(binding.searchDashboardCategoryCardAlbum.getId());
-        View merchCard = getView().findViewById(binding.searchDashboardCategoryCardMerch.getId());
-        albumCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity ma = (MainActivity) getContext();
-                ma.replaceFragment(new AlbumFragment());
-            }
-        });
-        merchCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity ma = (MainActivity) getContext();
-                ma.replaceFragment(new MerchFragment());
-            }
-        });
+        getView().findViewById(binding.searchDashboardCategoryCardAll.getId())
+                .setOnClickListener(view -> ((MainActivity) getContext()).replaceFragment(new AllProductFragment()));
+
+        getView().findViewById(binding.searchDashboardCategoryCardAlbum.getId())
+                .setOnClickListener(view -> ((MainActivity) getContext()).replaceFragment(new AlbumFragment()));
+
+        getView().findViewById(binding.searchDashboardCategoryCardMerch.getId())
+                .setOnClickListener(view -> ((MainActivity) getContext()).replaceFragment(new MerchFragment()));
+
+        getView().findViewById(binding.searchDashboardCategoryCardPhotobook.getId())
+                .setOnClickListener(view -> ((MainActivity) getContext()).replaceFragment(new PhotobookFragment()));
+
+        getView().findViewById(binding.searchDashboardCategoryCardVinyl.getId())
+                .setOnClickListener(view -> ((MainActivity) getContext()).replaceFragment(new VinylFragment()));
+
+        getView().findViewById(binding.searchDashboardCategoryCardLightstick.getId())
+                .setOnClickListener(view -> ((MainActivity) getContext()).replaceFragment(new LightstickFragment()));
     }
+
 
     @Override
     public void onResume() {
@@ -88,7 +99,7 @@ public class SearchDashboardFragment extends Fragment implements SearchView.OnQu
         binding.tbToolbarTitle.setTitleTextAppearance(getActivity(), R.style.SearchScreenToolbarTitle);
     }
 
-    private void setListArtist() {
+   /** private void setListArtist() {
         List<HashMap<String, String>> testData = new ArrayList<>();
         // Now you can add HashMaps to the list as needed
         HashMap<String, String> data1 = new HashMap<>();
@@ -103,10 +114,37 @@ public class SearchDashboardFragment extends Fragment implements SearchView.OnQu
 
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.HORIZONTAL);
-        artistsAdapter = new ListArtistAdapter(getActivity(), testData);
-        binding.rvListArtist.setAdapter(artistsAdapter);
+        artistHorizontalListAdapter = new ArtistHorizontalListAdapter(getActivity(), artistHorizontalList);
+        binding.rvListArtist.setAdapter(artistHorizontalListAdapter);
         binding.rvListArtist.setLayoutManager(llm);
     }
+**/
+   private void initData() {
+       LinearLayoutManager layoutManagerFeaturedArtist = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+       ItemOffsetHorizontalRecycler itemOffsetHorizontalRecycler = new ItemOffsetHorizontalRecycler(getContext(), R.dimen.item_offset);
+       binding.rccHotArtist.setLayoutManager(layoutManagerFeaturedArtist);
+       binding.rccHotArtist.addItemDecoration(itemOffsetHorizontalRecycler);
+       binding.rccHotArtist.setHasFixedSize(true);
+
+       // Tạo danh sách các nghệ sĩ đặc sắc
+       featuredArtistArrayList = new ArrayList<>();
+       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
+       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
+       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
+       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
+       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
+       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
+       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
+       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
+       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
+       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
+       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
+
+
+       // Khởi tạo và thiết lập adapter
+       featuredArtistAdapter = new ArtistHorizontalListAdapter(requireActivity(), featuredArtistArrayList);
+       binding.rccHotArtist.setAdapter(featuredArtistAdapter);
+   }
 
     private void setSearchBar() {
         binding.svQuerySearchBox.setOnQueryTextListener(this);
