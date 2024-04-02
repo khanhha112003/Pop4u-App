@@ -7,11 +7,24 @@
     tools:context=".home.AllArtist"
     android:background="@color/white">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbrArtistList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/md_theme_surfaceContainer"
+        android:elevation="4dp"
+        app:titleTextColor="@color/md_theme_onSurface"
+        app:menu="@menu/menu_product_list_screen"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rccAllArtist"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tbrArtistList"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

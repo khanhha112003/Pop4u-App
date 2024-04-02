@@ -11,7 +11,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:cardBackgroundColor="@color/md_theme_inverseOnSurface"
         app:cardCornerRadius="10dp"
-        app:cardElevation="0dp">
+        app:cardElevation="0dp"
+        android:foreground="@drawable/foreground_onclick_color_change">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

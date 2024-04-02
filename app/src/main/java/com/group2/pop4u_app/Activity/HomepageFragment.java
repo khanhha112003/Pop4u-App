@@ -250,6 +250,8 @@ public class HomepageFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(requireActivity(), ProductListCategory.class);
                 intent.putExtra("recyclerID", "newProduct");
+                intent.putExtra("recyclerName", "Mới ra mắt");
+
                 startActivity(intent);
             }
         });
@@ -259,6 +261,7 @@ public class HomepageFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(requireActivity(), AllArtist.class);
                 intent.putExtra("recyclerID", "hotArtist");
+                intent.putExtra("recyclerName", "Nghệ sĩ nổi bật");
                 startActivity(intent);
             }
         });
@@ -268,6 +271,7 @@ public class HomepageFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(requireActivity(), ProductListCategory.class);
                 intent.putExtra("recyclerID", "saleProduct");
+                intent.putExtra("recyclerName", "Sale");
                 startActivity(intent);
             }
         });

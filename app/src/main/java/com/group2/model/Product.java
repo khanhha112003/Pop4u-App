@@ -1,5 +1,9 @@
 package com.group2.model;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class Product {
     int productID;
     int productImage1;
@@ -133,6 +137,11 @@ public class Product {
 
     public void setProductArtistName(String productArtistName) {
         this.productArtistName = productArtistName;
+    }
+
+    public String getProductPriceInFormat() {
+        DecimalFormat decimalFormat = new DecimalFormat("#,###.###");
+        return decimalFormat.format(this.productPrice);
     }
 
 }

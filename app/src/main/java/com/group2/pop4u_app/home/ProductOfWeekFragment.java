@@ -81,7 +81,7 @@ public class ProductOfWeekFragment extends Fragment {
 
     private void addEvents() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            binding.imvBackGroundCard.setRenderEffect(RenderEffect.createBlurEffect(100.0f, 100.0f, Shader.TileMode.CLAMP));
+            binding.imvBackGroundCard.setRenderEffect(RenderEffect.createBlurEffect(150.0f, 150.0f, Shader.TileMode.CLAMP));
         }
     }
 }
