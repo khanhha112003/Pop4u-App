@@ -80,7 +80,7 @@ public class MiniProductCardRecyclerAdapter extends RecyclerView.Adapter<MiniPro
         TextView txtProductName, txtProductArtist, txtProductPrice, txtSalePercent;
         ImageView imvProductImage;
 
-        CardView crdSalePercent;
+        CardView crdSalePercent, crdProductMiniCard;
 
         public ViewHolder(View view) {
             super(view);
@@ -91,6 +91,7 @@ public class MiniProductCardRecyclerAdapter extends RecyclerView.Adapter<MiniPro
             txtProductPrice = (TextView) view.findViewById(R.id.txtProductPrice);
             imvProductImage = (ImageView) view.findViewById(R.id.imvProductImage);
             crdSalePercent = (CardView) view.findViewById(R.id.crdSalePercent);
+            crdProductMiniCard = (CardView) view.findViewById(R.id.crdProductMiniCard);
 
         }
     }

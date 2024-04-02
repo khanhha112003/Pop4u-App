@@ -3,7 +3,10 @@ package com.group2.pop4u_app.home;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.group2.adapter.ArtistVerticalListAdapter;
 import com.group2.model.Artist;
@@ -25,11 +28,14 @@ public class AllArtist extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityAllArtistBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        setSupportActionBar(binding.tbrArtistList);
         loadData();
     }
 
+
     private void loadData() {
+        Intent intent = getIntent();
+        getSupportActionBar().setTitle(intent.getStringExtra("recyclerName"));
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(this, R.dimen.item_offset);
         binding.rccAllArtist.setLayoutManager(gridLayoutManager);
