@@ -1,5 +1,6 @@
 package com.group2.pop4u_app.home;
 
+import android.content.Intent;
 import android.graphics.RenderEffect;
 import android.graphics.Shader;
 import android.os.Build;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.group2.pop4u_app.ProductDetailScreen.ProductDetailScreen;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentProductOfWeekBinding;
 
@@ -83,5 +85,13 @@ public class ProductOfWeekFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             binding.imvBackGroundCard.setRenderEffect(RenderEffect.createBlurEffect(150.0f, 150.0f, Shader.TileMode.CLAMP));
         }
+        binding.crdProductOfWeek.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(requireActivity(), ProductDetailScreen.class);
+                intent.putExtra("productID", "ABCD");
+                startActivity(intent);
+            }
+        });
     }
 }

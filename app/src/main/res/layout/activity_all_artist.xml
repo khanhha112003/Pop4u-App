@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/md_theme_surfaceContainer"
+        android:background="@color/md_theme_surfaceContainerLowest"
         android:elevation="4dp"
         app:titleTextColor="@color/md_theme_onSurface"
         app:menu="@menu/menu_product_list_screen"
