@@ -113,16 +113,13 @@
                     android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_list_artist"
-                    android:layout_width="0dp"
-                    android:layout_height="170dp"
-                    android:layout_below="@+id/txt_search_artist_title_text"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="0dp" />
+                    android:id="@+id/rccHotArtist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_search_artist_title_text"
+                    android:layout_marginTop="36dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    />
             </RelativeLayout>
 
             <RelativeLayout

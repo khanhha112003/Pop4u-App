@@ -2,8 +2,22 @@ package com.group2.pop4u_app.VoucherScreen;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+
+import com.group2.pop4u_app.PaymentScreen.Payment;
 import com.group2.pop4u_app.R;
 import com.group2.adapter.VoucherAdapter;
 import com.group2.model.ItemVoucher;
@@ -12,29 +26,88 @@ import com.group2.pop4u_app.databinding.ActivityShowVoucherBinding;
 import java.util.ArrayList;
 
 public class ShowVoucher extends AppCompatActivity {
-ActivityShowVoucherBinding binding;
+    ActivityShowVoucherBinding binding;
     VoucherAdapter adapter;
     ArrayList<ItemVoucher> vouchers;
+    SearchView editTextSearch;
+    ListView listViewVoucher;
+    LinearLayout textViewNoVoucher;
+    ImageView backButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityShowVoucherBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        initData();
-        loadData();
 
+        // Khởi tạo các view
+        editTextSearch = binding.svQuerySearchBox;
+        listViewVoucher = binding.lvVoucher;
+        textViewNoVoucher = binding.layoutNoVoucher;
+        backButton = binding.btnBack;
+
+        // Hiển thị nút quay lại
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Trở về trang Payment
+                Intent intent = new Intent(ShowVoucher.this, Payment.class);
+                startActivity(intent);
+            }
+        });
+
+        // Khởi tạo dữ liệu
+        initData();
+
+        // Thiết lập chức năng tìm kiếm
+        setupSearch();
     }
-    private  void initData(){
+
+    private void initData(){
         vouchers = new ArrayList<>();
         vouchers.add(new ItemVoucher("POP4U12345", "Giảm 10% giảm tối đa 20K "));
         vouchers.add(new ItemVoucher("POP4U56789", "Giảm 20% giảm tối đa 15K"));
         vouchers.add(new ItemVoucher("POP4U12111", "Freeship"));
 
-    }
-    private void loadData(){
-        adapter = new VoucherAdapter(ShowVoucher.this, R.layout.activity_item_voucher, vouchers);
-        binding.lvVoucher.setAdapter(adapter);
+        // Ẩn danh sách voucher và hiển thị layout "Không có voucher"
+        listViewVoucher.setVisibility(View.GONE);
+        textViewNoVoucher.setVisibility(View.VISIBLE);
     }
 
+    private void setupSearch() {
+        editTextSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filter(newText);
+                return true;
+            }
+        });
+    }
+
+    private void filter(String text) {
+        ArrayList<ItemVoucher> filteredList = new ArrayList<>();
+        for (ItemVoucher voucher : vouchers) {
+            if (voucher.getVoucher_id().toLowerCase().contains(text.toLowerCase())
+                    || voucher.getVoucher_description().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(voucher);
+            }
+        }
+        if (filteredList.isEmpty()) {
+            // Hiển thị layout "Không có voucher" nếu danh sách lọc rỗng
+            listViewVoucher.setVisibility(View.GONE);
+            textViewNoVoucher.setVisibility(View.VISIBLE);
+        } else {
+            // Hiển thị danh sách voucher nếu danh sách lọc không rỗng
+            listViewVoucher.setVisibility(View.VISIBLE);
+            textViewNoVoucher.setVisibility(View.GONE);
+            // Tạo adapter mới với danh sách voucher lọc
+            adapter = new VoucherAdapter(ShowVoucher.this, R.layout.activity_item_voucher, filteredList);
+            listViewVoucher.setAdapter(adapter);
+        }
+    }
 }
