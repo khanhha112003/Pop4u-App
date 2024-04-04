@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import com.group2.api.ProductService;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.SearchScreen.SearchDashboardFragment;
 import com.group2.pop4u_app.databinding.ActivityMainBinding;
@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ProductService.getListProduct();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         replaceFragment(new HomepageFragment());
@@ -35,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
-
     }
 
     public void replaceFragment(Fragment fragment){
