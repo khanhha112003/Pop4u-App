@@ -50,9 +50,9 @@
             android:layout_toEndOf="@+id/sv_query_search_box"
             android:text="Áp dụng"
             android:layout_marginEnd="8dp"
-            android:textStyle="bold"
             android:textColor="@color/md_theme_onPrimaryFixedVariant"
-            android:gravity="center" />
+            android:gravity="center"
+            android:fontFamily="@font/inter_semibold"/>
     </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -70,6 +70,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Không có mã giảm giá nào."
+        android:fontFamily="@font/inter"
+        android:textSize="15sp"
         />
     </LinearLayout>
 </LinearLayout>

@@ -12,19 +12,21 @@ import android.view.ViewGroup;
 import com.group2.model.Product;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentMerchBinding;
+import com.group2.pop4u_app.databinding.FragmentPhotobookBinding;
+import com.group2.pop4u_app.databinding.FragmentVinylBinding;
 
 import java.util.ArrayList;
 
-public class MerchFragment extends Fragment {
-    FragmentMerchBinding binding;
+public class VinylFragment extends Fragment {
+    FragmentVinylBinding binding;
     ProductGridviewAdapter adapter;
 
-    public MerchFragment() {
+    public VinylFragment() {
     }
 
 
-    public static MerchFragment newInstance(String param1, String param2) {
-        MerchFragment fragment = new MerchFragment();
+    public static VinylFragment newInstance(String param1, String param2) {
+        VinylFragment fragment = new VinylFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -55,14 +57,14 @@ public class MerchFragment extends Fragment {
         productArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
 
         adapter = new ProductGridviewAdapter(context, productArrayList);
-        binding.gvMerch.setAdapter(adapter);
+        binding.gvVinyl.setAdapter(adapter);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentMerchBinding.inflate(inflater,container,false);
+        binding = FragmentVinylBinding.inflate(inflater,container,false);
         setGridViewAdapter(getContext());
         return binding.getRoot();
     }

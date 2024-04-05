@@ -1,7 +1,6 @@
 package com.group2.adapter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.group2.model.SettingItem;
-import com.group2.pop4u_app.AccountScreen.SettingScreen;
 import com.group2.pop4u_app.R;
 
 import java.util.List;
