@@ -1,5 +1,5 @@
 package com.group2.api;
-import java.util.List;
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -22,7 +22,7 @@ public interface IProductService {
     );
 
     @GET("/product/search_product")
-    Call<List<ProductDAO>> searchProduct(
+    Call<ArrayList<ProductDAO>> searchProduct(
             @Query("product_name") String product_name
     );
 }
