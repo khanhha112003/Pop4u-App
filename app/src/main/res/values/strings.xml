@@ -83,7 +83,7 @@
     <string name="BoardDes2">Chỉ cần trên 500.000VND, pop4u chiêu đãi bạn phí ship nhé!</string>
     <string name="BoardDes3">Tình yêu sẽ được đổi trả sản phẩm trong vòng 7 ngày kể từ ngày nhận hàng.</string>
     <string name="BoardDes4">Cùng pop4u bảo vệ môi trường sống cho chúng ta và cả Idol nhé!</string>
-    
+
     <array name="initial_slider_year">
         <item>2020</item>
         <item>2024</item>
