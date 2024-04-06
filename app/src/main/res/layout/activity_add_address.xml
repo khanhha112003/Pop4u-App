@@ -30,44 +30,93 @@
             android:layout_height="wrap_content"
             android:text="Liên hệ"
             android:textSize="20sp"
+            android:layout_marginStart="10dp"
             android:fontFamily="@font/inter_semibold"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Họ và tên"/>
+            android:hint="Họ và tên"
+            android:padding="15dp"
+            android:fontFamily="@font/inter"
+            android:background="@drawable/shape_edit_text"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Số điện thoại"
-            />
+            android:fontFamily="@font/inter"
+            android:background="@drawable/shape_edit_text"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
+            android:padding="15dp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Địa chỉ"
             android:textSize="20sp"
+            android:layout_marginStart="10dp"
             android:fontFamily="@font/inter_semibold"/>
         <Spinner
             android:id="@+id/tinh"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:spinnerMode="dropdown"
+            android:background="@drawable/shape_edit_text"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
+            android:padding="15dp"
             />
         <Spinner
             android:id="@+id/huyen"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:spinnerMode="dropdown"
+            android:background="@drawable/shape_edit_text"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
+            android:padding="15dp"
             />
         <Spinner
             android:id="@+id/phuong"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:spinnerMode="dropdown"
-            />
+            android:background="@drawable/shape_edit_text"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
+            android:padding="15dp" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Cài đặt"
+        android:layout_marginStart="10dp"
         android:textSize="20sp"
         android:fontFamily="@font/inter_semibold"/>
+    <Switch
+        android:id="@+id/btnDefault"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/shape_edit_text"
+        android:textSize="20sp"
+        android:paddingLeft="10dp"
+        android:fontFamily="@font/inter"
+        android:text="Đặt làm địa chỉ mặc định"
+        android:checked="false"/>
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="Hoàn tất"
+        android:textSize="20dp"
+        android:backgroundTint="@color/md_theme_onPrimaryFixedVariant" />
     </LinearLayout>
