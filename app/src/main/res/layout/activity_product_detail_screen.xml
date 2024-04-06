@@ -40,14 +40,17 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:text=""
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
+                android:textColor="@color/md_theme_outline"
+                android:textSize="12.5sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imvProductImage"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/imvProductImage"
+                app:layout_constraintStart_toStartOf="parent"
                 android:background="@drawable/button_small_filled_pressed_background2"
                 android:fontFamily="@font/inter"
-                android:padding="6dp"/>
+                android:paddingStart="7.5dp"
+                android:paddingEnd="7.5dp"
+                android:paddingTop="2.5dp"
+                android:paddingBottom="2.5dp"/>
             <TextView
                 android:id="@+id/txtProductPrice"
                 app:layout_constraintStart_toStartOf="parent"

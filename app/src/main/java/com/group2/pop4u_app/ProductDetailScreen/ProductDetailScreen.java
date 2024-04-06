@@ -67,7 +67,7 @@ public class ProductDetailScreen extends AppCompatActivity {
             @Override
             public void onPageScrollStateChanged(int state) {
             }
-        }
+        });
     }
 
     @Override

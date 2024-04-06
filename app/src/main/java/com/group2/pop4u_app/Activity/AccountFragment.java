@@ -83,7 +83,7 @@ public class AccountFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initData1();
-//        initData2();
+        initData2();
         addEvents();
     }
 
@@ -97,21 +97,30 @@ public class AccountFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        settingSystemListAdapter.setOnClickListener(new SettingListAdapter.OnClickListener() {
+            @Override
+            public void onClick(int position, SettingItem settingItem) {
+                Intent intent = new Intent(requireActivity(), SettingScreen.class);
+                intent.putExtra("settingItem", (Serializable) settingItem);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initData2() {
         LinearLayoutManager linearLayoutManagerSystem = new LinearLayoutManager(requireActivity());
         binding.rcvSystemSetting.setLayoutManager(linearLayoutManagerSystem);
         binding.rcvSystemSetting.setHasFixedSize(true);
-        binding.rcvSystemSetting.setNestedScrollingEnabled(false);
 
         settingSystemItems = new ArrayList<>();
         settingSystemItems.add(new SettingItem("notification", R.drawable.notifications_unread, "Tùy chỉnh thông báo"));
         settingSystemItems.add(new SettingItem("language", R.drawable.globe, "Ngôn ngữ"));
         settingSystemItems.add(new SettingItem("termsAndPolicy", R.drawable.lists, "Chính sách"));
         settingSystemItems.add(new SettingItem("helpAndReport", R.drawable.help, "Giúp đỡ và khiếu nại"));
-        settingSystemListAdapter = new SettingListAdapter(requireActivity(), settingSystemItems);
+        settingSystemListAdapter = new SettingListAdapter(getActivity(), settingSystemItems);
         binding.rcvSystemSetting.setAdapter(settingSystemListAdapter);
+        binding.rcvSystemSetting.setNestedScrollingEnabled(false);
     }
 
     private void initData1() {
