@@ -1,5 +1,6 @@
 package com.group2.pop4u_app.SplashScreen;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
@@ -25,6 +26,7 @@ public class OnBoarding extends AppCompatActivity {
     BoardPagerAdapter boardPagerAdapter;
     Animation startanim;
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +40,10 @@ public class OnBoarding extends AppCompatActivity {
 
         skipbtn.setOnClickListener(view -> startNextActivity(MainActivity.class));
 
-        startBtn.setOnClickListener(view -> startNextActivity(MainActivity.class));
+        startBtn.setOnClickListener(view -> {
+            startBtn.setBackgroundColor(R.color.md_theme_onSecondaryContainer_highContrast); // Change color to red (you can use any color)
+            startNextActivity(MainActivity.class);
+        });
 
         mSliceViewpager = findViewById(R.id.sliceViewpager);
         mDotLayout = findViewById(R.id.indicator_layout);

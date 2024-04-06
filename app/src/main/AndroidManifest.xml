@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Pop4u_App"
         tools:targetApi="31" >
         <activity
+            android:name=".OrderDetailSrc.OrderDetail"
+            android:exported="false" />
+        <activity
             android:name=".SplashScreen.OnBoarding"
             android:exported="false" />
         <activity
