@@ -27,24 +27,38 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         CompletableFuture<ProductResponseDAO> getListProductFuture = ProductService.instance.getListProduct(1, "all", "asc", 10, 0, "");
+        CompletableFuture<ProductDAO> getProduct = ProductService.instance.getProduct("ASK1001");
 
         // Attaching a callback to handle the result of the asynchronous call
-        getListProductFuture.thenAccept(result -> {
-            runOnUiThread(() -> {
-                if (result != null && !result.getProductList().isEmpty()) {
-                    // Process the result if it's successful
-                    for (ProductDAO product : result.getProductList()) {
-                        Log.d("Product Item", product.getProductName());
-                    }
-                } else {
-                    // Handle the case when no products are found
-                    Log.d("Product Item", "Product not found");
-                }
-            });
-        });
+//        getListProductFuture.thenAccept(result -> {
+//            runOnUiThread(() -> {
+//                if (result != null && !result.getProductList().isEmpty()) {
+//                    // Process the result if it's successful
+//                    for (ProductDAO product : result.getProductList()) {
+//                        Log.d("Product Item", product.getProductName());
+//                    }
+//                } else {
+//                    // Handle the case when no products are found
+//                    Log.d("Product Item", "Product not found");
+//                }
+//            });
+//        });
+
+//        getProduct.thenAccept(result -> {
+//            runOnUiThread(() -> {
+//                if (result != null) {
+//                    // Process the result if it's successful
+//                    Log.d("Product Item", result.getProductName());
+//                } else {
+//                    // Handle the case when no products are found
+//                    Log.d("Product Item", "Product not found");
+//                }
+//            });
+//        });
 
         try {
-            getListProductFuture.get();
+//            getListProductFuture.get();
+            getProduct.get();
         } catch (ExecutionException | InterruptedException e) {
             Log.d("Product Network Request Error", "Error: " + e);
         }
