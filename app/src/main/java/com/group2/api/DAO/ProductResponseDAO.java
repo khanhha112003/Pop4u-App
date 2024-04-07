@@ -1,6 +1,8 @@
-package com.group2.api;
+package com.group2.api.DAO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.group2.api.DAO.ProductDAO;
+
 import java.util.Collection;
 
 public class ProductResponseDAO {

@@ -1,4 +1,7 @@
-package com.group2.api;
+package com.group2.api.Services;
+import com.group2.api.DAO.ProductDAO;
+import com.group2.api.DAO.ProductResponseDAO;
+
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -16,12 +19,12 @@ public interface IProductService {
             @Query("artist_code") String artist_code
     );
 
-    @GET("/product/product_detail")
+    @GET("/api/product/product_detail")
     Call<ProductDAO> getProductDetail(
             @Query("product_code") String product_code
     );
 
-    @GET("/product/search_product")
+    @GET("/api/product/search_product")
     Call<ArrayList<ProductDAO>> searchProduct(
             @Query("product_name") String product_name
     );

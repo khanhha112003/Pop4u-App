@@ -1,4 +1,4 @@
-package com.group2.api;
+package com.group2.api.DAO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -44,6 +44,10 @@ public class ProductDAO {
 
     public String getProductDescription() {
         return productDescription;
+    }
+
+    public String getProductName() {
+        return productName;
     }
 
 }
