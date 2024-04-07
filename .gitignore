@@ -23,3 +23,5 @@
 /app/src/wrapper/
 *.properties
 *.properties
+*.properties
+*.properties

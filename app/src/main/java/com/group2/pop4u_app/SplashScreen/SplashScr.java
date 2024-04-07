@@ -23,7 +23,7 @@ public class SplashScr extends AppCompatActivity {
             @Override
             public void run() {
                 // Chuyển hướng tới màn hình Onboarding
-                Intent i = new Intent(SplashScr.this, OnBoarding1.class);
+                Intent i = new Intent(SplashScr.this, OnBoarding.class);
                 startActivity(i);
 
                 // Đóng màn hình splash
