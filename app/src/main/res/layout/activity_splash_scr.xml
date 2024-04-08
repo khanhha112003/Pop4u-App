@@ -11,14 +11,14 @@
         android:id="@+id/SplSrcLgIcon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/splash_src_pop4u_icon"
+        android:src="@drawable/onboarding_logo"
         android:layout_marginTop="270dp" />
 
     <ImageView
         android:id="@+id/SplSrcNmIcon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/splash_src_pop4u_name"
+        android:src="@drawable/onboarding_name"
         android:layout_below="@+id/SplSrcLgIcon"
         android:layout_marginTop="10dp" />
 
@@ -27,7 +27,7 @@
         android:id="@+id/SplshSrcSlg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/splash_src_slogan"
+        android:src="@drawable/onboarding_slogan"
         android:layout_alignParentBottom="true"
         android:paddingBottom="50dp" />
 
