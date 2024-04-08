@@ -76,15 +76,14 @@ public class AccountFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentAccountBinding.inflate(inflater, container, false);
-        // Inflate the layout for this fragment
+        initData1();
+        initData2();
+        addEvents();
         return binding.getRoot();
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initData1();
-        initData2();
-        addEvents();
     }
 
 
