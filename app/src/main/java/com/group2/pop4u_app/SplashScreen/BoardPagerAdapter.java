@@ -18,10 +18,10 @@ public class BoardPagerAdapter extends PagerAdapter {
     Context context;
 
     int[] BoardImages = {
-            R.drawable.onboard_src_img1,
-            R.drawable.onboard_src_img2,
-            R.drawable.onboard_src_img3,
-            R.drawable.onboard_src_img4,
+            R.drawable.onboarding_1,
+            R.drawable.onboarding_2,
+            R.drawable.onboarding_3,
+            R.drawable.onboarding_4,
     };
 
     int[] BoardHeadings = {
