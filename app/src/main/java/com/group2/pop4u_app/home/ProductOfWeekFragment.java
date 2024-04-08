@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.group2.model.Product;
 import com.group2.pop4u_app.ProductDetailScreen.ProductDetailScreen;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentProductOfWeekBinding;
@@ -72,19 +73,26 @@ public class ProductOfWeekFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentProductOfWeekBinding.inflate(inflater, container, false);
+        addEvents();
+        setProductOfWeek();
         return binding.getRoot();
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        addEvents();
+    private void setProductOfWeek() {
+        Product product = new Product(1, "Cowboy Carter Album", R.drawable.img_2, "Beyonce", "BAN CHAY", 680000, 690000, 10, 4.5, 56, 12, 34, "Phần tiếp theo của Renaissance là một album nhạc đồng quê mạnh mẽ và đầy tham vọng được xây dựng theo khuôn mẫu độc nhất của Beyoncé. Cô khẳng định vị trí xứng đáng của mình trong thể loại này mà chỉ một ngôi sao nhạc pop với tài năng và tầm ảnh hưởng đáng kinh ngạc của cô mới có thể làm được.");
+
+        binding.imvBackGroundCard.setImageResource(product.getProductImage1());
+        binding.imvProductImage.setImageResource(product.getProductImage1());
+        binding.txtProductName.setText(product.getProductName());
+        binding.txtProductArtist.setText(product.getProductArtistName());
+        binding.txtProductPrice.setText(String.valueOf(product.getProductPrice()));
     }
 
     private void addEvents() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             binding.imvBackGroundCard.setRenderEffect(RenderEffect.createBlurEffect(150.0f, 150.0f, Shader.TileMode.CLAMP));
         }
+
         binding.crdProductOfWeek.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -21,6 +21,8 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/ctrProductButton"
         android:scrollbars="none">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -68,7 +70,7 @@
                 android:id="@+id/txtComparingPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@+id/txtProductPrice"
+                app:layout_constraintBaseline_toBaselineOf="@+id/txtProductPrice"
                 app:layout_constraintStart_toEndOf="@+id/txtProductPrice"
                 android:layout_marginStart="10dp"
                 android:text="400.000₫"
@@ -80,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@+id/txtComparingPrice"
-                app:layout_constraintBottom_toBottomOf="@id/txtProductPrice"
+                app:layout_constraintBottom_toBottomOf="@id/txtComparingPrice"
                 android:layout_marginStart="10dp"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@color/md_theme_errorContainer"
@@ -410,6 +412,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ctrProductButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

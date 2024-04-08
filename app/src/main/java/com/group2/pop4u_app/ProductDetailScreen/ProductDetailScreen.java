@@ -11,18 +11,25 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.group2.model.Product;
 import com.group2.pop4u_app.ArtistInfoScreen.ArtistInfoScreen;
 import com.group2.adapter.ProductImgAdapter;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.ActivityProductDetailScreenBinding;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
+
 public class ProductDetailScreen extends AppCompatActivity {
 
     ActivityProductDetailScreenBinding binding;
     private ViewPager viewPagerProductImages;
     private ProductImgAdapter adapter;
+
+    Product product;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,8 +38,27 @@ public class ProductDetailScreen extends AppCompatActivity {
         setSupportActionBar(binding.tbrProductDetail);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(binding.getRoot());
+        loadProduct();
         setUpProductImage();
         addEvents();
+    }
+
+    private void loadProduct() {
+        Product product = new Product(1, "Cowboy Carter Album", R.drawable.img_2, "Beyonce", "BAN CHAY", 680000, 690000, 10, 4.5, 56, 12, 34, "Phần tiếp theo của Renaissance là một album nhạc đồng quê mạnh mẽ và đầy tham vọng được xây dựng theo khuôn mẫu độc nhất của Beyoncé. Cô khẳng định vị trí xứng đáng của mình trong thể loại này mà chỉ một ngôi sao nhạc pop với tài năng và tầm ảnh hưởng đáng kinh ngạc của cô mới có thể làm được.");
+
+        binding.txtProductName.setText(product.getProductName());
+        binding.txtProductArtist.setText(product.getProductArtistName());
+        binding.txtProductPrice.setText(String.valueOf(product.getProductPrice()));
+        binding.txtComparingPrice.setText(String.valueOf(product.getProductComparingPrice()));
+        binding.txtProductDescription.append(product.getProductDescription());
+
+        binding.txtArtistYearDebut.append("");
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, 3);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("u, dd-MM-yyyy", Locale.getDefault());
+        String expectedDate = dateFormat.format(calendar.getTime());
+        binding.txtExpectedDate.append(" " + expectedDate);
     }
 
     private void addEvents() {
@@ -40,7 +66,7 @@ public class ProductDetailScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ProductDetailScreen.this, ArtistInfoScreen.class);
-                intent.putExtra("artistID", "LDR");
+                intent.putExtra("artistName", product.getProductArtistName());
                 startActivity(intent);
             }
         });
