@@ -437,8 +437,8 @@
             android:maxLines="1"
             android:textSize="17.5sp"
             app:icon="@drawable/add_shopping_cart"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp">
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
         </Button>
         <Button
             android:id="@+id/btnBuyNow"
@@ -455,8 +455,8 @@
             android:textSize="17.5sp"
             app:strokeWidth="1dp"
             app:strokeColor="@color/md_theme_outline"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp">
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
         </Button>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

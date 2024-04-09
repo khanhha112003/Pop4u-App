@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.group2.adapter.BigProductCardRecyclerAdapter;
 import com.group2.model.Product;
@@ -63,14 +65,15 @@ public class ProductListCategory extends AppCompatActivity {
     private void openFilterDialog() {
         Dialog dialog = new Dialog(ProductListCategory.this);
         dialog.setContentView(R.layout.dialog_filter_product);
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
-
+        dialog.getWindow().setWindowAnimations(R.style.DialogAnimation);
         Window window = dialog.getWindow();
+        float scale = dialog.getContext().getResources().getDisplayMetrics().density;
+        int dialogWidthPixels = (int) (300 * scale + 0.5f); // 0.5f is for rounding
         if (window != null) {
-            WindowManager.LayoutParams layoutParams = window.getAttributes();
-            layoutParams.gravity = Gravity.RIGHT | Gravity.BOTTOM;
-            layoutParams.horizontalMargin = 0;
-            layoutParams.verticalMargin = 0;
+            WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+            layoutParams.width = dialogWidthPixels;
+            layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
+            layoutParams.gravity = Gravity.RIGHT;
             window.setAttributes(layoutParams);
         }
 
@@ -87,7 +90,6 @@ public class ProductListCategory extends AppCompatActivity {
         binding.rccProductListInCategory.setLayoutManager(gridLayoutManager);
         binding.rccProductListInCategory.addItemDecoration(itemDecoration);
         binding.rccProductListInCategory.setHasFixedSize(true);
-
 
         productArrayList = new ArrayList<>();
         productArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
