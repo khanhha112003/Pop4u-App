@@ -30,7 +30,7 @@
         android:fontFamily="@font/inter"
         android:text="Khi Tạo tài khoản, Pop4u sẽ thu thập và lưu trữ các thông tin của bạn."
         android:textColor="@color/md_theme_outline"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,45 +41,94 @@
         android:id="@+id/edtEmail"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/shape_edit_text"
         android:hint="Email của bạn"
+        android:drawableLeft="@drawable/person"
+        android:drawablePadding="10dp"
         android:inputType="textEmailAddress"
-        android:padding="15dp"
-        android:textColorHint="@color/md_theme_outline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtNoteCreateAcc" />
-
-    <EditText
-        android:id="@+id/edtPass"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/shape_edit_text"
-        android:hint="Mật khẩu"
-        android:padding="15dp"
-        android:inputType="textPassword"
-        android:textColorHint="@color/md_theme_outline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/edtEmail"
-        app:layout_constraintTop_toBottomOf="@+id/edtEmail" />
-
-    <EditText
-        android:id="@+id/edtConfirmPass"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/shape_edit_text"
-        android:hint="Nhập lại mật khẩu"
-        android:inputType="textPassword"
-        android:padding="15dp"
+        android:padding="12dp"
         android:textColorHint="@color/md_theme_outline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtPass" />
+        app:layout_constraintTop_toBottomOf="@+id/txtNoteCreateAcc" />
+
+    <LinearLayout
+        android:id="@+id/llPass"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/shape_edit_text"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtEmail"
+        android:weightSum="10">
+
+        <EditText
+            android:id="@+id/edtPass"
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@color/transparent"
+            android:drawableLeft="@drawable/lock"
+            android:drawablePadding="10dp"
+            android:hint="Mật khẩu"
+            android:inputType="textPassword"
+            android:padding="12dp"
+            android:textColorHint="@color/md_theme_outline"
+            android:layout_weight="9" />
+
+        <ImageView
+            android:id="@+id/imvShowPass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/visibility_showpass"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:paddingEnd="5dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llConfirmPass"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/shape_edit_text"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llPass">
+
+        <EditText
+            android:id="@+id/edtConfirmPass"
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_weight="9"
+            android:background="@color/transparent"
+            android:drawableLeft="@drawable/lock"
+            android:drawablePadding="10dp"
+            android:hint="Nhập lại mật khẩu"
+            android:inputType="textPassword"
+            android:padding="12dp"
+            android:textColorHint="@color/md_theme_outline" />
+
+        <ImageView
+            android:id="@+id/imvShowPass2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:paddingEnd="5dp"
+            android:src="@drawable/visibility_showpass" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnSignUp"
@@ -91,7 +140,39 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtConfirmPass"
+        app:layout_constraintTop_toBottomOf="@+id/llConfirmPass"
         tools:ignore="MissingConstraints" />
+
+    <LinearLayout
+        android:id="@+id/lltext1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSignUp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/inter"
+            android:text="Bạn đã có tài khoản."
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/txtBacktoLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/inter_semibold"
+            android:paddingStart="5dp"
+            android:text="Đăng nhập"
+            android:textColor="@color/md_theme_primary"
+            android:textSize="12sp" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

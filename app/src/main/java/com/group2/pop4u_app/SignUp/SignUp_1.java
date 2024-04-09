@@ -2,7 +2,10 @@ package com.group2.pop4u_app.SignUp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -11,6 +14,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.group2.pop4u_app.LoginScreen.LoginPage;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.ActivitySignUp1Binding;
 
@@ -18,6 +22,8 @@ public class SignUp_1 extends AppCompatActivity {
 
     ActivitySignUp1Binding binding;
 
+    private boolean passwordShowing = false;
+    private boolean conPasswordShowing = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,14 +76,61 @@ public class SignUp_1 extends AppCompatActivity {
                 }
 
                 if (cancel) {
-                    // There was an error; don't attempt login and focus the first
-                    // form field with an error.
                     focusView.requestFocus();
                 } else {
-                    // Show a success message or continue with your sign-up process
                     Intent intent = new Intent(SignUp_1.this, SignUp_2.class);
                     startActivity(intent);
                 }
+            }
+        });
+
+        final EditText edtPass = findViewById(R.id.edtPass);
+        final EditText edtConfirmPass = findViewById(R.id.edtConfirmPass);
+        final ImageView imvShowPass = findViewById(R.id.imvShowPass);
+        final ImageView imvShowPass2 = findViewById(R.id.imvShowPass2);
+        binding.imvShowPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (passwordShowing) {
+                    passwordShowing = false;
+
+                    edtPass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    imvShowPass.setImageResource(R.drawable.visibility_showpass);
+                }else {
+                    passwordShowing = true;
+
+                    edtPass.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    imvShowPass.setImageResource(R.drawable.visibility_off);
+                }
+                //di chuyển cursor
+                edtPass.setSelection(edtPass.length());
+            }
+        });
+
+        binding.imvShowPass2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (conPasswordShowing) {
+                    conPasswordShowing = false;
+
+                    edtConfirmPass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    imvShowPass2.setImageResource(R.drawable.visibility_showpass);
+                }else {
+                    conPasswordShowing = true;
+
+                    edtConfirmPass.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    imvShowPass2.setImageResource(R.drawable.visibility_off);
+                }
+                //di chuyển cursor
+                edtConfirmPass.setSelection(edtConfirmPass.length());
+            }
+        });
+
+        binding.txtBacktoLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignUp_1.this, LoginPage.class);
+                startActivity(intent);
             }
         });
     }
