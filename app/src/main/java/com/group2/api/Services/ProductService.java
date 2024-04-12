@@ -84,4 +84,30 @@ public class ProductService {
         });
         return future;
     }
+
+    public CompletableFuture<ArrayList<ProductDAO>> getArtistProductList(Integer limit, String artist_code) {
+        CompletableFuture<ArrayList<ProductDAO>> future = new CompletableFuture<>();
+        executor.execute(() -> {
+            IProductService service = ServiceGenerator.createService(IProductService.class);
+            Call<ProductResponseDAO> call = service.getArtistProductList(1000, artist_code);
+
+            try {
+                Response<ProductResponseDAO> response = call.execute();
+                if (response.isSuccessful()) {
+                    ProductResponseDAO productResponse = response.body();
+                    if (productResponse == null) {
+                        future.completeExceptionally(new NullPointerException("Product not found")); // Complete the future exceptionally if product is null
+                        return;
+                    }
+                    ArrayList<ProductDAO> products = new ArrayList<>(productResponse.getProductList());
+                    future.complete(products); // Complete the future with the ProductResponseDAO object
+                } else {
+                    future.completeExceptionally(new Exception("Product Network Request Error: " + response.code())); // Complete the future exceptionally if the response is not successful
+                }
+            } catch (IOException e) {
+                future.completeExceptionally(e); // Complete the future exceptionally if an IOException occurs
+            }
+        });
+        return future;
+    }
 }

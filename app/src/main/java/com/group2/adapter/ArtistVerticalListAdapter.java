@@ -36,7 +36,7 @@ public class ArtistVerticalListAdapter extends RecyclerView.Adapter<ArtistVertic
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Artist artist = artistList.get(position);
-        holder.imvArtistAvatar.setImageResource(artist.getArtistAvatar());
+//        holder.imvArtistAvatar.setImageResource(artist.getArtistAvatar());
         holder.txtArtistName.setText(artist.getArtistName());
         holder.txtArtistYearDebut.setText("Ra mắt năm " + String.valueOf(artist.getArtistYearDebut()));
 

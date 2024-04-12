@@ -13,16 +13,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
-import android.os.Looper;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.ViewSwitcher;
 
 import com.group2.adapter.ArtistHorizontalListAdapter;
 import com.group2.adapter.BannerAdapter;
@@ -36,10 +32,10 @@ import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetHorizontalRecycler;
 import com.group2.pop4u_app.ProductDetailScreen.ProductDetailScreen;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentHomepageBinding;
-import com.group2.pop4u_app.home.AllArtist;
+import com.group2.pop4u_app.Home.AllArtist;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
-import com.group2.pop4u_app.home.ProductListCategory;
-import com.group2.pop4u_app.home.ProductOfWeekFragment;
+import com.group2.pop4u_app.Home.ProductListCategory;
+import com.group2.pop4u_app.Home.ProductOfWeekFragment;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -234,13 +230,13 @@ public class HomepageFragment extends Fragment {
 
     private void openProduct(Product product) {
         Intent intent = new Intent(requireActivity(), ProductDetailScreen.class);
-        intent.putExtra("productID", product.getProductID());
+        intent.putExtra("productCode", product.getProductCode());
         startActivity(intent);
     }
 
     private void openArtist(Artist artist) {
         Intent intent = new Intent(requireActivity(), ArtistInfoScreen.class);
-        intent.putExtra("artistID", artist.getArtistID());
+        intent.putExtra("artistCode", artist.getArtistCode());
         startActivity(intent);
     }
 
@@ -284,16 +280,7 @@ public class HomepageFragment extends Fragment {
         binding.rccRecommendedProduct.setHasFixedSize(true);
 
         rcmProductArrayList = new ArrayList<>();
-        rcmProductArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
-        rcmProductArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
-        rcmProductArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
-        rcmProductArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 0, 5.5, 50, 30, 30, "ABC"));
-        rcmProductArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 0, 5.5, 50, 30, 30, "ABC"));
-        rcmProductArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 0, 5.5, 50, 30, 30, "ABC"));
-        rcmProductArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
-        rcmProductArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
-        rcmProductArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
-
+        // TODO fill here
         rcmProductAdapter = new BigProductCardRecyclerAdapter(requireActivity(), rcmProductArrayList);
         ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(getContext(), R.dimen.item_offset);
         binding.rccRecommendedProduct.addItemDecoration(itemDecoration);
@@ -322,12 +309,7 @@ public class HomepageFragment extends Fragment {
         binding.rccHotArtist.addItemDecoration(itemOffsetHorizontalRecycler);
         binding.rccHotArtist.setHasFixedSize(true);
         featuredArtistArrayList = new ArrayList<>();
-        featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-        featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-        featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-        featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-        featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-        featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
+        // TODO: Add featured artist by syncing to API
         featuredArtistAdapter = new ArtistHorizontalListAdapter(requireActivity(), featuredArtistArrayList);
         binding.rccHotArtist.setAdapter(featuredArtistAdapter);
 

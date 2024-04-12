@@ -28,4 +28,10 @@ public interface IProductService {
     Call<ArrayList<ProductDAO>> searchProduct(
             @Query("product_name") String product_name
     );
+
+    @GET("/api/product/product_list")
+    Call<ProductResponseDAO> getArtistProductList(
+            @Query("limit") Integer limit,
+            @Query("artist_code") String artist_code
+    );
 }

@@ -50,7 +50,7 @@ public class ArtistHorizontalListAdapter extends RecyclerView.Adapter<ArtistHori
     @Override
     public void onBindViewHolder(@NonNull ArtistHorizontalListAdapter.ViewHolder holder, int position) {
         Artist artist = artistList.get(position);
-        holder.imvArtistAvatar.setImageResource(artist.getArtistAvatar());
+//        holder.imvArtistAvatar.setImageResource(R.drawable.img);
         holder.txtArtistName.setText(artist.getArtistName());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

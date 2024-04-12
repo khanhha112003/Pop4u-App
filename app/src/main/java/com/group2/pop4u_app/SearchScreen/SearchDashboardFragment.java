@@ -99,26 +99,6 @@ public class SearchDashboardFragment extends Fragment implements SearchView.OnQu
         binding.tbToolbarTitle.setTitleTextAppearance(getActivity(), R.style.SearchScreenToolbarTitle);
     }
 
-   /** private void setListArtist() {
-        List<HashMap<String, String>> testData = new ArrayList<>();
-        // Now you can add HashMaps to the list as needed
-        HashMap<String, String> data1 = new HashMap<>();
-        data1.put("artist_name", "value1");
-        data1.put("artist_img_url", "value2");
-        testData.add(data1);
-
-        HashMap<String, String> data2 = new HashMap<>();
-        data2.put("artist_name", "value3");
-        data2.put("artist_img_url", "value4");
-        testData.add(data2);
-
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        llm.setOrientation(LinearLayoutManager.HORIZONTAL);
-        artistHorizontalListAdapter = new ArtistHorizontalListAdapter(getActivity(), artistHorizontalList);
-        binding.rvListArtist.setAdapter(artistHorizontalListAdapter);
-        binding.rvListArtist.setLayoutManager(llm);
-    }
-**/
    private void initData() {
        LinearLayoutManager layoutManagerFeaturedArtist = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
        ItemOffsetHorizontalRecycler itemOffsetHorizontalRecycler = new ItemOffsetHorizontalRecycler(getContext(), R.dimen.item_offset);
@@ -128,17 +108,17 @@ public class SearchDashboardFragment extends Fragment implements SearchView.OnQu
 
        // Tạo danh sách các nghệ sĩ đặc sắc
        featuredArtistArrayList = new ArrayList<>();
-       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
+//       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
+//       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
+//       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
+//       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
+//       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
+//       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
+//       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
+//       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
+//       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
+//       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
+//       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
 
 
        // Khởi tạo và thiết lập adapter
