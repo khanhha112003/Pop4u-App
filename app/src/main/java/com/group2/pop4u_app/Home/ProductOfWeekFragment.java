@@ -1,4 +1,4 @@
-package com.group2.pop4u_app.home;
+package com.group2.pop4u_app.Home;
 
 import android.content.Intent;
 import android.graphics.RenderEffect;

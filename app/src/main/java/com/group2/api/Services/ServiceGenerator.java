@@ -5,7 +5,6 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class ServiceGenerator {
     private static final String BASE_URL = "https://seal-app-43wkn.ondigitalocean.app";
-
     private static final Retrofit.Builder builder
             = new Retrofit.Builder()
             .baseUrl(BASE_URL)

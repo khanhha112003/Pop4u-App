@@ -1,4 +1,4 @@
-package com.group2.pop4u_app.home;
+package com.group2.pop4u_app.Home;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -85,25 +85,7 @@ public class AllArtist extends AppCompatActivity {
         binding.rccAllArtist.setHasFixedSize(true);
 
         artistArrayList = new ArrayList<>();
-        artistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-        artistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-        artistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-        artistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-        artistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-        artistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-        artistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-        artistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-        artistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-        artistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-        artistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-        artistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-        artistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-        artistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-        artistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-        artistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-        artistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-        artistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-
+        // TODO
         artistVerticalListAdapter = new ArtistVerticalListAdapter(this, artistArrayList);
         binding.rccAllArtist.setAdapter(artistVerticalListAdapter);
     }

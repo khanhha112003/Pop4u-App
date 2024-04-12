@@ -33,10 +33,10 @@
             android:name=".AccountScreen.AccountScreen"
             android:exported="false" />
         <activity
-            android:name=".home.ProductListCategory"
+            android:name=".Home.ProductListCategory"
             android:exported="false" />
         <activity
-            android:name=".home.AllArtist"
+            android:name=".Home.AllArtist"
             android:exported="false" />
         <activity
             android:name=".LoginScreen.LoginPage"
@@ -86,7 +86,7 @@
         <!-- android:name=".CartScreen.Cart" -->
         <!-- android:exported="false" /> -->
         <activity
-            android:name=".home.HomeScreen"
+            android:name=".Home.HomeScreen"
             android:exported="false" />
         <activity
             android:name=".PaymentScreen.Payment"

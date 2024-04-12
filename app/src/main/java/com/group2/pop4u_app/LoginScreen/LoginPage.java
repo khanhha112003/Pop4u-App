@@ -1,24 +1,18 @@
-package com.group2.pop4u_app.LoginScreen;
+package com.group2.pop4u_app.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.SignUp.SignUp_1;
 import com.group2.pop4u_app.databinding.ActivityLoginPageBinding;
-import com.group2.pop4u_app.home.HomeScreen;
+import com.group2.pop4u_app.Home.HomeScreen;
 
 public class LoginPage extends AppCompatActivity {
 
     ActivityLoginPageBinding binding;
-
-    private boolean passwordShowing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +22,6 @@ public class LoginPage extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         addEvents();
-
 
 
     }
@@ -47,14 +40,14 @@ public class LoginPage extends AppCompatActivity {
                 boolean cancel = false;
                 View focusView = null;
 
-                // Kiểm tra mail
+                // Check for a valid email address.
                 if (!isValidEmail(email)) {
                     binding.edtEmail.setError("Bạn đã nhập sai email. Vui lòng nhập lại");
                     focusView = binding.edtEmail;
                     cancel = true;
                 }
 
-                // Kiểm tra pass
+                // Check for a valid password.
                 if (!isValidPassword(password)) {
                     binding.edtPass.setError("Mật khẩu phải chứa ít nhất 8 ký tự, bao gồm chữ hoa, số và ký tự đặc biệt");
                     if (focusView == null) {
@@ -66,43 +59,15 @@ public class LoginPage extends AppCompatActivity {
                 if (cancel) {
                     focusView.requestFocus();
                 } else {
-                    // trở về HomePage
-                    Intent intent = new Intent(LoginPage.this, HomeScreen.class);
+                    // Navigate to HomePage
+                    Intent intent = new Intent(LoginPage.this, HomeScreen.class); // Adjust this to your HomePage activity
                     startActivity(intent);
-                    finish();
+                    finish(); // Optional: If you don't want users to return to the login screen when pressing back
                 }
             }
         });
-        final EditText edtPass = findViewById(R.id.edtPass);
-        final ImageView imvShowPass = findViewById(R.id.imvShowPass);
-        binding.imvShowPass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (passwordShowing) {
-                    passwordShowing = false;
 
-                    edtPass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    imvShowPass.setImageResource(R.drawable.visibility_showpass);
-                }else {
-                    passwordShowing = true;
-
-                    edtPass.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                    imvShowPass.setImageResource(R.drawable.visibility_off);
-                }
-                //di chuyển cursor
-                edtPass.setSelection(edtPass.length());
-            }
-        });
-
-        binding.txtForgotPass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginPage.this, ForgotPassScreen.class);
-                startActivity(intent);
-            }
-        });
-
-        binding.txtCreateAcc.setOnClickListener(new View.OnClickListener() {
+        binding.textView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginPage.this, SignUp_1.class);
