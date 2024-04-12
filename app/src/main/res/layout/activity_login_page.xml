@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.LoginPage"
+    tools:context=".LoginScreen.LoginPage"
     android:padding="20dp">
 
     <ImageView
@@ -13,7 +13,7 @@
         android:layout_width="180dp"
         android:layout_height="80dp"
         android:layout_marginTop="44dp"
-        android:src="@drawable/logo"
+        android:src="@drawable/onboarding_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,59 +51,102 @@
         android:id="@+id/edtEmail"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/shape_edit_text"
         android:hint="Email của bạn"
+        android:drawableLeft="@drawable/person"
+        android:drawablePadding="10dp"
         android:inputType="textEmailAddress"
-        android:padding="15dp"
+        android:padding="12dp"
         android:textColorHint="@color/md_theme_outline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/txtSignIn"
         app:layout_constraintTop_toBottomOf="@+id/txtNoteLogin" />
 
-    <EditText
-        android:id="@+id/edtPass"
+    <LinearLayout
+        android:id="@+id/llPass"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/shape_edit_text"
-        android:hint="Mật khẩu"
-        android:padding="15dp"
-        android:inputType="textPassword"
-        android:textColorHint="@color/md_theme_outline"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/edtEmail"
-        app:layout_constraintTop_toBottomOf="@+id/edtEmail" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtEmail"
+        android:weightSum="10">
 
+        <EditText
+            android:id="@+id/edtPass"
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@color/transparent"
+            android:drawableLeft="@drawable/lock"
+            android:drawablePadding="10dp"
+            android:hint="Mật khẩu"
+            android:inputType="textPassword"
+            android:padding="12dp"
+            android:textColorHint="@color/md_theme_outline"
+            android:layout_weight="9" />
+
+        <ImageView
+            android:id="@+id/imvShowPass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/visibility_showpass"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:paddingEnd="5dp"/>
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/txtForgotPass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:drawableEnd="@drawable/login_page_arrow_outward_icon"
-        android:fontFamily="@font/inter"
+        android:layout_marginTop="30dp"
+        android:drawableRight="@drawable/login_page_arrow_outward_icon"
+        android:fontFamily="@font/inter_semibold"
         android:text="Bạn đã quên mật khẩu?"
+        android:textColor="@color/md_theme_primary"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtPass" />
+        app:layout_constraintTop_toBottomOf="@+id/llPass" />
 
-
-    <TextView
-        android:id="@+id/textView2"
+    <LinearLayout
+        android:id="@+id/lltext1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/inter"
-        android:text="Bạn chưa có tài khoản tại Pop4u? Tạo tài khoản ngay bây giờ."
-        android:textSize="12sp"
+        android:orientation="horizontal"
+        android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/txtForgotPass">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/inter"
+            android:text="Bạn chưa có tài khoản tại Pop4u?"
+            android:textSize="12sp" />
+        <TextView
+            android:id="@+id/txtCreateAcc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingStart="5dp"
+            android:fontFamily="@font/inter"
+            android:text="Tạo tài khoản ngay bây giờ."
+            android:textSize="12sp"
+            android:textColor="@color/md_theme_primary"/>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnLogIn"
@@ -115,5 +158,5 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/lltext1" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,17 +1,13 @@
-package com.group2.pop4u_app.Activity;
+package com.group2.pop4u_app.LoginScreen;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ImageView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.SignUp.SignUp_1;
@@ -22,6 +18,8 @@ public class LoginPage extends AppCompatActivity {
 
     ActivityLoginPageBinding binding;
 
+    private boolean passwordShowing = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +28,7 @@ public class LoginPage extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         addEvents();
+
 
 
     }
@@ -48,14 +47,14 @@ public class LoginPage extends AppCompatActivity {
                 boolean cancel = false;
                 View focusView = null;
 
-                // Check for a valid email address.
+                // Kiểm tra mail
                 if (!isValidEmail(email)) {
                     binding.edtEmail.setError("Bạn đã nhập sai email. Vui lòng nhập lại");
                     focusView = binding.edtEmail;
                     cancel = true;
                 }
 
-                // Check for a valid password.
+                // Kiểm tra pass
                 if (!isValidPassword(password)) {
                     binding.edtPass.setError("Mật khẩu phải chứa ít nhất 8 ký tự, bao gồm chữ hoa, số và ký tự đặc biệt");
                     if (focusView == null) {
@@ -67,15 +66,43 @@ public class LoginPage extends AppCompatActivity {
                 if (cancel) {
                     focusView.requestFocus();
                 } else {
-                    // Navigate to HomePage
-                    Intent intent = new Intent(LoginPage.this, HomeScreen.class); // Adjust this to your HomePage activity
+                    // trở về HomePage
+                    Intent intent = new Intent(LoginPage.this, HomeScreen.class);
                     startActivity(intent);
-                    finish(); // Optional: If you don't want users to return to the login screen when pressing back
+                    finish();
                 }
             }
         });
+        final EditText edtPass = findViewById(R.id.edtPass);
+        final ImageView imvShowPass = findViewById(R.id.imvShowPass);
+        binding.imvShowPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (passwordShowing) {
+                    passwordShowing = false;
 
-        binding.textView2.setOnClickListener(new View.OnClickListener() {
+                    edtPass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    imvShowPass.setImageResource(R.drawable.visibility_showpass);
+                }else {
+                    passwordShowing = true;
+
+                    edtPass.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    imvShowPass.setImageResource(R.drawable.visibility_off);
+                }
+                //di chuyển cursor
+                edtPass.setSelection(edtPass.length());
+            }
+        });
+
+        binding.txtForgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginPage.this, ForgotPassScreen.class);
+                startActivity(intent);
+            }
+        });
+
+        binding.txtCreateAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginPage.this, SignUp_1.class);
