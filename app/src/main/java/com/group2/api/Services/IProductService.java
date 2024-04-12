@@ -19,6 +19,15 @@ public interface IProductService {
             @Query("artist_code") String artist_code
     );
 
+    @GET("/api/product/product_list")
+    Call<ProductResponseDAO> getProductByCategory(
+            @Query("category") String category,
+            @Query("page") Integer page,
+            @Query("order") String order,
+            @Query("limit") Integer limit,
+            @Query("rating") Integer rating
+    );
+
     @GET("/api/product/product_detail")
     Call<ProductDAO> getProductDetail(
             @Query("product_code") String product_code
@@ -27,5 +36,11 @@ public interface IProductService {
     @GET("/api/product/search_product")
     Call<ArrayList<ProductDAO>> searchProduct(
             @Query("product_name") String product_name
+    );
+
+    @GET("/api/product/product_list")
+    Call<ProductResponseDAO> getArtistProductList(
+            @Query("limit") Integer limit,
+            @Query("artist_code") String artist_code
     );
 }

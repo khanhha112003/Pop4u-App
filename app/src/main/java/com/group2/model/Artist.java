@@ -1,58 +1,55 @@
 package com.group2.model;
 
 public class Artist {
-    int artistID;
-    int artistAvatar;
+    String artistCode;
+    String artistAvatar;
     String artistName;
     String artistDescription;
+    Boolean isHot;
+    String artistLogo;
     int artistYearDebut;
 
-    public Artist(int artistID, int artistAvatar, String artistName, String artistDescription, int artistYearDebut) {
-        this.artistID = artistID;
+    public Artist(  String artistCode,
+                    String artistAvatar,
+                    String artistName,
+                    String artistDescription,
+                    Boolean isHot,
+                    String artistLogo,
+                    int artistYearDebut) {
+        this.artistCode = artistCode;
         this.artistAvatar = artistAvatar;
         this.artistName = artistName;
         this.artistDescription = artistDescription;
+        this.isHot = isHot;
+        this.artistLogo = artistLogo;
         this.artistYearDebut = artistYearDebut;
     }
 
-    public int getArtistID() {
-        return artistID;
+    public String getArtistCode() {
+        return artistCode;
     }
 
-    public void setArtistID(int artistID) {
-        this.artistID = artistID;
-    }
-
-    public int getArtistAvatar() {
+    public String getArtistAvatar() {
         return artistAvatar;
-    }
-
-    public void setArtistAvatar(int artistAvatar) {
-        this.artistAvatar = artistAvatar;
     }
 
     public String getArtistName() {
         return artistName;
     }
 
-    public void setArtistName(String artistName) {
-        this.artistName = artistName;
+    public String getArtistDescription() { return artistDescription; }
+
+    public Boolean getIsHot() {
+        return isHot;
     }
 
-    public String getArtistDescription() {
-        return artistDescription;
-    }
-
-    public void setArtistDescription(String artistDescription) {
-        this.artistDescription = artistDescription;
+    public String getArtistLogo() {
+        return artistLogo;
     }
 
     public int getArtistYearDebut() {
         return artistYearDebut;
     }
 
-    public void setArtistYearDebut(int artistYearDebut) {
-        this.artistYearDebut = artistYearDebut;
-    }
 }
 

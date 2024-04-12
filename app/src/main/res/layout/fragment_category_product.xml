@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchScreen.MerchFragment">
+    tools:context=".SearchScreen.CategoryProductFragment">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -28,11 +28,12 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/tv_product_search_category_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:fontFamily="@font/inter_semibold"
-                android:text="Merch"
+                android:text="Tất cả"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
 
@@ -54,7 +55,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <GridView
-            android:id="@+id/gvMerch"
+            android:id="@+id/gvAllProduct"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="10dp"

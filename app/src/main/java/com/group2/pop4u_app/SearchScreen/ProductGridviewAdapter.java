@@ -15,6 +15,7 @@ import androidx.cardview.widget.CardView;
 import com.group2.adapter.BigProductCardRecyclerAdapter;
 import com.group2.model.Product;
 import com.group2.pop4u_app.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -63,14 +64,20 @@ public class ProductGridviewAdapter extends BaseAdapter {
         }
 
         public void setCardContent(Product product){
-//            txtProductArtist.setText(product.getProductArtistName());
-//            txtProductName.setText(product.getProductName());
-//            txtProductPrice.setText(product.getProductPrice());
-//            txtProductLabel.setText(product.getProductLabel());
-//            txtRating.setText(product.getProductSalePercent());
-//            imvMediumProductImage.setImageResource(product.getProductImage1());
-//            int isDisplaySaleBadge = product.getProductSalePercent() == 0 ? View.INVISIBLE: View.VISIBLE;
-//            crdSalePercent.setVisibility(isDisplaySaleBadge);
+            txtProductArtist.setText(product.getProductArtistName());
+            txtProductName.setText(product.getProductName());
+//            txtProductPrice.setText(String.format("%sđ", product.getProductPrice()));
+//            txtRating.setText(String.format("-%s", String.valueOf(product.getProductRating() + "%")));
+            txtLabel.setText(product.getProductLabel());
+//            txtSalePercent.setText(String.format("-%s", String.valueOf(product.getProductSalePercent() + "%")));
+            Picasso.get()
+                    .load(product.getBannerPhoto())
+                    .placeholder(R.drawable.placeholder_image)
+                    .error(R.drawable.error_image)
+                    .fit().centerInside()
+                    .into(imvMediumProductImage);
+            int isDisplaySaleBadge = product.getProductSalePercent() == 0 ? View.INVISIBLE: View.VISIBLE;
+            crdSalePercent.setVisibility(isDisplaySaleBadge);
         }
     }
     @Override
