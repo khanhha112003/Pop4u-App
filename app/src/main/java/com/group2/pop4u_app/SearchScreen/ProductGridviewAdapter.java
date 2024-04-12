@@ -55,7 +55,7 @@ public class ProductGridviewAdapter extends BaseAdapter {
         public ViewHolder(View view) {
             txtProductArtist = (TextView) view.findViewById(R.id.txtProductArtist);
             txtProductName = (TextView) view.findViewById(R.id.txtProductName);
-            txtProductPrice = (TextView) view.findViewById(R.id.txtProductPrice);
+            txtProductPrice = (TextView) view.findViewById(R.id.txtMediumCardProductPrice);
             imvMediumProductImage = (ImageView) view.findViewById(R.id.imvMediumProductImage);
             txtLabel = view.findViewById(R.id.txtLabel);
             txtRating = view.findViewById(R.id.txtRating);
@@ -66,10 +66,9 @@ public class ProductGridviewAdapter extends BaseAdapter {
         public void setCardContent(Product product){
             txtProductArtist.setText(product.getProductArtistName());
             txtProductName.setText(product.getProductName());
-//            txtProductPrice.setText(String.format("%sđ", product.getProductPrice()));
-//            txtRating.setText(String.format("-%s", String.valueOf(product.getProductRating() + "%")));
+            txtProductPrice.setText(String.format("%sđ", product.getProductPrice()));
+            txtRating.setText(String.format("-%s", String.valueOf(product.getProductRating() + "%")));
             txtLabel.setText(product.getProductLabel());
-//            txtSalePercent.setText(String.format("-%s", String.valueOf(product.getProductSalePercent() + "%")));
             Picasso.get()
                     .load(product.getBannerPhoto())
                     .placeholder(R.drawable.placeholder_image)
