@@ -49,8 +49,41 @@ public class ProductService {
         return future;
     }
 
-    public CompletableFuture<ProductDAO> getProduct(String product_code) {
-        CompletableFuture<ProductDAO> future = new CompletableFuture<>();
+    public CompletableFuture<ArrayList<Product>> getProductByCategory(String category,
+                                                                      Integer page,
+                                                                      String order,
+                                                                      Integer limit,
+                                                                      Integer rating) {
+        CompletableFuture<ArrayList<Product>> future = new CompletableFuture<>();
+        executor.execute(() -> {
+            IProductService service = ServiceGenerator.createService(IProductService.class);
+            Call<ProductResponseDAO> call = service.getProductByCategory(category, page, order, limit, rating);
+
+            try {
+                Response<ProductResponseDAO> response = call.execute();
+                if (response.isSuccessful()) {
+                    ProductResponseDAO productResponse = response.body();
+                    if (productResponse == null) {
+                        future.completeExceptionally(new NullPointerException("Product not found")); // Complete the future exceptionally if product is null
+                        return;
+                    }
+                    ArrayList<ProductDAO> listProductDAO = new ArrayList<>(productResponse.getProductList());
+                    ArrayList<Product> products = new ArrayList<>();
+                    for (ProductDAO productDAO : listProductDAO) {
+                        products.add(productDAO.asProduct());
+                    }
+                    future.complete(products); // Complete the future with the ProductResponseDAO object
+                } else {
+                    future.completeExceptionally(new Exception("Product Network Request Error: " + response.code())); // Complete the future exceptionally if the response is not successful
+                }
+            } catch (IOException e) {
+                future.completeExceptionally(e); // Complete the future exceptionally if an IOException occurs
+            }
+        });
+        return future;
+    }
+    public CompletableFuture<Product> getProduct(String product_code) {
+        CompletableFuture<Product> future = new CompletableFuture<>();
         executor.execute(() -> {
             IProductService service = ServiceGenerator.createService(IProductService.class);
             Call<ProductDAO> call = service.getProductDetail(product_code);
@@ -60,7 +93,7 @@ public class ProductService {
                 if (response.isSuccessful()) {
                     ProductDAO product = response.body();
                     if (product != null) {
-                        future.complete(product); // Complete the future with the ProductDAO object
+                        future.complete(product.asProduct()); // Complete the future with the ProductDAO object
                     } else {
                         future.completeExceptionally(new NullPointerException("Product not found")); // Complete the future exceptionally if product is null
                     }
@@ -74,8 +107,8 @@ public class ProductService {
         return future;
     }
 
-    public CompletableFuture<ArrayList<ProductDAO>> searchProduct(String query_product) {
-        CompletableFuture<ArrayList<ProductDAO>> future = new CompletableFuture<>();
+    public CompletableFuture<ArrayList<Product>> searchProduct(String query_product) {
+        CompletableFuture<ArrayList<Product>> future = new CompletableFuture<>();
         executor.execute(() -> {
             IProductService service = ServiceGenerator.createService(IProductService.class);
             Call<ArrayList<ProductDAO>> call = service.searchProduct(query_product);
@@ -83,7 +116,15 @@ public class ProductService {
             try {
                 Response<ArrayList<ProductDAO>> response = call.execute();
                 if (response.isSuccessful()) {
-                    ArrayList<ProductDAO> products = response.body();
+                    ArrayList<ProductDAO> productsRequestData = response.body();
+                    ArrayList<Product> products = new ArrayList<>();
+                    if (productsRequestData == null) {
+                        future.completeExceptionally(new NullPointerException("Product not found")); // Complete the future exceptionally if product is null
+                        return;
+                    }
+                    for (ProductDAO productDAO : productsRequestData) {
+                        products.add(productDAO.asProduct());
+                    }
                     future.complete(products); // Complete the future with the list of products
                 } else {
                     future.completeExceptionally(new Exception("Product Network Request Error: " + response.code())); // Complete the future exceptionally if the response is not successful

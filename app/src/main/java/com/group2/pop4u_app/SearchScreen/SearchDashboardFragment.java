@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
@@ -18,14 +17,11 @@ import com.group2.adapter.ArtistHorizontalListAdapter;
 import com.group2.api.Services.ArtistService;
 import com.group2.model.Artist;
 import com.group2.pop4u_app.Activity.MainActivity;
-import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetHorizontalRecycler;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentSearchDashboardBinding;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
@@ -67,23 +63,27 @@ public class SearchDashboardFragment extends Fragment implements SearchView.OnQu
     }
 
     private void setTabHandler() {
+        MainActivity mainActivity = (MainActivity) getActivity();
+        if (mainActivity == null) {
+            return;
+        }
         getView().findViewById(binding.searchDashboardCategoryCardAll.getId())
-                .setOnClickListener(view -> ((MainActivity) getContext()).replaceFragment(new AllProductFragment()));
+                .setOnClickListener(view ->mainActivity.replaceFragment(new CategoryProductFragment("all")));
 
         getView().findViewById(binding.searchDashboardCategoryCardAlbum.getId())
-                .setOnClickListener(view -> ((MainActivity) getContext()).replaceFragment(new AlbumFragment()));
+                .setOnClickListener(view -> mainActivity.replaceFragment(new CategoryProductFragment("album")));
 
         getView().findViewById(binding.searchDashboardCategoryCardMerch.getId())
-                .setOnClickListener(view -> ((MainActivity) getContext()).replaceFragment(new MerchFragment()));
+                .setOnClickListener(view -> mainActivity.replaceFragment(new CategoryProductFragment("merch")));
 
         getView().findViewById(binding.searchDashboardCategoryCardPhotobook.getId())
-                .setOnClickListener(view -> ((MainActivity) getContext()).replaceFragment(new PhotobookFragment()));
+                .setOnClickListener(view -> mainActivity.replaceFragment(new CategoryProductFragment("photo")));
 
         getView().findViewById(binding.searchDashboardCategoryCardVinyl.getId())
-                .setOnClickListener(view -> ((MainActivity) getContext()).replaceFragment(new VinylFragment()));
+                .setOnClickListener(view -> mainActivity.replaceFragment(new CategoryProductFragment("vinyl")));
 
         getView().findViewById(binding.searchDashboardCategoryCardLightstick.getId())
-                .setOnClickListener(view -> ((MainActivity) getContext()).replaceFragment(new LightstickFragment()));
+                .setOnClickListener(view -> mainActivity.replaceFragment(new CategoryProductFragment("lightstick")));
     }
 
 

@@ -129,7 +129,6 @@ public class HomepageFragment extends Fragment {
             saleProductFuture.get();
             featuredArtistFuture.get();
         } catch (Exception e) {
-            e.printStackTrace();
             Log.d("HomepageFragment", "loadData: " + e.getMessage());
         }
     }
