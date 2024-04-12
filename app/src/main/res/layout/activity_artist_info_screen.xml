@@ -6,98 +6,127 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".ArtistInfoScreen.ArtistInfoScreen">
-    
-    <ImageView
-        android:id="@+id/imvArtistAvatar"
-        android:layout_width="match_parent"
+
+    <ScrollView
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/img_1"
-        android:adjustViewBounds="true"/>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="1"
-        android:src="@drawable/rectangle_6496"
-        app:layout_constraintStart_toStartOf="@id/imvArtistAvatar"
-        app:layout_constraintTop_toTopOf="@id/imvArtistAvatar"
-        app:layout_constraintEnd_toEndOf="@id/imvArtistAvatar"/>
-
-    <TextView
-        android:id="@+id/txtArtistName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/txtArtistYearDebut"
-        android:layout_width="wrap_content"
-        android:text="Lana Del Rey"
-        android:fontFamily="@font/inter_semibold"
-        android:textSize="40sp"
-        android:textColor="@color/md_theme_onSurface"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/txtArtistYearDebut"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/imvArtistAvatar"
-        android:layout_marginBottom="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ra mat nam 2012"
-        android:textSize="17.5sp"
-        android:fontFamily="@font/inter_semibold"
-        android:textColor="@color/md_theme_error"/>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/crd01"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imvArtistAvatar"
-        app:cardCornerRadius="16dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="20dp"
-        app:cardElevation="0dp"
-        android:backgroundTint="@color/md_theme_surfaceContainer">
-        <TextView
-            android:id="@+id/txtArtistDescription"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:fontFamily="@font/inter"
-            android:textColor="@color/md_theme_onSurface"
-            android:text="Elizabeth Woolridge Grant (sinh ngày 21 tháng 6 năm 1985) Elizabeth Woolridge Grant (sinh ngày 21 tháng 6 năm 1985) Elizabeth Woolridge Grant (sinh ngày 21 tháng 6 năm 1985) Elizabeth Woolridge Grant (sinh ngày 21 tháng 6 năm 1985)"/>
-    </androidx.cardview.widget.CardView>
-    <TextView
-        android:id="@+id/txt01"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/crd01"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:textColor="@color/md_theme_onSurface"
-        android:text="@string/product_list_of_artist"
-        android:fontFamily="@font/inter_semibold"
-        android:textSize="27.5sp"
-        android:gravity="center"/>
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            tools:context=".ArtistInfoScreen.ArtistInfoScreen">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rccProductOfArtist"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txt01"
-        android:layout_marginTop="20dp"/>
+            <ImageView
+                android:id="@+id/imvArtistAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_1"
+                app:layout_constraintDimensionRatio="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:src="@drawable/rectangle_6496"
+                app:layout_constraintDimensionRatio="1"
+                app:layout_constraintEnd_toEndOf="@id/imvArtistAvatar"
+                app:layout_constraintStart_toStartOf="@id/imvArtistAvatar"
+                app:layout_constraintTop_toTopOf="@id/imvArtistAvatar" />
+
+            <ImageView
+                android:id="@+id/imv_artist_detail_back"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/baseline_arrow_back_24"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/txtArtistName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Lana Del Rey"
+                android:textColor="@color/md_theme_onSurface"
+                android:textSize="40sp"
+                app:layout_constraintBottom_toTopOf="@+id/txtArtistYearDebut"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/txtArtistYearDebut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Ra mat nam 2012"
+                android:textColor="@color/md_theme_error"
+                android:textSize="17.5sp"
+                app:layout_constraintBottom_toBottomOf="@id/imvArtistAvatar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/crd01"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="@color/md_theme_surfaceContainer"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imvArtistAvatar">
+
+                <TextView
+                    android:id="@+id/txtArtistDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter"
+                    android:padding="10dp"
+                    android:text="Elizabeth Woolridge Grant (sinh ngày 21 tháng 6 năm 1985) Elizabeth Woolridge Grant (sinh ngày 21 tháng 6 năm 1985) Elizabeth Woolridge Grant (sinh ngày 21 tháng 6 năm 1985) Elizabeth Woolridge Grant (sinh ngày 21 tháng 6 năm 1985)"
+                    android:textColor="@color/md_theme_onSurface" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/txt01"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/inter_semibold"
+                android:gravity="center"
+                android:text="@string/product_list_of_artist"
+                android:textColor="@color/md_theme_onSurface"
+                android:textSize="27.5sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/crd01" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rccProductOfArtist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt01" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

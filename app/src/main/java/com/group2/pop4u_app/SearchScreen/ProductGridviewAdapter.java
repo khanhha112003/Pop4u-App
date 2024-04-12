@@ -44,8 +44,6 @@ public class ProductGridviewAdapter extends BaseAdapter {
         return i;
     }
 
-
-
     private static class ViewHolder {
         TextView txtProductName, txtProductArtist, txtProductPrice, txtLabel, txtRating, txtSalePercent;
         ImageView imvMediumProductImage;
