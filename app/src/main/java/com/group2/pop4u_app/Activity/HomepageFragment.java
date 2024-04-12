@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,9 @@ import com.group2.adapter.BannerAdapter;
 import com.group2.adapter.BigProductCardRecyclerAdapter;
 import com.group2.adapter.MiniProductCardRecyclerAdapter;
 import com.group2.adapter.SaleProductCardRecyclerAdapter;
+import com.group2.api.DAO.ProductResponseDAO;
+import com.group2.api.Services.ArtistService;
+import com.group2.api.Services.ProductService;
 import com.group2.model.Artist;
 import com.group2.model.Product;
 import com.group2.pop4u_app.ArtistInfoScreen.ArtistInfoScreen;
@@ -40,6 +44,7 @@ import com.group2.pop4u_app.Home.ProductOfWeekFragment;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,7 +58,6 @@ public class HomepageFragment extends Fragment {
     BigProductCardRecyclerAdapter rcmProductAdapter;
     SaleProductCardRecyclerAdapter saleProductAdapter;
     ArrayList<Product> saleProductArrayList, newReleasedProductArrayList, rcmProductArrayList;
-    ArtistHorizontalListAdapter artistHorizontalListAdapter;
     ArrayList<Artist> featuredArtistArrayList;
     ArtistHorizontalListAdapter featuredArtistAdapter;
     ViewPager mSliceViewpager;
@@ -62,35 +66,14 @@ public class HomepageFragment extends Fragment {
     int currentPage = 0;
     TextView[] dots;
 
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     private Timer timer;
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public HomepageFragment() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomepageFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static HomepageFragment newInstance(String param1, String param2) {
         HomepageFragment fragment = new HomepageFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -98,10 +81,6 @@ public class HomepageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -119,6 +98,40 @@ public class HomepageFragment extends Fragment {
         addItemClickEvents();
         loadProductOfWeek();
         setupBanner();
+        loadData();
+    }
+
+    private void loadData() {
+        CompletableFuture<ArrayList<Product>> newProductFuture = ProductService.instance.getListProduct(1, "new", "asc", 10, 0, "");
+//        CompletableFuture<ArrayList<Product>> rcmProductFuture = ProductService.instance.getListProduct(1, "recommend", "desc", 10, 0, "");
+        CompletableFuture<ArrayList<Product>> saleProductFuture = ProductService.instance.getListProduct(1, "sale", "desc", 10, 0, "");
+        CompletableFuture<ArrayList<Artist>> featuredArtistFuture = ArtistService.instance.getListArtist(1, 4, "hot");
+        newProductFuture.thenAccept(products -> {
+            newReleasedProductArrayList.clear();
+            newReleasedProductArrayList.addAll(products);
+            newProductAdapter.notifyDataSetChanged();
+        });
+
+        saleProductFuture.thenAccept(products -> {
+            saleProductArrayList.clear();
+            saleProductArrayList.addAll(products);
+            saleProductAdapter.notifyDataSetChanged();
+        });
+
+        featuredArtistFuture.thenAccept(artists -> {
+            featuredArtistArrayList.clear();
+            featuredArtistArrayList.addAll(artists);
+            featuredArtistAdapter.notifyDataSetChanged();
+        });
+
+        try {
+            newProductFuture.get();
+            saleProductFuture.get();
+            featuredArtistFuture.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("HomepageFragment", "loadData: " + e.getMessage());
+        }
     }
 
     private void loadProductOfWeek() {

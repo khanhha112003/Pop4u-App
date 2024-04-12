@@ -13,16 +13,16 @@ import java.util.concurrent.Executors;
 import retrofit2.Call;
 import retrofit2.Response;
 
-public class AuthorService {
-    public static final AuthorService instance = new AuthorService();
+public class ArtistService {
+    public static final ArtistService instance = new ArtistService();
 
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    public CompletableFuture<ArrayList<Artist>> getListArtist(Integer page, Integer limit) {
+    public CompletableFuture<ArrayList<Artist>> getListArtist(Integer page, Integer limit, String type_filter) {
         CompletableFuture<ArrayList<Artist>> future = new CompletableFuture<>();
         executor.execute(() -> {
             IArtistService service = ServiceGenerator.createService(IArtistService.class);
-            Call<ArtistResponseDAO> call = service.getArtistList(page, limit);
+            Call<ArtistResponseDAO> call = service.getArtistList(page, limit, type_filter);
 
             try {
                 Response<ArtistResponseDAO> response = call.execute();

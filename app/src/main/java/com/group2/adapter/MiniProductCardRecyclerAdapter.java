@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.group2.model.Artist;
 import com.group2.model.Product;
 import com.group2.pop4u_app.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -41,13 +42,17 @@ public class MiniProductCardRecyclerAdapter extends RecyclerView.Adapter<MiniPro
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Product product = productList.get(position);
         if (product.getProductSalePercent() != 0) {
-            holder.txtSalePercent.setText("-" + String.valueOf(product.getProductSalePercent()) + "%");
+            holder.txtSalePercent.setText(String.format("-%s%%", String.valueOf(product.getProductSalePercent())));
         } else {
             holder.crdSalePercent.setVisibility(View.INVISIBLE); // or View.INVISIBLE or View.GONE based on your requirement
         }
-
-        holder.imvProductImage.setImageResource(product.getProductImage1());
-        holder.txtProductPrice.setText(String.valueOf(product.getProductPrice()) + "₫");
+        Picasso.get()
+                .load(product.getBannerPhoto())
+                .placeholder(R.drawable.placeholder_image)
+                .error(R.drawable.error_image)
+                .fit()
+                .into(holder.imvProductImage);
+        holder.txtProductPrice.setText(String.format("%s₫", String.valueOf(product.getProductPrice())));
         holder.txtProductName.setText(product.getProductName());
         holder.txtProductArtist.setText(product.getProductArtistName());
 

@@ -18,7 +18,8 @@ public interface IArtistService {
     @GET("/api/artist/artist_list")
     Call<ArtistResponseDAO> getArtistList(
             @Query("page") Integer page,
-            @Query("limit") Integer limit
+            @Query("limit") Integer limit,
+            @Query("type_filter") String type_filter
     );
 
     @GET("/api/artist/artist_detail")

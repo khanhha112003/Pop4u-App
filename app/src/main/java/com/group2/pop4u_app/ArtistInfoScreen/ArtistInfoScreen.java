@@ -7,13 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.group2.api.DAO.ProductDAO;
-import com.group2.api.DAO.ProductResponseDAO;
-import com.group2.api.Services.AuthorService;
+import com.group2.api.Services.ArtistService;
 import com.group2.api.Services.ProductService;
 import com.group2.model.Artist;
 import com.group2.model.Product;
-import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.ActivityArtistInfoScreenBinding;
 
 import java.util.ArrayList;
@@ -34,8 +31,8 @@ public class ArtistInfoScreen extends AppCompatActivity {
     private void getData() {
         Intent intent = getIntent();
         String artistCode = intent.getStringExtra("artistCode");
-        CompletableFuture<Artist> futureArtist = AuthorService.instance.getArtistDetail(artistCode);
-        CompletableFuture<ProductResponseDAO> futureProduct = ProductService.instance.getListProduct(1, "all", "desc", 10, 0, artistCode);
+        CompletableFuture<Artist> futureArtist = ArtistService.instance.getArtistDetail(artistCode);
+        CompletableFuture<ArrayList<Product>> futureProduct = ProductService.instance.getListProduct(1, "all", "desc", 10, 0, artistCode);
         futureArtist.thenAccept(artist -> {
             binding.txtArtistName.setText(artist.getArtistName());
             binding.txtArtistDescription.setText(artist.getArtistDescription());
@@ -44,13 +41,6 @@ public class ArtistInfoScreen extends AppCompatActivity {
 
         });
 
-        futureProduct.thenAccept(productResponse -> {
-            ArrayList<ProductDAO> product = new ArrayList<>(productResponse.getProductList());
-            ArrayList<Product> products = new ArrayList<>();
-            for (ProductDAO productDAO : product) {
-                products.add(productDAO.asProduct());
-            }
-        });
         try {
             futureArtist.get();
             futureProduct.get();

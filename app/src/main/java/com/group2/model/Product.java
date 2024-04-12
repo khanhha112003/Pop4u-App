@@ -1,12 +1,10 @@
 package com.group2.model;
 
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Locale;
+import java.util.ArrayList;
 
 public class Product {
     String productCode;
-    int productImage1;
     String productName;
     String productArtistName;
     String productLabel;
@@ -19,10 +17,23 @@ public class Product {
     int productStock;
     String productDescription;
 
-    public Product(String productCode, String productName, int productImage1, String productArtistName, String productLabel, int productPrice, int productComparingPrice, int productSalePercent, Double productRating, int productRatingCount, int productSoldAmount, int productStock, String productDescription) {
+    ArrayList<String> listProductPhoto;
+
+    public Product(String productCode,
+                   String productName,
+                   ArrayList<String> listProductPhoto,
+                   String productArtistName,
+                   String productLabel,
+                   int productPrice,
+                   int productComparingPrice,
+                   int productSalePercent,
+                   Double productRating,
+                   int productRatingCount,
+                   int productSoldAmount,
+                   int productStock,
+                   String productDescription) {
         this.productCode = productCode;
         this.productName = productName;
-        this.productImage1 = productImage1;
         this.productArtistName = productArtistName;
         this.productLabel = productLabel;
         this.productPrice = productPrice;
@@ -33,6 +44,7 @@ public class Product {
         this.productSoldAmount = productSoldAmount;
         this.productStock = productStock;
         this.productDescription = productDescription;
+        this.listProductPhoto = listProductPhoto;
     }
 
     public String getProductCode() {
@@ -59,9 +71,15 @@ public class Product {
     public int getProductSoldAmount() {
         return productSoldAmount;
     }
-    public int getProductImage1() {
-        return productImage1;
+
+    public String getBannerPhoto() {
+        return listProductPhoto.get(0);
     }
+
+    public ArrayList<String> getListProductPhoto() {
+        return listProductPhoto;
+    }
+
     public String getProductArtistName() {
         return productArtistName;
     }

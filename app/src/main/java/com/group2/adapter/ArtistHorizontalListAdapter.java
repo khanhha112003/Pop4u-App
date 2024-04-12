@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.group2.model.Artist;
 import com.group2.pop4u_app.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -50,7 +51,12 @@ public class ArtistHorizontalListAdapter extends RecyclerView.Adapter<ArtistHori
     @Override
     public void onBindViewHolder(@NonNull ArtistHorizontalListAdapter.ViewHolder holder, int position) {
         Artist artist = artistList.get(position);
-//        holder.imvArtistAvatar.setImageResource(R.drawable.img);
+        Picasso.get()
+                .load(artist.getArtistAvatar())
+                .placeholder(R.drawable.placeholder_image)
+                .error(R.drawable.error_image)
+                .fit().centerCrop()
+                .into(holder.imvArtistAvatar);
         holder.txtArtistName.setText(artist.getArtistName());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -3,6 +3,7 @@ package com.group2.api.Services;
 import android.util.Log;
 import com.group2.api.DAO.ProductDAO;
 import com.group2.api.DAO.ProductResponseDAO;
+import com.group2.model.Product;
 
 import retrofit2.Call;
 import java.io.IOException;
@@ -18,8 +19,8 @@ public class ProductService {
 
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    public CompletableFuture<ProductResponseDAO> getListProduct(Integer page , String type_filter, String order, Integer limit, Integer rating, String artist_code) {
-        CompletableFuture<ProductResponseDAO> future = new CompletableFuture<>();
+    public CompletableFuture<ArrayList<Product>> getListProduct(Integer page , String type_filter, String order, Integer limit, Integer rating, String artist_code) {
+        CompletableFuture<ArrayList<Product>> future = new CompletableFuture<>();
         executor.execute(() -> {
             IProductService service = ServiceGenerator.createService(IProductService.class);
             Call<ProductResponseDAO> call = service.getListProduct(page, type_filter, order, limit, rating, artist_code);
@@ -28,7 +29,16 @@ public class ProductService {
                 Response<ProductResponseDAO> response = call.execute();
                 if (response.isSuccessful()) {
                     ProductResponseDAO productResponse = response.body();
-                    future.complete(productResponse); // Complete the future with the ProductResponseDAO object
+                    if (productResponse == null) {
+                        future.completeExceptionally(new NullPointerException("Product not found")); // Complete the future exceptionally if product is null
+                        return;
+                    }
+                    ArrayList<ProductDAO> listProductDAO = new ArrayList<>(productResponse.getProductList());
+                    ArrayList<Product> products = new ArrayList<>();
+                    for (ProductDAO productDAO : listProductDAO) {
+                        products.add(productDAO.asProduct());
+                    }
+                    future.complete(products); // Complete the future with the ProductResponseDAO object
                 } else {
                     future.completeExceptionally(new Exception("Product Network Request Error: " + response.code())); // Complete the future exceptionally if the response is not successful
                 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.group2.model.Product;
 import com.group2.pop4u_app.R;
 
+import java.util.ArrayList;
 import java.util.Collection;
 @JsonIgnoreProperties({ "artist_code", "reviews", "rating_detail"})
 public class ProductDAO {
@@ -77,7 +78,8 @@ public class ProductDAO {
         if (productComparingPrice != 0) {
             salePercent = Math.round((productComparingPrice - productPrice) * 100 / productComparingPrice);
         }
-        return new Product(productCode, productName, R.drawable.img,productArtistName, label, productPrice, productComparingPrice, salePercent, productRating, productRatingCount, 30, productStock, productDescription);
+        ArrayList<String> listProductImage = new ArrayList<>(this.listProductImage);
+        return new Product(productCode, productName, listProductImage,productArtistName, label, productPrice, productComparingPrice, salePercent, productRating, productRatingCount, 30, productStock, productDescription);
     }
 
 }

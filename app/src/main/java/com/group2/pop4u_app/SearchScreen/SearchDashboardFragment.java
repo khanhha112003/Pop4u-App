@@ -8,12 +8,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 
 import com.group2.adapter.ArtistHorizontalListAdapter;
+import com.group2.api.Services.ArtistService;
 import com.group2.model.Artist;
 import com.group2.pop4u_app.Activity.MainActivity;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 public class SearchDashboardFragment extends Fragment implements SearchView.OnQueryTextListener  {
 
@@ -32,8 +35,6 @@ public class SearchDashboardFragment extends Fragment implements SearchView.OnQu
     ArrayList<Artist> featuredArtistArrayList;
     ArtistHorizontalListAdapter featuredArtistAdapter;
     Boolean isNotTypingSearch;
-
-    ArrayList<Artist> artistHorizontalList;
     public SearchDashboardFragment() {}
 
     public static SearchDashboardFragment newInstance() {
@@ -53,10 +54,9 @@ public class SearchDashboardFragment extends Fragment implements SearchView.OnQu
                              Bundle savedInstanceState) {
         binding = FragmentSearchDashboardBinding.inflate(inflater,container,false);
         setToolbar();
-       //setListArtist();
         setSearchBar();
         initData();
-
+        loadingData();
         return binding.getRoot();
     }
 
@@ -108,34 +108,34 @@ public class SearchDashboardFragment extends Fragment implements SearchView.OnQu
 
        // Tạo danh sách các nghệ sĩ đặc sắc
        featuredArtistArrayList = new ArrayList<>();
-//       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-//       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-//       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-//       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-//       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-//       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-//       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-//       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-//       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-//       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-//       featuredArtistArrayList.add(new Artist(1, R.drawable.img, "BIGBANG", "ABC", 2011));
-
 
        // Khởi tạo và thiết lập adapter
        featuredArtistAdapter = new ArtistHorizontalListAdapter(requireActivity(), featuredArtistArrayList);
        binding.rccHotArtist.setAdapter(featuredArtistAdapter);
    }
 
+    private void loadingData() {
+        CompletableFuture<ArrayList<Artist>> future = ArtistService.instance.getListArtist(1, 4, "hot");
+        future.thenAccept(artistList -> {
+            featuredArtistArrayList.addAll(artistList);
+            featuredArtistAdapter.notifyDataSetChanged();
+        });
+        try {
+            future.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("SearchDashboardFragment", "loadingData: " + e.getMessage());
+        }
+    }
+
     private void setSearchBar() {
         binding.svQuerySearchBox.setOnQueryTextListener(this);
     }
-
 
     @Override
     public boolean onQueryTextSubmit(String s) {
         return false;
     }
-
     @Override
     public boolean onQueryTextChange(String s) {
         if (!Objects.equals(s, "") && isNotTypingSearch) {
