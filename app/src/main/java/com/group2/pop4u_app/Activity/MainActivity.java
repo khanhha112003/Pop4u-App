@@ -7,7 +7,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
+import com.google.android.material.color.MaterialColors;
 import com.group2.api.DAO.ProductDAO;
 import com.group2.api.DAO.ProductResponseDAO;
 import com.group2.api.Services.ProductService;
@@ -64,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         }
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        setSupportActionBar(binding.topAppBar);
         replaceFragment(new HomepageFragment());
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.ic_home) {
@@ -85,4 +90,24 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frame_layout, fragment);
         fragmentTransaction.commit();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.top_main_action_bar, menu);
+        binding.topAppBar.setTitle(R.string.home_title);
+//        binding.appBarLayout.setStatusBarForegroundColor(getResources().color.md_theme_surfaceContainerLow);
+        return true;
+    }
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.mnFilterProduct) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".home.ProductOfWeekFragment">
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -38,6 +37,7 @@
                     android:src="@drawable/white_background_for_blur"
                     android:scaleType="centerCrop"/>
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:foreground="@drawable/foreground_onclick_color_change"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     android:id="@+id/crdProductOfWeek"
@@ -82,6 +82,7 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/crdProductImage"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             android:layout_marginStart="15dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content">
