@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.group2.pop4u_app.home.HomeScreen"
+    tools:context="com.group2.pop4u_app.Home.HomeScreen"
     android:background="@color/white">
 
     <androidx.fragment.app.FragmentContainerView

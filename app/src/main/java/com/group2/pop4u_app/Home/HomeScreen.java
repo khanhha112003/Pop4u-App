@@ -1,9 +1,6 @@
-package com.group2.pop4u_app.home;
+package com.group2.pop4u_app.Home;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
 
