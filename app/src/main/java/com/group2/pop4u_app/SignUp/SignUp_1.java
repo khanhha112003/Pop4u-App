@@ -14,7 +14,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.group2.pop4u_app.LoginScreen.LoginPage;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.ActivitySignUp1Binding;
 
@@ -129,8 +128,8 @@ public class SignUp_1 extends AppCompatActivity {
         binding.txtBacktoLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SignUp_1.this, LoginPage.class);
-                startActivity(intent);
+//                Intent intent = new Intent(SignUp_1.this, LoginPage.class);
+//                startActivity(intent);
             }
         });
     }
