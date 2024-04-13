@@ -1,4 +1,4 @@
-package com.group2.pop4u_app.Activity;
+package com.group2.pop4u_app.LoginScreen;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,9 +6,9 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.group2.pop4u_app.Activity.MainActivity;
 import com.group2.pop4u_app.SignUp.SignUp_1;
 import com.group2.pop4u_app.databinding.ActivityLoginPageBinding;
-import com.group2.pop4u_app.Home.HomeScreen;
 
 public class LoginPage extends AppCompatActivity {
 
@@ -60,7 +60,7 @@ public class LoginPage extends AppCompatActivity {
                     focusView.requestFocus();
                 } else {
                     // Navigate to HomePage
-                    Intent intent = new Intent(LoginPage.this, HomeScreen.class); // Adjust this to your HomePage activity
+                    Intent intent = new Intent(LoginPage.this, MainActivity.class); // Adjust this to your HomePage activity
                     startActivity(intent);
                     finish(); // Optional: If you don't want users to return to the login screen when pressing back
                 }

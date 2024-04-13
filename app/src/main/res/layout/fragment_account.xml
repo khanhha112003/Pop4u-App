@@ -116,11 +116,11 @@
                 android:text="@string/btn_sign_out"
                 android:fontFamily="@font/inter_semibold"
                 android:textSize="14sp"
+                android:padding="20dp"
                 android:layout_marginBottom="20dp"
-                android:backgroundTint="@drawable/button_small_text_filled_state_background"
-                android:textColor="@drawable/button_filled_text_color"
+                android:backgroundTint="@color/md_theme_secondaryContainer"
+                android:textColor="@color/md_theme_onSecondaryContainer"
                 app:layout_constraintTop_toBottomOf="@+id/cdvSystemSetting"/>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
