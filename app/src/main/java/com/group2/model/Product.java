@@ -62,6 +62,11 @@ public class Product {
     public int getProductPrice() {
         return productPrice;
     }
+
+    public int getProductComparingPrice() {
+        return productComparingPrice;
+    }
+
     public int getProductSalePercent() {
         return productSalePercent;
     }
@@ -74,6 +79,10 @@ public class Product {
 
     public String getBannerPhoto() {
         return listProductPhoto.get(0);
+    }
+
+    public String getProductDescription() {
+        return productDescription;
     }
 
     public ArrayList<String> getListProductPhoto() {

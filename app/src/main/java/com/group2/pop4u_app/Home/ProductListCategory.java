@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,19 +16,21 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.group2.adapter.BigProductCardRecyclerAdapter;
+import com.group2.api.Services.ProductService;
 import com.group2.model.Product;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.ActivityProductListCategoryBinding;
 
 import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
 
 public class ProductListCategory extends AppCompatActivity {
 
     ActivityProductListCategoryBinding binding;
 
     BigProductCardRecyclerAdapter bigProductCardRecyclerAdapter;
-    ArrayList<Product> productArrayList;
+    ArrayList<Product> productArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +38,14 @@ public class ProductListCategory extends AppCompatActivity {
         binding = ActivityProductListCategoryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.tbrProductList);
-        loadData();
+        loadRecycleView();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loadData();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -77,7 +85,7 @@ public class ProductListCategory extends AppCompatActivity {
     }
 
 
-    private void loadData() {
+    private void loadRecycleView() {
         Intent intent = getIntent();
         getSupportActionBar().setTitle(intent.getStringExtra("recyclerName"));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -86,11 +94,30 @@ public class ProductListCategory extends AppCompatActivity {
         binding.rccProductListInCategory.setLayoutManager(gridLayoutManager);
         binding.rccProductListInCategory.addItemDecoration(itemDecoration);
         binding.rccProductListInCategory.setHasFixedSize(true);
-
-
-        productArrayList = new ArrayList<>();
-//        productArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
         bigProductCardRecyclerAdapter = new BigProductCardRecyclerAdapter(this, productArrayList);
         binding.rccProductListInCategory.setAdapter(bigProductCardRecyclerAdapter);
+    }
+
+    private void loadData() {
+        String extra = getIntent().getStringExtra("recyclerID");
+        if (extra != null) {
+            String params = "";
+            if (extra.equals("saleProduct")) {
+                params = "sale";
+            } else if (extra.equals("newProduct")) {
+                params = "new";
+            }
+            CompletableFuture<ArrayList<Product>> future = ProductService.instance.getListProduct(null, params, "asc", 1000, 0, null);
+            future.thenAccept(products -> {
+                productArrayList.clear();
+                productArrayList.addAll(products);
+                runOnUiThread(() -> bigProductCardRecyclerAdapter.notifyDataSetChanged());
+            });
+            try {
+                future.get();
+            } catch (Exception e) {
+                Log.d("ProductListCategory", e.getMessage());
+            }
+        }
     }
 }

@@ -65,7 +65,7 @@ public class ProductGridviewAdapter extends BaseAdapter {
             txtProductArtist.setText(product.getProductArtistName());
             txtProductName.setText(product.getProductName());
             txtProductPrice.setText(String.format("%sđ", product.getProductPrice()));
-            txtRating.setText(String.format("-%s", String.valueOf(product.getProductRating() + "%")));
+            txtRating.setText(String.valueOf(product.getProductRating()));
             txtLabel.setText(product.getProductLabel());
             Picasso.get()
                     .load(product.getBannerPhoto())
