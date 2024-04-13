@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:title="@string/action_bar_favorite_action"
         android:icon="@drawable/favorite_icon_24"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
     <item android:icon="@drawable/quick_reorder_icon_24"
         android:title="@string/action_bar_order_action"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
 </menu>

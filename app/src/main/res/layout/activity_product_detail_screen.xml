@@ -6,9 +6,29 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".ProductDetailScreen.ProductDetailScreen">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:background="@color/md_theme_surfaceContainerLow">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tbrProductDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            android:background="@android:color/transparent"
+            app:titleTextColor="@color/md_theme_onSurface"
+            app:menu="@menu/menu_product_detail"/>
+    </com.google.android.material.appbar.AppBarLayout>
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsvProductDetail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/ctrProductButton"
         android:scrollbars="none">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -21,27 +41,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constraintDimensionRatio="1"/>
-
             <TextView
                 android:id="@+id/txtIndicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:text=""
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
+                android:textColor="@color/md_theme_outline"
+                android:textSize="12.5sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imvProductImage"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/imvProductImage"
+                app:layout_constraintStart_toStartOf="parent"
                 android:background="@drawable/button_small_filled_pressed_background2"
                 android:fontFamily="@font/inter"
-                android:padding="6dp"/>
+                android:paddingStart="7.5dp"
+                android:paddingEnd="7.5dp"
+                android:paddingTop="2.5dp"
+                android:paddingBottom="2.5dp"/>
             <TextView
                 android:id="@+id/txtProductPrice"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imvProductImage"
                 android:layout_marginTop="20dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="360.000₫"
@@ -53,7 +75,7 @@
                 android:id="@+id/txtComparingPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@+id/txtProductPrice"
+                app:layout_constraintBaseline_toBaselineOf="@+id/txtProductPrice"
                 app:layout_constraintStart_toEndOf="@+id/txtProductPrice"
                 android:layout_marginStart="10dp"
                 android:text="400.000₫"
@@ -65,7 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@+id/txtComparingPrice"
-                app:layout_constraintBottom_toBottomOf="@id/txtProductPrice"
+                app:layout_constraintBottom_toBottomOf="@id/txtComparingPrice"
                 android:layout_marginStart="10dp"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@color/md_theme_errorContainer"
@@ -89,8 +111,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/txtProductPrice"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="15dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:maxLines="2"
@@ -105,8 +127,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtProductName">
 
@@ -159,8 +181,8 @@
                     android:contentDescription="@string/add_to_favorite_btn"
                     app:tint="@drawable/button_no_filled_text_color"
                     android:background="@android:color/transparent"
-                    android:padding="5dp"
-                    android:src="@drawable/favorite"
+                    android:padding="10dp"
+                    android:src="@drawable/icon_add_to_fav_button_state"
                     app:layout_constraintStart_toEndOf="@+id/ctr02"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -173,8 +195,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/ctr01"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginTop="15dp"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@color/md_theme_surfaceContainer"
@@ -263,8 +285,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/crdProductFeature"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginTop="15dp"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@color/md_theme_surfaceContainer"
@@ -322,7 +344,7 @@
                         android:contentDescription="@string/view_artist_btn"
                         app:tint="@drawable/button_no_filled_text_color"
                         android:background="@android:color/transparent"
-                        android:padding="5dp"
+                        android:padding="10dp"
                         android:src="@drawable/arrow_forward_ios"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -336,8 +358,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/crdArtist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginTop="15dp"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@color/md_theme_surfaceContainer"
@@ -393,6 +415,53 @@
                 app:layout_constraintTop_toBottomOf="@id/txtProductRelevantHeadline"
                 android:layout_marginTop="20dp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.core.widget.NestedScrollView>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ctrProductButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/md_theme_surfaceContainerLowest"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="5dp">
+        <Button
+            android:id="@+id/btnAddToCart"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnBuyNow"
+            android:text="@string/add_to_cart"
+            android:backgroundTint="@color/md_theme_primary"
+            android:textColor="@color/md_theme_onPrimary"
+            android:fontFamily="@font/inter_semibold"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="17.5sp"
+            app:icon="@drawable/add_shopping_cart"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
+        </Button>
+        <Button
+            android:id="@+id/btnBuyNow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnAddToCart"
+            android:layout_marginStart="10dp"
+            android:text="@string/buy_now"
+            app:backgroundTint="@color/md_theme_primaryContainer"
+            android:textColor="@color/md_theme_onPrimaryContainer"
+            android:fontFamily="@font/inter_semibold"
+            android:textSize="17.5sp"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/md_theme_outline"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
+        </Button>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

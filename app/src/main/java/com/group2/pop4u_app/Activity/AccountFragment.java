@@ -76,20 +76,28 @@ public class AccountFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentAccountBinding.inflate(inflater, container, false);
-        // Inflate the layout for this fragment
+        initData1();
+        initData2();
+        addEvents();
         return binding.getRoot();
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initData1();
-//        initData2();
-        addEvents();
     }
 
 
     private void addEvents() {
         settingAccountListAdapter.setOnClickListener(new SettingListAdapter.OnClickListener() {
+            @Override
+            public void onClick(int position, SettingItem settingItem) {
+                Intent intent = new Intent(requireActivity(), SettingScreen.class);
+                intent.putExtra("settingItem", (Serializable) settingItem);
+                startActivity(intent);
+            }
+        });
+
+        settingSystemListAdapter.setOnClickListener(new SettingListAdapter.OnClickListener() {
             @Override
             public void onClick(int position, SettingItem settingItem) {
                 Intent intent = new Intent(requireActivity(), SettingScreen.class);
@@ -103,15 +111,15 @@ public class AccountFragment extends Fragment {
         LinearLayoutManager linearLayoutManagerSystem = new LinearLayoutManager(requireActivity());
         binding.rcvSystemSetting.setLayoutManager(linearLayoutManagerSystem);
         binding.rcvSystemSetting.setHasFixedSize(true);
-        binding.rcvSystemSetting.setNestedScrollingEnabled(false);
 
         settingSystemItems = new ArrayList<>();
         settingSystemItems.add(new SettingItem("notification", R.drawable.notifications_unread, "Tùy chỉnh thông báo"));
         settingSystemItems.add(new SettingItem("language", R.drawable.globe, "Ngôn ngữ"));
         settingSystemItems.add(new SettingItem("termsAndPolicy", R.drawable.lists, "Chính sách"));
         settingSystemItems.add(new SettingItem("helpAndReport", R.drawable.help, "Giúp đỡ và khiếu nại"));
-        settingSystemListAdapter = new SettingListAdapter(requireActivity(), settingSystemItems);
+        settingSystemListAdapter = new SettingListAdapter(getActivity(), settingSystemItems);
         binding.rcvSystemSetting.setAdapter(settingSystemListAdapter);
+        binding.rcvSystemSetting.setNestedScrollingEnabled(false);
     }
 
     private void initData1() {
