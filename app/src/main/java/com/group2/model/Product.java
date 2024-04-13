@@ -8,6 +8,8 @@ public class Product {
     String productName;
     String productArtistName;
     String productLabel;
+
+    String artistCode;
     int productPrice;
     int productComparingPrice;
     int productSalePercent;
@@ -23,6 +25,7 @@ public class Product {
                    String productName,
                    ArrayList<String> listProductPhoto,
                    String productArtistName,
+                   String artistCode,
                    String productLabel,
                    int productPrice,
                    int productComparingPrice,
@@ -36,6 +39,7 @@ public class Product {
         this.productName = productName;
         this.productArtistName = productArtistName;
         this.productLabel = productLabel;
+        this.artistCode = artistCode;
         this.productPrice = productPrice;
         this.productComparingPrice = productComparingPrice;
         this.productSalePercent = productSalePercent;
@@ -65,6 +69,10 @@ public class Product {
 
     public int getProductComparingPrice() {
         return productComparingPrice;
+    }
+
+    public String getArtistCode() {
+        return artistCode;
     }
 
     public int getProductSalePercent() {

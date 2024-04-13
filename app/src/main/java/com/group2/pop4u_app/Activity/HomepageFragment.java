@@ -243,6 +243,7 @@ public class HomepageFragment extends Fragment {
     private void openProduct(Product product) {
         Intent intent = new Intent(requireActivity(), ProductDetailScreen.class);
         intent.putExtra("productCode", product.getProductCode());
+        intent.putExtra("artistCode", product.getArtistCode());
         startActivity(intent);
     }
 
