@@ -79,7 +79,7 @@ public class ArtistInfoScreen extends AppCompatActivity {
             @Override
             public void onClick(int position, Product product) {
                 Intent intent = new Intent(getApplicationContext(), ProductDetailScreen.class);
-                intent.putExtra("productID", product.getProductID());
+                intent.putExtra("productID", product.getProductCode());
                 startActivity(intent);
             }
         });

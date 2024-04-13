@@ -37,12 +37,16 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.ic_home) {
                 replaceFragment(new HomepageFragment());
+                getSupportActionBar().setTitle(R.string.home_title);
             } else if (item.getItemId() == R.id.ic_search) {
                 replaceFragment(new SearchDashboardFragment());
+                getSupportActionBar().setTitle(R.string.search_title);
             } else if (item.getItemId() == R.id.ic_cart) {
                 replaceFragment(new CartFragment());
+                getSupportActionBar().setTitle(R.string.cart_title);
             } else if (item.getItemId() == R.id.ic_account) {
                 replaceFragment(new AccountFragment());
+                getSupportActionBar().setTitle(R.string.account_title);
             }
             return true;
         });
@@ -60,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.top_main_action_bar, menu);
         binding.topAppBar.setTitle(R.string.home_title);
-//        binding.appBarLayout.setStatusBarForegroundColor(getResources().color.md_theme_surfaceContainerLow);
         return true;
     }
 

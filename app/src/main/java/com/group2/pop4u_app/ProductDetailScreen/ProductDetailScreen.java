@@ -44,7 +44,9 @@ public class ProductDetailScreen extends AppCompatActivity {
     }
 
     private void loadProduct() {
-        Product product = new Product(1, "Cowboy Carter Album", R.drawable.img_2, "Beyonce", "BAN CHAY", 680000, 690000, 10, 4.5, 56, 12, 34, "Phần tiếp theo của Renaissance là một album nhạc đồng quê mạnh mẽ và đầy tham vọng được xây dựng theo khuôn mẫu độc nhất của Beyoncé. Cô khẳng định vị trí xứng đáng của mình trong thể loại này mà chỉ một ngôi sao nhạc pop với tài năng và tầm ảnh hưởng đáng kinh ngạc của cô mới có thể làm được.");
+        ArrayList<String> stringArrayList = new ArrayList<>();
+        stringArrayList.add("ABC");
+        Product product = new Product("VFN", "Cowboy Carter Album", stringArrayList, "Beyonce", "BAN CHAY", 680000, 690000, 10, 4.5, 56, 12, 34, "Phần tiếp theo của Renaissance là một album nhạc đồng quê mạnh mẽ và đầy tham vọng được xây dựng theo khuôn mẫu độc nhất của Beyoncé. Cô khẳng định vị trí xứng đáng của mình trong thể loại này mà chỉ một ngôi sao nhạc pop với tài năng và tầm ảnh hưởng đáng kinh ngạc của cô mới có thể làm được.");
 
         binding.txtProductName.setText(product.getProductName());
         binding.txtProductArtist.setText(product.getProductArtistName());
@@ -58,7 +60,7 @@ public class ProductDetailScreen extends AppCompatActivity {
         calendar.add(Calendar.DAY_OF_MONTH, 3);
         SimpleDateFormat dateFormat = new SimpleDateFormat("u, dd-MM-yyyy", Locale.getDefault());
         String expectedDate = dateFormat.format(calendar.getTime());
-        binding.txtExpectedDate.append(" " + expectedDate);
+        binding.txtExpectedDate.append(" " + expectedDate );
     }
 
     private void addEvents() {
@@ -68,6 +70,18 @@ public class ProductDetailScreen extends AppCompatActivity {
                 Intent intent = new Intent(ProductDetailScreen.this, ArtistInfoScreen.class);
                 intent.putExtra("artistName", product.getProductArtistName());
                 startActivity(intent);
+            }
+        });
+        binding.btnAddToFavProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean favoriteState = binding.btnAddToFavProduct.isSelected();
+                binding.btnAddToFavProduct.setSelected(!favoriteState);
+                if (favoriteState) {
+
+                } else {
+
+                }
             }
         });
     }

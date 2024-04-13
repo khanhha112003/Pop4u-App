@@ -2,65 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:paddingTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/imv_favorite_icon"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginEnd="10dp"
-                android:contentDescription="@string/just_image"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imv_ship_icon"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@id/tb_toolbar_title"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/search_screen_toolbar_heart_icon" />
-
-            <ImageView
-                android:id="@+id/imv_ship_icon"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginEnd="10dp"
-                android:contentDescription="@string/just_image"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/imv_favorite_icon"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/search_screen_toolbar_ship_icon" />
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/tb_toolbar_title"
-                android:layout_width="0dp"
-                android:layout_height="58dp"
-                android:layout_marginEnd="9dp"
-                android:background="@color/transparent"
-                android:focusable="false"
-                android:theme="?attr/actionBarTheme"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imv_favorite_icon"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:title="Tìm kiếm" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
 
     <android.widget.SearchView
@@ -75,9 +18,10 @@
         android:iconifiedByDefault="false"
         android:queryBackground="@color/transparent"
         android:queryHint="Tìm kiếm"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+        app:layout_goneMarginTop="20dp" />
 
     <ScrollView
         android:layout_width="0dp"

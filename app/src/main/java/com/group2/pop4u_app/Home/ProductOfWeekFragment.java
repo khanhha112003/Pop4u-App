@@ -19,6 +19,8 @@ import com.group2.pop4u_app.ProductDetailScreen.ProductDetailScreen;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentProductOfWeekBinding;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ProductOfWeekFragment#newInstance} factory method to
@@ -79,10 +81,12 @@ public class ProductOfWeekFragment extends Fragment {
     }
 
     private void setProductOfWeek() {
-        Product product = new Product(1, "Cowboy Carter Album", R.drawable.img_2, "Beyonce", "BAN CHAY", 680000, 690000, 10, 4.5, 56, 12, 34, "Phần tiếp theo của Renaissance là một album nhạc đồng quê mạnh mẽ và đầy tham vọng được xây dựng theo khuôn mẫu độc nhất của Beyoncé. Cô khẳng định vị trí xứng đáng của mình trong thể loại này mà chỉ một ngôi sao nhạc pop với tài năng và tầm ảnh hưởng đáng kinh ngạc của cô mới có thể làm được.");
+        ArrayList<String>  stringArrayList = new ArrayList<>();
+        stringArrayList.add("abd");
+        Product product = new Product("gegbrh", "Cowboy Carter Album", stringArrayList, "Beyonce", "BAN CHAY", 680000, 690000, 10, 4.5, 56, 12, 34, "Phần tiếp theo của Renaissance là một album nhạc đồng quê mạnh mẽ và đầy tham vọng được xây dựng theo khuôn mẫu độc nhất của Beyoncé. Cô khẳng định vị trí xứng đáng của mình trong thể loại này mà chỉ một ngôi sao nhạc pop với tài năng và tầm ảnh hưởng đáng kinh ngạc của cô mới có thể làm được.");
 
-        binding.imvBackGroundCard.setImageResource(product.getProductImage1());
-        binding.imvProductImage.setImageResource(product.getProductImage1());
+//        binding.imvBackGroundCard.setImageResource(product.getProductImage1());
+//        binding.imvProductImage.setImageResource(product.getProductImage1());
         binding.txtProductName.setText(product.getProductName());
         binding.txtProductArtist.setText(product.getProductArtistName());
         binding.txtProductPrice.setText(String.valueOf(product.getProductPrice()));
