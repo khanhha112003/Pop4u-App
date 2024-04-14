@@ -243,6 +243,7 @@ public class HomepageFragment extends Fragment {
     private void openProduct(Product product) {
         Intent intent = new Intent(requireActivity(), ProductDetailScreen.class);
         intent.putExtra("productCode", product.getProductCode());
+        intent.putExtra("artistCode", product.getArtistCode());
         startActivity(intent);
     }
 
@@ -292,7 +293,6 @@ public class HomepageFragment extends Fragment {
         binding.rccRecommendedProduct.setHasFixedSize(true);
 
         rcmProductArrayList = new ArrayList<>();
-        // TODO fill here
         rcmProductAdapter = new BigProductCardRecyclerAdapter(requireActivity(), rcmProductArrayList);
         ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(getContext(), R.dimen.item_offset);
         binding.rccRecommendedProduct.addItemDecoration(itemDecoration);
@@ -321,7 +321,6 @@ public class HomepageFragment extends Fragment {
         binding.rccHotArtist.addItemDecoration(itemOffsetHorizontalRecycler);
         binding.rccHotArtist.setHasFixedSize(true);
         featuredArtistArrayList = new ArrayList<>();
-        // TODO: Add featured artist by syncing to API
         featuredArtistAdapter = new ArtistHorizontalListAdapter(requireActivity(), featuredArtistArrayList);
         binding.rccHotArtist.setAdapter(featuredArtistAdapter);
 

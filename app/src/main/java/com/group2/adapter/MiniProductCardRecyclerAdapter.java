@@ -42,7 +42,7 @@ public class MiniProductCardRecyclerAdapter extends RecyclerView.Adapter<MiniPro
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Product product = productList.get(position);
         if (product.getProductSalePercent() != 0) {
-            holder.txtSalePercent.setText(String.format("-%s%%", String.valueOf(product.getProductSalePercent())));
+            holder.txtSalePercent.setText(String.format("%s%%", String.valueOf(product.getProductSalePercent())));
         } else {
             holder.crdSalePercent.setVisibility(View.INVISIBLE); // or View.INVISIBLE or View.GONE based on your requirement
         }
@@ -64,8 +64,6 @@ public class MiniProductCardRecyclerAdapter extends RecyclerView.Adapter<MiniPro
                 }
             }
         });
-
-
     }
 
     @Override
