@@ -67,10 +67,6 @@ public class Product {
         return productPrice;
     }
 
-    public int getProductComparingPrice() {
-        return productComparingPrice;
-    }
-
     public String getArtistCode() {
         return artistCode;
     }
@@ -103,10 +99,6 @@ public class Product {
 
     public int getProductComparingPrice() {
         return productComparingPrice;
-    }
-
-    public String getProductDescription() {
-        return productDescription;
     }
 
     public void setProductDescription(String productDescription) {

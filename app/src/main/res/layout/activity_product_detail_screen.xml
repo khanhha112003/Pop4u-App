@@ -282,6 +282,7 @@
                 app:cardBackgroundColor="@color/md_theme_surfaceContainer"
                 app:cardCornerRadius="15dp">
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/crdArtistOfProduct"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="20dp">

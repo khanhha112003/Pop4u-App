@@ -4,6 +4,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +13,8 @@ import com.group2.adapter.MiniProductCardRecyclerAdapter;
 import com.group2.adapter.ProductImgAdapter;
 import com.group2.api.Services.ProductService;
 import com.group2.model.Product;
+import com.group2.pop4u_app.ArtistInfoScreen.ArtistInfoScreen;
+import com.group2.pop4u_app.Home.AllArtist;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.ActivityProductDetailScreenBinding;
 
@@ -33,6 +36,7 @@ public class ProductDetailScreen extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         bindingBackButton();
+        setArtistCardClick();
         ViewPager viewPagerProductImages = findViewById(R.id.imvProductImage);
         adapter = new ProductImgAdapter(this);
         viewPagerProductImages.setAdapter(adapter);
@@ -69,6 +73,15 @@ public class ProductDetailScreen extends AppCompatActivity {
     private void bindingBackButton() {
         binding.imvProductDetailBack.setOnClickListener(v -> {
             finish();
+        });
+    }
+
+    private void setArtistCardClick() {
+        binding.crdArtistOfProduct.setOnClickListener(v -> {
+            String artistCode = getIntent().getStringExtra("artistCode");
+            Intent intent = new Intent(this, ArtistInfoScreen.class);
+            intent.putExtra("artistCode", artistCode);
+            startActivity(intent);
         });
     }
 

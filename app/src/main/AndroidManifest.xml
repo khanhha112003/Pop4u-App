@@ -30,9 +30,6 @@
             android:name=".AccountScreen.SettingScreen"
             android:exported="false" />
         <activity
-            android:name=".AccountScreen.AccountScreen"
-            android:exported="false" />
-        <activity
             android:name=".Home.ProductListCategory"
             android:exported="false" />
         <activity
