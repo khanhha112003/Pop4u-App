@@ -49,7 +49,6 @@ public class SearchDashboardFragment extends Fragment implements SearchView.OnQu
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentSearchDashboardBinding.inflate(inflater,container,false);
-        setToolbar();
         setSearchBar();
         initData();
         loadingData();
@@ -95,9 +94,6 @@ public class SearchDashboardFragment extends Fragment implements SearchView.OnQu
         isNotTypingSearch = true;
     }
 
-    private void setToolbar() {
-        binding.tbToolbarTitle.setTitleTextAppearance(getActivity(), R.style.SearchScreenToolbarTitle);
-    }
 
    private void initData() {
        LinearLayoutManager layoutManagerFeaturedArtist = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
