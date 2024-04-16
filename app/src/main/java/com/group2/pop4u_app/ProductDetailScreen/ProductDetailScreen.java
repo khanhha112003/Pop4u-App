@@ -21,6 +21,7 @@ import com.group2.pop4u_app.databinding.ActivityProductDetailScreenBinding;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+
 public class ProductDetailScreen extends AppCompatActivity {
 
     ActivityProductDetailScreenBinding binding;
@@ -35,10 +36,12 @@ public class ProductDetailScreen extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         bindingBackButton();
+        setArtistCardClick();
         ViewPager viewPagerProductImages = findViewById(R.id.imvProductImage);
         adapter = new ProductImgAdapter(this);
         viewPagerProductImages.setAdapter(adapter);
         updateIndicator(0, adapter.getCount());
+
         artistProductAdapter = new MiniProductCardRecyclerAdapter(this, productArrayList);
         binding.rccProductRelevant.setAdapter(artistProductAdapter);
         LinearLayoutManager layoutManagerNewProduct = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -89,6 +92,15 @@ public class ProductDetailScreen extends AppCompatActivity {
         loadData();
     }
 
+    private void setArtistCardClick() {
+        binding.crdArtistOfProduct.setOnClickListener(v -> {
+            String artistCode = getIntent().getStringExtra("artistCode");
+            Intent intent = new Intent(this, ArtistInfoScreen.class);
+            intent.putExtra("artistCode", artistCode);
+            startActivity(intent);
+        });
+    }
+
     private void loadData() {
         // Load data from server
         String productCode = getIntent().getStringExtra("productCode");
@@ -118,6 +130,12 @@ public class ProductDetailScreen extends AppCompatActivity {
             productArrayList.addAll(productsResponse);
             artistProductAdapter.notifyDataSetChanged();
         });
+
+        try {
+            future.get();
+        } catch (Exception e) {
+            Log.d("ProductListCategory", e.getMessage());
+        }
 
         try {
             future.get();

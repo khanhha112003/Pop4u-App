@@ -41,7 +41,7 @@ public class BigProductCardRecyclerAdapter extends RecyclerView.Adapter<BigProdu
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Product product = productList.get(position);
         if (product.getProductSalePercent() != 0) {
-            holder.txtSalePercent.setText(String.format("-%s%%", product.getProductSalePercent()));
+            holder.txtSalePercent.setText(String.format("%s%%", product.getProductSalePercent()));
         } else {
             holder.crdSalePercent.setVisibility(View.INVISIBLE); // or View.INVISIBLE or View.GONE based on your requirement
         }

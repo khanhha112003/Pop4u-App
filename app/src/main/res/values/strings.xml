@@ -8,6 +8,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="view_all_button_content">Xem</string>
     <string name="home_title">Trang chủ</string>
+    <string name="search_title">Tìm kiếm</string>
+    <string name="cart_title">Giỏ hàng</string>
+    <string name="account_title">Tài khoản</string>
     <string name="home_title_sub_head1">Mới ra mắt</string>
     <string name="home_title_sub_head2">Sale</string>
     <string name="home_title_sub_head3">Nghệ sĩ nổi bật</string>
@@ -16,6 +19,7 @@
     <string name="action_bar_order_action">Đơn hàng của tôi</string>
     <string name="product_of_week_title">Có Gì Tuần Này 😎</string>
     <string name="filter_product">Lọc sản phẩm</string>
+    <string name="filter_artist">Lọc nghệ sĩ</string>
     <string name="sort_by">Sắp xếp theo</string>
     <string name="sort_by_as_price">Giá tăng dần</string>
     <string name="sort_by_de_price">Giá giảm dần</string>
@@ -35,6 +39,13 @@
     <string name="price_over_2M">Trên 2TR</string>
     <string name="apply_filter">Áp dụng</string>
     <string name="reset_filter">Reset</string>
+    <string name="range_year_debut">Khoảng năm ra mắt</string>
+    <string name="sort_by_as_year_debut">Ra mắt mới nhất</string>
+    <string name="sort_by_ade_year_debut">Ra mắt cũ nhất</string>
+    <string name="btn_open_cart">Mở giỏ hàng</string>
+    <string name="btn_share">Chia sẻ</string>
+    <string name="add_to_cart">Thêm vào giỏ</string>
+    <string name="buy_now">Mua ngay</string>
     <string name="title_activity_all_artist">AllArtistActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"

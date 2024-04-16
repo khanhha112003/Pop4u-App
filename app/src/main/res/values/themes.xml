@@ -15,4 +15,9 @@
     <style name="Theme.Pop4u_App.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Pop4u_App.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation" >@anim/dialog_filter_enter_anim</item>
+        <item name="android:windowExitAnimation">@anim/dialog_filter_exit_anim</item>
+    </style>
 </resources>

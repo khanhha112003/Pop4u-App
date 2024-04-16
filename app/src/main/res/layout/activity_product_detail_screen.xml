@@ -306,6 +306,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/crdProductFeature">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/crdArtistOfProduct"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="20dp">

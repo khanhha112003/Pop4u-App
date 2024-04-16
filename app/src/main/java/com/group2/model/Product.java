@@ -67,10 +67,6 @@ public class Product {
         return productPrice;
     }
 
-    public int getProductComparingPrice() {
-        return productComparingPrice;
-    }
-
     public String getArtistCode() {
         return artistCode;
     }
@@ -100,9 +96,21 @@ public class Product {
     public String getProductArtistName() {
         return productArtistName;
     }
+
+    public int getProductComparingPrice() {
+        return productComparingPrice;
+    }
+
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
+    }
+
+    public void setProductComparingPrice(int productComparingPrice) {
+        this.productComparingPrice = productComparingPrice;
+    }
+
     public String getProductPriceInFormat() {
         DecimalFormat decimalFormat = new DecimalFormat("#,###.###");
         return decimalFormat.format(this.productPrice);
     }
-
 }
