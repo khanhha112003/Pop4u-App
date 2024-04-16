@@ -254,13 +254,27 @@
                     android:stepSize="1"
                     android:valueFrom="2010"
                     android:valueTo="2024"
-                    app:labelBehavior="visible"
+                    app:labelBehavior="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/txtFilterByYearRelease"
                     app:thumbColor="@color/md_theme_primary"
                     app:trackColorActive="@color/md_theme_primary"
                     app:trackColorInactive="@color/md_theme_surfaceContainerHighest"
                     app:values="@array/initial_slider_year" />
+
+                <TextView
+                    android:id="@+id/txtRangeDateValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="20dp"
+                    android:fontFamily="@font/inter_semibold"
+                    android:text="@string/placeholder"
+                    android:textColor="@color/md_theme_onSurface"
+                    android:textSize="14.5sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/sliderYearRangeProductRelease" />
+
 
                 <TextView
                     android:id="@+id/txtFilterByPriceRange"
@@ -272,7 +286,7 @@
                     android:textColor="@color/md_theme_onSurface"
                     android:textSize="17.5sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/sliderYearRangeProductRelease" />
+                    app:layout_constraintTop_toBottomOf="@+id/txtRangeDateValue" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/chipGroupPriceRange"
