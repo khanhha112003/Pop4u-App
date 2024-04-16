@@ -14,6 +14,7 @@ import com.group2.adapter.MiniProductCardRecyclerAdapter;
 import com.group2.adapter.ProductImgAdapter;
 import com.group2.api.Services.ProductService;
 import com.group2.model.Product;
+import com.group2.pop4u_app.ArtistInfoScreen.ArtistInfoScreen;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetHorizontalRecycler;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.ActivityProductDetailScreenBinding;
