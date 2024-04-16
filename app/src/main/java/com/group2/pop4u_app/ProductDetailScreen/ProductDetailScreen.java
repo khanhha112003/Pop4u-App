@@ -1,10 +1,16 @@
 package com.group2.pop4u_app.ProductDetailScreen;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.group2.model.Product;
+import com.group2.pop4u_app.Activity.MainActivity;
 import com.group2.pop4u_app.ArtistInfoScreen.ArtistInfoScreen;
 import com.group2.adapter.ProductImgAdapter;
 import com.group2.pop4u_app.R;
@@ -22,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class ProductDetailScreen extends AppCompatActivity {
 
@@ -37,6 +45,7 @@ public class ProductDetailScreen extends AppCompatActivity {
         binding = ActivityProductDetailScreenBinding.inflate(getLayoutInflater());
         setSupportActionBar(binding.tbrProductDetail);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
         setContentView(binding.getRoot());
         loadProduct();
         setUpProductImage();
@@ -82,6 +91,21 @@ public class ProductDetailScreen extends AppCompatActivity {
                 } else {
 
                 }
+            }
+        });
+
+        final int[] previousScrollY = {0};
+
+        binding.nsvProductDetail.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(@NonNull NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY > previousScrollY[0]) {
+                    Drawable actionBarBackground = getResources().getDrawable(R.color.md_theme_surfaceContainerLow);
+                    getSupportActionBar().setBackgroundDrawable(actionBarBackground);
+                } else if (scrollY == 0) {
+                    getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                }
+                previousScrollY[0] = scrollY;
             }
         });
     }

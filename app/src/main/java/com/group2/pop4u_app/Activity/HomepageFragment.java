@@ -259,7 +259,6 @@ public class HomepageFragment extends Fragment {
                 Intent intent = new Intent(requireActivity(), ProductListCategory.class);
                 intent.putExtra("recyclerID", "newProduct");
                 intent.putExtra("recyclerName", "Mới ra mắt");
-
                 startActivity(intent);
             }
         });
@@ -292,7 +291,6 @@ public class HomepageFragment extends Fragment {
         binding.rccRecommendedProduct.setHasFixedSize(true);
 
         rcmProductArrayList = new ArrayList<>();
-        // TODO fill here
         rcmProductAdapter = new BigProductCardRecyclerAdapter(requireActivity(), rcmProductArrayList);
         ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(getContext(), R.dimen.item_offset);
         binding.rccRecommendedProduct.addItemDecoration(itemDecoration);

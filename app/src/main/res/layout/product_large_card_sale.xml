@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:cardBackgroundColor="@color/md_theme_inverseOnSurface"
+        app:cardBackgroundColor="@color/md_theme_surfaceContainerLow"
         app:cardCornerRadius="10dp"
         app:cardElevation="0dp"
         android:foreground="@drawable/foreground_onclick_color_change">

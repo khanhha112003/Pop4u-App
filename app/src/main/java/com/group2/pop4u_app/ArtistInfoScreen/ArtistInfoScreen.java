@@ -1,10 +1,15 @@
 package com.group2.pop4u_app.ArtistInfoScreen;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -67,11 +72,17 @@ public class ArtistInfoScreen extends AppCompatActivity {
     }
 
     private void addEvents() {
-        binding.nsvArtistInfo.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+        final int[] previousScrollY = {0};
+        binding.nsvArtistInfo.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
-            public void onScrollChange(View view, int i, int i1, int i2, int i3) {
-                getSupportActionBar().setTitle("Lana Del Rey");
-                binding.nsvArtistInfo.setBackgroundColor(R.color.md_theme_surfaceContainerLow);
+            public void onScrollChange(@NonNull NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY > previousScrollY[0]) {
+                    Drawable actionBarBackground = getResources().getDrawable(R.color.md_theme_surfaceContainerLow);
+                    getSupportActionBar().setBackgroundDrawable(actionBarBackground);
+                } else if (scrollY == 0) {
+                    getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                }
+                previousScrollY[0] = scrollY;
             }
         });
 
