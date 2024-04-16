@@ -16,6 +16,7 @@ import com.group2.model.Product;
 import com.group2.pop4u_app.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MiniProductCardRecyclerAdapter extends RecyclerView.Adapter<MiniProductCardRecyclerAdapter.ViewHolder>{
