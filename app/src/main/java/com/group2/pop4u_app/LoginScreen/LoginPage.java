@@ -22,8 +22,6 @@ public class LoginPage extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         addEvents();
-
-
     }
 
     private void addEvents() {
