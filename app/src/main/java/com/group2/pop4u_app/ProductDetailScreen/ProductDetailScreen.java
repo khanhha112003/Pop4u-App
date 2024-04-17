@@ -14,10 +14,14 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -42,6 +46,9 @@ public class ProductDetailScreen extends AppCompatActivity {
     private ProductImgAdapter adapter;
 
     Product product;
+
+    Dialog optionDialog;
+    int currentAmount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,11 +133,77 @@ public class ProductDetailScreen extends AppCompatActivity {
         binding.btnBuyNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Dialog dialog = new Dialog(ProductDetailScreen.this);
-                dialog.setContentView(R.layout.product_option_dialog);
-                dialog.show();
+                openOptionDialog();
+                Button btnAction = optionDialog.findViewById(R.id.btnAction);
+                btnAction.setText(R.string.buy_now);
+                btnAction.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
             }
         });
+
+        binding.btnAddToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openOptionDialog();
+                Button btnAction = optionDialog.findViewById(R.id.btnAction);
+                btnAction.setText(R.string.add_to_cart);
+                btnAction.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Snackbar.make(binding.ctnSnackBar, "Bạn đã thêm " + currentAmount + " sản phẩm vào giỏ hàng.", Snackbar.LENGTH_LONG).setAction(R.string.view_cart, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(ProductDetailScreen.this, MainActivity.class);
+
+                            }
+                        }).show();
+                        optionDialog.dismiss();
+                    }
+                });
+            }
+        });
+    }
+
+    private void openOptionDialog() {
+        optionDialog = new Dialog(ProductDetailScreen.this);
+        optionDialog.setContentView(R.layout.product_option_dialog);
+        TextView txtAmount = optionDialog.findViewById(R.id.txtAmount);
+        currentAmount = Integer.parseInt(txtAmount.getText().toString());
+        optionDialog.findViewById(R.id.btnUpAmount).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentAmount = Integer.parseInt(txtAmount.getText().toString());
+                currentAmount = currentAmount + 1;
+                txtAmount.setText(String.valueOf(currentAmount));
+            }
+        });
+
+        optionDialog.findViewById(R.id.btnDownAmount).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentAmount = Integer.parseInt(txtAmount.getText().toString());
+                if (currentAmount > 1) {
+                    currentAmount = currentAmount - 1;
+                    txtAmount.setText(String.valueOf(currentAmount));
+                }
+            }
+        });
+
+        optionDialog.findViewById(R.id.btnCancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                optionDialog.dismiss();
+            }
+        });
+
+        optionDialog.getWindow().setGravity(Gravity.BOTTOM);
+        optionDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewPager.LayoutParams.WRAP_CONTENT);
+        optionDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        optionDialog.show();
     }
 
     private void setUpProductImage() {

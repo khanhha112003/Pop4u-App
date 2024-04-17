@@ -28,7 +28,6 @@ public class FavoriteListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         binding = ActivityFavoriteListBinding.inflate(getLayoutInflater());
         setSupportActionBar(binding.tbrFavorite);
         getSupportActionBar().setTitle(R.string.action_bar_favorite_action);

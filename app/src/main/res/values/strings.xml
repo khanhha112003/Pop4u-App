@@ -56,6 +56,8 @@
     <string name="btn_share">Chia sẻ</string>
     <string name="add_to_cart">Thêm vào giỏ</string>
     <string name="buy_now">Mua ngay</string>
+    <string name="cancel">Hủy</string>
+    <string name="view_cart">Xem giỏ hàng</string>
     <string name="title_activity_all_artist">AllArtistActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
