@@ -2,13 +2,18 @@ package com.group2.pop4u_app.LoginScreen;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.group2.api.Services.UserService;
+import com.group2.local.LoginManagerTemp;
 import com.group2.pop4u_app.Activity.MainActivity;
 import com.group2.pop4u_app.SignUp.SignUp_1;
 import com.group2.pop4u_app.databinding.ActivityLoginPageBinding;
+
+import java.util.concurrent.CompletableFuture;
 
 public class LoginPage extends AppCompatActivity {
 
@@ -22,6 +27,20 @@ public class LoginPage extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         addEvents();
+    }
+
+    private void performLogin(String username, String password) {
+        CompletableFuture<Boolean> loginFuture = UserService.instance.login(username, password);
+        loginFuture.thenAccept(v -> {
+           if (v) {
+               if (!this.isFinishing()) {
+                   LoginManagerTemp.isLogin = true;
+                   this.finish();
+               }
+           } else {
+               Log.d("Login screen", "Login fail");
+           }
+        });
     }
 
     private void addEvents() {
