@@ -1,10 +1,12 @@
 package com.group2.pop4u_app.Activity;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,6 +17,8 @@ import com.google.android.material.color.MaterialColors;
 import com.group2.api.DAO.ProductDAO;
 import com.group2.api.DAO.ProductResponseDAO;
 import com.group2.api.Services.ProductService;
+import com.group2.pop4u_app.Home.FavoriteListActivity;
+import com.group2.pop4u_app.OrderScreen.OrderScreen;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.SearchScreen.SearchDashboardFragment;
 import com.group2.pop4u_app.databinding.ActivityMainBinding;
@@ -30,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.topAppBar);
@@ -67,12 +72,13 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.mnFilterProduct) {
-            return true;
+        if (item.getItemId() == R.id.mnOpenFavoriteProducts) {
+            Intent intent = new Intent(MainActivity.this, FavoriteListActivity.class);
+            startActivity(intent);
+        } else if (item.getItemId() == R.id.mnOpenOrders) {
+            Intent intent = new Intent(MainActivity.this, OrderScreen.class);
         }
         return super.onOptionsItemSelected(item);
     }

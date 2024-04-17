@@ -14,11 +14,19 @@
     <string name="home_title_sub_head1">Mới ra mắt</string>
     <string name="home_title_sub_head2">Sale</string>
     <string name="home_title_sub_head3">Nghệ sĩ nổi bật</string>
+    <string name="no_favorite_product">Hiện tại bạn chưa có sản phẩm nào nằm trong danh sách yêu thích.</string>
     <string name="home_title_sub_head4">Đề xuất</string>
-    <string name="action_bar_favorite_action">S.phẩm yêu thích</string>
+    <string name="action_bar_favorite_action">Sản phẩm yêu thích</string>
     <string name="action_bar_order_action">Đơn hàng của tôi</string>
     <string name="product_of_week_title">Có Gì Tuần Này 😎</string>
     <string name="filter_product">Lọc sản phẩm</string>
+    <string name="undo">Hoàn tác</string>
+    <string name="option_heading">Phân loại</string>
+    <string name="amount_heading">Số lượng</string>
+    <string name="up_amount">Tăng số lượng</string>
+    <string name="down_amount">Giảm số lượng</string>
+    <string name="delete_favorite_noti">Bạn đã bỏ sản phẩm khỏi danh sách yêu thích.</string>
+    <string name="add_favorite_noti">Bạn thêm sản phẩm vào danh sách yêu thích.</string>
     <string name="filter_artist">Lọc nghệ sĩ</string>
     <string name="sort_by">Sắp xếp theo</string>
     <string name="sort_by_as_price">Giá tăng dần</string>
@@ -39,6 +47,8 @@
     <string name="price_over_2M">Trên 2TR</string>
     <string name="apply_filter">Áp dụng</string>
     <string name="reset_filter">Reset</string>
+    <string name="total_price">Tổng cộng</string>
+    <string name="select_all">Chọn tất cả</string>
     <string name="range_year_debut">Khoảng năm ra mắt</string>
     <string name="sort_by_as_year_debut">Ra mắt mới nhất</string>
     <string name="sort_by_ade_year_debut">Ra mắt cũ nhất</string>
@@ -46,6 +56,8 @@
     <string name="btn_share">Chia sẻ</string>
     <string name="add_to_cart">Thêm vào giỏ</string>
     <string name="buy_now">Mua ngay</string>
+    <string name="cancel">Hủy</string>
+    <string name="view_cart">Xem giỏ hàng</string>
     <string name="title_activity_all_artist">AllArtistActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"

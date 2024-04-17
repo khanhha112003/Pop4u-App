@@ -27,7 +27,9 @@ import com.group2.adapter.CartAdapter;
 import com.group2.adapter.MiniProductCardRecyclerAdapter;
 import com.group2.model.CartItem;
 import com.group2.model.Product;
+import com.group2.pop4u_app.Home.FavoriteListActivity;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
+import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetVerticalRecycler;
 import com.group2.pop4u_app.PaymentScreen.Payment;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentCartBinding;
@@ -131,7 +133,6 @@ public class CartFragment extends Fragment {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 if (direction == ItemTouchHelper.LEFT) {
-                    // Xóa đơn hàng
                     int position = viewHolder.getAdapterPosition();
                     deleteOrder(position);
                 }
@@ -169,6 +170,11 @@ public class CartFragment extends Fragment {
     private void customAndLoadData() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
         binding.rvCart.setLayoutManager(layoutManager);
+        ItemOffsetVerticalRecycler itemOffsetVerticalRecycler = new ItemOffsetVerticalRecycler(requireContext(), R.dimen.small_offset);
+        binding.rvCart.setHasFixedSize(true);
+        binding.rvCart.addItemDecoration(itemOffsetVerticalRecycler);
+        binding.rvCart.setNestedScrollingEnabled(false);
+
 
         carts = new ArrayList<>();
         carts.add(new CartItem(R.drawable.photo_ex, "The Album - BlackPink", "Hồng", 400000, 1));

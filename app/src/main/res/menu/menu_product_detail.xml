@@ -4,7 +4,7 @@
     <item
         android:id="@+id/mnOpenCart"
         android:title="@string/btn_open_cart"
-        android:icon="@drawable/shopping_bag"
+        android:icon="@drawable/shopping_cart_24px"
         app:showAsAction="always"/>
     <item
         android:id="@+id/mnShareProduct"
