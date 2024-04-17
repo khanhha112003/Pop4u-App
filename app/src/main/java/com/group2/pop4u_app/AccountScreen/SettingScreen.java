@@ -27,9 +27,13 @@ public class SettingScreen extends AppCompatActivity {
     private void loadSettingScreen() {
         Intent intent = getIntent();
         SettingItem settingItem = (SettingItem) intent.getSerializableExtra("settingItem");
-        if (settingItem != null && settingItem.getSettingID().equals("personal_info")) {
-            replaceFragment(new AccountPersonalInfoFragment());
-        }
+        if (settingItem != null) {
+            if (settingItem.getSettingID().equals("personal_info")) {
+                replaceFragment(new AccountPersonalInfoFragment());
+            } else if (settingItem.getSettingID().equals("notification")) {
+                
+            }
+        } 
     }
 
     private void replaceFragment(Fragment fragment) {

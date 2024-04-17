@@ -34,7 +34,6 @@ ActivityPickAddressBinding binding;
         addresses.add(new Address("Khánh Hà", "0123455777", "Cổng sau KTX khu B, Phường Đông Hòa, Thành phố Dĩ An, tỉnh Bình Dương"));
         addresses.add(new Address("Kahane", "0567855777", "669 QL1A, khu phố 3, Thủ Đức, Thành phố Hồ Chí Minh"));
         addresses.add(new Address("Ka Ka ", "098755777", "669 QL1A, khu phố 3, Thủ Đức, Thành phố Hồ Chí Minh"));
-
     }
     private void loadData(){
         adapter = new AddressAdapter(PickAddress.this, R.layout.activity_item_address, addresses);

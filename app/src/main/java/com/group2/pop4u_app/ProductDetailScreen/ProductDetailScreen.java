@@ -3,10 +3,12 @@ package com.group2.pop4u_app.ProductDetailScreen;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.TooltipCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -16,7 +18,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.group2.model.Product;
 import com.group2.pop4u_app.Activity.MainActivity;
 import com.group2.pop4u_app.ArtistInfoScreen.ArtistInfoScreen;
@@ -87,9 +91,19 @@ public class ProductDetailScreen extends AppCompatActivity {
                 boolean favoriteState = binding.btnAddToFavProduct.isSelected();
                 binding.btnAddToFavProduct.setSelected(!favoriteState);
                 if (favoriteState) {
+                    Snackbar.make(binding.ctnSnackBar, R.string.delete_favorite_noti, Snackbar.LENGTH_LONG).setAction(R.string.undo, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
 
+                        }
+                    }).show();
                 } else {
+                    Snackbar.make(binding.ctnSnackBar, R.string.add_favorite_noti, Snackbar.LENGTH_LONG).setAction(R.string.undo, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
 
+                        }
+                    }).show();
                 }
             }
         });
@@ -106,6 +120,15 @@ public class ProductDetailScreen extends AppCompatActivity {
                     getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 }
                 previousScrollY[0] = scrollY;
+            }
+        });
+
+        binding.btnBuyNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog dialog = new Dialog(ProductDetailScreen.this);
+                dialog.setContentView(R.layout.product_option_dialog);
+                dialog.show();
             }
         });
     }

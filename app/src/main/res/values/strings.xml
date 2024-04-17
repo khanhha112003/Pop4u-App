@@ -20,6 +20,13 @@
     <string name="action_bar_order_action">Đơn hàng của tôi</string>
     <string name="product_of_week_title">Có Gì Tuần Này 😎</string>
     <string name="filter_product">Lọc sản phẩm</string>
+    <string name="undo">Hoàn tác</string>
+    <string name="option_heading">Phân loại</string>
+    <string name="amount_heading">Số lượng</string>
+    <string name="up_amount">Tăng số lượng</string>
+    <string name="down_amount">Giảm số lượng</string>
+    <string name="delete_favorite_noti">Bạn đã bỏ sản phẩm khỏi danh sách yêu thích.</string>
+    <string name="add_favorite_noti">Bạn thêm sản phẩm vào danh sách yêu thích.</string>
     <string name="filter_artist">Lọc nghệ sĩ</string>
     <string name="sort_by">Sắp xếp theo</string>
     <string name="sort_by_as_price">Giá tăng dần</string>
