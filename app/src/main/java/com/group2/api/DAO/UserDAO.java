@@ -2,7 +2,6 @@ package com.group2.api.DAO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
 public class UserDAO {
     @JsonProperty("username")
     private String username;

@@ -1,20 +1,24 @@
 package com.group2.api.Services;
 
+import com.group2.api.DAO.LoginResponseDAO;
 import com.group2.api.DAO.UserDAO;
 
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface IUserService {
-    @POST("/api/user/login")
-    Call<UserDAO> login(
-            @Query("email") String email,
-            @Query("password") String password
+    @FormUrlEncoded
+    @POST("/api/auth/login")
+    Call<LoginResponseDAO> login(
+            @Field("username") String email,
+            @Field("password") String password
     );
 
-    @POST("/api/user/register")
+    @POST("/api/auth/register")
     Call<UserDAO> register(
             @Query("email") String email,
             @Query("password") String password,
@@ -23,7 +27,7 @@ public interface IUserService {
             @Query("address") String address
     );
 
-    @POST("/api/user/logout")
+    @POST("/api/auth/logout")
     Call<UserDAO> logout();
 
     @POST("/api/user/update")
@@ -35,6 +39,6 @@ public interface IUserService {
             @Query("address") String address
     );
 
-    @GET ("/api/user/user_profile")
+    @GET ("/api/auth/user_profile")
     Call<UserDAO> getUserProfile();
 }

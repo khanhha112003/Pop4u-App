@@ -2,6 +2,7 @@ package com.group2.api.Services;
 
 import retrofit2.Call;
 
+import com.group2.api.DAO.LoginResponseDAO;
 import com.group2.api.DAO.UserDAO;
 
 import java.io.IOException;
@@ -20,12 +21,12 @@ public class UserService {
     public CompletableFuture<Boolean> login(String email, String password) {
         CompletableFuture<Boolean> future = new CompletableFuture<>();
         executor.execute(() -> {
-            Call<UserDAO> call = userService.login(email, password);
+            Call<LoginResponseDAO> call = userService.login(email, password);
             try {
-                Response<UserDAO> response = call.execute();
+                Response<LoginResponseDAO> response = call.execute();
                 if (response.isSuccessful()) {
-                    UserDAO user = response.body();
-                    if (user != null) {
+                    LoginResponseDAO user = response.body();
+                    if (!user.getToken().isEmpty()) {
                         System.out.println("Login success");
                         future.complete(true); // Complete the future with true
                     } else {

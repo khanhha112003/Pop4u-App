@@ -48,14 +48,14 @@
         app:layout_constraintTop_toBottomOf="@+id/txtSignIn" />
 
     <EditText
-        android:id="@+id/edtEmail"
+        android:id="@+id/edtUsername"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/shape_edit_text"
-        android:hint="Email của bạn"
         android:drawableLeft="@drawable/person"
         android:drawablePadding="10dp"
+        android:hint="Tên đăng nhập"
         android:inputType="textEmailAddress"
         android:padding="12dp"
         android:textColorHint="@color/md_theme_outline"
@@ -74,7 +74,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtEmail"
+        app:layout_constraintTop_toBottomOf="@+id/edtUsername"
         android:weightSum="10">
 
         <EditText
