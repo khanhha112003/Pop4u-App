@@ -46,11 +46,6 @@ import java.util.TimerTask;
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomepageFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HomepageFragment extends Fragment {
 
     FragmentHomepageBinding binding;
