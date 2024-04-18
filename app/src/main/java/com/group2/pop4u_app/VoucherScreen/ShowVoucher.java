@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -38,29 +41,31 @@ public class ShowVoucher extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityShowVoucherBinding.inflate(getLayoutInflater());
+        setSupportActionBar(binding.tbrInputVoucher);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(binding.getRoot());
 
-        // Khởi tạo các view
         editTextSearch = binding.svQuerySearchBox;
         listViewVoucher = binding.lvVoucher;
         textViewNoVoucher = binding.layoutNoVoucher;
-        backButton = binding.btnBack;
-
-        // Hiển thị nút quay lại
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Trở về trang Payment
-                Intent intent = new Intent(ShowVoucher.this, Payment.class);
-                startActivity(intent);
-            }
-        });
-
-        // Khởi tạo dữ liệu
         initData();
-
-        // Thiết lập chức năng tìm kiếm
         setupSearch();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.plain_action_bar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            this.finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void initData(){

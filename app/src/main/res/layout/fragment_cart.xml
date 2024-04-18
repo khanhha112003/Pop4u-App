@@ -77,14 +77,14 @@
             android:background="@color/md_theme_surfaceContainerLow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="12dp">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ctrTotalPrice"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginEnd="16dp"
                 android:orientation="vertical"
-                android:layout_weight="6"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -126,8 +126,7 @@
                 android:paddingBottom="10dp"
                 android:textSize="20sp"
                 android:fontFamily="@font/inter_semibold"
-                android:backgroundTint="@color/md_theme_onPrimaryFixedVariant"
-                android:layout_marginEnd="10dp"/>
+                android:backgroundTint="@color/md_theme_onPrimaryFixedVariant"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".Home.ProductListCategory">
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tbrProductList"
         app:layout_constraintStart_toStartOf="parent"
@@ -16,6 +15,7 @@
         android:background="@color/md_theme_surfaceContainerLowest"
         android:elevation="10dp"
         app:titleTextColor="@color/md_theme_onSurface"
+        app:titleTextAppearance="@style/TitleActionBar"
         app:menu="@menu/menu_product_list_screen"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>

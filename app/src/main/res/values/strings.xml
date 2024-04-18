@@ -58,6 +58,21 @@
     <string name="buy_now">Mua ngay</string>
     <string name="cancel">Hủy</string>
     <string name="view_cart">Xem giỏ hàng</string>
+    <string name="product_in_order_head">Sản phẩm trong đơn hàng</string>
+    <string name="voucher">Mã giảm giá</string>
+    <string name="change">Thay đổi</string>
+    <string name="payment_head">Thanh toán</string>
+    <string name="payment_method_head">Phương thức thanh toán</string>
+    <string name="cod">Thanh toán khi nhận hàng (COD)</string>
+    <string name="napas">Thanh toán qua thẻ Napas</string>
+    <string name="momo">Thanh toán qua ví điện tử Momo</string>
+    <string name="payment_detail_head">Chi tiết thanh toán</string>
+    <string name="address_book">Sổ địa chỉ</string>
+    <string name="no_voucher">Không có mã giảm giá nào.</string>
+    <string name="quit_order_flow_title">Bạn có chắc muốn thoát quá trình đặt hàng?</string>
+    <string name="quit_order_flow_sub">Có rất nhiều người đang muốn mua sản phẩm của bạn, đừng chần chừ.</string>
+    <string name="quit">Thoát</string>
+    <string name="continue_flow">Tiếp tục</string>
     <string name="title_activity_all_artist">AllArtistActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
