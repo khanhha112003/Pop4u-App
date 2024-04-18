@@ -1,21 +1,22 @@
 package com.group2.database_helper;
-
-import static com.group2.database_helper.OrderContract.OrderEntry.TABLE_NAME;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import com.group2.model.Product;
 
 public class OrderDatabaseHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "order.db";
+    public static final String TABLE_NAME = "orders";
+    private static final String DATABASE_NAME = "order.sqlite";
     private static final int DATABASE_VERSION = 1;
 
-    public static final String COLUMN_PRODUCT_NAME = "product_name";
-    public static final String COLUMN_PRODUCT_PRICE = "product_price";
+    public static final String COLUMN_PRODUCT_NAME = "productName";
+    public static final String COLUMN_PRODUCT_PRICE = "productPrice";
+    public static final String COLUMN_PRODUCT_CODE = "productCode";
     public static final String COLUMN_QUANTITY = "quantity";
-    public static final String COLUMN_TOKEN = "token";
 
     public OrderDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -23,26 +24,24 @@ public class OrderDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String SQL_CREATE_ORDER_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+        String sql = "CREATE TABLE " + TABLE_NAME + " ("
                 + OrderContract.OrderEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + OrderContract.OrderEntry.COLUMN_PRODUCT_NAME + " TEXT NOT NULL, "
+                + OrderContract.OrderEntry.COLUMN_PRODUCT_CODE + " TEXT NOT NULL, "
                 + OrderContract.OrderEntry.COLUMN_PRODUCT_PRICE + " REAL NOT NULL, "
-                + OrderContract.OrderEntry.COLUMN_QUANTITY + " INTEGER NOT NULL, "
-                + OrderContract.OrderEntry.COLUMN_TOKEN + " TEXT NOT NULL);";
+                + OrderContract.OrderEntry.COLUMN_QUANTITY + " INTEGER NOT NULL); ";
 
-        db.execSQL(SQL_CREATE_ORDER_TABLE);
+        db.execSQL(sql);
     }
-    public boolean insertData(String product_name,
-                              int product_price,
-                              int quantity,
-                              String token){
+    public boolean insertData(Product product,
+                              Integer quantity){
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_PRODUCT_NAME, product_name);
-        contentValues.put(COLUMN_PRODUCT_PRICE, product_price);
+        contentValues.put(COLUMN_PRODUCT_NAME, product.getProductName());
+        contentValues.put(COLUMN_PRODUCT_CODE, product.getProductCode());
+        contentValues.put(COLUMN_PRODUCT_PRICE, product.getProductPrice());
         contentValues.put(COLUMN_QUANTITY, quantity);
-        contentValues.put(COLUMN_TOKEN, token);
 
 
         long result = db.insert(TABLE_NAME, null, contentValues);
@@ -66,20 +65,34 @@ public class OrderDatabaseHelper extends SQLiteOpenHelper {
     }
 
     //INSERT, UPDATE, DELETE
-    public void execSql(String sql){
+
+    public Cursor queryData(String sql) {
+        SQLiteDatabase db = getReadableDatabase();
+        return  db.rawQuery(sql, null);
+    }
+    public boolean excecSql(String sql){
+        SQLiteDatabase db = getWritableDatabase();
         try {
-            SQLiteDatabase db = getWritableDatabase();
             db.execSQL(sql);
+            return true;
         }
         catch (Exception e){
+            Log.e("Error: ", e.toString());
+            return false;
         }
     }
+    private int numOfRows() {
+        Cursor c = queryData("SELECT * FROM " + TABLE_NAME);
+        int numOfRows = c.getCount();
+        c.close();
+        return numOfRows;
+    }
 
-    //Num of Rows
-    public int numbOfRows(){
-        Cursor cursor = getData("SELECT * FROM " + TABLE_NAME);
-        int count = cursor.getCount();
-        cursor.close();
-        return count;
+    public void createSampleData() {
+        if (numOfRows() == 0){
+            excecSql("INSERT INTO " + TABLE_NAME + " VALUES(null, 'Aespa – Savage (Photobook Version)', 'PAE1001', 214999, 1)");
+            excecSql("INSERT INTO " + TABLE_NAME + " VALUES(null, 'EXO 7th Album [EXIST] (Photo Book Ver.)', 'PEX1001', 214999, 2)");
+            excecSql("INSERT INTO " + TABLE_NAME + " VALUES(null, 'ALBUM STRAY KIDS - NOEASY', 'ASK1001', 214999, 3)");
+        }
     }
 }

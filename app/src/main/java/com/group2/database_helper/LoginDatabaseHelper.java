@@ -1,6 +1,5 @@
 package com.group2.database_helper;
 
-import static com.group2.database_helper.LoginContract.LoginEntry.COLUMN_EMAIL;
 import static com.group2.database_helper.LoginContract.LoginEntry.COLUMN_PASSWORD;
 import static com.group2.database_helper.OrderContract.OrderEntry.TABLE_NAME;
 
@@ -11,8 +10,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class LoginDatabaseHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "login.db";
+    private static final String DATABASE_NAME = "login.sqlite";
     private static final int DATABASE_VERSION = 1;
+    private static final String COLUMN_USERNAME = "gmail";
 
     public LoginDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -22,7 +22,7 @@ public class LoginDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String SQL_CREATE_LOGIN_TABLE = "CREATE TABLE " + LoginContract.LoginEntry.TABLE_NAME + " ("
                 + LoginContract.LoginEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + LoginContract.LoginEntry.COLUMN_EMAIL + " TEXT NOT NULL, "
+                + LoginContract.LoginEntry.COLUMN_GMAIL + " TEXT NOT NULL, "
                 + LoginContract.LoginEntry.COLUMN_PASSWORD + " TEXT NOT NULL);";
 
         db.execSQL(SQL_CREATE_LOGIN_TABLE);
@@ -34,12 +34,12 @@ public class LoginDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertData(String email,
+    public boolean insertData(String gmail,
                               String password){
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_EMAIL, email);
+        contentValues.put(COLUMN_USERNAME, gmail);
         contentValues.put(COLUMN_PASSWORD, password);
 
         long result = db.insert(TABLE_NAME, null, contentValues);

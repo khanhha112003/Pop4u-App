@@ -1,6 +1,8 @@
 package com.group2.pop4u_app.Activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -25,6 +27,7 @@ import android.widget.Toast;
 import com.group2.adapter.BigProductCardRecyclerAdapter;
 import com.group2.adapter.CartAdapter;
 import com.group2.adapter.MiniProductCardRecyclerAdapter;
+import com.group2.database_helper.OrderDatabaseHelper;
 import com.group2.model.CartItem;
 import com.group2.model.Product;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
@@ -42,6 +45,8 @@ public class CartFragment extends Fragment {
     BigProductCardRecyclerAdapter bigProductCardRecyclerAdapter;
     ArrayList<Product> productArrayList;
 
+    OrderDatabaseHelper db;
+
     public CartFragment() {
         // Required empty public constructor
     }
@@ -56,8 +61,35 @@ public class CartFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) { }
+        binding = FragmentCartBinding.inflate(getLayoutInflater());
+
+        if (getArguments() != null) {
+        }
+        createDB();
+        loadDB();
     }
+
+    private void loadDB() {
+        productArrayList = new ArrayList<>();
+        Cursor cursor = db.queryData("SELECT * FROM " + db.TABLE_NAME);
+        while (cursor.moveToNext()){
+            productArrayList.add(new Product(cursor.getInt(0), cursor.getString(1), cursor.getDouble(2)));
+        }
+        cursor.close();
+        adapter = new CartAdapter(CartFragment.this, R.layout.activity_item_cart, db);
+        binding.rvCart.setAdapter(adapter);
+    }
+
+    private void createDB() {
+        // Get the context from the CartFragment
+        android.content.Context context = CartFragment.this.getContext();
+
+        // Instantiate the OrderDatabaseHelper with the context
+        db = new OrderDatabaseHelper(context);
+        db.createSampleData();
+    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -214,6 +246,7 @@ public class CartFragment extends Fragment {
 
 
         productArrayList = new ArrayList<>();
+
 //        productArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
 
         bigProductCardRecyclerAdapter = new BigProductCardRecyclerAdapter(  requireActivity(), productArrayList);

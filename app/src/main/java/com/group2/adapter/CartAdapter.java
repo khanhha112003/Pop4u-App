@@ -13,7 +13,9 @@ import android.widget.CheckBox;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.group2.database_helper.OrderDatabaseHelper;
 import com.group2.model.CartItem;
+import com.group2.pop4u_app.Activity.CartFragment;
 import com.group2.pop4u_app.R;
 
 import java.text.DecimalFormat;
@@ -28,6 +30,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public CartAdapter(Context context, ArrayList<CartItem> carts) {
         this.context = context;
         this.carts = carts;
+    }
+
+    public CartAdapter(CartFragment cartFragment, int activity_item_cart, OrderDatabaseHelper orderdb) {
+
     }
 
     @NonNull
