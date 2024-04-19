@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -13,21 +13,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Pop4u_App"
-        tools:targetApi="31" >
+        tools:targetApi="31">
+        <activity
+            android:name=".Home.FavoriteListActivity"
+            android:exported="false" />
         <activity
             android:name=".LoginScreen.ForgotPassScreen"
             android:exported="false" />
-<!--        <activity-->
-<!--            android:name=".OrderDetailSrc.OrderDetail"-->
-<!--            android:exported="false" />-->
         <activity
-            android:name=".Activity.MainActivity"
+            android:name=".OrderDetailSrc.OrderDetail"
+            android:exported="false" />
+        <activity
+            android:name=".OrderScreen.OrderScreen"
             android:exported="false" />
         <activity
             android:name=".ProductDetailScreen.ProductDetailScreen"
             android:exported="false" />
         <activity
             android:name=".AccountScreen.SettingScreen"
+            android:exported="false" />
+        <activity
+            android:name=".AccountScreen.AccountScreen"
             android:exported="false" />
         <activity
             android:name=".Home.ProductListCategory"
@@ -40,8 +46,7 @@
             android:exported="false" />
         <activity
             android:name=".SearchScreen.QuerySearchActivity"
-            android:exported="false" />
-        <!-- <activity -->
+            android:exported="false" /> <!-- <activity -->
         <!-- android:name=".home.ProductListCategory" -->
         <!-- android:exported="false" /> -->
         <activity
@@ -52,8 +57,7 @@
             android:exported="false" />
         <activity
             android:name=".SplashScreen.SplashScr"
-            android:exported="false" />
-        <!-- <activity -->
+            android:exported="false" /> <!-- <activity -->
         <!-- android:name=".SearchScreen.SearchDashboardActivity" -->
         <!-- android:exported="false" /> -->
         <activity
@@ -67,8 +71,7 @@
             android:exported="false" />
         <activity
             android:name=".VoucherScreen.ShowVoucher"
-            android:exported="false" />
-        <!-- <activity -->
+            android:exported="false" /> <!-- <activity -->
         <!-- android:name=".home.ProductListCategory" -->
         <!-- android:exported="false" /> -->
         <activity
@@ -82,22 +85,18 @@
             android:exported="false" />
         <activity
             android:name=".SignUp.SignUp_1"
-            android:exported="false" />
-        <!-- <activity -->
+            android:exported="false" /> <!-- <activity -->
         <!-- android:name=".CartScreen.Cart" -->
         <!-- android:exported="false" /> -->
-<!--        <activity-->
-<!--            android:name=".Home."-->
-<!--            android:exported="false" />-->
+        <activity
+            android:name=".Home.HomeScreen"
+            android:exported="false" />
         <activity
             android:name=".PaymentScreen.Payment"
             android:exported="false" />
         <activity
-            android:name=".OrderDetailSrc.OrderDetail"
-            android:exported="false" />
-        <activity
-            android:name=".OrderScreen.OrderScreen"
-            android:exported="true" >
+            android:name=".Activity.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

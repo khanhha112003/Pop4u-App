@@ -30,7 +30,9 @@ import com.group2.adapter.MiniProductCardRecyclerAdapter;
 import com.group2.database_helper.OrderDatabaseHelper;
 import com.group2.model.CartItem;
 import com.group2.model.Product;
+import com.group2.pop4u_app.Home.FavoriteListActivity;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
+import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetVerticalRecycler;
 import com.group2.pop4u_app.PaymentScreen.Payment;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentCartBinding;
@@ -96,7 +98,7 @@ public class CartFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentCartBinding.inflate(inflater, container, false);
-        return  binding.getRoot();
+        return binding.getRoot();
     }
 
     @Override
@@ -135,7 +137,6 @@ public class CartFragment extends Fragment {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 if (direction == ItemTouchHelper.LEFT) {
-                    // Xóa đơn hàng
                     int position = viewHolder.getAdapterPosition();
                     deleteOrder(position);
                 }
@@ -173,6 +174,11 @@ public class CartFragment extends Fragment {
     private void customAndLoadData() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
         binding.rvCart.setLayoutManager(layoutManager);
+        ItemOffsetVerticalRecycler itemOffsetVerticalRecycler = new ItemOffsetVerticalRecycler(requireContext(), R.dimen.small_offset);
+        binding.rvCart.setHasFixedSize(true);
+        binding.rvCart.addItemDecoration(itemOffsetVerticalRecycler);
+        binding.rvCart.setNestedScrollingEnabled(false);
+
 
         carts = new ArrayList<>();
         carts.add(new CartItem(R.drawable.photo_ex, "The Album - BlackPink", "Hồng", 400000, 1));
@@ -214,13 +220,11 @@ public class CartFragment extends Fragment {
         currentQuantity++;
         item.setQuantity(currentQuantity);
         adapter.notifyItemChanged(position);
-        // Tính lại tổng giá tiền sau khi thay đổi số lượng
         calculateTotalPrice();
     }
     private void deleteOrder(int position) {
         carts.remove(position);
         adapter.notifyItemRemoved(position);
-        // Tính lại tổng giá tiền sau khi xóa
         calculateTotalPrice();
         Toast.makeText(requireActivity(), "Đơn hàng đã được xóa", Toast.LENGTH_SHORT).show();
     }
@@ -249,7 +253,7 @@ public class CartFragment extends Fragment {
 
 //        productArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
 
-        bigProductCardRecyclerAdapter = new BigProductCardRecyclerAdapter(  requireActivity(), productArrayList);
+        bigProductCardRecyclerAdapter = new BigProductCardRecyclerAdapter(requireActivity(), productArrayList);
         ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(getContext(), R.dimen.item_offset);
         binding.rcRelativeProduct.addItemDecoration(itemDecoration);
         binding.rcRelativeProduct.setAdapter(bigProductCardRecyclerAdapter);

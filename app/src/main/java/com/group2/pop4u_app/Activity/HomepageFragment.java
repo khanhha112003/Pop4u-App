@@ -255,7 +255,6 @@ public class HomepageFragment extends Fragment {
                 Intent intent = new Intent(requireActivity(), ProductListCategory.class);
                 intent.putExtra("recyclerID", "newProduct");
                 intent.putExtra("recyclerName", "Mới ra mắt");
-
                 startActivity(intent);
             }
         });
