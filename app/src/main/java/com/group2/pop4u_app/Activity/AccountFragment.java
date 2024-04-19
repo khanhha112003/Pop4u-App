@@ -8,18 +8,22 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.group2.adapter.SettingListAdapter;
+import com.group2.api.Services.UserService;
 import com.group2.model.SettingItem;
+import com.group2.model.User;
 import com.group2.pop4u_app.AccountScreen.SettingScreen;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentAccountBinding;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
 
 public class AccountFragment extends Fragment {
 
@@ -28,6 +32,7 @@ public class AccountFragment extends Fragment {
 
     ArrayList<SettingItem> settingAccountItems, settingSystemItems;
 
+    User user = new User("username", "email", "fullname", "birthdate", "phone_number");
 
     public AccountFragment() {
         // Required empty public constructor
@@ -55,13 +60,20 @@ public class AccountFragment extends Fragment {
         initData1();
         initData2();
         addEvents();
+        CompletableFuture<User> userInfoFuture = UserService.instance.getUserProfile();
+        userInfoFuture.thenAccept(user -> {
+            if (this != null) {
+                this.user = user;
+            }
+            this.setUserProfile();
+        });
+        try {
+            userInfoFuture.get();
+        } catch (Exception e) {
+            Log.d("AccountFragment", "Get user info failed");
+        }
         return binding.getRoot();
     }
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
 
     private void addEvents() {
         settingAccountListAdapter.setOnClickListener(new SettingListAdapter.OnClickListener() {
@@ -111,6 +123,11 @@ public class AccountFragment extends Fragment {
         settingAccountListAdapter = new SettingListAdapter(requireActivity(), settingAccountItems);
         binding.rcvAccountSetting.setAdapter(settingAccountListAdapter);
         binding.rcvAccountSetting.setNestedScrollingEnabled(false);
+    }
+
+    private void setUserProfile() {
+        binding.txtUserFullName.setText(user.getFullname());
+        binding.txtUserEmail.setText(user.getEmail());
     }
 
 }

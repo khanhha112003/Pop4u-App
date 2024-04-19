@@ -14,8 +14,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.group2.api.Services.UserService;
+import com.group2.model.ResponseValidate;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.ActivitySignUp1Binding;
+
+import java.util.concurrent.CompletableFuture;
 
 public class SignUp_1 extends AppCompatActivity {
 
@@ -77,8 +81,7 @@ public class SignUp_1 extends AppCompatActivity {
                 if (cancel) {
                     focusView.requestFocus();
                 } else {
-                    Intent intent = new Intent(SignUp_1.this, SignUp_2.class);
-                    startActivity(intent);
+                    sendRegisterRequest(email, password);
                 }
             }
         });
@@ -128,8 +131,7 @@ public class SignUp_1 extends AppCompatActivity {
         binding.txtBacktoLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(SignUp_1.this, LoginPage.class);
-//                startActivity(intent);
+                SignUp_1.this.finish();
             }
         });
     }
@@ -143,5 +145,34 @@ public class SignUp_1 extends AppCompatActivity {
         // Check if the password contains at least 8 characters, includes at least one uppercase letter, one number, and one special character
         String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
         return password.matches(passwordPattern);
+    }
+
+    private void sendRegisterRequest(String email, String password) {
+        CompletableFuture<ResponseValidate> future = UserService.instance.register(email, password);
+        future.whenComplete((result, error) -> {
+            if (error != null) {
+                error.printStackTrace();
+                runOnUiThread(() -> {
+                    Toast.makeText(SignUp_1.this, "Đã xảy ra lỗi trong quá trình đăng ký", Toast.LENGTH_SHORT).show();
+                });
+            } else {
+                if (result != null && result.getStatus() == 1) {
+                    runOnUiThread(() -> {
+                        Toast.makeText(SignUp_1.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(SignUp_1.this, SignUp_2.class);
+                        intent.putExtra("email", email);
+                        startActivity(intent);
+                    });
+                } else {
+                    runOnUiThread(() -> {
+                        if (result != null) {
+                            Toast.makeText(SignUp_1.this, result.getMessage(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(SignUp_1.this, "Đã xảy ra lỗi trong quá trình đăng ký", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        });
     }
 }

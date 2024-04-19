@@ -25,16 +25,18 @@ public class LoginPage extends AppCompatActivity {
 
         binding = ActivityLoginPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         addEvents();
     }
 
     private void performLogin(String username, String password) {
-        CompletableFuture<Boolean> loginFuture = UserService.instance.login(username, password);
+        CompletableFuture<String> loginFuture = UserService.instance.login(username, password);
         loginFuture.thenAccept(v -> {
-           if (v) {
+           if (v != null) {
                if (!this.isFinishing()) {
                    LoginManagerTemp.isLogin = true;
+                   LoginManagerTemp.token = v;
+                   this.finish();
+               } else {
                    this.finish();
                }
            } else {
@@ -86,11 +88,14 @@ public class LoginPage extends AppCompatActivity {
             }
         });
 
-        binding.textView2.setOnClickListener(new View.OnClickListener() {
+        binding.txtCreateAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginPage.this, SignUp_1.class);
                 startActivity(intent);
+                if (LoginPage.this != null && !LoginPage.this.isFinishing()) {
+                    LoginPage.this.finish();
+                }
             }
         });
     }
