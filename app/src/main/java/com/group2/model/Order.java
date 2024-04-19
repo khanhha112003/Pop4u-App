@@ -1,6 +1,7 @@
 package com.group2.model;
 
 public class Order {
+    int o_id;
     int o_thumb;
     String o_name;
     String o_artist;
@@ -8,13 +9,23 @@ public class Order {
     int o_price;
     int o_quantity;
 
-    public Order(int o_thumb, String o_name, String o_artist, String o_option, int o_price, int o_quantity) {
+
+    public Order(int o_id, int o_thumb, String o_name, String o_artist, String o_option, int o_price, int o_quantity) {
+        this.o_id = o_id;
         this.o_thumb = o_thumb;
         this.o_name = o_name;
         this.o_artist = o_artist;
         this.o_option = o_option;
         this.o_price = o_price;
         this.o_quantity = o_quantity;
+    }
+
+    public int getO_id() {
+        return o_id;
+    }
+
+    public void setO_id(int o_id) {
+        this.o_id = o_id;
     }
 
     public int getO_thumb() {

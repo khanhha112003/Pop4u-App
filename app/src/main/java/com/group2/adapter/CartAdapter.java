@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.group2.database_helper.OrderDatabaseHelper;
 import com.group2.model.CartItem;
+import com.group2.model.Order;
 import com.group2.pop4u_app.Activity.CartFragment;
 import com.group2.pop4u_app.R;
 
@@ -27,7 +28,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public OnTotalPriceChangeListener totalPriceChangeListener;
     public OnQuantityChangeListener quantityChangeListener;
 
-    public CartAdapter(Context context, ArrayList<CartItem> carts) {
+    public CartAdapter(Context context, ArrayList<Order> carts) {
         this.context = context;
         this.carts = carts;
     }
