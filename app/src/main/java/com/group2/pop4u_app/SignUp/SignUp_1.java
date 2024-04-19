@@ -3,6 +3,7 @@ package com.group2.pop4u_app.SignUp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -151,7 +152,7 @@ public class SignUp_1 extends AppCompatActivity {
         CompletableFuture<ResponseValidate> future = UserService.instance.register(email, password);
         future.whenComplete((result, error) -> {
             if (error != null) {
-                error.printStackTrace();
+                Log.d("Signup level 1", "error happend when register email");
                 runOnUiThread(() -> {
                     Toast.makeText(SignUp_1.this, "Đã xảy ra lỗi trong quá trình đăng ký", Toast.LENGTH_SHORT).show();
                 });

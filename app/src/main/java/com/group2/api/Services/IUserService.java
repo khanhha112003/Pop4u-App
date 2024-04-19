@@ -29,6 +29,12 @@ public interface IUserService {
             @Field("password") String password
     );
 
+    @POST("/api/auth/mobile_verification")
+    Call<RegisterFormResponseDAO> otp_verification(
+            @Field("email") String email,
+            @Field("otp") String otp
+    );
+
     @POST("/api/user/update")
     Call<UserDAO> update(
             @Query("email") String email,

@@ -77,6 +77,35 @@ public class UserService {
         return future;
     }
 
+    public CompletableFuture<ResponseValidate> validate_otp(String email, String otp) {
+        CompletableFuture<ResponseValidate> future = new CompletableFuture<>();
+        executor.execute(() -> {
+            Call<RegisterFormResponseDAO> call = userService.otp_verification(email, otp);
+            try {
+                Response<RegisterFormResponseDAO> response = call.execute();
+                if (response.isSuccessful()) {
+                    RegisterFormResponseDAO resultRegister = response.body();
+                    if (resultRegister == null) {
+                        future.complete(null); // Complete the future with false if the response body is null
+                        return;
+                    }
+                    if (resultRegister.getStatus() == 1) {
+                        Log.d("Validate", "Validate success");
+                    } else {
+                        Log.d("Validate", "Validate failed");
+                    }
+                    future.complete(resultRegister.asResponseValidate()); // Complete the future with the ResponseValidate object
+                } else {
+                    future.complete(null); // Complete the future with false in case of unsuccessful response
+                }
+            } catch (IOException e) {
+                future.completeExceptionally(e); // Complete the future exceptionally if an exception occurs
+            }
+        });
+        return future;
+    }
+
+
 //    CompletableFuture<Boolean> logoutFuture = logout();
 //
 //    // Attach a callback to the CompletableFuture to handle the result
