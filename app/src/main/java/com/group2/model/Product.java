@@ -51,6 +51,9 @@ public class Product {
         this.listProductPhoto = listProductPhoto;
     }
 
+    public Product(int anInt, String string, double aDouble) {
+    }
+
     public String getProductCode() {
         return productCode;
     }
