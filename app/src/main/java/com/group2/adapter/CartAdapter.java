@@ -62,7 +62,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 item.setChecked(isChecked);
                 calculateTotalPrice();
-                // Kiểm tra xem có ít nhất một checkbox cá nhân không được chọn
                 boolean atLeastOneUnchecked = false;
                 for (CartItem cartItem : carts) {
                     if (!cartItem.isChecked()) {
@@ -71,7 +70,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     }
                 }
 
-                // Nếu có ít nhất một checkbox cá nhân không được chọn, hãy làm cho checkbox "Chọn tất cả" không được chọn
                 if (atLeastOneUnchecked && totalPriceChangeListener != null) {
                     totalPriceChangeListener.onAtLeastOneUnchecked();
                 }
