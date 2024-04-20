@@ -12,6 +12,7 @@ import com.group2.model.ResponseValidate;
 import com.group2.model.User;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -52,7 +53,10 @@ public class UserService {
     public CompletableFuture<ResponseValidate> register(String email, String password) {
         CompletableFuture<ResponseValidate> future = new CompletableFuture<>();
         executor.execute(() -> {
-            Call<RegisterFormResponseDAO> call = userService.register(email, password);
+            HashMap<String, String> body = new HashMap<>();
+            body.put("email", email);
+            body.put("password", password);
+            Call<RegisterFormResponseDAO> call = userService.register(body);
             try {
                 Response<RegisterFormResponseDAO> response = call.execute();
                 if (response.isSuccessful()) {
@@ -80,7 +84,10 @@ public class UserService {
     public CompletableFuture<ResponseValidate> validate_otp(String email, String otp) {
         CompletableFuture<ResponseValidate> future = new CompletableFuture<>();
         executor.execute(() -> {
-            Call<RegisterFormResponseDAO> call = userService.otp_verification(email, otp);
+            HashMap<String, String> body = new HashMap<>();
+            body.put("email", email);
+            body.put("otp", otp);
+            Call<RegisterFormResponseDAO> call = userService.otp_verification(body);
             try {
                 Response<RegisterFormResponseDAO> response = call.execute();
                 if (response.isSuccessful()) {

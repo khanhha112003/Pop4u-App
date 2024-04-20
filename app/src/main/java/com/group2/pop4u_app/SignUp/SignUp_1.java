@@ -162,6 +162,7 @@ public class SignUp_1 extends AppCompatActivity {
                         Toast.makeText(SignUp_1.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(SignUp_1.this, SignUp_2.class);
                         intent.putExtra("email", email);
+                        this.finish();
                         startActivity(intent);
                     });
                 } else {

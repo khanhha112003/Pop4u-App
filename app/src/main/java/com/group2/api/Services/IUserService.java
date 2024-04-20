@@ -4,7 +4,10 @@ import com.group2.api.DAO.LoginResponseDAO;
 import com.group2.api.DAO.RegisterFormResponseDAO;
 import com.group2.api.DAO.UserDAO;
 
+import java.util.HashMap;
+
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -24,16 +27,10 @@ public interface IUserService {
     Call<UserDAO> logout(@Header("Authorization") String authHeader);
 
     @POST("/api/auth/mobile_register")
-    Call<RegisterFormResponseDAO> register(
-            @Field("email") String email,
-            @Field("password") String password
-    );
+    Call<RegisterFormResponseDAO> register(@Body HashMap<String, String> body);
 
     @POST("/api/auth/mobile_verification")
-    Call<RegisterFormResponseDAO> otp_verification(
-            @Field("email") String email,
-            @Field("otp") String otp
-    );
+    Call<RegisterFormResponseDAO> otp_verification(@Body HashMap<String, String> body);
 
     @POST("/api/user/update")
     Call<UserDAO> update(
