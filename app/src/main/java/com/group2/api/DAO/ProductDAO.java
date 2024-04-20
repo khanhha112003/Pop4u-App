@@ -58,16 +58,6 @@ public class ProductDAO {
     @JsonProperty("is_sale")
     private boolean is_sale;
 
-    // Getters and setters
-
-    public String getProductDescription() {
-        return productDescription;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
     public Product asProduct() {
         String label = "";
         if (is_hot) {

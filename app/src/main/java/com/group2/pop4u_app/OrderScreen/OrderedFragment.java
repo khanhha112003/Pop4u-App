@@ -62,7 +62,7 @@ public class OrderedFragment extends Fragment {
         orderDetailItem.add(new Order(1, R.drawable.photo_ex, "The Album - BlackPink", "Black Pink", "Hồng", 400000, 1));
         orderDetailItem.add(new Order(1, R.drawable.photo_ex, "The Album - BlackPink", "Black Pink", "Hồng", 400000, 1));
 
-       // orderDetailAdapter = new OrderDetailAdapter(getContext(), orderDetailItem);
-        binding.lvOrderedList.setAdapter((ListAdapter) orderDetailItem);
+        orderDetailAdapter = new OrderDetailAdapter(orderDetailItem);
+//        binding.lvOrderedList.setAdapter((ListAdapter) orderDetailAdapter);
     }
 }

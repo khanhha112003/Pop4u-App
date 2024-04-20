@@ -25,10 +25,6 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
         this.orders = orders;
     }
 
-    public OrderDetailAdapter(Context context, int order_item_layout, List<Order> initData) {
-    }
-
-
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView imvThumb;
         TextView txtName, txtArtist, txtQuantity, txtPrice, txtOption;

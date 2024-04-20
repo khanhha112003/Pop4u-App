@@ -2,13 +2,18 @@ package com.group2.pop4u_app.LoginScreen;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.group2.api.Services.UserService;
+import com.group2.local.LoginManagerTemp;
 import com.group2.pop4u_app.Activity.MainActivity;
 import com.group2.pop4u_app.SignUp.SignUp_1;
 import com.group2.pop4u_app.databinding.ActivityLoginPageBinding;
+
+import java.util.concurrent.CompletableFuture;
 
 public class LoginPage extends AppCompatActivity {
 
@@ -20,30 +25,49 @@ public class LoginPage extends AppCompatActivity {
 
         binding = ActivityLoginPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         addEvents();
+    }
 
-
+    private void performLogin(String username, String password) {
+        CompletableFuture<String> loginFuture = UserService.instance.login(username, password);
+        loginFuture.thenAccept(v -> {
+           if (v != null) {
+               if (!this.isFinishing()) {
+                   LoginManagerTemp.isLogin = true;
+                   LoginManagerTemp.token = v;
+                   this.finish();
+               } else {
+                   this.finish();
+               }
+           } else {
+               Log.d("Login screen", "Login fail");
+           }
+        });
+        try {
+            loginFuture.get();
+        } catch (Exception e) {
+            Log.d("Login screen", "Login fail");
+        }
     }
 
     private void addEvents() {
         binding.btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = binding.edtEmail.getText().toString();
+                String username = binding.edtUsername.getText().toString();
                 String password = binding.edtPass.getText().toString();
 
                 // Reset errors
-                binding.edtEmail.setError(null);
+                binding.edtUsername.setError(null);
                 binding.edtPass.setError(null);
 
                 boolean cancel = false;
                 View focusView = null;
 
                 // Check for a valid email address.
-                if (!isValidEmail(email)) {
-                    binding.edtEmail.setError("Bạn đã nhập sai email. Vui lòng nhập lại");
-                    focusView = binding.edtEmail;
+                if (!isValidUsername(username)) {
+                    binding.edtUsername.setError("Bạn đã nhập sai email. Vui lòng nhập lại");
+                    focusView = binding.edtUsername;
                     cancel = true;
                 }
 
@@ -59,31 +83,30 @@ public class LoginPage extends AppCompatActivity {
                 if (cancel) {
                     focusView.requestFocus();
                 } else {
-                    // Navigate to HomePage
-                    Intent intent = new Intent(LoginPage.this, MainActivity.class); // Adjust this to your HomePage activity
-                    startActivity(intent);
-                    finish(); // Optional: If you don't want users to return to the login screen when pressing back
+                    performLogin(username, password);
                 }
             }
         });
 
-        binding.textView2.setOnClickListener(new View.OnClickListener() {
+        binding.txtCreateAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginPage.this, SignUp_1.class);
                 startActivity(intent);
+                if (LoginPage.this != null && !LoginPage.this.isFinishing()) {
+                    LoginPage.this.finish();
+                }
             }
         });
     }
 
-    private boolean isValidEmail(String email) {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    private boolean isValidUsername(String username) {
+        return !username.isEmpty();
     }
 
     private boolean isValidPassword(String password) {
         // Password regex pattern
-        String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
-        return password.matches(passwordPattern);
+        return password.length() > 7;
     }
 
 }

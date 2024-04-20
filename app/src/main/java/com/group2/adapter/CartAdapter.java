@@ -28,7 +28,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public OnTotalPriceChangeListener totalPriceChangeListener;
     public OnQuantityChangeListener quantityChangeListener;
 
-    public CartAdapter(Context context, ArrayList<Order> carts) {
+    public CartAdapter(Context context, ArrayList<CartItem> carts) {
         this.context = context;
         this.carts = carts;
     }
