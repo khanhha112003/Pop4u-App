@@ -46,11 +46,6 @@ import java.util.TimerTask;
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomepageFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HomepageFragment extends Fragment {
 
     FragmentHomepageBinding binding;
@@ -103,7 +98,6 @@ public class HomepageFragment extends Fragment {
 
     private void loadData() {
         CompletableFuture<ArrayList<Product>> newProductFuture = ProductService.instance.getListProduct(1, "new", "asc", 10, 0, "");
-//        CompletableFuture<ArrayList<Product>> rcmProductFuture = ProductService.instance.getListProduct(1, "recommend", "desc", 10, 0, "");
         CompletableFuture<ArrayList<Product>> saleProductFuture = ProductService.instance.getListProduct(1, "sale", "desc", 10, 0, "");
         CompletableFuture<ArrayList<Artist>> featuredArtistFuture = ArtistService.instance.getListArtist(1, 4, "hot");
         newProductFuture.thenAccept(products -> {
@@ -243,6 +237,7 @@ public class HomepageFragment extends Fragment {
     private void openProduct(Product product) {
         Intent intent = new Intent(requireActivity(), ProductDetailScreen.class);
         intent.putExtra("productCode", product.getProductCode());
+        intent.putExtra("artistCode", product.getArtistCode());
         startActivity(intent);
     }
 
@@ -319,7 +314,6 @@ public class HomepageFragment extends Fragment {
         binding.rccHotArtist.addItemDecoration(itemOffsetHorizontalRecycler);
         binding.rccHotArtist.setHasFixedSize(true);
         featuredArtistArrayList = new ArrayList<>();
-        // TODO: Add featured artist by syncing to API
         featuredArtistAdapter = new ArtistHorizontalListAdapter(requireActivity(), featuredArtistArrayList);
         binding.rccHotArtist.setAdapter(featuredArtistAdapter);
 

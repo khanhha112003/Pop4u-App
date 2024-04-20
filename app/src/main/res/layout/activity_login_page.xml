@@ -48,14 +48,14 @@
         app:layout_constraintTop_toBottomOf="@+id/txtSignIn" />
 
     <EditText
-        android:id="@+id/edtEmail"
+        android:id="@+id/edtUsername"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/shape_edit_text"
-        android:hint="Email của bạn"
         android:drawableLeft="@drawable/person"
         android:drawablePadding="10dp"
+        android:hint="Tên đăng nhập"
         android:inputType="textEmailAddress"
         android:padding="12dp"
         android:textColorHint="@color/md_theme_outline"
@@ -74,7 +74,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtEmail"
+        app:layout_constraintTop_toBottomOf="@+id/edtUsername"
         android:weightSum="10">
 
         <EditText
@@ -119,32 +119,35 @@
 
     <LinearLayout
         android:id="@+id/lltext1"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:gravity="center"
+        android:orientation="vertical"
         android:padding="5dp"
+        app:flow_verticalAlign="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtForgotPass">
 
         <TextView
-            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/inter"
             android:text="Bạn chưa có tài khoản tại Pop4u?"
             android:textSize="12sp" />
+
         <TextView
             android:id="@+id/txtCreateAcc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:paddingStart="5dp"
             android:fontFamily="@font/inter"
+            android:textFontWeight="700"
+            android:paddingStart="5dp"
             android:text="Tạo tài khoản ngay bây giờ."
-            android:textSize="12sp"
-            android:textColor="@color/md_theme_primary"/>
+            android:textColor="@color/md_theme_primary"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
