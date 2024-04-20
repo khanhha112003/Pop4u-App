@@ -18,6 +18,8 @@ import com.group2.api.Services.UserService;
 import com.group2.model.SettingItem;
 import com.group2.model.User;
 import com.group2.pop4u_app.AccountScreen.SettingScreen;
+import com.group2.pop4u_app.AddressScreen.PickAddress;
+import com.group2.pop4u_app.OrderScreen.OrderScreen;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentAccountBinding;
 
@@ -31,6 +33,8 @@ public class AccountFragment extends Fragment {
     SettingListAdapter settingAccountListAdapter, settingSystemListAdapter;
 
     ArrayList<SettingItem> settingAccountItems, settingSystemItems;
+    SettingItem selectedItem;
+
 
     User user = new User("username", "email", "fullname", "birthdate", "phone_number");
 
@@ -79,20 +83,35 @@ public class AccountFragment extends Fragment {
         settingAccountListAdapter.setOnClickListener(new SettingListAdapter.OnClickListener() {
             @Override
             public void onClick(int position, SettingItem settingItem) {
-                Intent intent = new Intent(requireActivity(), SettingScreen.class);
-                intent.putExtra("settingItem", (Serializable) settingItem);
-                startActivity(intent);
+                if (settingItem.getSettingID().equals("order")) {
+                    Intent intent = new Intent(requireActivity(), OrderScreen.class);
+                    startActivity(intent);
+                } else if (settingItem.getSettingID().equals("payment")) {
+                    Intent intent = new Intent(requireActivity(), OrderScreen.class);
+                    startActivity(intent);
+                } else if (settingItem.getSettingID().equals("address")) {
+                    Intent intent = new Intent(requireActivity(), PickAddress.class);
+                    startActivity(intent);
+                } else {
+                    selectedItem = settingItem;
+                    startSettingScreen();
+                }
             }
         });
 
         settingSystemListAdapter.setOnClickListener(new SettingListAdapter.OnClickListener() {
             @Override
             public void onClick(int position, SettingItem settingItem) {
-                Intent intent = new Intent(requireActivity(), SettingScreen.class);
-                intent.putExtra("settingItem", (Serializable) settingItem);
-                startActivity(intent);
+                selectedItem = settingItem;
+                startSettingScreen();
             }
         });
+    }
+
+    private void startSettingScreen() {
+        Intent intent = new Intent(requireActivity(), SettingScreen.class);
+        intent.putExtra("settingItem", (Serializable) selectedItem);
+        startActivity(intent);
     }
 
     private void initData2() {

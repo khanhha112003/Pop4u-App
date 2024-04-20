@@ -6,9 +6,29 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".ProductDetailScreen.ProductDetailScreen">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbrProductDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md_theme_surfaceContainerLow"
+        android:elevation="4dp"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/menu_product_detail"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextColor="@color/md_theme_onSurface" />
+
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsvProductDetail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/ctrProductButton"
+        app:layout_constraintStart_toStartOf="parent"
         android:scrollbars="none">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,6 +52,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/search_screen_list_artist_item_image_background"
+                android:backgroundTint="@color/white"
                 android:src="@drawable/baseline_arrow_back_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -445,4 +466,62 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/ctrProductButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ctnSnackBar"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ctrProductButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/md_theme_surfaceContainerLowest"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="5dp">
+        <Button
+            android:id="@+id/btnAddToCart"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnBuyNow"
+            android:text="@string/add_to_cart"
+            android:backgroundTint="@color/md_theme_primary"
+            android:textColor="@color/md_theme_onPrimary"
+            android:fontFamily="@font/inter_medium"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="17.5sp"
+            app:icon="@drawable/add_shopping_cart"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
+        </Button>
+        <Button
+            android:id="@+id/btnBuyNow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnAddToCart"
+            android:layout_marginStart="10dp"
+            android:text="@string/buy_now"
+            app:backgroundTint="@color/md_theme_primaryContainer"
+            android:textColor="@color/md_theme_onPrimaryContainer"
+            android:fontFamily="@font/inter_medium"
+            android:textSize="17.5sp"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/md_theme_outline"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
+        </Button>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
