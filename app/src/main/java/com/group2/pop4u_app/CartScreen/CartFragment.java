@@ -65,6 +65,7 @@ public class CartFragment extends Fragment {
         }
         createDB();
         loadDB();
+        addEvents();
     }
 
     private void loadDB() {
@@ -259,7 +260,7 @@ public class CartFragment extends Fragment {
         binding.btnMuangay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), Payment.class);
+                Intent intent = new Intent(requireContext(), Payment.class);
                 startActivity(intent);
             }
         });
