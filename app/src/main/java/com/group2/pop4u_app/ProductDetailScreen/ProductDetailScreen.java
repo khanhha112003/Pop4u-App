@@ -5,6 +5,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.TooltipCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -58,6 +61,18 @@ public class ProductDetailScreen extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("");
         setContentView(binding.getRoot());
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.ctrProductButton, (v, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            mlp.leftMargin = insets.left;
+            mlp.bottomMargin = insets.bottom;
+            mlp.rightMargin = insets.right;
+            v.setLayoutParams(mlp);
+
+            return WindowInsetsCompat.CONSUMED;
+        });
+
         loadProduct();
         setUpProductImage();
         addEvents();
@@ -220,7 +235,6 @@ public class ProductDetailScreen extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                // Update indicator text
                 updateIndicator(position, adapter.getCount());
             }
 
@@ -242,7 +256,28 @@ public class ProductDetailScreen extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             this.finish();
             return true;
-        } else if (item.getItemId() == R.id.mnFilterProduct) {
+        } else if (item.getItemId() == R.id.mnOpenCart) {
+            this.finish();
+            Intent intent = new Intent(ProductDetailScreen.this, CartActivity.class);
+            startActivity(intent);
+            return true;
+        } else if (item.getItemId() == R.id.mnShareProduct) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            ArrayList<String> stringArrayList = new ArrayList<>();
+            stringArrayList.add("ABC");
+            Product product = new Product("VFN", "Cowboy Carter Album", stringArrayList, "Beyonce", "BAN CHAY", 680000, 690000, 10, 4.5, 56, 12, 34, "Phần tiếp theo của Renaissance là một album nhạc đồng quê mạnh mẽ và đầy tham vọng được xây dựng theo khuôn mẫu độc nhất của Beyoncé. Cô khẳng định vị trí xứng đáng của mình trong thể loại này mà chỉ một ngôi sao nhạc pop với tài năng và tầm ảnh hưởng đáng kinh ngạc của cô mới có thể làm được.");
+            sendIntent.putExtra(
+                    Intent.EXTRA_TEXT,
+                    "Xem ngay sản phẩm " + product.getProductName() +
+                            " tại Pop4u với mức giá siêu hời chỉ " + String.valueOf(product.getProductPrice()) +
+                            "₫, giảm đến " + String.valueOf(product.getProductSalePercent()) +
+                            "%\n\nFreeship cho đơn hàng từ 500K, giao ngay chỉ trong 2 ngày.\n\nCùng nhiều quà tặng hấp dẫn đang chờ đón bạn."
+            );
+            sendIntent.setType("text/plain");
+            Intent shareIntent = Intent.createChooser(sendIntent, null);
+            startActivity(shareIntent);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

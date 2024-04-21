@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.topAppBar);
@@ -79,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         } else if (item.getItemId() == R.id.mnOpenOrders) {
             Intent intent = new Intent(MainActivity.this, OrderScreen.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
