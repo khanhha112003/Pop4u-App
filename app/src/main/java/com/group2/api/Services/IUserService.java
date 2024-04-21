@@ -3,6 +3,7 @@ package com.group2.api.Services;
 import com.group2.api.DAO.LoginResponseDAO;
 import com.group2.api.DAO.RegisterFormResponseDAO;
 import com.group2.api.DAO.UserDAO;
+import com.group2.model.ResponseValidate;
 
 import java.util.HashMap;
 
@@ -31,6 +32,9 @@ public interface IUserService {
 
     @POST("/api/auth/mobile_verification")
     Call<RegisterFormResponseDAO> otp_verification(@Body HashMap<String, String> body);
+
+    @POST("/api/auth/mobile_update_profile")
+    Call<RegisterFormResponseDAO> update_profile(@Body HashMap<String, String> body);
 
     @POST("/api/user/update")
     Call<UserDAO> update(

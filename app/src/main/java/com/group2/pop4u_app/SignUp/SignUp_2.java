@@ -48,15 +48,16 @@ public class SignUp_2 extends AppCompatActivity {
 
     private void otpVerification() {
         String otp = String.valueOf(binding.edtCode.getText());
-        if (otp.length() != 8) {
-
+        if (otp.length() != 6 || !otp.matches("[0-9]+")) {
+            Toast.makeText(SignUp_2.this, "Mã OTP không hợp lệ", Toast.LENGTH_SHORT).show();
         } else {
             CompletableFuture<ResponseValidate> future = UserService.instance.validate_otp(email, otp);
             future.thenAccept(v -> {
                 if (v.getStatus() == 1) {
-                    Toast.makeText(SignUp_2.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUp_2.this, "Xác thưc thành công", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(SignUp_2.this, SignUp_3.class);
                     intent.putExtra("username", email);
+                    intent.putExtra("otp", otp);
                     this.finish();
                     startActivity(intent);
                 } else {

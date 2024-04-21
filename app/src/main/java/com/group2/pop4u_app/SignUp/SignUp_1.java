@@ -159,7 +159,7 @@ public class SignUp_1 extends AppCompatActivity {
             } else {
                 if (result != null && result.getStatus() == 1) {
                     runOnUiThread(() -> {
-                        Toast.makeText(SignUp_1.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUp_1.this, "Gửi thông tin đăng ký thành công", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(SignUp_1.this, SignUp_2.class);
                         intent.putExtra("email", email);
                         this.finish();
