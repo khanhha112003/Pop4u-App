@@ -12,8 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.group2.model.Product;
-import com.group2.pop4u_app.Activity.CartFragment;
-import com.group2.pop4u_app.Activity.MainActivity;
+import com.group2.pop4u_app.CartScreen.CartFragment;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.ActivityCartBinding;
 

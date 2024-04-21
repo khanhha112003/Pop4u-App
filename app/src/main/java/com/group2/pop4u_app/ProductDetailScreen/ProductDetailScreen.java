@@ -14,9 +14,13 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -50,7 +54,12 @@ public class ProductDetailScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         binding = ActivityProductDetailScreenBinding.inflate(getLayoutInflater());
+        setSupportActionBar(binding.tbrProductDetail);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
         setContentView(binding.getRoot());
+        
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.ctrProductButton, (v, windowInsets) -> {
             Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
             ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
@@ -62,7 +71,6 @@ public class ProductDetailScreen extends AppCompatActivity {
             return WindowInsetsCompat.CONSUMED;
         });
 
-        loadProduct();
         setUpToolbar();
         setArtistCardClick();
         setUpProductImage();
@@ -71,19 +79,18 @@ public class ProductDetailScreen extends AppCompatActivity {
     }
 
     private void setUpToolbar() {
-        setSupportActionBar(binding.tbrProductDetail);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("");
-
         final int[] previousScrollY = {0};
-
         binding.nsvProductDetail.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             if (scrollY > previousScrollY[0]) {
-                binding.tbrProductDetail.setVisibility(View.VISIBLE);
-                binding.imvProductDetailBack.setVisibility(View.GONE);
+                int color = getResources().getColor(R.color.md_theme_surfaceContainerLow);
+                Drawable drawable = new ColorDrawable(color);
+                getSupportActionBar().setBackgroundDrawable(drawable);
+//                binding.tbrProductDetail.setVisibility(View.VISIBLE);
+//                binding.imvProductDetailBack.setVisibility(View.GONE);
             } else if (scrollY == 0) {
-                binding.tbrProductDetail.setVisibility(View.GONE);
-                binding.imvProductDetailBack.setVisibility(View.VISIBLE);
+                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                binding.tbrProductDetail.setVisibility(View.GONE);
+//                binding.imvProductDetailBack.setVisibility(View.VISIBLE);
             }
             previousScrollY[0] = scrollY;
         });
@@ -265,7 +272,7 @@ public class ProductDetailScreen extends AppCompatActivity {
             sendIntent.setAction(Intent.ACTION_SEND);
             ArrayList<String> stringArrayList = new ArrayList<>();
             stringArrayList.add("ABC");
-            Product product = new Product("VFN", "Cowboy Carter Album", stringArrayList, "Beyonce", "BAN CHAY", 680000, 690000, 10, 4.5, 56, 12, 34, "Phần tiếp theo của Renaissance là một album nhạc đồng quê mạnh mẽ và đầy tham vọng được xây dựng theo khuôn mẫu độc nhất của Beyoncé. Cô khẳng định vị trí xứng đáng của mình trong thể loại này mà chỉ một ngôi sao nhạc pop với tài năng và tầm ảnh hưởng đáng kinh ngạc của cô mới có thể làm được.");
+            Product product = new Product("VFN", "Cowboy Carter Album", stringArrayList, "Beyonce", "ABC", "BAN CHAY", 680000, 690000, 10, 4.5, 56, 12, 34, "Phần tiếp theo của Renaissance là một album nhạc đồng quê mạnh mẽ và đầy tham vọng được xây dựng theo khuôn mẫu độc nhất của Beyoncé. Cô khẳng định vị trí xứng đáng của mình trong thể loại này mà chỉ một ngôi sao nhạc pop với tài năng và tầm ảnh hưởng đáng kinh ngạc của cô mới có thể làm được.");
             sendIntent.putExtra(
                     Intent.EXTRA_TEXT,
                     "Xem ngay sản phẩm " + product.getProductName() +
