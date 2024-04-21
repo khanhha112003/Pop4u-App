@@ -1,5 +1,7 @@
 package com.group2.pop4u_app.AccountScreen;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -60,10 +62,41 @@ public class NotificationSettingFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentNotificationSettingBinding.inflate(inflater, container, false);
-        // Inflate the layout for this fragment
+        setupSwitchListeners();
         return binding.getRoot();
+    }
+
+    private void setupSwitchListeners() {
+        // Listener for in-app notification switch
+        binding.switchInAppNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            // Save the state to SharedPreferences or handle the change
+            saveNotificationSetting("in_app_notifications", isChecked);
+        });
+
+        // Listener for email notification switch
+        binding.switchEmailNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            // Save the state to SharedPreferences or handle the change
+            saveNotificationSetting("email_notifications", isChecked);
+        });
+
+        // Load initial state from SharedPreferences or your storage mechanism
+        loadInitialSwitchStates();
+    }
+
+    private void saveNotificationSetting(String key, boolean value) {
+        SharedPreferences prefs = getActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(key, value);
+        editor.apply();
+    }
+
+    private void loadInitialSwitchStates() {
+        SharedPreferences prefs = getActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        boolean inAppNotifEnabled = prefs.getBoolean("in_app_notifications", false);
+        boolean emailNotifEnabled = prefs.getBoolean("email_notifications", false);
+        binding.switchInAppNotifications.setChecked(inAppNotifEnabled);
+        binding.switchEmailNotifications.setChecked(emailNotifEnabled);
     }
 }
