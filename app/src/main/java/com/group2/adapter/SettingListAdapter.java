@@ -16,8 +16,8 @@ import com.group2.pop4u_app.R;
 import java.util.List;
 
 public class SettingListAdapter extends RecyclerView.Adapter<SettingListAdapter.ViewHolder> {
-    static Activity activity;
-    static List<SettingItem> settingItemList;
+    Activity activity;
+    List<SettingItem> settingItemList;
 
     private OnClickListener onClickListener;
 

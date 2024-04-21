@@ -10,7 +10,7 @@
 
     <TextView
         android:id="@+id/txtInfor"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_semibold"
         android:text="Thông tin tài khoản"
@@ -36,7 +36,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtInfor" />
 
     <EditText
-        android:id="@+id/edtFullname"
+        android:id="@+id/edtUpdateInfoFullname"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="45dp"
@@ -46,12 +46,12 @@
         android:padding="15dp"
         android:textColorHint="@color/md_theme_outline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtNoteInfor" />
 
     <EditText
-        android:id="@+id/edtPhone"
+        android:id="@+id/edtUpdateInfoPhone"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="20dp"
@@ -63,25 +63,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtFullname" />
+        app:layout_constraintTop_toBottomOf="@+id/edtUpdateInfoFullname" />
 
     <EditText
-        android:id="@+id/edtDatebirth"
+        android:id="@+id/edtUpdateInfoDatebirth"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/shape_edit_text"
         android:hint="Ngày sinh"
-        android:inputType="date"
+        android:inputType="datetime|date"
         android:padding="15dp"
         android:textColorHint="@color/md_theme_outline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtPhone" />
+        app:layout_constraintTop_toBottomOf="@+id/edtUpdateInfoPhone" />
 
     <EditText
-        android:id="@+id/edtGender"
+        android:id="@+id/edtUpdateInfoGender"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="20dp"
@@ -93,18 +93,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtDatebirth" />
+        app:layout_constraintTop_toBottomOf="@+id/edtUpdateInfoDatebirth" />
 
     <Button
-        android:id="@+id/btnConfirm"
+        android:id="@+id/btnUpdateInfoConfirm"
         android:layout_width="267dp"
         android:layout_height="65dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/button_small_filled_norm_background"
-        android:text="Xác thực email"
+        android:text="Cập nhật thông tin"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtGender" />
+        app:layout_constraintTop_toBottomOf="@+id/edtUpdateInfoGender" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

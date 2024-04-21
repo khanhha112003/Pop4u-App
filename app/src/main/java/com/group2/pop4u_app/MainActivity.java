@@ -1,59 +1,80 @@
-package com.group2.pop4u_app.Activity;
-
+package com.group2.pop4u_app;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-
-import com.google.android.material.color.MaterialColors;
-import com.group2.api.DAO.ProductDAO;
-import com.group2.api.DAO.ProductResponseDAO;
-import com.group2.api.Services.ProductService;
-import com.group2.pop4u_app.Home.FavoriteListActivity;
+import android.view.View;
+import com.group2.local.LoginManagerTemp;
+import com.group2.pop4u_app.AccountScreen.AccountFragment;
+import com.group2.pop4u_app.CartScreen.CartFragment;
+import com.group2.pop4u_app.HomeScreen.HomepageFragment;
+import com.group2.pop4u_app.LoginScreen.LoginPage;
+import com.group2.pop4u_app.HomeScreen.FavoriteListActivity;
 import com.group2.pop4u_app.OrderScreen.OrderScreen;
-import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.SearchScreen.SearchDashboardFragment;
 import com.group2.pop4u_app.databinding.ActivityMainBinding;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
-
-//    BottomNavigationMenuView bottomNavigationMenuView;
+    private int savedLoginItemIndex = -1;
+    private boolean navigateToAnotherActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+        this.savedLoginItemIndex = R.id.ic_home;
+        this.navigateToAnotherActivity = false;
         setContentView(binding.getRoot());
         setSupportActionBar(binding.topAppBar);
         replaceFragment(new HomepageFragment());
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+            this.navigateToAnotherActivity = false;
             if (item.getItemId() == R.id.ic_home) {
+                this.savedLoginItemIndex = R.id.ic_home;
                 replaceFragment(new HomepageFragment());
                 getSupportActionBar().setTitle(R.string.home_title);
             } else if (item.getItemId() == R.id.ic_search) {
+                this.savedLoginItemIndex = R.id.ic_search;
                 replaceFragment(new SearchDashboardFragment());
                 getSupportActionBar().setTitle(R.string.search_title);
             } else if (item.getItemId() == R.id.ic_cart) {
+                this.savedLoginItemIndex = R.id.ic_cart;
                 replaceFragment(new CartFragment());
                 getSupportActionBar().setTitle(R.string.cart_title);
             } else if (item.getItemId() == R.id.ic_account) {
-                replaceFragment(new AccountFragment());
-                getSupportActionBar().setTitle(R.string.account_title);
+                if (LoginManagerTemp.isLogin) {
+                    this.savedLoginItemIndex = R.id.ic_account;
+                    replaceFragment(new AccountFragment());
+                    getSupportActionBar().setTitle(R.string.account_title);
+                } else {
+                    this.navigateToAnotherActivity = true;
+                    openLogin();
+                }
             }
             return true;
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (LoginManagerTemp.isJustFinishRegisterSuccess) {
+            LoginManagerTemp.isJustFinishRegisterSuccess = false;
+            this.savedLoginItemIndex = R.id.ic_account;
+            View view = binding.bottomNavigationView.findViewById(this.savedLoginItemIndex);
+            view.performClick();
+        } else if (this.savedLoginItemIndex != -1 && navigateToAnotherActivity) {
+            View view = binding.bottomNavigationView.findViewById(this.savedLoginItemIndex);
+            view.performClick();
+        }
     }
 
     public void replaceFragment(Fragment fragment){
@@ -71,6 +92,11 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    public void openLogin() {
+        Intent intent = new Intent(this, LoginPage.class);
+        startActivity(intent);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.mnOpenFavoriteProducts) {
@@ -83,4 +109,9 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void backHome() {
+        this.savedLoginItemIndex = R.id.ic_home;
+        View view = binding.bottomNavigationView.findViewById(this.savedLoginItemIndex);
+        view.performClick();
+    }
 }

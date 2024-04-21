@@ -107,10 +107,12 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp">
+
                 <TextView
                     android:id="@+id/txtProductPrice"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
                     android:ellipsize="end"
                     android:fontFamily="@font/inter_semibold"
                     android:maxLines="1"
@@ -118,11 +120,11 @@
                     android:text="450.000₫"
                     android:textColor="@color/md_theme_primary"
                     android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/cslRating"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cslRating"
@@ -132,28 +134,28 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/txtProductPrice">
+
                     <ImageView
                         android:id="@+id/imvStar"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/star"/>
+                        android:src="@drawable/star"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <TextView
                         android:id="@+id/txtRating"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_height="20dp"
                         android:layout_marginStart="5dp"
-                        app:layout_constraintStart_toEndOf="@+id/imvStar"
+                        android:fontFamily="@font/inter_medium"
                         android:text="4.6"
                         android:textColor="@color/md_theme_outline"
-                        android:fontFamily="@font/inter_medium"
-                        />
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imvStar"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.cardview.widget.CardView

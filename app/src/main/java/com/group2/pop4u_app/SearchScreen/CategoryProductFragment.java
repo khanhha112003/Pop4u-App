@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.group2.api.Services.ProductService;
 import com.group2.model.Product;
-import com.group2.pop4u_app.Activity.MainActivity;
+import com.group2.pop4u_app.MainActivity;
 import com.group2.pop4u_app.databinding.FragmentCategoryProductBinding;
 
 import java.util.ArrayList;

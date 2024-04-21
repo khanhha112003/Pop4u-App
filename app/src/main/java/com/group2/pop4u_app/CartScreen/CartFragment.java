@@ -1,6 +1,7 @@
-package com.group2.pop4u_app.Activity;
+package com.group2.pop4u_app.CartScreen;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -18,16 +19,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.group2.adapter.BigProductCardRecyclerAdapter;
 import com.group2.adapter.CartAdapter;
-import com.group2.adapter.MiniProductCardRecyclerAdapter;
+import com.group2.database_helper.OrderDatabaseHelper;
 import com.group2.model.CartItem;
 import com.group2.model.Product;
-import com.group2.pop4u_app.Home.FavoriteListActivity;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetVerticalRecycler;
 import com.group2.pop4u_app.PaymentScreen.Payment;
@@ -37,11 +36,6 @@ import com.group2.pop4u_app.databinding.FragmentCartBinding;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CartFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CartFragment extends Fragment {
     FragmentCartBinding binding;
     CartAdapter adapter;
@@ -49,33 +43,15 @@ public class CartFragment extends Fragment {
     BigProductCardRecyclerAdapter bigProductCardRecyclerAdapter;
     ArrayList<Product> productArrayList;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    OrderDatabaseHelper db;
 
     public CartFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CartFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static CartFragment newInstance(String param1, String param2) {
         CartFragment fragment = new CartFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -83,11 +59,35 @@ public class CartFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = FragmentCartBinding.inflate(getLayoutInflater());
+
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        createDB();
+        loadDB();
     }
+
+    private void loadDB() {
+        productArrayList = new ArrayList<>();
+        Cursor cursor = db.queryData("SELECT * FROM " + db.TABLE_NAME);
+        while (cursor.moveToNext()){
+            productArrayList.add(new Product(cursor.getInt(0), cursor.getString(1), cursor.getDouble(2)));
+        }
+        cursor.close();
+        adapter = new CartAdapter(CartFragment.this, R.layout.activity_item_cart, db);
+        binding.rvCart.setAdapter(adapter);
+    }
+
+    private void createDB() {
+        // Get the context from the CartFragment
+        android.content.Context context = CartFragment.this.getContext();
+
+        // Instantiate the OrderDatabaseHelper with the context
+        db = new OrderDatabaseHelper(context);
+        db.createSampleData();
+    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -246,6 +246,7 @@ public class CartFragment extends Fragment {
 
 
         productArrayList = new ArrayList<>();
+
 //        productArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
 
         bigProductCardRecyclerAdapter = new BigProductCardRecyclerAdapter(requireActivity(), productArrayList);
