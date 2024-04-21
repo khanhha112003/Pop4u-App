@@ -36,16 +36,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtEmailConfirm" />
 
-    <EditText
+<!--    <EditText-->
+<!--        android:id="@+id/edtCode"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="70dp"-->
+<!--        android:layout_marginTop="40dp"-->
+<!--        android:background="@drawable/shape_edit_text"-->
+<!--        android:hint="Mã xác thực"-->
+<!--        android:padding="15dp"-->
+<!--        android:inputType="number"-->
+
+<!--        android:textColorHint="@color/md_theme_outline"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="1.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/txtNoteEmailConfirm" />-->
+
+    <com.group2.pop4u_app.SignUp.OtpEditText
         android:id="@+id/edtCode"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/shape_edit_text"
-        android:hint="Mã xác thực"
-        android:inputType="numberSigned"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:cursorVisible="false"
+        android:digits="1234567890"
+        android:inputType="number"
+        android:maxLength="6"
         android:padding="15dp"
-        android:textColorHint="@color/md_theme_outline"
+        android:textIsSelectable="false"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"

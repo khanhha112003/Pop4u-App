@@ -1,4 +1,4 @@
-package com.group2.pop4u_app.Home;
+package com.group2.pop4u_app.HomeScreen;
 
 import android.content.Intent;
 import android.graphics.RenderEffect;
@@ -6,17 +6,13 @@ import android.graphics.Shader;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.group2.model.Product;
 import com.group2.pop4u_app.ProductDetailScreen.ProductDetailScreen;
-import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentProductOfWeekBinding;
 
 import java.util.ArrayList;
@@ -83,13 +79,12 @@ public class ProductOfWeekFragment extends Fragment {
     private void setProductOfWeek() {
         ArrayList<String>  stringArrayList = new ArrayList<>();
         stringArrayList.add("abd");
-        Product product = new Product("gegbrh", "Cowboy Carter Album", stringArrayList, "Beyonce", "BAN CHAY", 680000, 690000, 10, 4.5, 56, 12, 34, "Phần tiếp theo của Renaissance là một album nhạc đồng quê mạnh mẽ và đầy tham vọng được xây dựng theo khuôn mẫu độc nhất của Beyoncé. Cô khẳng định vị trí xứng đáng của mình trong thể loại này mà chỉ một ngôi sao nhạc pop với tài năng và tầm ảnh hưởng đáng kinh ngạc của cô mới có thể làm được.");
 
 //        binding.imvBackGroundCard.setImageResource(product.getProductImage1());
 //        binding.imvProductImage.setImageResource(product.getProductImage1());
-        binding.txtProductName.setText(product.getProductName());
-        binding.txtProductArtist.setText(product.getProductArtistName());
-        binding.txtProductPrice.setText(String.valueOf(product.getProductPrice()));
+//        binding.txtProductName.setText(product.getProductName());
+//        binding.txtProductArtist.setText(product.getProductArtistName());
+//        binding.txtProductPrice.setText(String.valueOf(product.getProductPrice()));
     }
 
     private void addEvents() {

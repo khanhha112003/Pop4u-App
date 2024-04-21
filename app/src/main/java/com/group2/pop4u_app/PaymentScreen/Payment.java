@@ -92,9 +92,9 @@ public class Payment extends AppCompatActivity {
 //        binding.rvCart.setHasFixedSize(true);
 
         orders = new ArrayList<>();
-        orders.add(new Order(R.drawable.photo_ex, "The Album - BlackPink", "Artist", "Hồng", 400000, 3));
-        orders.add(new Order(R.drawable.photo_ex, "The Album - BlackPink", "Artist", "Hồng", 400000, 1));
-        orders.add(new Order(R.drawable.photo_ex, "The Album - BlackPink", "Artist", "Hồng", 400000, 1));
+        orders.add(new Order(101, R.drawable.photo_ex, "The Album - BlackPink", "Artist", "Hồng", 400000, 3));
+        orders.add(new Order(102, R.drawable.photo_ex, "The Album - BlackPink", "Artist", "Hồng", 400000, 1));
+        orders.add(new Order(103, R.drawable.photo_ex, "The Album - BlackPink", "Artist", "Hồng", 400000, 1));
 
 
         adapter = new OrderAdapter(getApplicationContext(), orders);
