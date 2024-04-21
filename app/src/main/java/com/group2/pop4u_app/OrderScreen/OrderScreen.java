@@ -2,6 +2,9 @@ package com.group2.pop4u_app.OrderScreen;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +20,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.group2.adapter.CartAdapter;
 import com.group2.model.CartItem;
 import com.group2.pop4u_app.R;
+import com.group2.pop4u_app.databinding.ActivityOrderScreenBinding;
 
 import java.util.ArrayList;
 
@@ -24,10 +28,15 @@ public class OrderScreen extends AppCompatActivity {
     private ViewPager2 viewPager;
     private TabLayout tabLayout;
     private ViewPagerAdapter viewPagerAdapter;
+    ActivityOrderScreenBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_screen);
+        binding = ActivityOrderScreenBinding.inflate(getLayoutInflater());
+        setSupportActionBar(binding.tbrOrderScreen);
+        getSupportActionBar().setTitle(R.string.action_bar_order_action);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setContentView(binding.getRoot());
 
         viewPager = findViewById(R.id.vpOrder);
         tabLayout = findViewById(R.id.tlOrder);
@@ -47,4 +56,21 @@ public class OrderScreen extends AppCompatActivity {
         ).attach();
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.plain_action_bar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            this.finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

@@ -20,6 +20,8 @@ public class SettingScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySettingScreenBinding.inflate(getLayoutInflater());
+        setSupportActionBar(binding.tbrSetting);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(binding.getRoot());
         loadSettingScreen();
     }
@@ -29,9 +31,13 @@ public class SettingScreen extends AppCompatActivity {
         SettingItem settingItem = (SettingItem) intent.getSerializableExtra("settingItem");
         if (settingItem != null) {
             if (settingItem.getSettingID().equals("personal_info")) {
+                getSupportActionBar().setTitle(settingItem.getSettingTitle());
                 replaceFragment(new AccountPersonalInfoFragment());
             } else if (settingItem.getSettingID().equals("notification")) {
-                
+                getSupportActionBar().setTitle(settingItem.getSettingTitle());
+                replaceFragment(new AccountPersonalInfoFragment());
+            } else if (settingItem.getSettingID().equals("website")) {
+
             }
         } 
     }

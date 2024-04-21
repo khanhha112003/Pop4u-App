@@ -26,4 +26,10 @@
         <item name="android:textSize">24sp</item>
         <item name="android:textColor">@color/md_theme_onSurface</item>
     </style>
+
+    <style name="TitleTabBar">
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@drawable/tab_title_color</item>
+    </style>
 </resources>

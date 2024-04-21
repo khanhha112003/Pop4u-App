@@ -59,13 +59,9 @@ public class CartFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = FragmentCartBinding.inflate(getLayoutInflater());
 
         if (getArguments() != null) {
         }
-        createDB();
-        loadDB();
-        addEvents();
     }
 
     private void loadDB() {
@@ -95,6 +91,8 @@ public class CartFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentCartBinding.inflate(inflater, container, false);
+        createDB();
+        loadDB();
         return binding.getRoot();
     }
 
