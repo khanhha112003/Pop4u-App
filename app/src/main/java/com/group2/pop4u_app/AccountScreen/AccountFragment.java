@@ -1,10 +1,9 @@
-package com.group2.pop4u_app.Activity;
+package com.group2.pop4u_app.AccountScreen;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -17,7 +16,6 @@ import com.group2.adapter.SettingListAdapter;
 import com.group2.api.Services.UserService;
 import com.group2.model.SettingItem;
 import com.group2.model.User;
-import com.group2.pop4u_app.AccountScreen.SettingScreen;
 import com.group2.pop4u_app.AddressScreen.PickAddress;
 import com.group2.pop4u_app.OrderScreen.OrderScreen;
 import com.group2.pop4u_app.R;
@@ -28,37 +26,24 @@ import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
 public class AccountFragment extends Fragment {
-
     FragmentAccountBinding binding;
     SettingListAdapter settingAccountListAdapter, settingSystemListAdapter;
-
     ArrayList<SettingItem> settingAccountItems, settingSystemItems;
     SettingItem selectedItem;
-
-
-    User user = new User("username", "email", "fullname", "birthdate", "phone_number");
-
-    public AccountFragment() {
-        // Required empty public constructor
-    }
-
-    public static AccountFragment newInstance(String param1, String param2) {
+    User user = new User("username", "email", "name", "birthdate", "phone_number");
+    public AccountFragment() { }
+    public static AccountFragment newInstance() {
         AccountFragment fragment = new AccountFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
     }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentAccountBinding.inflate(inflater, container, false);
         initData1();
@@ -66,9 +51,7 @@ public class AccountFragment extends Fragment {
         addEvents();
         CompletableFuture<User> userInfoFuture = UserService.instance.getUserProfile();
         userInfoFuture.thenAccept(user -> {
-            if (this != null) {
-                this.user = user;
-            }
+            this.user = user;
             this.setUserProfile();
         });
         try {
@@ -83,18 +66,22 @@ public class AccountFragment extends Fragment {
         settingAccountListAdapter.setOnClickListener(new SettingListAdapter.OnClickListener() {
             @Override
             public void onClick(int position, SettingItem settingItem) {
-                if (settingItem.getSettingID().equals("order")) {
-                    Intent intent = new Intent(requireActivity(), OrderScreen.class);
-                    startActivity(intent);
-                } else if (settingItem.getSettingID().equals("payment")) {
-                    Intent intent = new Intent(requireActivity(), OrderScreen.class);
-                    startActivity(intent);
-                } else if (settingItem.getSettingID().equals("address")) {
-                    Intent intent = new Intent(requireActivity(), PickAddress.class);
-                    startActivity(intent);
-                } else {
-                    selectedItem = settingItem;
-                    startSettingScreen();
+                switch (settingItem.getSettingID()) {
+                    case "order":
+                    case "payment": {
+                        Intent intent = new Intent(requireActivity(), OrderScreen.class);
+                        startActivity(intent);
+                        break;
+                    }
+                    case "address": {
+                        Intent intent = new Intent(requireActivity(), PickAddress.class);
+                        startActivity(intent);
+                        break;
+                    }
+                    default:
+                        selectedItem = settingItem;
+                        startSettingScreen();
+                        break;
                 }
             }
         });

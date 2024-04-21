@@ -112,6 +112,31 @@ public class UserService {
         return future;
     }
 
+    public CompletableFuture<ResponseValidate> updateProfile(String email, String otp, String fullname, String name, String phone) {
+        CompletableFuture<ResponseValidate> future = new CompletableFuture<>();
+        executor.execute(() -> {
+            HashMap<String, String> body = new HashMap<>();
+            body.put("username", email);
+            body.put("otp", otp);
+            body.put("new_fullname", fullname);
+            body.put("new_birthdate", name);
+            body.put("new_phone_number", phone);
+            Call<RegisterFormResponseDAO> call = userService.update_profile(body);
+            try {
+                Response<RegisterFormResponseDAO> response = call.execute();
+                if (response.isSuccessful() && response.body() != null){
+                    RegisterFormResponseDAO result = response.body();
+                    future.complete(result.asResponseValidate());
+                } else {
+                    future.complete(null);
+                }
+            } catch (IOException e) {
+                future.completeExceptionally(e); // Complete the future exceptionally if an exception occurs
+            }
+        });
+        return future;
+    }
+
 
 //    CompletableFuture<Boolean> logoutFuture = logout();
 //

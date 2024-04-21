@@ -1,4 +1,4 @@
-package com.group2.pop4u_app.Home;
+package com.group2.pop4u_app.HomeScreen;
 
 import android.content.Intent;
 import android.graphics.RenderEffect;
@@ -6,17 +6,13 @@ import android.graphics.Shader;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.group2.model.Product;
 import com.group2.pop4u_app.ProductDetailScreen.ProductDetailScreen;
-import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentProductOfWeekBinding;
 
 import java.util.ArrayList;

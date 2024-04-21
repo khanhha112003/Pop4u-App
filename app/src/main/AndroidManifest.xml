@@ -15,7 +15,7 @@
         android:theme="@style/Theme.Pop4u_App"
         tools:targetApi="31">
         <activity
-            android:name=".Home.FavoriteListActivity"
+            android:name=".HomeScreen.FavoriteListActivity"
             android:exported="false" />
         <activity
             android:name=".LoginScreen.ForgotPassScreen"
@@ -33,10 +33,10 @@
             android:name=".AccountScreen.SettingScreen"
             android:exported="false" />
         <activity
-            android:name=".Home.ProductListCategory"
+            android:name=".HomeScreen.ProductListCategory"
             android:exported="false" />
         <activity
-            android:name=".Home.AllArtist"
+            android:name=".HomeScreen.AllArtist"
             android:exported="false" />
         <activity
             android:name=".LoginScreen.LoginPage"
@@ -99,7 +99,7 @@
             android:name=".OrderDetailSrc.OrderDetail"
             android:exported="false" />
         <activity
-            android:name=".Activity.MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

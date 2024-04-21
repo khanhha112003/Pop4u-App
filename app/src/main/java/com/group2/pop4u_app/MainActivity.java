@@ -1,4 +1,4 @@
-package com.group2.pop4u_app.Activity;
+package com.group2.pop4u_app;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -11,10 +11,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import com.group2.local.LoginManagerTemp;
+import com.group2.pop4u_app.AccountScreen.AccountFragment;
+import com.group2.pop4u_app.CartScreen.CartFragment;
+import com.group2.pop4u_app.HomeScreen.HomepageFragment;
 import com.group2.pop4u_app.LoginScreen.LoginPage;
-import com.group2.pop4u_app.Home.FavoriteListActivity;
+import com.group2.pop4u_app.HomeScreen.FavoriteListActivity;
 import com.group2.pop4u_app.OrderScreen.OrderScreen;
-import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.SearchScreen.SearchDashboardFragment;
 import com.group2.pop4u_app.databinding.ActivityMainBinding;
 
@@ -65,7 +67,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (this.savedLoginItemIndex != -1 && navigateToAnotherActivity) {
+        if (LoginManagerTemp.isJustFinishRegisterSuccess) {
+            LoginManagerTemp.isJustFinishRegisterSuccess = false;
+            this.savedLoginItemIndex = R.id.ic_account;
+            View view = binding.bottomNavigationView.findViewById(this.savedLoginItemIndex);
+            view.performClick();
+        } else if (this.savedLoginItemIndex != -1 && navigateToAnotherActivity) {
             View view = binding.bottomNavigationView.findViewById(this.savedLoginItemIndex);
             view.performClick();
         }
