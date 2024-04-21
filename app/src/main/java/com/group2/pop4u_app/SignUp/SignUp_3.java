@@ -30,10 +30,9 @@ public class SignUp_3 extends AppCompatActivity {
         String otp = getIntent().getStringExtra("otp");
         String updateFullName = binding.edtUpdateInfoFullname.getText().toString();
         String updatePhone = binding.edtUpdateInfoPhone.getText().toString();
-        String updateGender = binding.edtUpdateInfoGender.getText().toString();
         String updateBirthday = binding.edtUpdateInfoDatebirth.getText().toString();
 
-        if (updateFullName.isEmpty() || updatePhone.isEmpty() || updateGender.isEmpty() || updateBirthday.isEmpty()) {
+        if (updateFullName.isEmpty() || updatePhone.isEmpty() || updateBirthday.isEmpty()) {
             Toast.makeText(this, "Please fill all the information", Toast.LENGTH_SHORT).show();
             return;
         }

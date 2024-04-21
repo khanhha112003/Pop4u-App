@@ -114,4 +114,10 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.bottomNavigationView.findViewById(this.savedLoginItemIndex);
         view.performClick();
     }
+
+    public void fromSplashToLogin() {
+        this.savedLoginItemIndex = R.id.ic_home;
+        this.navigateToAnotherActivity = true;
+        openLogin();
+    }
 }

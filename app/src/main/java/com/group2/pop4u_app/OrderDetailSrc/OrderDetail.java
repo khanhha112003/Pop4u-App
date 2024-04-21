@@ -4,13 +4,9 @@ import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.group2.adapter.OrderAdapter;
 import com.group2.model.Order;
-import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.ActivityOrderDetailBinding;
 
 import java.util.ArrayList;
@@ -24,13 +20,12 @@ ArrayList <Order> orders;
         super.onCreate(savedInstanceState);
         binding = ActivityOrderDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         loadData();
     }
 
     private void loadData() {
-    orders = new ArrayList<>();
-//        adapter = new OrderAdapter(OrderDetail.this, R.layout.activity_item_order, orders);
+        orders = new ArrayList<>();
+        adapter = new OrderAdapter(OrderDetail.this, orders);
         binding.lvOrdered.setAdapter(adapter);
     }
 }
