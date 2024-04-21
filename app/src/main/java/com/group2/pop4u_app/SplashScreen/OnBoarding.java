@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import com.group2.pop4u_app.LoginScreen.LoginPage;
 import com.group2.pop4u_app.MainActivity;
 import com.group2.pop4u_app.R;
 
@@ -38,11 +39,11 @@ public class OnBoarding extends AppCompatActivity {
 
         startBtn.setVisibility(View.INVISIBLE);
 
-        skipbtn.setOnClickListener(view -> startNextActivity(MainActivity.class));
+        skipbtn.setOnClickListener(view -> startNextActivity(LoginPage.class));
 
         startBtn.setOnClickListener(view -> {
             startBtn.setBackgroundColor(R.color.md_theme_onSecondaryContainer_highContrast); // Change color to red (you can use any color)
-            startNextActivity(MainActivity.class);
+            startNextActivity(LoginPage.class);
         });
 
         mSliceViewpager = findViewById(R.id.sliceViewpager);

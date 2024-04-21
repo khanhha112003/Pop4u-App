@@ -1,9 +1,8 @@
 package com.group2.api.Services;
 
 import com.group2.api.DAO.LoginResponseDAO;
-import com.group2.api.DAO.RegisterFormResponseDAO;
+import com.group2.api.DAO.ValidationResponseDAO;
 import com.group2.api.DAO.UserDAO;
-import com.group2.model.ResponseValidate;
 
 import java.util.HashMap;
 
@@ -25,16 +24,16 @@ public interface IUserService {
     );
 
     @POST("/api/auth/logout")
-    Call<UserDAO> logout(@Header("Authorization") String authHeader);
+    Call<ValidationResponseDAO> logout(@Header("Authorization") String authHeader);
 
     @POST("/api/auth/mobile_register")
-    Call<RegisterFormResponseDAO> register(@Body HashMap<String, String> body);
+    Call<ValidationResponseDAO> register(@Body HashMap<String, String> body);
 
     @POST("/api/auth/mobile_verification")
-    Call<RegisterFormResponseDAO> otp_verification(@Body HashMap<String, String> body);
+    Call<ValidationResponseDAO> otp_verification(@Body HashMap<String, String> body);
 
     @POST("/api/auth/mobile_update_profile")
-    Call<RegisterFormResponseDAO> update_profile(@Body HashMap<String, String> body);
+    Call<ValidationResponseDAO> update_profile(@Body HashMap<String, String> body);
 
     @POST("/api/user/update")
     Call<UserDAO> update(

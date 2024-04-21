@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="10dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingTop="15dp">
 
         <ImageView
             android:id="@+id/o_thumb"
@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:text="BLACKPINK THE GAME PHOTOCARD COLLECTION LOVELY VALENTINE'S EDITION "
                 android:textSize="18sp"
-                android:fontFamily="@font/inter" />
+                android:fontFamily="@font/inter_medium" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -44,18 +44,16 @@
                     android:id="@+id/o_artist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/inter"
+                    android:fontFamily="@font/inter_medium"
                     android:textColor="@color/md_theme_outline"
-                    android:text="BLACKPINK"
-
-                    />
+                    android:text="BLACKPINK"/>
 
                 <TextView
                     android:id="@+id/o_option"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="100dp"
-                    android:fontFamily="@font/inter"
+                    android:fontFamily="@font/inter_medium"
                     android:text="Hồng" />
             </LinearLayout>
 
@@ -81,14 +79,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:text="Số lượng: "
-                    android:fontFamily="@font/inter"/>
+                    android:fontFamily="@font/inter_medium"/>
 
                 <TextView
                     android:id="@+id/o_quantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:fontFamily="@font/inter"
+                    android:fontFamily="@font/inter_medium"
                     android:text="2" />
             </LinearLayout>
         </LinearLayout>
