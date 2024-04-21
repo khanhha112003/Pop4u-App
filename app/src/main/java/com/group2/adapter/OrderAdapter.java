@@ -24,8 +24,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     Context context;
     ArrayList<Order> orders;
 
-
-
     public OrderAdapter(Context context, ArrayList<Order> orders) {
         this.context = context;
         this.orders = orders;
@@ -51,7 +49,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         holder.rvDetail.setAdapter(orderDetailAdapter);
         holder.rvDetail.setRecycledViewPool(viewPool);
 
-        holder.o_thumb.setImageResource(order.getO_thumb());
+//        holder.o_thumb.setImageResource(order.getO_thumb());
         holder.o_name.setText(order.getO_name());
         holder.o_option.setText(order.getO_option());
         holder.o_price.setText(String.valueOf(Math.round(order.getO_price())));
