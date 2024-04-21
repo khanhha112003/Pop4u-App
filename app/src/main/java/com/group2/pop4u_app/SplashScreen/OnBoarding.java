@@ -14,7 +14,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import com.group2.pop4u_app.Activity.MainActivity;
+import com.group2.pop4u_app.MainActivity;
 import com.group2.pop4u_app.R;
 
 public class OnBoarding extends AppCompatActivity {

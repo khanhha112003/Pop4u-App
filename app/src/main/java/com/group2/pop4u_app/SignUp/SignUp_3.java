@@ -1,24 +1,14 @@
 package com.group2.pop4u_app.SignUp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.group2.api.Services.UserService;
 import com.group2.local.LoginManagerTemp;
 import com.group2.model.ResponseValidate;
-import com.group2.pop4u_app.Activity.MainActivity;
-import com.group2.pop4u_app.R;
-import com.group2.pop4u_app.databinding.ActivitySignUp3Binding;
 
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;

@@ -16,10 +16,9 @@ import android.widget.SearchView;
 import com.group2.adapter.ArtistHorizontalListAdapter;
 import com.group2.api.Services.ArtistService;
 import com.group2.model.Artist;
-import com.group2.pop4u_app.Activity.MainActivity;
+import com.group2.pop4u_app.MainActivity;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetHorizontalRecycler;
 import com.group2.pop4u_app.R;
-import com.group2.pop4u_app.databinding.FragmentSearchDashboardBinding;
 
 import java.util.ArrayList;
 import java.util.Objects;
