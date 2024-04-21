@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.group2.api.Services.UserService;
 import com.group2.local.LoginManagerTemp;
+import com.group2.pop4u_app.MainActivity;
 import com.group2.pop4u_app.SignUp.SignUp_1;
 import com.group2.pop4u_app.databinding.ActivityLoginPageBinding;
 
@@ -34,6 +35,8 @@ public class LoginPage extends AppCompatActivity {
                if (!this.isFinishing()) {
                    LoginManagerTemp.isLogin = true;
                    LoginManagerTemp.token = v;
+                   Intent intent = new Intent(LoginPage.this, MainActivity.class); // Chuyển đến MainActivity
+                   startActivity(intent);
                    this.finish();
                } else {
                    this.finish();

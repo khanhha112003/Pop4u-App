@@ -66,7 +66,7 @@
                     android:singleLine="true"
                     android:text="BLACKPINK"
                     android:textColor="@color/md_theme_outline"
-                    android:textSize="15sp"
+                    android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/cdvProductLabel"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -95,7 +95,7 @@
                         android:paddingBottom="2.5dp"
                         android:text="SAP HET"
                         android:textColor="@color/md_theme_inverseOnSurface"
-                        android:textSize="11.25sp" />
+                        android:textSize="9sp" />
                 </androidx.cardview.widget.CardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -137,8 +137,8 @@
 
                     <ImageView
                         android:id="@+id/imvStar"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:src="@drawable/star"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -149,13 +149,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
                         android:layout_marginStart="5dp"
-                        android:fontFamily="@font/inter_medium"
+                        android:fontFamily="@font/inter"
+                        android:gravity="center"
                         android:text="4.6"
+                        android:textSize="10sp"
                         android:textColor="@color/md_theme_outline"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@id/imvStar"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/imvStar"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="@id/imvStar" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.cardview.widget.CardView
