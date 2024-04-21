@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.group2.api.Services.UserService;
 import com.group2.local.LoginManagerTemp;
 import com.group2.model.ResponseValidate;
+import com.group2.pop4u_app.databinding.ActivitySignUp3Binding;
 
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;

@@ -26,6 +26,7 @@ import com.group2.pop4u_app.MainActivity;
 import com.group2.pop4u_app.ArtistInfoScreen.ArtistInfoScreen;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetHorizontalRecycler;
 import com.group2.pop4u_app.R;
+import com.group2.pop4u_app.databinding.ActivityProductDetailScreenBinding;
 
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
