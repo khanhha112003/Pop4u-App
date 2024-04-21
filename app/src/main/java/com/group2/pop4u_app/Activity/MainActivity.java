@@ -65,7 +65,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (this.savedLoginItemIndex != -1 && navigateToAnotherActivity) {
+        if (LoginManagerTemp.isJustFinishRegisterSuccess) {
+            LoginManagerTemp.isJustFinishRegisterSuccess = false;
+            this.savedLoginItemIndex = R.id.ic_account;
+            View view = binding.bottomNavigationView.findViewById(this.savedLoginItemIndex);
+            view.performClick();
+        } else if (this.savedLoginItemIndex != -1 && navigateToAnotherActivity) {
             View view = binding.bottomNavigationView.findViewById(this.savedLoginItemIndex);
             view.performClick();
         }
