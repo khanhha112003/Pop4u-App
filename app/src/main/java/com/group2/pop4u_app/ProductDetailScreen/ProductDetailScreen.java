@@ -2,6 +2,11 @@ package com.group2.pop4u_app.ProductDetailScreen;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.TooltipCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.core.widget.NestedScrollView;
 import androidx.viewpager.widget.ViewPager;
@@ -9,9 +14,13 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -45,7 +54,23 @@ public class ProductDetailScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         binding = ActivityProductDetailScreenBinding.inflate(getLayoutInflater());
+        setSupportActionBar(binding.tbrProductDetail);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
         setContentView(binding.getRoot());
+        
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.ctrProductButton, (v, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            mlp.leftMargin = insets.left;
+            mlp.bottomMargin = insets.bottom;
+            mlp.rightMargin = insets.right;
+            v.setLayoutParams(mlp);
+
+            return WindowInsetsCompat.CONSUMED;
+        });
+
         setUpToolbar();
         setArtistCardClick();
         setUpProductImage();
@@ -54,19 +79,18 @@ public class ProductDetailScreen extends AppCompatActivity {
     }
 
     private void setUpToolbar() {
-        setSupportActionBar(binding.tbrProductDetail);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("");
-
         final int[] previousScrollY = {0};
-
         binding.nsvProductDetail.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             if (scrollY > previousScrollY[0]) {
-                binding.tbrProductDetail.setVisibility(View.VISIBLE);
-                binding.imvProductDetailBack.setVisibility(View.GONE);
+                int color = getResources().getColor(R.color.md_theme_surfaceContainerLow);
+                Drawable drawable = new ColorDrawable(color);
+                getSupportActionBar().setBackgroundDrawable(drawable);
+//                binding.tbrProductDetail.setVisibility(View.VISIBLE);
+//                binding.imvProductDetailBack.setVisibility(View.GONE);
             } else if (scrollY == 0) {
-                binding.tbrProductDetail.setVisibility(View.GONE);
-                binding.imvProductDetailBack.setVisibility(View.VISIBLE);
+                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                binding.tbrProductDetail.setVisibility(View.GONE);
+//                binding.imvProductDetailBack.setVisibility(View.VISIBLE);
             }
             previousScrollY[0] = scrollY;
         });
@@ -223,6 +247,45 @@ public class ProductDetailScreen extends AppCompatActivity {
                 openProduct(product);
             }
         });
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_product_detail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            this.finish();
+            return true;
+        } else if (item.getItemId() == R.id.mnOpenCart) {
+            this.finish();
+            Intent intent = new Intent(ProductDetailScreen.this, CartActivity.class);
+            startActivity(intent);
+            return true;
+        } else if (item.getItemId() == R.id.mnShareProduct) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            ArrayList<String> stringArrayList = new ArrayList<>();
+            stringArrayList.add("ABC");
+            Product product = new Product("VFN", "Cowboy Carter Album", stringArrayList, "Beyonce", "ABC", "BAN CHAY", 680000, 690000, 10, 4.5, 56, 12, 34, "Phần tiếp theo của Renaissance là một album nhạc đồng quê mạnh mẽ và đầy tham vọng được xây dựng theo khuôn mẫu độc nhất của Beyoncé. Cô khẳng định vị trí xứng đáng của mình trong thể loại này mà chỉ một ngôi sao nhạc pop với tài năng và tầm ảnh hưởng đáng kinh ngạc của cô mới có thể làm được.");
+            sendIntent.putExtra(
+                    Intent.EXTRA_TEXT,
+                    "Xem ngay sản phẩm " + product.getProductName() +
+                            " tại Pop4u với mức giá siêu hời chỉ " + String.valueOf(product.getProductPrice()) +
+                            "₫, giảm đến " + String.valueOf(product.getProductSalePercent()) +
+                            "%\n\nFreeship cho đơn hàng từ 500K, giao ngay chỉ trong 2 ngày.\n\nCùng nhiều quà tặng hấp dẫn đang chờ đón bạn."
+            );
+            sendIntent.setType("text/plain");
+            Intent shareIntent = Intent.createChooser(sendIntent, null);
+            startActivity(shareIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void updateIndicator(int position, int total) {
