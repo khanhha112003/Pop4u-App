@@ -17,6 +17,7 @@ import com.group2.api.Services.UserService;
 import com.group2.model.SettingItem;
 import com.group2.model.User;
 import com.group2.pop4u_app.AddressScreen.PickAddress;
+import com.group2.pop4u_app.MainActivity;
 import com.group2.pop4u_app.OrderScreen.OrderScreen;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentAccountBinding;
@@ -63,41 +64,52 @@ public class AccountFragment extends Fragment {
     }
 
     private void addEvents() {
-        settingAccountListAdapter.setOnClickListener(new SettingListAdapter.OnClickListener() {
-            @Override
-            public void onClick(int position, SettingItem settingItem) {
-                switch (settingItem.getSettingID()) {
-                    case "order":
-                    case "payment": {
-                        Intent intent = new Intent(requireActivity(), OrderScreen.class);
-                        startActivity(intent);
-                        break;
-                    }
-                    case "address": {
-                        Intent intent = new Intent(requireActivity(), PickAddress.class);
-                        startActivity(intent);
-                        break;
-                    }
-                    default:
-                        selectedItem = settingItem;
-                        startSettingScreen();
-                        break;
+        settingAccountListAdapter.setOnClickListener((position, settingItem) -> {
+            switch (settingItem.getSettingID()) {
+                case "order":
+                case "payment": {
+                    Intent intent = new Intent(requireActivity(), OrderScreen.class);
+                    startActivity(intent);
+                    break;
                 }
+                case "address": {
+                    Intent intent = new Intent(requireActivity(), PickAddress.class);
+                    startActivity(intent);
+                    break;
+                }
+                default:
+                    selectedItem = settingItem;
+                    startSettingScreen();
+                    break;
             }
         });
 
-        settingSystemListAdapter.setOnClickListener(new SettingListAdapter.OnClickListener() {
-            @Override
-            public void onClick(int position, SettingItem settingItem) {
-                selectedItem = settingItem;
-                startSettingScreen();
+        settingSystemListAdapter.setOnClickListener((position, settingItem) -> {
+            selectedItem = settingItem;
+            startSettingScreen();
+        });
+
+        binding.btnSignOut.setOnClickListener(v -> {
+            CompletableFuture<Boolean> future = UserService.instance.logout();
+            future.thenAccept(result -> {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (result && mainActivity != null) {
+                    mainActivity.backHome();
+                } else {
+                    Log.d("AccountFragment", "Logout failed");
+                }
+            });
+            try {
+                future.get();
+            } catch (Exception e) {
+                Log.d("AccountFragment", "Logout failed");
             }
         });
     }
 
     private void startSettingScreen() {
         Intent intent = new Intent(requireActivity(), SettingScreen.class);
-        intent.putExtra("settingItem", (Serializable) selectedItem);
+        intent.putExtra("settingItem", selectedItem);
         startActivity(intent);
     }
 

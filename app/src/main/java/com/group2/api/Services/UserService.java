@@ -5,7 +5,7 @@ import android.util.Log;
 import retrofit2.Call;
 
 import com.group2.api.DAO.LoginResponseDAO;
-import com.group2.api.DAO.RegisterFormResponseDAO;
+import com.group2.api.DAO.ValidationResponseDAO;
 import com.group2.api.DAO.UserDAO;
 import com.group2.local.LoginManagerTemp;
 import com.group2.model.ResponseValidate;
@@ -56,11 +56,11 @@ public class UserService {
             HashMap<String, String> body = new HashMap<>();
             body.put("email", email);
             body.put("password", password);
-            Call<RegisterFormResponseDAO> call = userService.register(body);
+            Call<ValidationResponseDAO> call = userService.register(body);
             try {
-                Response<RegisterFormResponseDAO> response = call.execute();
+                Response<ValidationResponseDAO> response = call.execute();
                 if (response.isSuccessful()) {
-                    RegisterFormResponseDAO resultRegister = response.body();
+                    ValidationResponseDAO resultRegister = response.body();
                     if (resultRegister == null) {
                         future.complete(null); // Complete the future with false if the response body is null
                         return;
@@ -87,11 +87,11 @@ public class UserService {
             HashMap<String, String> body = new HashMap<>();
             body.put("email", email);
             body.put("otp", otp);
-            Call<RegisterFormResponseDAO> call = userService.otp_verification(body);
+            Call<ValidationResponseDAO> call = userService.otp_verification(body);
             try {
-                Response<RegisterFormResponseDAO> response = call.execute();
+                Response<ValidationResponseDAO> response = call.execute();
                 if (response.isSuccessful()) {
-                    RegisterFormResponseDAO resultRegister = response.body();
+                    ValidationResponseDAO resultRegister = response.body();
                     if (resultRegister == null) {
                         future.complete(null); // Complete the future with false if the response body is null
                         return;
@@ -121,11 +121,11 @@ public class UserService {
             body.put("new_fullname", fullname);
             body.put("new_birthdate", name);
             body.put("new_phone_number", phone);
-            Call<RegisterFormResponseDAO> call = userService.update_profile(body);
+            Call<ValidationResponseDAO> call = userService.update_profile(body);
             try {
-                Response<RegisterFormResponseDAO> response = call.execute();
+                Response<ValidationResponseDAO> response = call.execute();
                 if (response.isSuccessful() && response.body() != null){
-                    RegisterFormResponseDAO result = response.body();
+                    ValidationResponseDAO result = response.body();
                     future.complete(result.asResponseValidate());
                 } else {
                     future.complete(null);
@@ -155,13 +155,15 @@ public class UserService {
         CompletableFuture<Boolean> future = new CompletableFuture<>();
         executor.execute(() -> {
             String authHeader = "Bearer " + LoginManagerTemp.token;
-            Call<UserDAO> call = userService.logout(authHeader);
+            Call<ValidationResponseDAO> call = userService.logout(authHeader);
             try {
-                Response<UserDAO> response = call.execute();
+                Response<ValidationResponseDAO> response = call.execute();
                 if (response.isSuccessful()) {
-                    UserDAO user = response.body();
-                    if (user != null) {
+                    ValidationResponseDAO user = response.body();
+                    if (user != null && user.getStatus() == 1){
                         System.out.println("Logout success");
+                        LoginManagerTemp.token = null;
+                        LoginManagerTemp.isLogin = false;
                         future.complete(true); // Complete the future with true
                     } else {
                         System.out.println("Logout failed");

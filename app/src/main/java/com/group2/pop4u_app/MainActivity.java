@@ -110,4 +110,9 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void backHome() {
+        this.savedLoginItemIndex = R.id.ic_home;
+        View view = binding.bottomNavigationView.findViewById(this.savedLoginItemIndex);
+        view.performClick();
+    }
 }
