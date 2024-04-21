@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.group2.api.Services.UserService;
 import com.group2.local.LoginManagerTemp;
+import com.group2.pop4u_app.MainActivity;
 import com.group2.pop4u_app.SignUp.SignUp_1;
 import com.group2.pop4u_app.databinding.ActivityLoginPageBinding;
 
@@ -34,18 +36,22 @@ public class LoginPage extends AppCompatActivity {
                if (!this.isFinishing()) {
                    LoginManagerTemp.isLogin = true;
                    LoginManagerTemp.token = v;
-                   this.finish();
-               } else {
+                   Intent intent = new Intent(LoginPage.this, MainActivity.class); // Chuyển đến MainActivity
+                   startActivity(intent);
                    this.finish();
                }
            } else {
-               Log.d("Login screen", "Login fail");
+                binding.btnLogIn.setClickable(true);
+                Log.d("Login screen", "Login fail");
+                Toast.makeText(this, "Thông tin đăng nhập không chính xác, vui lòng thử lại", Toast.LENGTH_SHORT).show();
            }
         });
         try {
             loginFuture.get();
         } catch (Exception e) {
+            binding.btnLogIn.setClickable(true);
             Log.d("Login screen", "Login fail");
+            Toast.makeText(this, "Đã có lỗi xảy ra, xin vui lòng thử lại", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -55,7 +61,7 @@ public class LoginPage extends AppCompatActivity {
             public void onClick(View v) {
                 String username = binding.edtUsername.getText().toString();
                 String password = binding.edtPass.getText().toString();
-
+                binding.btnLogIn.setClickable(false);
                 // Reset errors
                 binding.edtUsername.setError(null);
                 binding.edtPass.setError(null);

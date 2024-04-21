@@ -112,29 +112,6 @@
                         android:fontFamily="@font/inter"
                         android:gravity="right"
                         app:layout_constraintEnd_toEndOf="parent"/>
-
-                    <TextView
-                        android:id="@+id/txtSex"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/sex"
-                        android:fontFamily="@font/inter"
-                        app:layout_constraintBaseline_toBaselineOf="@+id/edtSex"
-                        android:textColor="@color/md_theme_outline"
-                        android:textSize="17.5sp"
-                        app:layout_constraintStart_toStartOf="parent"/>
-                    <EditText
-                        android:id="@+id/edtSex"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@+id/edtFirstName"
-                        android:layout_marginTop="20dp"
-                        android:textSize="17.5sp"
-                        android:text="Luwjc"
-                        android:textColor="@color/md_theme_onSurface"
-                        android:fontFamily="@font/inter"
-                        android:gravity="right"
-                        app:layout_constraintEnd_toEndOf="parent"/>
                     <TextView
                         android:id="@+id/txtBirthdate"
                         android:layout_width="wrap_content"
@@ -149,10 +126,10 @@
                         android:id="@+id/edtBirthdate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@+id/edtSex"
+                        app:layout_constraintTop_toBottomOf="@+id/edtFirstName"
                         android:layout_marginTop="20dp"
                         android:textSize="17.5sp"
-                        android:text="Nam"
+                        android:text="12.3.2939"
                         android:textColor="@color/md_theme_onSurface"
                         android:fontFamily="@font/inter"
                         android:gravity="right"

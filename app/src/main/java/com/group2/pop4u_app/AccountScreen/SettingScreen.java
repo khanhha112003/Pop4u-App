@@ -34,10 +34,9 @@ public class SettingScreen extends AppCompatActivity {
                 getSupportActionBar().setTitle(settingItem.getSettingTitle());
                 replaceFragment(new AccountPersonalInfoFragment());
             } else if (settingItem.getSettingID().equals("notification")) {
-                getSupportActionBar().setTitle(settingItem.getSettingTitle());
-                replaceFragment(new AccountPersonalInfoFragment());
-            } else if (settingItem.getSettingID().equals("website")) {
-
+                replaceFragment(new NotificationSettingFragment());
+            } else if (settingItem.getSettingID().equals("payment_methods")) {
+                replaceFragment(new PaymentMethodFragment());
             }
         } 
     }
