@@ -120,7 +120,7 @@ public class AccountFragment extends Fragment {
 
         settingSystemItems = new ArrayList<>();
         settingSystemItems.add(new SettingItem("notification", R.drawable.notifications_unread, "Tùy chỉnh thông báo"));
-        settingSystemItems.add(new SettingItem("language", R.drawable.globe, "Ngôn ngữ"));
+        settingSystemItems.add(new SettingItem("website", R.drawable.globe, "Pop4u Website"));
         settingSystemItems.add(new SettingItem("termsAndPolicy", R.drawable.lists, "Chính sách"));
         settingSystemItems.add(new SettingItem("helpAndReport", R.drawable.help, "Giúp đỡ và khiếu nại"));
         settingSystemListAdapter = new SettingListAdapter(getActivity(), settingSystemItems);
