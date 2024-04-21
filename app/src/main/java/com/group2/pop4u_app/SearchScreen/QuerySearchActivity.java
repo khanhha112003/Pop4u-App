@@ -6,13 +6,13 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.group2.model.SearchItem;
-import com.group2.pop4u_app.databinding.SearchScreenActivityQuerySearchBinding;
+import com.group2.pop4u_app.databinding.ActivitySearchScreenQuerySearchBinding;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class QuerySearchActivity extends AppCompatActivity {
-    SearchScreenActivityQuerySearchBinding binding;
+    ActivitySearchScreenQuerySearchBinding binding;
 
     HistorySearchAdapter adapter;
 
@@ -20,7 +20,7 @@ public class QuerySearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = SearchScreenActivityQuerySearchBinding.inflate(getLayoutInflater());
+        binding = ActivitySearchScreenQuerySearchBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         List<SearchItem> listSearchRes = Arrays.asList(
                 new SearchItem(SearchItem.HISTORY_TYPE, "History 1", ""),
