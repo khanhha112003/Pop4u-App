@@ -1,6 +1,5 @@
-package com.group2.pop4u_app.Home;
+package com.group2.pop4u_app.HomeScreen;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
