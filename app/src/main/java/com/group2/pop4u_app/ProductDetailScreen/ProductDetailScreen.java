@@ -52,7 +52,6 @@ public class ProductDetailScreen extends AppCompatActivity {
     Product product;
     Dialog optionDialog;
     int currentAmount;
-    int statusBarHeight;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
