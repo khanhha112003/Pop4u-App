@@ -65,7 +65,7 @@
         app:layout_constraintStart_toStartOf="@+id/indicator_layout"
         app:layout_constraintTop_toTopOf="@+id/indicator_layout"
         app:layout_constraintBottom_toTopOf="@+id/bottomBarrier"
-        android:background="@drawable/button_small_filled_norm_background"/>
+        android:background="@drawable/button_filled_norm_background"/>
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/bottomBarrier"

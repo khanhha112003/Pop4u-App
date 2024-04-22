@@ -22,14 +22,17 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.group2.adapter.BigProductCardRecyclerAdapter;
 import com.group2.adapter.CartAdapter;
 import com.group2.database_helper.OrderDatabaseHelper;
 import com.group2.model.CartItem;
 import com.group2.model.Product;
+import com.group2.pop4u_app.HomeScreen.FavoriteListActivity;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetVerticalRecycler;
 import com.group2.pop4u_app.PaymentScreen.Payment;
+import com.group2.pop4u_app.ProductDetailScreen.ProductDetailScreen;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentCartBinding;
 
@@ -133,13 +136,38 @@ public class CartFragment extends Fragment {
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 if (direction == ItemTouchHelper.LEFT) {
                     int position = viewHolder.getAdapterPosition();
+                    // Keep a reference to the item being deleted
+                    final CartItem deletedItem = carts.get(position);
+                    // Delete the item from your list
                     deleteOrder(position);
+
+                    // Show the Snackbar
+                    Snackbar snackbar = Snackbar.make(binding.ctnSnackBar, "Bạn đã xóa sản phẩm khỏi giỏ hàng.", Snackbar.LENGTH_LONG);
+                    snackbar.setAction(R.string.undo, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            // Restore the deleted item
+                            carts.add(position, deletedItem);
+                            // Notify the adapter that the item has been added back
+                            adapter.notifyItemInserted(position);
+                        }
+                    });
+                    snackbar.addCallback(new Snackbar.Callback() {
+                        @Override
+                        public void onDismissed(Snackbar snackbar, int event) {
+                            // Remove the reference to the deleted item if Snackbar is dismissed without undo
+                            if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                                // Handle any cleanup if needed
+                            }
+                        }
+                    });
+                    snackbar.show();
                 }
             }
 
             @Override
             public float getSwipeThreshold(RecyclerView.ViewHolder viewHolder) {
-                return 0.5f; // Set ngưỡng lướt để hiển thị chữ "Xóa" khi lướt một nửa
+                return 0.75f; // Set ngưỡng lướt để hiển thị chữ "Xóa" khi lướt một nửa
             }
 
             @Override
@@ -221,9 +249,7 @@ public class CartFragment extends Fragment {
         carts.remove(position);
         adapter.notifyItemRemoved(position);
         calculateTotalPrice();
-        Toast.makeText(requireActivity(), "Đơn hàng đã được xóa", Toast.LENGTH_SHORT).show();
     }
-    // Cập nhật tổng giá trị của giỏ hàng
     private void calculateTotalPrice() {
         double totalPrice = 0;
         for (CartItem item : carts) {
