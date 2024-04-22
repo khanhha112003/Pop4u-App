@@ -23,6 +23,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowInsets;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -49,6 +50,7 @@ public class ProductDetailScreen extends AppCompatActivity {
     Product product;
     Dialog optionDialog;
     int currentAmount;
+    int statusBarHeight;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +60,6 @@ public class ProductDetailScreen extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("");
         setContentView(binding.getRoot());
-        
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.ctrProductButton, (v, windowInsets) -> {
             Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -67,14 +68,19 @@ public class ProductDetailScreen extends AppCompatActivity {
             mlp.bottomMargin = insets.bottom;
             mlp.rightMargin = insets.right;
             v.setLayoutParams(mlp);
-
             return WindowInsetsCompat.CONSUMED;
+        });
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.tbrProductDetail, (v, insets) -> {
+            Insets systemInsets = insets.getInsets(WindowInsetsCompat.Type.statusBars());
+            int paddingTop = systemInsets.top;
+            v.setPadding( 0, paddingTop, 0, 0);
+            return insets;
         });
 
         setUpToolbar();
         setArtistCardClick();
         setUpProductImage();
-        bindingBackButton();
         addEvents();
     }
 
@@ -96,11 +102,6 @@ public class ProductDetailScreen extends AppCompatActivity {
         });
     }
 
-    private void bindingBackButton() {
-        binding.imvProductDetailBack.setOnClickListener(v -> {
-            finish();
-        });
-    }
 
     private void addEvents() {
         binding.crdArtist.setOnClickListener(new View.OnClickListener() {

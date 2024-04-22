@@ -39,11 +39,11 @@ public class OnBoarding extends AppCompatActivity {
 
         startBtn.setVisibility(View.INVISIBLE);
 
-        skipbtn.setOnClickListener(view -> startNextActivity(LoginPage.class));
+        skipbtn.setOnClickListener(view -> startNextActivity(MainActivity.class));
 
         startBtn.setOnClickListener(view -> {
             startBtn.setBackgroundColor(R.color.md_theme_onSecondaryContainer_highContrast); // Change color to red (you can use any color)
-            startNextActivity(LoginPage.class);
+            startNextActivity(MainActivity.class);
         });
 
         mSliceViewpager = findViewById(R.id.sliceViewpager);
