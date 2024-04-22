@@ -21,9 +21,12 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cdvProductImage"
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="0dp"
+                app:strokeWidth="5dp"
+                app:strokeColor="@color/md_theme_outline"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -36,6 +39,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/img"
+                        android:scaleType="centerCrop"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
