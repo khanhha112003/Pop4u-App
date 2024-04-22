@@ -7,6 +7,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.group2.model.SettingItem;
 import com.group2.pop4u_app.R;
@@ -31,12 +34,17 @@ public class SettingScreen extends AppCompatActivity {
         SettingItem settingItem = (SettingItem) intent.getSerializableExtra("settingItem");
         if (settingItem != null) {
             if (settingItem.getSettingID().equals("personal_info")) {
-                getSupportActionBar().setTitle(settingItem.getSettingTitle());
                 replaceFragment(new AccountPersonalInfoFragment());
+                getSupportActionBar().setTitle(settingItem.getSettingTitle());
             } else if (settingItem.getSettingID().equals("notification")) {
                 replaceFragment(new NotificationSettingFragment());
+                getSupportActionBar().setTitle(settingItem.getSettingTitle());
             } else if (settingItem.getSettingID().equals("payment_methods")) {
                 replaceFragment(new PaymentMethodFragment());
+                getSupportActionBar().setTitle(settingItem.getSettingTitle());
+            } else if (settingItem.getSettingID().equals("website")) {
+                replaceFragment(new PaymentMethodFragment());
+                getSupportActionBar().setTitle(settingItem.getSettingTitle());
             }
         } 
     }
@@ -47,4 +55,21 @@ public class SettingScreen extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frgtSettingContent, fragment);
         fragmentTransaction.commit();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.plain_action_bar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            this.finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

@@ -32,9 +32,11 @@ import com.group2.adapter.ProductImgAdapter;
 import com.group2.api.Services.ProductService;
 import com.google.android.material.snackbar.Snackbar;
 import com.group2.model.Product;
+import com.group2.pop4u_app.HomeScreen.FavoriteListActivity;
 import com.group2.pop4u_app.MainActivity;
 import com.group2.pop4u_app.ArtistInfoScreen.ArtistInfoScreen;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetHorizontalRecycler;
+import com.group2.pop4u_app.PaymentScreen.Payment;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.ActivityProductDetailScreenBinding;
 
@@ -102,7 +104,6 @@ public class ProductDetailScreen extends AppCompatActivity {
         });
     }
 
-
     private void addEvents() {
         binding.crdArtist.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,17 +119,19 @@ public class ProductDetailScreen extends AppCompatActivity {
                 boolean favoriteState = binding.btnAddToFavProduct.isSelected();
                 binding.btnAddToFavProduct.setSelected(!favoriteState);
                 if (favoriteState) {
-                    Snackbar.make(binding.ctnSnackBar, R.string.delete_favorite_noti, Snackbar.LENGTH_LONG).setAction(R.string.undo, new View.OnClickListener() {
+                    Snackbar.make(binding.ctnSnackBar, R.string.delete_favorite_noti, Snackbar.LENGTH_LONG).setAction(R.string.action_bar_favorite_action, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
-                        }
+                            Intent intent = new Intent(ProductDetailScreen.this, FavoriteListActivity.class);
+                            startActivity(intent);
+                        };
                     }).show();
                 } else {
-                    Snackbar.make(binding.ctnSnackBar, R.string.add_favorite_noti, Snackbar.LENGTH_LONG).setAction(R.string.undo, new View.OnClickListener() {
+                    Snackbar.make(binding.ctnSnackBar, R.string.add_favorite_noti, Snackbar.LENGTH_LONG).setAction(R.string.action_bar_favorite_action, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
+                            Intent intent = new Intent(ProductDetailScreen.this, FavoriteListActivity.class);
+                            startActivity(intent);
                         }
                     }).show();
                 }
@@ -144,7 +147,8 @@ public class ProductDetailScreen extends AppCompatActivity {
                 btnAction.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        Intent intent = new Intent(ProductDetailScreen.this, Payment.class);
+                        startActivity(intent);
                     }
                 });
             }
@@ -162,8 +166,8 @@ public class ProductDetailScreen extends AppCompatActivity {
                         Snackbar.make(binding.ctnSnackBar, "Bạn đã thêm " + currentAmount + " sản phẩm vào giỏ hàng.", Snackbar.LENGTH_LONG).setAction(R.string.view_cart, new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent intent = new Intent(ProductDetailScreen.this, MainActivity.class);
-
+                                Intent intent = new Intent(ProductDetailScreen.this, CartActivity.class);
+                                startActivity(intent);
                             }
                         }).show();
                         optionDialog.dismiss();
@@ -327,7 +331,7 @@ public class ProductDetailScreen extends AppCompatActivity {
             binding.txtProductDetailArtist.setText(product.getProductArtistName());
             binding.txtProductDetailDescription.setText(product.getProductDescription());
             binding.txtProductDetailRate.setText(String.format("%s", product.getProductRating()));
-            binding.txtProductDetailSoldAmount.setText(String.format("%s", product.getProductSoldAmount()));
+            binding.txtProductDetailSoldAmount.append(String.format("%s", product.getProductSoldAmount()));
             productImgAdapter.setImagesUrl(product.getListProductPhoto());
             productImgAdapter.notifyDataSetChanged();
         });

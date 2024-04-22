@@ -208,8 +208,8 @@
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
                 android:layout_marginBottom="20dp"
-                android:backgroundTint="@drawable/button_small_text_filled_state_background"
-                android:textColor="@drawable/button_filled_text_color"
+                android:backgroundTint="@color/md_theme_tertiaryContainer"
+                android:textColor="@color/md_theme_onTertiaryContainer"
                 app:layout_constraintTop_toBottomOf="@+id/cdvChangeAccountInfo"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
