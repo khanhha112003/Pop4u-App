@@ -2,8 +2,11 @@ package com.group2.pop4u_app.LoginScreen;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.group2.api.Services.UserService;
 import com.group2.local.LoginManagerTemp;
 import com.group2.pop4u_app.MainActivity;
+import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.SignUp.SignUp_1;
 import com.group2.pop4u_app.databinding.ActivityLoginPageBinding;
 
@@ -19,6 +23,7 @@ import java.util.concurrent.CompletableFuture;
 public class LoginPage extends AppCompatActivity {
 
     ActivityLoginPageBinding binding;
+    private boolean passwordShowing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +106,40 @@ public class LoginPage extends AppCompatActivity {
                 if (LoginPage.this != null && !LoginPage.this.isFinishing()) {
                     LoginPage.this.finish();
                 }
+            }
+        });
+
+        binding.txtForgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginPage.this, ForgotPassScreen.class);
+                startActivity(intent);
+                if (LoginPage.this != null && !LoginPage.this.isFinishing()) {
+                    LoginPage.this.finish();
+                }
+            }
+        });
+
+        //Show password
+        final EditText edtPass = findViewById(R.id.edtPass);
+        final ImageView imvShowPass = findViewById(R.id.imvShowPass);
+
+        binding.imvShowPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (passwordShowing) {
+                    passwordShowing = false;
+
+                    edtPass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    imvShowPass.setImageResource(R.drawable.visibility_showpass);
+                }else {
+                    passwordShowing = true;
+
+                    edtPass.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    imvShowPass.setImageResource(R.drawable.visibility_off);
+                }
+                //di chuyển cursor
+                edtPass.setSelection(edtPass.length());
             }
         });
     }
