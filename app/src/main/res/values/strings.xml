@@ -76,6 +76,7 @@
     <string name="title_activity_all_artist">AllArtistActivity</string>
     <string name="add_address">Tạo địa chỉ mới</string>
     <string name="pick_address">Địa chỉ nhận hàng</string>
+    <string name="request_to_sign_in">Bạn vui lòng đăng nhập để thực hiện thao tác.</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
     </string>

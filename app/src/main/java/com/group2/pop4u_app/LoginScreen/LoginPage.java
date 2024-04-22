@@ -36,6 +36,10 @@ public class LoginPage extends AppCompatActivity {
                if (!this.isFinishing()) {
                    LoginManagerTemp.isLogin = true;
                    LoginManagerTemp.token = v;
+                   Intent intent = getIntent();
+//                   if (intent.getStringExtra("request").equals("request_from_product_detail")){
+//
+//                   }
 //                   Intent intent = new Intent(LoginPage.this, MainActivity.class); // Chuyển đến MainActivity
 //                   startActivity(intent);
                    this.finish();
@@ -43,7 +47,7 @@ public class LoginPage extends AppCompatActivity {
            } else {
                 binding.btnLogIn.setClickable(true);
                 Log.d("Login screen", "Login fail");
-                Toast.makeText(this, "Thông tin đăng nhập không chính xác, vui lòng thử lại", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Thông tin đăng nhập không chính xác, vui lòng thử lại.", Toast.LENGTH_SHORT).show();
            }
         });
         try {
@@ -51,7 +55,7 @@ public class LoginPage extends AppCompatActivity {
         } catch (Exception e) {
             binding.btnLogIn.setClickable(true);
             Log.d("Login screen", "Login fail");
-            Toast.makeText(this, "Đã có lỗi xảy ra, xin vui lòng thử lại", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Đã có lỗi xảy ra, xin vui lòng thử lại.", Toast.LENGTH_SHORT).show();
         }
     }
 

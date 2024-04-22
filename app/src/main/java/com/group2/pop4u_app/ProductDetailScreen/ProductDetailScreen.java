@@ -26,13 +26,16 @@ import android.view.ViewGroup;
 import android.view.WindowInsets;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.group2.adapter.MiniProductCardRecyclerAdapter;
 import com.group2.adapter.ProductImgAdapter;
 import com.group2.api.Services.ProductService;
 import com.google.android.material.snackbar.Snackbar;
+import com.group2.local.LoginManagerTemp;
 import com.group2.model.Product;
 import com.group2.pop4u_app.HomeScreen.FavoriteListActivity;
+import com.group2.pop4u_app.LoginScreen.LoginPage;
 import com.group2.pop4u_app.MainActivity;
 import com.group2.pop4u_app.ArtistInfoScreen.ArtistInfoScreen;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetHorizontalRecycler;
@@ -92,12 +95,8 @@ public class ProductDetailScreen extends AppCompatActivity {
                 int color = getResources().getColor(R.color.md_theme_surfaceContainerLow);
                 Drawable drawable = new ColorDrawable(color);
                 getSupportActionBar().setBackgroundDrawable(drawable);
-//                binding.tbrProductDetail.setVisibility(View.VISIBLE);
-//                binding.imvProductDetailBack.setVisibility(View.GONE);
             } else if (scrollY == 0) {
                 getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                binding.tbrProductDetail.setVisibility(View.GONE);
-//                binding.imvProductDetailBack.setVisibility(View.VISIBLE);
             }
             previousScrollY[0] = scrollY;
         });
@@ -140,38 +139,51 @@ public class ProductDetailScreen extends AppCompatActivity {
         binding.btnBuyNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openOptionDialog();
-                Button btnAction = optionDialog.findViewById(R.id.btnAction);
-                btnAction.setText(R.string.buy_now);
-                btnAction.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(ProductDetailScreen.this, Payment.class);
-                        startActivity(intent);
-                    }
-                });
+                if (LoginManagerTemp.isLogin == false) {
+                    Toast.makeText(ProductDetailScreen.this, R.string.request_to_sign_in, Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(ProductDetailScreen.this, LoginPage.class);
+                    startActivity(intent);
+                } else {
+                    openOptionDialog();
+                    Button btnAction = optionDialog.findViewById(R.id.btnAction);
+                    btnAction.setText(R.string.buy_now);
+                    btnAction.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(ProductDetailScreen.this, Payment.class);
+                            intent.putExtra("productCode", product.getProductCode());
+                            startActivity(intent);
+                        }
+                    });
+                }
             }
         });
 
         binding.btnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openOptionDialog();
-                Button btnAction = optionDialog.findViewById(R.id.btnAction);
-                btnAction.setText(R.string.add_to_cart);
-                btnAction.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Snackbar.make(binding.ctnSnackBar, "Bạn đã thêm " + currentAmount + " sản phẩm vào giỏ hàng.", Snackbar.LENGTH_LONG).setAction(R.string.view_cart, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Intent intent = new Intent(ProductDetailScreen.this, CartActivity.class);
-                                startActivity(intent);
-                            }
-                        }).show();
-                        optionDialog.dismiss();
-                    }
-                });
+                if (LoginManagerTemp.isLogin == false) {
+                    Toast.makeText(ProductDetailScreen.this, R.string.request_to_sign_in, Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(ProductDetailScreen.this, LoginPage.class);
+                    startActivity(intent);
+                } else {
+                    openOptionDialog();
+                    Button btnAction = optionDialog.findViewById(R.id.btnAction);
+                    btnAction.setText(R.string.add_to_cart);
+                    btnAction.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Snackbar.make(binding.ctnSnackBar, "Bạn đã thêm " + currentAmount + " sản phẩm vào giỏ hàng.", Snackbar.LENGTH_LONG).setAction(R.string.view_cart, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(ProductDetailScreen.this, CartActivity.class);
+                                    startActivity(intent);
+                                }
+                            }).show();
+                            optionDialog.dismiss();
+                        }
+                    });
+                }
             }
         });
     }
