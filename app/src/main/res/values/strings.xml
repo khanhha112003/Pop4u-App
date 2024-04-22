@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pop4u_App</string>
+    <string name="app_name">Pop4u</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="ordered_fragment">Đã đặt</string>
     <string name="processing_fragment">Đang xử lý</string>
