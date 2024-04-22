@@ -156,7 +156,7 @@
         android:layout_width="267dp"
         android:layout_height="65dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/button_small_filled_norm_background"
+        android:backgroundTint="@drawable/"
         android:text="Đăng nhập"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
