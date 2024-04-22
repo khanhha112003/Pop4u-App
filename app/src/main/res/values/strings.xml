@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pop4u_App</string>
+    <string name="app_name">Pop4u</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="ordered_fragment">Đã đặt</string>
     <string name="processing_fragment">Đang xử lý</string>
@@ -125,6 +125,16 @@
     <string name="BoardDes3">Tình yêu sẽ được đổi trả sản phẩm trong vòng 7 ngày kể từ ngày nhận hàng.</string>
     <string name="BoardDes4">Cùng pop4u bảo vệ môi trường sống cho chúng ta và cả Idol nhé!</string>
     <string name="create_account_button_title">Tạo tài khoản</string>
+
+    //TermsAccount
+    <string name="BuyTerm">Chính sách mua hàng</string>
+    <string name="ShipTerm">Chính sách giao hàng</string>
+    <string name="PayTerm">Chính sách thanh toán</string>
+    <string name="PersonData">Dữ liệu cá nhân</string>
+
+    //Helps and Report
+    <string name="Help">Hỗ trợ giúp đỡ</string>
+    <string name="Report">Báo cáo khiếu nại</string>
 
     <array name="initial_slider_year">
         <item>2020</item>
