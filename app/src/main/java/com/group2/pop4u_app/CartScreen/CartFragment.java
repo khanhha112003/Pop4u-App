@@ -1,5 +1,6 @@
 package com.group2.pop4u_app.CartScreen;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -17,6 +18,8 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +53,7 @@ public class CartFragment extends Fragment {
     int undoPosition;
     OrderDatabaseHelper databaseHelper;
 
+    Vibrator vibrator;
     public CartFragment() {
         // Required empty public constructor
     }
@@ -136,6 +140,8 @@ public class CartFragment extends Fragment {
                     int position = viewHolder.getAdapterPosition();
                     CartItem undoItem = carts.get(position);
                     deleteOrder(position);
+                    vibrator = (Vibrator) requireContext().getSystemService(requireContext().VIBRATOR_SERVICE);
+                    vibrator.vibrate(VibrationEffect.EFFECT_HEAVY_CLICK);
                     Snackbar.make(binding.ctnSnackBar, "Bạn đã xóa sản phẩm khỏi giỏ hàng.", Snackbar.LENGTH_LONG).setAction(R.string.undo, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
