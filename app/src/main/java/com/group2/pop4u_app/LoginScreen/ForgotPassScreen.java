@@ -38,8 +38,8 @@ public class ForgotPassScreen extends AppCompatActivity {
         if (!isValidEmail(email)) {
             binding.edtEmail.setError("Bạn đã nhập sai email. Vui lòng nhập lại");
             focusView = binding.edtEmail;
-            cancel = true;
-        }
+
+        } cancel = true;
     }
 
     private boolean isValidEmail(String email) {

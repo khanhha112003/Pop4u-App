@@ -45,6 +45,15 @@ public class SettingScreen extends AppCompatActivity {
             } else if (settingItem.getSettingID().equals("website")) {
                 replaceFragment(new PaymentMethodFragment());
                 getSupportActionBar().setTitle(settingItem.getSettingTitle());
+            } else if (settingItem.getSettingID().equals("termsAndPolicy")) {
+                replaceFragment(new TermsFragment());
+                getSupportActionBar().setTitle(settingItem.getSettingTitle());
+            } else if (settingItem.getSettingID().equals("helpAndReport")) {
+                replaceFragment(new HelpsNReportFragment());
+                getSupportActionBar().setTitle(settingItem.getSettingTitle());
+            }else if (settingItem.getSettingID().equals("address_list")) {
+                replaceFragment(new AddressFragment());
+                getSupportActionBar().setTitle(settingItem.getSettingTitle());
             }
         } 
     }
