@@ -51,7 +51,7 @@ public class MiniProductCardRecyclerAdapter extends RecyclerView.Adapter<MiniPro
                 .load(product.getBannerPhoto())
                 .placeholder(R.drawable.placeholder_image)
                 .error(R.drawable.error_image)
-                .fit()
+                .fit().centerCrop()
                 .into(holder.imvProductImage);
         holder.txtProductPrice.setText(String.format("%s₫", String.valueOf(product.getProductPrice())));
         holder.txtProductName.setText(product.getProductName());

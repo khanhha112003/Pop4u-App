@@ -38,8 +38,9 @@
         android:layout_width="267dp"
         android:layout_height="65dp"
         android:layout_marginTop="28dp"
-        android:background="@drawable/button_small_filled_norm_background"
+        android:backgroundTint="@color/md_theme_primary"
         android:text="Gửi mã xác nhận"
+        android:fontFamily="@font/inter_semibold"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,18 +65,18 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/inter"
             android:text="Trở về"
-            android:textSize="12sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/txtCreateAcc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/inter"
-            android:paddingStart="5dp"
+            android:fontFamily="@font/inter_medium"
+            android:layout_marginStart="8dp"
             android:text="Trang đăng nhập"
             android:textColor="@color/md_theme_primary"
-            android:textSize="12sp" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 

@@ -11,16 +11,17 @@
         android:id="@+id/btnSkip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bỏ qua"
-        android:textSize="22sp"
-        android:textStyle="bold"
+        android:text="@string/skip"
+        android:textSize="18sp"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@android:color/transparent"
-        android:textColor="@color/md_theme_inversePrimary_mediumContrast"/>
+        android:fontFamily="@font/inter_medium"
+        android:backgroundTint="@android:color/transparent"
+        android:textColor="@drawable/button_no_filled_text_color"/>
 
     <ImageView
+        android:layout_marginTop="16dp"
         android:id="@+id/SplSrcNmIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -56,16 +57,19 @@
         android:id="@+id/btnStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/md_theme_onTertiaryFixedVariant"
-        android:text="Bắt đầu"
+        android:text="@string/start"
         android:textColor="@color/md_theme_background_mediumContrast"
         android:textSize="20sp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:paddingEnd="64dp"
+        android:paddingStart="64dp"
         android:fontFamily="@font/inter_semibold"
         app:layout_constraintEnd_toEndOf="@+id/indicator_layout"
         app:layout_constraintStart_toStartOf="@+id/indicator_layout"
         app:layout_constraintTop_toTopOf="@+id/indicator_layout"
         app:layout_constraintBottom_toTopOf="@+id/bottomBarrier"
-        android:background="@drawable/button_small_filled_norm_background"/>
+        android:backgroundTint="@color/md_theme_primary"/>
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/bottomBarrier"

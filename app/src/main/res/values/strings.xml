@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pop4u_App</string>
+    <string name="app_name">Pop4u</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="ordered_fragment">Đã đặt</string>
     <string name="processing_fragment">Đang xử lý</string>
@@ -76,6 +76,10 @@
     <string name="title_activity_all_artist">AllArtistActivity</string>
     <string name="add_address">Tạo địa chỉ mới</string>
     <string name="pick_address">Địa chỉ nhận hàng</string>
+    <string name="request_to_sign_in">Bạn vui lòng đăng nhập để thực hiện thao tác.</string>
+    <string name="back">Trở về trang chủ</string>
+    <string name="order_success">Bạn đã đặt hàng thành công</string>
+    <string name="view_order">Xem đơn hàng</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
     </string>
@@ -124,6 +128,18 @@
     <string name="BoardDes3">Tình yêu sẽ được đổi trả sản phẩm trong vòng 7 ngày kể từ ngày nhận hàng.</string>
     <string name="BoardDes4">Cùng pop4u bảo vệ môi trường sống cho chúng ta và cả Idol nhé!</string>
     <string name="create_account_button_title">Tạo tài khoản</string>
+
+    //TermsAccount
+    <string name="BuyTerm">Chính sách mua hàng</string>
+    <string name="ShipTerm">Chính sách giao hàng</string>
+    <string name="PayTerm">Chính sách thanh toán</string>
+    <string name="PersonData">Dữ liệu cá nhân</string>
+
+    //Helps and Report
+    <string name="Help">Hỗ trợ giúp đỡ</string>
+    <string name="Report">Báo cáo khiếu nại</string>
+    <string name="skip">Bỏ qua</string>
+    <string name="start">Bắt đầu</string>
 
     <array name="initial_slider_year">
         <item>2020</item>

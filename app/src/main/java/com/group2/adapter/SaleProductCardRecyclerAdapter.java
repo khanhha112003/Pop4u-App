@@ -44,7 +44,7 @@ public class SaleProductCardRecyclerAdapter extends RecyclerView.Adapter<SalePro
                 .load(product.getBannerPhoto())
                 .placeholder(R.drawable.placeholder_image)
                 .error(R.drawable.error_image)
-                .fit()
+                .fit().centerCrop()
                 .into(holder.imvProductImage);
         holder.txtProductSalePercent.setText(String.format("s%%", String.valueOf(product.getProductSalePercent())));
         holder.txtProductSaleSoldAmount.setText(String.format("Đã bán %s", String.valueOf(product.getProductSoldAmount())));

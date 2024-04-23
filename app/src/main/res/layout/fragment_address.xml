@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".AccountScreen.AddressFragment"
+    android:orientation="vertical">
+    <ListView
+        android:id="@+id/lvAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="+  Thêm địa chỉ mới"
+        android:textColor="@color/md_theme_background"
+        android:backgroundTint="@color/md_theme_onPrimaryFixedVariant"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:fontFamily="@font/inter"
+        android:textSize="15sp" />
+
+</LinearLayout>

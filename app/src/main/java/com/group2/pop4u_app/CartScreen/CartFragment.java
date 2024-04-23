@@ -2,6 +2,7 @@ package com.group2.pop4u_app.CartScreen;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -22,14 +23,17 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.group2.adapter.BigProductCardRecyclerAdapter;
 import com.group2.adapter.CartAdapter;
 import com.group2.database_helper.OrderDatabaseHelper;
 import com.group2.model.CartItem;
 import com.group2.model.Product;
+import com.group2.pop4u_app.HomeScreen.FavoriteListActivity;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetVerticalRecycler;
 import com.group2.pop4u_app.PaymentScreen.Payment;
+import com.group2.pop4u_app.ProductDetailScreen.ProductDetailScreen;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentCartBinding;
 
@@ -42,8 +46,9 @@ public class CartFragment extends Fragment {
     ArrayList<CartItem> carts;
     BigProductCardRecyclerAdapter bigProductCardRecyclerAdapter;
     ArrayList<Product> productArrayList;
-
-    OrderDatabaseHelper db;
+    CartItem undoCartItem;
+    int undoPosition;
+    OrderDatabaseHelper databaseHelper;
 
     public CartFragment() {
         // Required empty public constructor
@@ -59,31 +64,24 @@ public class CartFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
         }
     }
 
-    private void loadDB() {
-        productArrayList = new ArrayList<>();
-        Cursor cursor = db.queryData("SELECT * FROM " + db.TABLE_NAME);
-        while (cursor.moveToNext()){
-            productArrayList.add(new Product(cursor.getInt(0), cursor.getString(1), cursor.getDouble(2)));
-        }
-        cursor.close();
-        adapter = new CartAdapter(CartFragment.this, R.layout.activity_item_cart, db);
-        binding.rvCart.setAdapter(adapter);
-    }
+//    private void loadDB() {
+//        productArrayList = new ArrayList<>();
+//        Cursor cursor = db.queryData("SELECT * FROM " + db.TABLE_NAME);
+//        while (cursor.moveToNext()){
+//            productArrayList.add(new Product(cursor.getInt(0), cursor.getString(1), cursor.getDouble(2)));
+//        }
+//        cursor.close();
+//        adapter = new CartAdapter(CartFragment.this, R.layout.activity_item_cart, db);
+//        binding.rvCart.setAdapter(adapter);
+//    }
 
     private void createDB() {
-        // Get the context from the CartFragment
-        android.content.Context context = CartFragment.this.getContext();
-
-        // Instantiate the OrderDatabaseHelper with the context
-        db = new OrderDatabaseHelper(context);
-        db.createSampleData();
+        databaseHelper = new OrderDatabaseHelper(requireContext());
     }
-
 
 
     @Override
@@ -92,9 +90,11 @@ public class CartFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentCartBinding.inflate(inflater, container, false);
         createDB();
-        loadDB();
         return binding.getRoot();
     }
+
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -133,13 +133,22 @@ public class CartFragment extends Fragment {
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 if (direction == ItemTouchHelper.LEFT) {
                     int position = viewHolder.getAdapterPosition();
+                    CartItem undoItem = carts.get(position);
                     deleteOrder(position);
+                    Snackbar.make(binding.ctnSnackBar, "Bạn đã xóa sản phẩm khỏi giỏ hàng.", Snackbar.LENGTH_LONG).setAction(R.string.undo, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            carts.add(position, undoItem);
+                            adapter.notifyItemInserted(undoPosition);
+                            databaseHelper.undoData(carts.get(position));
+                        }
+                    }).show();
                 }
             }
 
             @Override
             public float getSwipeThreshold(RecyclerView.ViewHolder viewHolder) {
-                return 0.5f; // Set ngưỡng lướt để hiển thị chữ "Xóa" khi lướt một nửa
+                return 0.75f; // Set ngưỡng lướt để hiển thị chữ "Xóa" khi lướt một nửa
             }
 
             @Override
@@ -176,10 +185,24 @@ public class CartFragment extends Fragment {
 
 
         carts = new ArrayList<>();
-        carts.add(new CartItem(R.drawable.photo_ex, "The Album - BlackPink", "Hồng", 400000, 1));
-        carts.add(new CartItem(R.drawable.photo_ex, "The Album - BlackPink", "Hồng", 400000, 2));
-        carts.add(new CartItem(R.drawable.photo_ex, "The Album - BlackPink", "Hồng", 400000, 4));
-        carts.add(new CartItem(R.drawable.photo_ex, "The Album - BlackPink", "Hồng", 400000, 2));
+        try (Cursor cursor = databaseHelper.queryData("SELECT * FROM " + OrderDatabaseHelper.TABLE_NAME)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    int id = cursor.getInt(0);
+                    String name = cursor.getString(1);
+                    String code = cursor.getString(2);
+                    int price = cursor.getInt(3);
+                    int comparingPrice = cursor.getInt(4);
+                    String image = cursor.getString(5);;
+                    int quantity = cursor.getInt(6);
+
+                    carts.add(new CartItem(code, image, name, price, comparingPrice, quantity, false));
+                } while (cursor.moveToNext());
+            } else {
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         adapter = new CartAdapter(getContext(), carts);
         binding.rvCart.setAdapter(adapter);
@@ -204,26 +227,26 @@ public class CartFragment extends Fragment {
             currentQuantity--;
             item.setQuantity(currentQuantity);
             adapter.notifyItemChanged(position);
-            // Tính lại tổng giá tiền sau khi thay đổi số lượng
+            databaseHelper.updateData(item.getProductCode(), currentQuantity);
             calculateTotalPrice();
         }
     }
-    // Xử lý tăng số lượng sản phẩm
     private void increaseQuantity(int position) {
         CartItem item = carts.get(position);
         int currentQuantity =item.getQuantity();
         currentQuantity++;
         item.setQuantity(currentQuantity);
         adapter.notifyItemChanged(position);
+        databaseHelper.updateData(item.getProductCode(), currentQuantity);
         calculateTotalPrice();
     }
     private void deleteOrder(int position) {
+        databaseHelper.deleteData(carts.get(position).getProductCode());
+        undoCartItem = carts.get(position);
         carts.remove(position);
         adapter.notifyItemRemoved(position);
         calculateTotalPrice();
-        Toast.makeText(requireActivity(), "Đơn hàng đã được xóa", Toast.LENGTH_SHORT).show();
     }
-    // Cập nhật tổng giá trị của giỏ hàng
     private void calculateTotalPrice() {
         double totalPrice = 0;
         for (CartItem item : carts) {

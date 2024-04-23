@@ -106,7 +106,7 @@
         android:id="@+id/txtForgotPass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="28dp"
         android:drawableRight="@drawable/login_page_arrow_outward_icon"
         android:fontFamily="@font/inter_semibold"
         android:text="Bạn đã quên mật khẩu?"
@@ -123,11 +123,11 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="5dp"
+        android:layout_marginTop="20dp"
         app:flow_verticalAlign="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtForgotPass">
+        app:layout_constraintTop_toBottomOf="@+id/btnLogIn">
 
         <TextView
             android:layout_width="wrap_content"
@@ -135,19 +135,19 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/inter"
             android:text="Bạn chưa có tài khoản tại Pop4u?"
-            android:textSize="12sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/txtCreateAcc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/inter"
+            android:fontFamily="@font/inter_medium"
             android:textFontWeight="700"
             android:paddingStart="5dp"
             android:text="Tạo tài khoản ngay bây giờ."
             android:textColor="@color/md_theme_primary"
-            android:textSize="12sp" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -155,11 +155,12 @@
         android:id="@+id/btnLogIn"
         android:layout_width="267dp"
         android:layout_height="65dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/button_small_filled_norm_background"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/md_theme_primary"
         android:text="Đăng nhập"
         android:textSize="18sp"
+        android:fontFamily="@font/inter_semibold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lltext1" />
+        app:layout_constraintTop_toBottomOf="@+id/txtForgotPass" />
 </androidx.constraintlayout.widget.ConstraintLayout>

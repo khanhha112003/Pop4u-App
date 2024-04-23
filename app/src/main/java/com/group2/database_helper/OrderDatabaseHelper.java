@@ -4,8 +4,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
+import android.util.Printer;
 
+import com.group2.model.CartItem;
 import com.group2.model.Product;
 
 public class OrderDatabaseHelper extends SQLiteOpenHelper {
@@ -15,8 +18,10 @@ public class OrderDatabaseHelper extends SQLiteOpenHelper {
 
     public static final String COLUMN_PRODUCT_NAME = "productName";
     public static final String COLUMN_PRODUCT_PRICE = "productPrice";
+    public static final String COLUMN_PRODUCT_COMPARING_PRICE = "productComparingPrice";
     public static final String COLUMN_PRODUCT_CODE = "productCode";
     public static final String COLUMN_QUANTITY = "quantity";
+    public static final String COLUMN_IMAGE = "image";
 
     public OrderDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -24,28 +29,107 @@ public class OrderDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "CREATE TABLE " + TABLE_NAME + " ("
+        String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("
                 + OrderContract.OrderEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + OrderContract.OrderEntry.COLUMN_PRODUCT_NAME + " TEXT NOT NULL, "
-                + OrderContract.OrderEntry.COLUMN_PRODUCT_CODE + " TEXT NOT NULL, "
-                + OrderContract.OrderEntry.COLUMN_PRODUCT_PRICE + " REAL NOT NULL, "
-                + OrderContract.OrderEntry.COLUMN_QUANTITY + " INTEGER NOT NULL); ";
-
+                + COLUMN_PRODUCT_NAME + " TEXT NOT NULL, "
+                + COLUMN_PRODUCT_CODE + " TEXT NOT NULL, "
+                + COLUMN_PRODUCT_PRICE + " REAL NOT NULL, "
+                + COLUMN_PRODUCT_COMPARING_PRICE + " REAL NOT NULL, "
+                + COLUMN_IMAGE + " TEXT NOT NULL, "
+                + COLUMN_QUANTITY + " INTEGER NOT NULL); ";
         db.execSQL(sql);
     }
     public boolean insertData(Product product,
-                              Integer quantity){
-        SQLiteDatabase db = getWritableDatabase();
+                              int quantity){
+        SQLiteDatabase database = getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_PRODUCT_NAME, product.getProductName());
         contentValues.put(COLUMN_PRODUCT_CODE, product.getProductCode());
         contentValues.put(COLUMN_PRODUCT_PRICE, product.getProductPrice());
+        contentValues.put(COLUMN_PRODUCT_COMPARING_PRICE, product.getProductComparingPrice());
+        contentValues.put(COLUMN_IMAGE, product.getBannerPhoto());
         contentValues.put(COLUMN_QUANTITY, quantity);
 
+        long result = database.insert(TABLE_NAME, null, contentValues);
+        database.close();
+        return result != -1;
+    }
 
-        long result = db.insert(TABLE_NAME, null, contentValues);
-        return result != -1; // Returns true if insert was successful
+    public int updateData(String cartItemCode, int quantity) {
+        SQLiteDatabase database = getWritableDatabase();
+        String sql = "UPDATE " + TABLE_NAME + " SET "
+                + COLUMN_QUANTITY + " = ? "
+                + "WHERE " + COLUMN_PRODUCT_CODE + " = ?";
+        SQLiteStatement statement = database.compileStatement(sql);
+        statement.clearBindings();
+        statement.bindDouble(1, quantity);
+        statement.bindString(2, cartItemCode);
+        int rowsUpdated = statement.executeUpdateDelete();
+        statement.close();
+        database.close();
+        return rowsUpdated;
+    }
+
+    public int addMoreQuantity(Product product, int quantity) {
+        SQLiteDatabase database = getWritableDatabase();
+        SQLiteDatabase readDB = getReadableDatabase();
+        int currentAmount = 0;
+        try (Cursor cursor = readDB.rawQuery("SELECT " + COLUMN_QUANTITY + " FROM " + TABLE_NAME + " WHERE " + COLUMN_PRODUCT_CODE + " = ?", new String[]{String.valueOf(product.getProductCode())})) {
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    currentAmount = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_QUANTITY));
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        int updatedAmount = quantity + currentAmount;
+        String sql = "UPDATE " + TABLE_NAME + " SET "
+                + COLUMN_QUANTITY + " = ? "
+                + "WHERE " + COLUMN_PRODUCT_CODE + " = ?";
+        SQLiteStatement statement = database.compileStatement(sql);
+        statement.clearBindings();
+        statement.bindDouble(1, updatedAmount);
+        statement.bindString(2, product.getProductCode());
+        int rowsUpdated = statement.executeUpdateDelete();
+        statement.close();
+        database.close();
+        return rowsUpdated;
+    }
+
+    public boolean undoData(CartItem cartItem) {
+        SQLiteDatabase database = getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_PRODUCT_NAME, cartItem.getName());
+        contentValues.put(COLUMN_PRODUCT_CODE, cartItem.getProductCode());
+        contentValues.put(COLUMN_PRODUCT_PRICE, cartItem.getPrice());
+        contentValues.put(COLUMN_PRODUCT_COMPARING_PRICE, cartItem.getComparingPrice());
+        contentValues.put(COLUMN_IMAGE, cartItem.getThumb());
+        contentValues.put(COLUMN_QUANTITY, cartItem.getQuantity());
+
+        long result = database.insert(TABLE_NAME, null, contentValues);
+        database.close();
+        return result != -1;
+    }
+    public void deleteAll() {
+        SQLiteDatabase database = getWritableDatabase();
+        database.execSQL("DELETE FROM " + TABLE_NAME);
+        database.close();
+    }
+
+    public int deleteData(String cartItemCode) {
+        SQLiteDatabase database = getWritableDatabase();
+        String sql = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_PRODUCT_CODE + " = ?";
+        SQLiteStatement statement = database.compileStatement(sql);
+        statement.clearBindings();
+        statement.bindString(1, cartItemCode);
+        int rowsUpdated = statement.executeUpdateDelete();
+        statement.close();
+        database.close();
+        return rowsUpdated;
     }
 
 
@@ -63,8 +147,6 @@ public class OrderDatabaseHelper extends SQLiteOpenHelper {
             return null;
         }
     }
-
-    //INSERT, UPDATE, DELETE
 
     public Cursor queryData(String sql) {
         SQLiteDatabase db = getReadableDatabase();
@@ -95,4 +177,6 @@ public class OrderDatabaseHelper extends SQLiteOpenHelper {
             excecSql("INSERT INTO " + TABLE_NAME + " VALUES(null, 'ALBUM STRAY KIDS - NOEASY', 'ASK1001', 214999, 3)");
         }
     }
+
+
 }

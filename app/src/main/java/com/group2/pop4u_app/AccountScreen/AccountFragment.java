@@ -66,13 +66,15 @@ public class AccountFragment extends Fragment {
     private void addEvents() {
         settingAccountListAdapter.setOnClickListener((position, settingItem) -> {
             switch (settingItem.getSettingID()) {
-                case "order":
-                case "payment": {
+                case "order_history": {
                     Intent intent = new Intent(requireActivity(), OrderScreen.class);
                     startActivity(intent);
                     break;
                 }
-                case "address": {
+                case "payment_method": {
+
+                }
+                case "address_list": {
                     Intent intent = new Intent(requireActivity(), PickAddress.class);
                     startActivity(intent);
                     break;
@@ -106,6 +108,7 @@ public class AccountFragment extends Fragment {
             }
         });
     }
+
 
     private void startSettingScreen() {
         Intent intent = new Intent(requireActivity(), SettingScreen.class);

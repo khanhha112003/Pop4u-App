@@ -49,7 +49,7 @@ public class BigProductCardRecyclerAdapter extends RecyclerView.Adapter<BigProdu
                 .load(product.getBannerPhoto())
                 .placeholder(R.drawable.placeholder_image)
                 .error(R.drawable.error_image)
-                .fit()
+                .fit().centerCrop()
                 .into(holder.imvLargeProductImage);
         holder.txtProductLabel.setText(product.getProductLabel());
         holder.txtRating.setText(String.valueOf(product.getProductRating()));
