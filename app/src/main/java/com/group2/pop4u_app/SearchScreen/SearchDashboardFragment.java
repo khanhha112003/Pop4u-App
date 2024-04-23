@@ -2,21 +2,20 @@ package com.group2.pop4u_app.SearchScreen;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.group2.adapter.ArtistHorizontalListAdapter;
 import com.group2.api.Services.ArtistService;
 import com.group2.model.Artist;
-import com.group2.pop4u_app.MainActivity;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetHorizontalRecycler;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentSearchDashboardBinding;
@@ -31,6 +30,7 @@ public class SearchDashboardFragment extends Fragment implements SearchView.OnQu
     ArrayList<Artist> featuredArtistArrayList;
     ArtistHorizontalListAdapter featuredArtistAdapter;
     Boolean isNotTypingSearch;
+
     public SearchDashboardFragment() {}
 
     public static SearchDashboardFragment newInstance() {
@@ -54,36 +54,98 @@ public class SearchDashboardFragment extends Fragment implements SearchView.OnQu
         loadingData();
         return binding.getRoot();
     }
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        addViewCategoryEvent();
+    }
+
+    private void addViewCategoryEvent() {
+        binding.searchDashboardCategoryCardAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(requireActivity(), CategoryProduct.class);
+                intent.putExtra("recyclerID", "all");
+                intent.putExtra("recyclerName", "Tất cả");
+                startActivity(intent);
+            }
+        });
+        binding.searchDashboardCategoryCardVinyl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(requireActivity(), CategoryProduct.class);
+                intent.putExtra("recyclerID", "vinyl");
+                intent.putExtra("recyclerName", "Vinyl");
+                startActivity(intent);
+            }
+        });
+        binding.searchDashboardCategoryCardLightstick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(requireActivity(), CategoryProduct.class);
+                intent.putExtra("recyclerID", "lightstick");
+                intent.putExtra("recyclerName", "Lighstick");
+                startActivity(intent);
+            }
+        });
+        binding.searchDashboardCategoryCardPhotobook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(requireActivity(), CategoryProduct.class);
+                intent.putExtra("recyclerID", "photobook");
+                intent.putExtra("recyclerName", "Photobook");
+                startActivity(intent);
+            }
+        });
+        binding.searchDashboardCategoryCardMerch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(requireActivity(), CategoryProduct.class);
+                intent.putExtra("recyclerID", "merch");
+                intent.putExtra("recyclerName", "Merch");
+                startActivity(intent);
+            }
+        });
+        binding.searchDashboardCategoryCardAlbum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(requireActivity(), CategoryProduct.class);
+                intent.putExtra("recyclerID", "album");
+                intent.putExtra("recyclerName", "Album");
+                startActivity(intent);
+            }
+        });
+    }
 
     @Override
     public void onStart() {
-        setTabHandler();
+        //setTabHandler();
         super.onStart();
     }
 
-    private void setTabHandler() {
-        MainActivity mainActivity = (MainActivity) getActivity();
-        if (mainActivity == null) {
-            return;
-        }
-        getView().findViewById(binding.searchDashboardCategoryCardAll.getId())
-                .setOnClickListener(view ->mainActivity.replaceFragment(new CategoryProductFragment("all")));
 
-        getView().findViewById(binding.searchDashboardCategoryCardAlbum.getId())
-                .setOnClickListener(view -> mainActivity.replaceFragment(new CategoryProductFragment("album")));
-
-        getView().findViewById(binding.searchDashboardCategoryCardMerch.getId())
-                .setOnClickListener(view -> mainActivity.replaceFragment(new CategoryProductFragment("merch")));
-
-        getView().findViewById(binding.searchDashboardCategoryCardPhotobook.getId())
-                .setOnClickListener(view -> mainActivity.replaceFragment(new CategoryProductFragment("photo")));
-
-        getView().findViewById(binding.searchDashboardCategoryCardVinyl.getId())
-                .setOnClickListener(view -> mainActivity.replaceFragment(new CategoryProductFragment("vinyl")));
-
-        getView().findViewById(binding.searchDashboardCategoryCardLightstick.getId())
-                .setOnClickListener(view -> mainActivity.replaceFragment(new CategoryProductFragment("lightstick")));
-    }
+//    private void setTabHandler() {
+//        MainActivity mainActivity = (MainActivity) getActivity();
+//        if (mainActivity == null) {
+//            return;
+//        }
+//        getView().findViewById(binding.searchDashboardCategoryCardAll.getId())
+//                .setOnClickListener(view ->mainActivity.replaceFragment(new CategoryProductFragment("all")));
+//
+//        getView().findViewById(binding.searchDashboardCategoryCardAlbum.getId())
+//                .setOnClickListener(view -> mainActivity.replaceFragment(new CategoryProductFragment("album")));
+//
+//        getView().findViewById(binding.searchDashboardCategoryCardMerch.getId())
+//                .setOnClickListener(view -> mainActivity.replaceFragment(new CategoryProductFragment("merch")));
+//
+//        getView().findViewById(binding.searchDashboardCategoryCardPhotobook.getId())
+//                .setOnClickListener(view -> mainActivity.replaceFragment(new CategoryProductFragment("photo")));
+//
+//        getView().findViewById(binding.searchDashboardCategoryCardVinyl.getId())
+//                .setOnClickListener(view -> mainActivity.replaceFragment(new CategoryProductFragment("vinyl")));
+//
+//        getView().findViewById(binding.searchDashboardCategoryCardLightstick.getId())
+//                .setOnClickListener(view -> mainActivity.replaceFragment(new CategoryProductFragment("lightstick")));
+//    }
 
 
     @Override

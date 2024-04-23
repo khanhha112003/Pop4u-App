@@ -1,4 +1,4 @@
-package com.group2.pop4u_app.HomeScreen;
+package com.group2.pop4u_app.SearchScreen;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -22,25 +22,24 @@ import com.group2.api.Services.ProductService;
 import com.group2.model.Product;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
 import com.group2.pop4u_app.R;
-import com.group2.pop4u_app.databinding.ActivityProductListCategoryBinding;
+import com.group2.pop4u_app.databinding.SearchScreenCategoryProductBinding;
 
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
-public class ProductListCategory extends AppCompatActivity {
+public class CategoryProduct extends AppCompatActivity {
+    SearchScreenCategoryProductBinding binding;
 
-    ActivityProductListCategoryBinding binding;
-
-    BigProductCardRecyclerAdapter bigProductCardRecyclerAdapter;
+    BigProductCardRecyclerAdapter adapter;
     ArrayList<Product> productArrayList = new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityProductListCategoryBinding.inflate(getLayoutInflater());
+        binding = SearchScreenCategoryProductBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        setSupportActionBar(binding.tbrProductList);
+        setSupportActionBar(binding.tbrCategory);
         loadRecycleView();
+
     }
 
     @Override
@@ -70,7 +69,7 @@ public class ProductListCategory extends AppCompatActivity {
     }
 
     private void openFilterDialog() {
-        Dialog dialog = new Dialog(ProductListCategory.this);
+        Dialog dialog = new Dialog(CategoryProduct.this);
         dialog.setContentView(R.layout.dialog_filter_product);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
@@ -117,8 +116,8 @@ public class ProductListCategory extends AppCompatActivity {
 
         TextView rangeValue = dialog.findViewById(R.id.txtRangeDateValue);
         rangeValue.setText(String.format("Year Range: %s - %s",
-                                         String.valueOf(rangeSlider.getValues().get(0).intValue()),
-                                         String.valueOf(rangeSlider.getValues().get(1).intValue())));
+                String.valueOf(rangeSlider.getValues().get(0).intValue()),
+                String.valueOf(rangeSlider.getValues().get(1).intValue())));
 
         dialog.findViewById(R.id.chipUnder500).setOnClickListener(v -> {
             Log.d("Filter", "Under 500");
@@ -149,8 +148,8 @@ public class ProductListCategory extends AppCompatActivity {
             Log.d("Filter", "Reset Filter");
             rangeSlider.setValues(2010F, 2021F);
             rangeValue.setText(String.format("Year Range: %s - %s",
-                                             String.valueOf(rangeSlider.getValues().get(0).intValue()),
-                                             String.valueOf(rangeSlider.getValues().get(1).intValue())));
+                    String.valueOf(rangeSlider.getValues().get(0).intValue()),
+                    String.valueOf(rangeSlider.getValues().get(1).intValue())));
         });
 
         Window window = dialog.getWindow();
@@ -168,36 +167,45 @@ public class ProductListCategory extends AppCompatActivity {
 
     private void loadRecycleView() {
         Intent intent = getIntent();
-        getSupportActionBar().setTitle(intent.getStringExtra("recyclerleaName"));
+        getSupportActionBar().setTitle(intent.getStringExtra("recyclerName"));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(this, R.dimen.item_offset);
-        binding.rccProductListInCategory.setLayoutManager(gridLayoutManager);
-        binding.rccProductListInCategory.addItemDecoration(itemDecoration);
-        binding.rccProductListInCategory.setHasFixedSize(true);
-        bigProductCardRecyclerAdapter = new BigProductCardRecyclerAdapter(this, productArrayList);
-        binding.rccProductListInCategory.setAdapter(bigProductCardRecyclerAdapter);
+        binding.rccProductCategory.setLayoutManager(gridLayoutManager);
+        binding.rccProductCategory.addItemDecoration(itemDecoration);
+        binding.rccProductCategory.setHasFixedSize(true);
+        adapter = new BigProductCardRecyclerAdapter(this, productArrayList);
+        binding.rccProductCategory.setAdapter(adapter);
     }
+
 
     private void loadData() {
         String extra = getIntent().getStringExtra("recyclerID");
         if (extra != null) {
             String params = "";
-            if (extra.equals("saleProduct")) {
-                params = "sale";
-            } else if (extra.equals("newProduct")) {
-                params = "new";
+            if (extra.equals("album")) {
+                params = "Album";
+            } else if (extra.equals("photobook")) {
+                params = "Photobook";
+            } else if (extra.equals("merch")) {
+                params = "Merch";
+            } else if (extra.equals("vinyl")) {
+                params = "Vinyl";
+            } else if (extra.equals("lightstick")) {
+                params = "Lightstick";
+            } else if (extra.equals("all")){
+                params = "Tất cả sản phẩm";
             }
             CompletableFuture<ArrayList<Product>> future = ProductService.instance.getListProduct(null, params, "asc", 1000, 0, null);
             future.thenAccept(products -> {
                 productArrayList.clear();
                 productArrayList.addAll(products);
-                runOnUiThread(() -> bigProductCardRecyclerAdapter.notifyDataSetChanged());
+                runOnUiThread(() -> adapter.notifyDataSetChanged());
             });
             try {
                 future.get();
             } catch (Exception e) {
-                Log.d("ProductListCategory", e.getMessage());
+                Log.d("Category Product List", e.getMessage());
             }
         }
     }
