@@ -128,7 +128,6 @@ public class HomepageFragment extends Fragment {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frgProductOfWeek, new ProductOfWeekFragment());
         fragmentTransaction.commit();
-
     }
     private static final long DELAY_MS = 0;
     private static final long PERIOD_MS = 5000;

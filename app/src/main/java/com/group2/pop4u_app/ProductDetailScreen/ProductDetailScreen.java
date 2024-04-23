@@ -2,6 +2,7 @@ package com.group2.pop4u_app.ProductDetailScreen;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.widget.TooltipCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
@@ -29,6 +30,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.badge.BadgeUtils;
 import com.group2.adapter.MiniProductCardRecyclerAdapter;
 import com.group2.adapter.ProductImgAdapter;
 import com.group2.api.Services.ProductService;
@@ -60,6 +63,7 @@ public class ProductDetailScreen extends AppCompatActivity {
     Dialog optionDialog;
     int currentAmount;
     OrderDatabaseHelper databaseHelper;
+    BadgeDrawable badge;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,9 +92,20 @@ public class ProductDetailScreen extends AppCompatActivity {
         });
 
         setUpToolbar();
+        createDB();
         setArtistCardClick();
         setUpProductImage();
         addEvents();
+        addCartBadge();
+
+    }
+
+    private void addCartBadge() {
+        badge = BadgeDrawable.create(ProductDetailScreen.this);
+        badge.setVisible(true);
+        badge.setNumber(databaseHelper.numOfRows());
+        Toolbar tbrProductDetail = binding.tbrProductDetail;
+        BadgeUtils.attachBadgeDrawable(badge, tbrProductDetail, R.id.mnOpenCart);
     }
 
     private void setUpToolbar() {
@@ -178,12 +193,11 @@ public class ProductDetailScreen extends AppCompatActivity {
                     btnAction.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
-                            createDB();
                             int rowsUpdated = databaseHelper.addMoreQuantity(product, currentAmount);
                             if (rowsUpdated == 0) {
                                 databaseHelper.insertData(product, currentAmount);
                             }
+                            badge.setNumber(databaseHelper.numOfRows());
                             Snackbar.make(binding.ctnSnackBar, "Bạn đã thêm " + currentAmount + " sản phẩm vào giỏ hàng.", Snackbar.LENGTH_LONG).setAction(R.string.view_cart, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -321,7 +335,8 @@ public class ProductDetailScreen extends AppCompatActivity {
                     "Xem ngay sản phẩm " + product.getProductName() +
                             " tại Pop4u với mức giá siêu hời chỉ " + String.valueOf(product.getProductPrice()) +
                             "₫, giảm đến " + String.valueOf(product.getProductSalePercent()) +
-                            "%\n\nFreeship cho đơn hàng từ 500K, giao ngay chỉ trong 2 ngày.\n\nCùng nhiều quà tặng hấp dẫn đang chờ đón bạn."
+                            "%.\n\nFreeship cho đơn hàng từ 500K, giao ngay chỉ trong 2 ngày.\n\nCùng nhiều quà tặng hấp dẫn đang chờ đón bạn.\n\n" +
+                            product.getBannerPhoto()
             );
             sendIntent.setType("text/plain");
             Intent shareIntent = Intent.createChooser(sendIntent, null);
