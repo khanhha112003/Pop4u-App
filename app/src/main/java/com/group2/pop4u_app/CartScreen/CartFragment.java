@@ -102,6 +102,7 @@ public class CartFragment extends Fragment {
         customAndLoadData();
         loadRecommendProduct();
         addEvents();
+
         binding.checkboxSelectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -148,14 +149,12 @@ public class CartFragment extends Fragment {
 
             @Override
             public float getSwipeThreshold(RecyclerView.ViewHolder viewHolder) {
-                return 0.75f; // Set ngưỡng lướt để hiển thị chữ "Xóa" khi lướt một nửa
+                return 0.75f;
             }
 
             @Override
             public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-                // Hiển thị chữ "Xóa" khi lướt một nửa
                 if (dX < 0) {
-                    // Tính toán vị trí và kích thước của văn bản "Xóa"
                     Paint paint = new Paint();
                     paint.setColor(Color.RED);
                     paint.setTextSize(50);
