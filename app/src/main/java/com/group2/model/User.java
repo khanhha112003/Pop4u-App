@@ -19,6 +19,26 @@ public class User {
         return username;
     }
 
+    public String getUserLastName() {
+        if (fullname == null || fullname.isEmpty()) {
+            return "";
+        }
+        String[] liststr = fullname.split(" ");
+        String result = "";
+        for (int i = 0; i < liststr.length - 1; i++) {
+            result += liststr[i] + " ";
+        }
+        return result;
+    }
+
+    public String getUserFirstName() {
+        if (fullname == null || fullname.isEmpty()) {
+            return "";
+        }
+        String[] liststr = fullname.split(" ");
+        return liststr[liststr.length - 1];
+    }
+
     public String getEmail() {
         return email;
     }
