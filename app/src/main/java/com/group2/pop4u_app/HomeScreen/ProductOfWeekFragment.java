@@ -6,6 +6,8 @@ import android.graphics.Shader;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -79,9 +81,14 @@ public class ProductOfWeekFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentProductOfWeekBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         setProductOfWeek();
         addEvents();
-        return binding.getRoot();
+        super.onViewCreated(view, savedInstanceState);
     }
 
     private void setProductOfWeek() {

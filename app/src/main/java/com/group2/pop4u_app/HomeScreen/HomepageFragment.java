@@ -279,7 +279,6 @@ public class HomepageFragment extends Fragment {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         binding.rccRecommendedProduct.setLayoutManager(gridLayoutManager);
         binding.rccRecommendedProduct.setHasFixedSize(true);
-
         rcmProductArrayList = new ArrayList<>();
         rcmProductAdapter = new BigProductCardRecyclerAdapter(requireActivity(), rcmProductArrayList);
         ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(getContext(), R.dimen.item_offset);
