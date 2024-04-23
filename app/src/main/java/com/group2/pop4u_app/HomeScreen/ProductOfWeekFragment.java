@@ -11,11 +11,18 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.group2.api.Services.ProductService;
+import com.group2.model.Product;
 import com.group2.pop4u_app.ProductDetailScreen.ProductDetailScreen;
+import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentProductOfWeekBinding;
+import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +32,7 @@ import java.util.ArrayList;
 public class ProductOfWeekFragment extends Fragment {
 
     FragmentProductOfWeekBinding binding;
+    Product productOfWeek;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -71,32 +79,47 @@ public class ProductOfWeekFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentProductOfWeekBinding.inflate(inflater, container, false);
-        addEvents();
         setProductOfWeek();
+        addEvents();
         return binding.getRoot();
     }
 
     private void setProductOfWeek() {
-        ArrayList<String>  stringArrayList = new ArrayList<>();
-        stringArrayList.add("abd");
-
-//        binding.imvBackGroundCard.setImageResource(product.getProductImage1());
-//        binding.imvProductImage.setImageResource(product.getProductImage1());
-//        binding.txtProductName.setText(product.getProductName());
-//        binding.txtProductArtist.setText(product.getProductArtistName());
-//        binding.txtProductPrice.setText(String.valueOf(product.getProductPrice()));
+        CompletableFuture<Product> future = ProductService.instance.getProduct("PIU1001");
+        future.thenAccept(product -> {
+            this.productOfWeek = product;
+            DecimalFormat df = new DecimalFormat("#,###");
+            binding.txtProductPrice.setText(df.format(product.getProductPrice()) + "₫");
+            binding.txtProductName.setText(product.getProductName());
+            binding.txtProductArtist.setText(product.getProductArtistName());
+            binding.txtSalePercent.setText(product.getProductSalePercent() + "%");
+            ImageView imageView01 = binding.imvProductImage;
+            Picasso.get()
+                    .load(product.getBannerPhoto())
+                    .placeholder(R.drawable.placeholder_image)
+                    .error(R.drawable.error_image)
+                    .fit().centerCrop()
+                    .into(imageView01);
+            ImageView imageView02 = binding.imvBackGroundCard;
+            Picasso.get()
+                    .load(product.getBannerPhoto())
+                    .placeholder(R.drawable.placeholder_image)
+                    .error(R.drawable.error_image)
+                    .fit().centerCrop()
+                    .into(imageView02);
+        });
     }
 
     private void addEvents() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             binding.imvBackGroundCard.setRenderEffect(RenderEffect.createBlurEffect(150.0f, 150.0f, Shader.TileMode.CLAMP));
         }
-
         binding.crdProductOfWeek.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(requireActivity(), ProductDetailScreen.class);
-                intent.putExtra("productID", "ABCD");
+                intent.putExtra("productCode", productOfWeek.getProductCode());
+                intent.putExtra("artistCode", productOfWeek.getArtistCode());
                 startActivity(intent);
             }
         });

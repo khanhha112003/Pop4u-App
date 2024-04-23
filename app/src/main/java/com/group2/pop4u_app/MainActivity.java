@@ -1,5 +1,6 @@
 package com.group2.pop4u_app;
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.OptIn;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -12,7 +13,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.badge.BadgeUtils;
+import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.google.android.material.snackbar.Snackbar;
+import com.group2.database_helper.OrderDatabaseHelper;
 import com.group2.local.LoginManagerTemp;
 import com.group2.pop4u_app.AccountScreen.AccountFragment;
 import com.group2.pop4u_app.CartScreen.CartFragment;
@@ -20,6 +25,7 @@ import com.group2.pop4u_app.HomeScreen.HomepageFragment;
 import com.group2.pop4u_app.LoginScreen.LoginPage;
 import com.group2.pop4u_app.HomeScreen.FavoriteListActivity;
 import com.group2.pop4u_app.OrderScreen.OrderScreen;
+import com.group2.pop4u_app.ProductDetailScreen.ProductDetailScreen;
 import com.group2.pop4u_app.SearchScreen.SearchDashboardFragment;
 import com.group2.pop4u_app.databinding.ActivityMainBinding;
 
@@ -28,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     private int savedLoginItemIndex = -1;
     private boolean navigateToAnotherActivity;
+
+    OrderDatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +77,15 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
+
+        databaseHelper = new OrderDatabaseHelper(MainActivity.this);
+        setCartBadge();
+    }
+
+    private void setCartBadge() {
+        BadgeDrawable badge = binding.bottomNavigationView.getOrCreateBadge(R.id.ic_cart);
+        badge.setVisible(true);
+        badge.setNumber(databaseHelper.numOfRows());
     }
 
     @Override
@@ -83,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
             View view = binding.bottomNavigationView.findViewById(this.savedLoginItemIndex);
             view.performClick();
         }
+        setCartBadge();
     }
 
     public void replaceFragment(Fragment fragment){
