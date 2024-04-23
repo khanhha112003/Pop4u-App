@@ -27,7 +27,7 @@ ActivityPickAddressBinding binding;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityPickAddressBinding.inflate(getLayoutInflater());
-        setSupportActionBar(binding.tbrPickAdress);
+        setSupportActionBar(binding.tbrPickAddress);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(binding.getRoot());
         initData();

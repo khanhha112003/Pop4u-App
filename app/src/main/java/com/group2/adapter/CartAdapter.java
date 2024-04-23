@@ -13,10 +13,12 @@ import android.widget.CheckBox;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.group2.database_helper.OrderDatabaseHelper;
 import com.group2.model.CartItem;
 import com.group2.pop4u_app.CartScreen.CartFragment;
 import com.group2.pop4u_app.R;
+import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -47,12 +49,19 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         CartItem item = carts.get(position);
-        holder.thumb.setImageResource(item.getThumb());
+        Picasso.get()
+                .load(item.getThumb())
+                .placeholder(R.drawable.placeholder_image)
+                .error(R.drawable.error_image)
+                .fit().centerCrop()
+                .into(holder.thumb);
+//        holder.thumb.setImageResource(item.getThumb());
         holder.name.setText(item.getName());
-        holder.option.setText(item.getOption());
         DecimalFormat df = new DecimalFormat("#,###"); // Sử dụng "#,###" nếu không muốn hiển thị phần thập phân
         String formattedPrice = df.format(item.getPrice());
-        holder.price.setText(formattedPrice);
+        holder.price.setText(formattedPrice + "₫");
+        String formattedComparingPrice = df.format(item.getComparingPrice());
+        holder.comparingPrice.setText(formattedComparingPrice + "₫");
         holder.quantity.setText(String.valueOf(item.getQuantity()));
         holder.checkbox.setChecked(item.isChecked());
 
@@ -108,8 +117,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView thumb;
         TextView name;
-        TextView option;
-        TextView price;
+        TextView price, comparingPrice;
         TextView quantity;
         CheckBox checkbox;
         ImageButton btnDecrease;
@@ -119,8 +127,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             super(itemView);
             thumb = itemView.findViewById(R.id.thumb);
             name = itemView.findViewById(R.id.name);
-            option = itemView.findViewById(R.id.option);
             price = itemView.findViewById(R.id.pricebuy);
+            comparingPrice = itemView.findViewById(R.id.comparingPrice);
             quantity = itemView.findViewById(R.id.quantity);
             checkbox = itemView.findViewById(R.id.checkbox);
             btnDecrease = itemView.findViewById(R.id.btnDecrease);

@@ -68,16 +68,11 @@ public class ArtistInfoScreen extends AppCompatActivity {
             v.setPadding( 0, paddingTop, 0, 0);
             return insets;
         });
-
-
-
         setToolbarBehavior();
         setContentView(binding.getRoot());
         setUpRecycleView();
         getData();
         addEvents();
-
-
     }
 
 

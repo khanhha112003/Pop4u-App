@@ -6,31 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".AddressScreen.PickAddress"
     android:orientation="vertical">
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/tbrPickAdress"
-            android:fitsSystemWindows="true"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbrPickAddress"
+        android:fitsSystemWindows="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md_theme_surfaceContainerLow"
+        android:elevation="4dp"
+        app:title="@string/pick_address"
+        app:titleTextColor="@color/md_theme_onSurface"
+        app:titleTextAppearance="@style/TitleActionBar"
+        app:menu="@menu/plain_action_bar"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ListView
+            android:id="@+id/lvAddress"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/md_theme_surfaceContainerLow"
-            android:elevation="4dp"
-            app:title="@string/pick_address"
-            app:titleTextColor="@color/md_theme_onSurface"
-            app:titleTextAppearance="@style/TitleActionBar"
-            app:menu="@menu/plain_action_bar"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-
-
-<ListView
-    android:id="@+id/lvAddress"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    />
+            android:layout_height="wrap_content" />
+    </RadioGroup>
     <Button
         android:id="@+id/btnAdd"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:text="+  Thêm địa chỉ mới"
+        android:text="Thêm địa chỉ mới"
         android:textColor="@color/md_theme_background"
         android:backgroundTint="@color/md_theme_onPrimaryFixedVariant"
         android:layout_gravity="center"

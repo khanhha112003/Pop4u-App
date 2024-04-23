@@ -76,6 +76,7 @@
     <string name="title_activity_all_artist">AllArtistActivity</string>
     <string name="add_address">Tạo địa chỉ mới</string>
     <string name="pick_address">Địa chỉ nhận hàng</string>
+    <string name="request_to_sign_in">Bạn vui lòng đăng nhập để thực hiện thao tác.</string>
     <string name="back">Trở về trang chủ</string>
     <string name="order_success">Bạn đã đặt hàng thành công</string>
     <string name="view_order">Xem đơn hàng</string>
@@ -137,6 +138,8 @@
     //Helps and Report
     <string name="Help">Hỗ trợ giúp đỡ</string>
     <string name="Report">Báo cáo khiếu nại</string>
+    <string name="skip">Bỏ qua</string>
+    <string name="start">Bắt đầu</string>
 
     <array name="initial_slider_year">
         <item>2020</item>

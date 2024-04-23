@@ -48,7 +48,7 @@ public class LoginPage extends AppCompatActivity {
            } else {
                 binding.btnLogIn.setClickable(true);
                 Log.d("Login screen", "Login fail");
-                Toast.makeText(this, "Thông tin đăng nhập không chính xác, vui lòng thử lại", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Thông tin đăng nhập không chính xác, vui lòng thử lại.", Toast.LENGTH_SHORT).show();
            }
         });
         try {
@@ -56,7 +56,7 @@ public class LoginPage extends AppCompatActivity {
         } catch (Exception e) {
             binding.btnLogIn.setClickable(true);
             Log.d("Login screen", "Login fail");
-            Toast.makeText(this, "Đã có lỗi xảy ra, xin vui lòng thử lại", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Đã có lỗi xảy ra, xin vui lòng thử lại.", Toast.LENGTH_SHORT).show();
         }
     }
 
