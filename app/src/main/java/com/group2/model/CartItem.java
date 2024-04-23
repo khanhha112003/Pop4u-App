@@ -1,22 +1,26 @@
 package com.group2.model;
 
+import java.util.ArrayList;
+
 public class CartItem {
-    int thumb;
+    String productCode;
+    String thumb;
     String name;
-    String option;
     int price;
+    int comparingPrice;
     int quantity;
     private boolean isChecked;
 
-
-    public CartItem(int thumb, String name, String option,  int price,  int quantity) {
+    public CartItem(String productCode, String thumb, String name, int price, int comparingPrice, int quantity, boolean isChecked) {
+        this.productCode = productCode;
         this.thumb = thumb;
         this.name = name;
-        this.option = option;
         this.price = price;
+        this.comparingPrice = comparingPrice;
         this.quantity = quantity;
-        this.isChecked = false;
+        this.isChecked = isChecked;
     }
+
     public boolean isChecked() {
         return isChecked;
     }
@@ -24,12 +28,29 @@ public class CartItem {
     public void setChecked(boolean checked) {
         isChecked = checked;
     }
-    public int getThumb() {
+
+    public String getProductCode() {
+        return productCode;
+    }
+
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
+    }
+
+    public String getThumb() {
         return thumb;
     }
 
-    public void setThumb(int thumb) {
+    public void setThumb(String thumb) {
         this.thumb = thumb;
+    }
+
+    public int getComparingPrice() {
+        return comparingPrice;
+    }
+
+    public void setComparingPrice(int comparingPrice) {
+        this.comparingPrice = comparingPrice;
     }
 
     public String getName() {
@@ -38,14 +59,6 @@ public class CartItem {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getOption() {
-        return option;
-    }
-
-    public void setOption(String option) {
-        this.option = option;
     }
 
     public int getPrice() {

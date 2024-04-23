@@ -142,7 +142,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/inter"
+            android:fontFamily="@font/inter_medium"
             android:textFontWeight="700"
             android:paddingStart="5dp"
             android:text="Tạo tài khoản ngay bây giờ."

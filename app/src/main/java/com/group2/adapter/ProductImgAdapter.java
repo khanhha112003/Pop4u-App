@@ -50,7 +50,7 @@ public class ProductImgAdapter extends PagerAdapter {
                     .load(imagesUrl.get(position))
                     .placeholder(R.drawable.placeholder_image)
                     .error(R.drawable.error_image)
-                    .fit().centerInside()
+                    .fit().centerCrop()
                     .into(imageView);
         } else {
             imageView.setImageResource(R.drawable.placeholder_image);

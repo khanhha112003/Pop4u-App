@@ -41,10 +41,6 @@ public class LoginPage extends AppCompatActivity {
                if (!this.isFinishing()) {
                    LoginManagerTemp.isLogin = true;
                    LoginManagerTemp.token = v;
-                   Intent intent = getIntent();
-//                   if (intent.getStringExtra("request").equals("request_from_product_detail")){
-//
-//                   }
 //                   Intent intent = new Intent(LoginPage.this, MainActivity.class); // Chuyển đến MainActivity
 //                   startActivity(intent);
                    this.finish();

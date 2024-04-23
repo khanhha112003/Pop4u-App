@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowInsets;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ import com.group2.adapter.MiniProductCardRecyclerAdapter;
 import com.group2.adapter.ProductImgAdapter;
 import com.group2.api.Services.ProductService;
 import com.google.android.material.snackbar.Snackbar;
+import com.group2.database_helper.OrderDatabaseHelper;
 import com.group2.local.LoginManagerTemp;
 import com.group2.model.Product;
 import com.group2.pop4u_app.HomeScreen.FavoriteListActivity;
@@ -42,7 +44,9 @@ import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetHorizontalRecycler;
 import com.group2.pop4u_app.PaymentScreen.Payment;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.ActivityProductDetailScreenBinding;
+import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
@@ -52,9 +56,10 @@ public class ProductDetailScreen extends AppCompatActivity {
     private ProductImgAdapter productImgAdapter;
     MiniProductCardRecyclerAdapter artistProductAdapter;
     ArrayList<Product> productArrayList = new ArrayList<>();
-    Product product;
+    Product product, thisProduct;
     Dialog optionDialog;
     int currentAmount;
+    OrderDatabaseHelper databaseHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -173,6 +178,12 @@ public class ProductDetailScreen extends AppCompatActivity {
                     btnAction.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+
+                            createDB();
+                            int rowsUpdated = databaseHelper.addMoreQuantity(product, currentAmount);
+                            if (rowsUpdated == 0) {
+                                databaseHelper.insertData(product, currentAmount);
+                            }
                             Snackbar.make(binding.ctnSnackBar, "Bạn đã thêm " + currentAmount + " sản phẩm vào giỏ hàng.", Snackbar.LENGTH_LONG).setAction(R.string.view_cart, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -188,9 +199,27 @@ public class ProductDetailScreen extends AppCompatActivity {
         });
     }
 
+    private void createDB() {
+        databaseHelper = new OrderDatabaseHelper(ProductDetailScreen.this);
+    }
+
     private void openOptionDialog() {
         optionDialog = new Dialog(ProductDetailScreen.this);
         optionDialog.setContentView(R.layout.product_option_dialog);
+        ImageView imvProductImage = optionDialog.findViewById(R.id.imvProductImage);
+        Picasso.get()
+                .load(product.getBannerPhoto())
+                .placeholder(R.drawable.placeholder_image)
+                .error(R.drawable.error_image)
+                .fit().centerCrop()
+                .into(imvProductImage);
+        TextView txtPrice = optionDialog.findViewById(R.id.txtProductPrice);
+        TextView txtComparingPrice = optionDialog.findViewById(R.id.txtComparingPrice);
+        DecimalFormat df = new DecimalFormat("#,###");
+        txtPrice.setText(df.format(product.getProductPrice()) + "₫");
+        txtComparingPrice.setText(df.format(product.getProductComparingPrice()) + "₫");
+        TextView txtSalePercent = optionDialog.findViewById(R.id.txtSalePercent);
+        txtSalePercent.setText(product.getProductSalePercent() + "%");
         TextView txtAmount = optionDialog.findViewById(R.id.txtAmount);
         currentAmount = Integer.parseInt(txtAmount.getText().toString());
         optionDialog.findViewById(R.id.btnUpAmount).setOnClickListener(new View.OnClickListener() {
@@ -279,7 +308,6 @@ public class ProductDetailScreen extends AppCompatActivity {
             this.finish();
             return true;
         } else if (item.getItemId() == R.id.mnOpenCart) {
-            this.finish();
             Intent intent = new Intent(ProductDetailScreen.this, CartActivity.class);
             startActivity(intent);
             return true;
@@ -288,7 +316,6 @@ public class ProductDetailScreen extends AppCompatActivity {
             sendIntent.setAction(Intent.ACTION_SEND);
             ArrayList<String> stringArrayList = new ArrayList<>();
             stringArrayList.add("ABC");
-            Product product = new Product("VFN", "Cowboy Carter Album", stringArrayList, "Beyonce", "ABC", "BAN CHAY", 680000, 690000, 10, 4.5, 56, 12, 34, "Phần tiếp theo của Renaissance là một album nhạc đồng quê mạnh mẽ và đầy tham vọng được xây dựng theo khuôn mẫu độc nhất của Beyoncé. Cô khẳng định vị trí xứng đáng của mình trong thể loại này mà chỉ một ngôi sao nhạc pop với tài năng và tầm ảnh hưởng đáng kinh ngạc của cô mới có thể làm được.");
             sendIntent.putExtra(
                     Intent.EXTRA_TEXT,
                     "Xem ngay sản phẩm " + product.getProductName() +
@@ -331,6 +358,7 @@ public class ProductDetailScreen extends AppCompatActivity {
         CompletableFuture<Product> future = ProductService.instance.getProduct(productCode);
         future.thenAccept(product -> {
             // Update UI with product data
+            this.product = product;
             if (product.getProductComparingPrice() != 0) {
                 binding.txtProductDetailPrice.setText(String.format("%s đ", product.getProductComparingPrice()));
                 binding.txtProductDetailComparingPrice.setText(String.format("%s đ", product.getProductPrice()));

@@ -135,6 +135,8 @@
     //Helps and Report
     <string name="Help">Hỗ trợ giúp đỡ</string>
     <string name="Report">Báo cáo khiếu nại</string>
+    <string name="skip">Bỏ qua</string>
+    <string name="start">Bắt đầu</string>
 
     <array name="initial_slider_year">
         <item>2020</item>

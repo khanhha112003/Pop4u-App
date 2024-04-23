@@ -10,6 +10,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
 import com.group2.local.LoginManagerTemp;
 import com.group2.pop4u_app.AccountScreen.AccountFragment;
 import com.group2.pop4u_app.CartScreen.CartFragment;
@@ -46,9 +49,14 @@ public class MainActivity extends AppCompatActivity {
                 replaceFragment(new SearchDashboardFragment());
                 getSupportActionBar().setTitle(R.string.search_title);
             } else if (item.getItemId() == R.id.ic_cart) {
-                this.savedLoginItemIndex = R.id.ic_cart;
-                replaceFragment(new CartFragment());
-                getSupportActionBar().setTitle(R.string.cart_title);
+                if (LoginManagerTemp.isLogin) {
+                    this.savedLoginItemIndex = R.id.ic_cart;
+                    replaceFragment(new CartFragment());
+                    getSupportActionBar().setTitle(R.string.cart_title);
+                } else {
+                    this.navigateToAnotherActivity = true;
+                    openLogin();
+                }
             } else if (item.getItemId() == R.id.ic_account) {
                 if (LoginManagerTemp.isLogin) {
                     this.savedLoginItemIndex = R.id.ic_account;
@@ -93,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openLogin() {
+        Toast.makeText(this, R.string.request_to_sign_in, Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, LoginPage.class);
         startActivity(intent);
     }

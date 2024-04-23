@@ -159,19 +159,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/inter"
-            android:text="Bạn đã có tài khoản."
-            android:textSize="12sp" />
+            android:text="Bạn đã có tài khoản?"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/txtBacktoLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
             android:fontFamily="@font/inter_semibold"
             android:paddingStart="5dp"
             android:text="Đăng nhập"
             android:textColor="@color/md_theme_primary"
-            android:textSize="12sp" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 
