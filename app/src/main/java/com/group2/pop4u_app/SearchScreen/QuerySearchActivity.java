@@ -3,18 +3,22 @@ package com.group2.pop4u_app.SearchScreen;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.SearchView;
 
+import com.group2.api.Services.SearchService;
 import com.group2.model.SearchItem;
 import com.group2.pop4u_app.databinding.ActivitySearchScreenQuerySearchBinding;
-
-import java.util.Arrays;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
 
 public class QuerySearchActivity extends AppCompatActivity {
     ActivitySearchScreenQuerySearchBinding binding;
 
     HistorySearchAdapter adapter;
+
+    ArrayList<SearchItem> listSearchRes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,17 +26,26 @@ public class QuerySearchActivity extends AppCompatActivity {
 
         binding = ActivitySearchScreenQuerySearchBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        List<SearchItem> listSearchRes = Arrays.asList(
-                new SearchItem(SearchItem.HISTORY_TYPE, "History 1", ""),
-                new SearchItem(SearchItem.HISTORY_TYPE, "History 2", ""),
-                new SearchItem(SearchItem.HISTORY_TYPE, "History 3", "")
-        );
+        listSearchRes = new ArrayList<>();
         adapter = new HistorySearchAdapter(this, listSearchRes);
 
         binding.lvHistorySearch.setAdapter(adapter);
 
         setSearchBarInitialValue();
         setCancelSearchButton();
+
+        binding.svQuerySearchBox.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                conductSearch(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     private void setSearchBarInitialValue() {
@@ -55,8 +68,30 @@ public class QuerySearchActivity extends AppCompatActivity {
         });
     }
 
-    private void conductSearch() {
-        String query = binding.svQuerySearchBox.getQuery().toString();
+    private void conductSearch(String query) {
+        // luu history search vao database
+        // dien o day
+
+        CompletableFuture<ArrayList<SearchItem>> searchResult = SearchService.instance.search(query);
+        searchResult.thenAccept(res -> {
+            listSearchRes.clear();
+            // de test, neu chen code vao day thi add cai history search luu o database
+            listSearchRes.add(new SearchItem(SearchItem.HISTORY_TYPE, query, null, null));
+            // dien code lay tu database, dung model Search item lam mau
+
+
+            listSearchRes.addAll(res);
+            adapter.notifyDataSetChanged();
+        }).exceptionally(e -> {
+            Log.e("Search", "Search failed", e);
+            return null;
+        });
+
+        try {
+            searchResult.get();
+        } catch (Exception e) {
+            Log.e("Search", "Search failed", e);
+        }
 
     }
 }

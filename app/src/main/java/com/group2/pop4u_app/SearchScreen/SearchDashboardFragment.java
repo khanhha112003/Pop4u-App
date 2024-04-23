@@ -134,6 +134,9 @@ public class SearchDashboardFragment extends Fragment implements SearchView.OnQu
     }
     @Override
     public boolean onQueryTextChange(String s) {
+        if (s == null) {
+            return false;
+        }
         if (!Objects.equals(s, "") && isNotTypingSearch) {
             isNotTypingSearch = false;
             Intent myIntent = new Intent(getActivity(), QuerySearchActivity.class);
