@@ -13,16 +13,18 @@ import com.group2.model.SearchItem;
 import com.group2.pop4u_app.R;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Objects;
+
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class HistorySearchAdapter extends BaseAdapter {
 
     Context context;
 
-    List<SearchItem> listSearchResultItem;
+    ArrayList<SearchItem> listSearchResultItem;
 
-    HistorySearchAdapter(Context context, List<SearchItem> listSearchResultItem){
+    HistorySearchAdapter(Context context, ArrayList<SearchItem> listSearchResultItem){
         this.context = context;
         this.listSearchResultItem = listSearchResultItem;
     }
@@ -42,74 +44,90 @@ public class HistorySearchAdapter extends BaseAdapter {
         return i;
     }
 
-    private static class HistoryViewHolder {
-        TextView historySearchContext;
+    private static class SearchViewHolder {
+        TextView itemSearchText;
 
-        ImageButton copyHistorySearch;
-    }
+        ImageButton copySearchText;
 
-    private static class ArtistViewHolder {
-        TextView artistName;
-        ImageView artistAvatar;
-    }
+        ImageView itemSearchImage;
 
-    private static class ProductViewHolder {
-        TextView productName;
-        ImageView productImage;
+        ImageView arrowImage;
+
+        ImageView historySearchIcon;
+
+        TextView searchItemSubtitle;
+        TextView historySearchText;
+
+        public SearchViewHolder(View view) {
+            itemSearchText = view.findViewById(R.id.txt_search_item_text);
+            itemSearchImage = view.findViewById(R.id.img_search_item_avatar);
+            arrowImage = view.findViewById(R.id.img_search_item_arrow);
+            searchItemSubtitle = view.findViewById(R.id.txt_search_item_subtitle);
+
+            historySearchIcon = view.findViewById(R.id.imv_history_search_icon);
+            historySearchText = view.findViewById(R.id.txt_history_search_text);
+            copySearchText = view.findViewById(R.id.btn_copy_history_search);
+        }
+
+        public void bind(SearchItem searchItem) {
+
+            if (!Objects.equals(searchItem.getItemType(), SearchItem.HISTORY_TYPE)) {
+                itemSearchText.setText(searchItem.getItemContext());
+                itemSearchImage.setVisibility(View.VISIBLE);
+                arrowImage.setVisibility(View.VISIBLE);
+                searchItemSubtitle.setVisibility(View.VISIBLE);
+
+                copySearchText.setVisibility(View.GONE);
+                historySearchIcon.setVisibility(View.GONE);
+                historySearchText.setVisibility(View.GONE);
+                if (Objects.equals(searchItem.getItemType(), SearchItem.ARTIST_TYPE)) {
+                    searchItemSubtitle.setText("Nghệ sĩ");
+                    Picasso
+                            .get()
+                            .load(searchItem.getItemImage())
+                            .placeholder(R.drawable.placeholder_image)
+                            .error(R.drawable.error_image)
+                            .fit().centerCrop()
+                            .transform(new CropCircleTransformation())
+                            .into(itemSearchImage);
+                } else if (Objects.equals(searchItem.getItemType(), SearchItem.PRODUCT_TYPE)) {
+                    searchItemSubtitle.setText("Sản phẩm");
+                    Picasso
+                            .get()
+                            .load(searchItem.getItemImage())
+                            .placeholder(R.drawable.placeholder_image)
+                            .error(R.drawable.error_image)
+                            .fit()
+                            .into(itemSearchImage);
+                }
+            } else {
+                historySearchText.setText(searchItem.getItemContext());
+                copySearchText.setVisibility(View.VISIBLE);
+                historySearchIcon.setVisibility(View.VISIBLE);
+                historySearchText.setVisibility(View.VISIBLE);
+
+                itemSearchText.setVisibility(View.GONE);
+                itemSearchImage.setVisibility(View.GONE);
+                arrowImage.setVisibility(View.GONE);
+                searchItemSubtitle.setVisibility(View.GONE);
+            }
+
+
+        }
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        HistoryViewHolder historyItem;
-        ArtistViewHolder artistItem;
-        ProductViewHolder productItem;
+        SearchViewHolder searchViewItem;
         SearchItem searchItem = listSearchResultItem.get(position);
-        if (Objects.equals(searchItem.getItemType(), SearchItem.HISTORY_TYPE)) {
-            if (convertView == null) {
-                convertView = LayoutInflater.from(context).inflate(R.layout.search_screen_history_search_item, parent, false);
-                historyItem = new HistoryViewHolder();
-                historyItem.historySearchContext = convertView.findViewById(R.id.txt_history_search_content);
-                historyItem.copyHistorySearch = convertView.findViewById(R.id.btn_copy_history_search);
-                convertView.setTag(historyItem);
-            } else {
-                historyItem = (HistoryViewHolder) convertView.getTag();
-            }
-            historyItem.historySearchContext.setText(searchItem.getItemContext());
-        } else if (searchItem.getItemType() == SearchItem.ARTIST_TYPE) {
-            if (convertView == null) {
-                convertView = LayoutInflater.from(context).inflate(R.layout.search_screen_artist_item, parent, false);
-                artistItem = new ArtistViewHolder();
-                artistItem.artistName = convertView.findViewById(R.id.txt_search_item_artist_name);
-                artistItem.artistAvatar = convertView.findViewById(R.id.img_search_item_artist_avatar);
-                convertView.setTag(artistItem);
-            } else {
-                artistItem = (ArtistViewHolder) convertView.getTag();
-            }
-            artistItem.artistName.setText(searchItem.getItemContext());
-            Picasso
-                    .get()
-                    .load(searchItem.getItemImage())
-                    .placeholder(R.drawable.placeholder_image)
-                    .error(R.drawable.error_image)
-                    .into(artistItem.artistAvatar);
-        } else if (Objects.equals(searchItem.getItemType(), SearchItem.PRODUCT_TYPE)) {
-            if (convertView == null) {
-                convertView = LayoutInflater.from(context).inflate(R.layout.search_screen_product_item, parent, false);
-                productItem = new ProductViewHolder();
-                productItem.productName = convertView.findViewById(R.id.txt_search_item_product_name);
-                productItem.productImage = convertView.findViewById(R.id.img_search_item_product_image);
-                convertView.setTag(productItem);
-            } else {
-                productItem = (ProductViewHolder) convertView.getTag();
-            }
-            productItem.productName.setText(searchItem.getItemContext());
-            Picasso
-                    .get()
-                    .load(searchItem.getItemImage())
-                    .placeholder(R.drawable.placeholder_image)
-                    .error(R.drawable.error_image)
-                    .into(productItem.productImage);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.search_screen_search_item, parent, false);
+            searchViewItem = new SearchViewHolder(convertView);
+            convertView.setTag(searchViewItem);
+        } else {
+            searchViewItem = (SearchViewHolder) convertView.getTag();
         }
+        searchViewItem.bind(searchItem);
         return convertView;
     }
 }

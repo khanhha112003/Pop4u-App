@@ -8,6 +8,7 @@ public class SearchItem {
     private String itemType;
     private String itemContext;
     private String itemImage;
+    private String itemCode;
 
     public String getItemType() {
         return itemType;
@@ -21,9 +22,15 @@ public class SearchItem {
         return itemImage;
     }
 
-    public SearchItem(String itemType, String itemContext, String itemImage) {
+    public String getItemCode() {
+        return itemCode;
+    }
+
+    public SearchItem(String itemType, String itemContext, String itemImage, String itemCode) {
         this.itemType = itemType;
         this.itemContext = itemContext;
         this.itemImage = itemImage;
+        this.itemCode = itemCode;
     }
+
 }
