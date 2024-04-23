@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PaymentScreen.PaymentSuccess">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbrBack"
+        android:fitsSystemWindows="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/md_theme_surfaceContainerLow"
+        android:elevation="4dp"
+        app:title="@string/back"
+        app:titleTextColor="@color/md_theme_onSurface"
+        app:titleTextAppearance="@style/TitleActionBar"
+        app:menu="@menu/plain_action_bar"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+
+
+    <LinearLayout
+        android:id="@+id/layoutNoVoucher"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center"
+            android:src="@drawable/success" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/order_success"
+            android:fontFamily="@font/inter_semibold"
+            android:textSize="18sp"
+            android:textColor="@color/md_theme_outline"
+            android:layout_marginTop="16dp"/>
+        <Button
+            android:id="@+id/btnViewOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/svQuerySearchBox"
+            app:layout_constraintBottom_toBottomOf="@id/svQuerySearchBox"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:backgroundTint="@color/transparent"
+            android:text="@string/view_order"
+            android:textSize="16sp"
+            android:padding="0dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="@drawable/button_no_filled_text_color"
+            android:gravity="center"
+            android:fontFamily="@font/inter_medium"/>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

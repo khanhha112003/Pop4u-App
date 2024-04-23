@@ -128,5 +128,12 @@ public class Payment extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        binding.btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Payment.this, PaymentSuccess.class);
+                startActivity(intent);
+            }
+        });
     }
     }
