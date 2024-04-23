@@ -107,35 +107,6 @@ public class ProductService {
         return future;
     }
 
-    public CompletableFuture<ArrayList<Product>> searchProduct(String query_product) {
-        CompletableFuture<ArrayList<Product>> future = new CompletableFuture<>();
-        executor.execute(() -> {
-            IProductService service = ServiceGenerator.createService(IProductService.class);
-            Call<ArrayList<ProductDAO>> call = service.searchProduct(query_product);
-
-            try {
-                Response<ArrayList<ProductDAO>> response = call.execute();
-                if (response.isSuccessful()) {
-                    ArrayList<ProductDAO> productsRequestData = response.body();
-                    ArrayList<Product> products = new ArrayList<>();
-                    if (productsRequestData == null) {
-                        future.completeExceptionally(new NullPointerException("Product not found")); // Complete the future exceptionally if product is null
-                        return;
-                    }
-                    for (ProductDAO productDAO : productsRequestData) {
-                        products.add(productDAO.asProduct());
-                    }
-                    future.complete(products); // Complete the future with the list of products
-                } else {
-                    future.completeExceptionally(new Exception("Product Network Request Error: " + response.code())); // Complete the future exceptionally if the response is not successful
-                }
-            } catch (IOException e) {
-                future.completeExceptionally(e); // Complete the future exceptionally if an IOException occurs
-            }
-        });
-        return future;
-    }
-
     public CompletableFuture<ArrayList<ProductDAO>> getArtistProductList(Integer limit, String artist_code) {
         CompletableFuture<ArrayList<ProductDAO>> future = new CompletableFuture<>();
         executor.execute(() -> {
