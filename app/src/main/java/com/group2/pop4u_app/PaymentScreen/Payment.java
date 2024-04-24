@@ -90,15 +90,16 @@ public class Payment extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager
                 (this, LinearLayoutManager.VERTICAL, false);
         binding.rvOrder.setLayoutManager(layoutManager);
-//        binding.rvCart.setHasFixedSize(true);
+        binding.rvOrder.setHasFixedSize(true);
 
         orders = new ArrayList<>();
-        orders.add(new Order(101, R.drawable.photo_ex, "The Album - BlackPink", "Artist", "Hồng", 400000, 3));
-        orders.add(new Order(102, R.drawable.photo_ex, "The Album - BlackPink", "Artist", "Hồng", 400000, 1));
-        orders.add(new Order(103, R.drawable.photo_ex, "The Album - BlackPink", "Artist", "Hồng", 400000, 1));
+        orders.add(new Order("101", R.drawable.img_5, "4th Album 'Face the Sun' (CARAT Ver.) (Random)", "SEVENTEEN", 350000, 3));
+        orders.add(new Order("102", R.drawable.img_3, "Official Light Stick Special Editio", "BTS", 849000, 1));
+        orders.add(new Order("103", R.drawable.img_4, "TXT Official Light Stick", "TXT", 500000, 2));
 
 
         adapter = new OrderAdapter(getApplicationContext(), orders);
+        binding.rvOrder.setNestedScrollingEnabled(false);
         binding.rvOrder.setAdapter(adapter);
     }
 

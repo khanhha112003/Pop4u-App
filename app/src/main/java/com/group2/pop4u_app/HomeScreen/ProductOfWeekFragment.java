@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,27 +95,31 @@ public class ProductOfWeekFragment extends Fragment {
     private void setProductOfWeek() {
         CompletableFuture<Product> future = ProductService.instance.getProduct("PIU1001");
         future.thenAccept(product -> {
-            this.productOfWeek = product;
+            Picasso.get()
+                    .load(product.getBannerPhoto())
+                    .placeholder(R.drawable.placeholder_image)
+                    .error(R.drawable.error_image)
+                    .fit().centerCrop()
+                    .into(binding.imvProductImage);
+            Picasso.get()
+                    .load(product.getBannerPhoto())
+                    .placeholder(R.drawable.placeholder_image)
+                    .error(R.drawable.error_image)
+                    .fit().centerCrop()
+                    .into(binding.imvBackGroundCard);
             DecimalFormat df = new DecimalFormat("#,###");
             binding.txtProductPrice.setText(df.format(product.getProductPrice()) + "₫");
             binding.txtProductName.setText(product.getProductName());
             binding.txtProductArtist.setText(product.getProductArtistName());
             binding.txtSalePercent.setText(product.getProductSalePercent() + "%");
-            ImageView imageView01 = binding.imvProductImage;
-            Picasso.get()
-                    .load(product.getBannerPhoto())
-                    .placeholder(R.drawable.placeholder_image)
-                    .error(R.drawable.error_image)
-                    .fit().centerCrop()
-                    .into(imageView01);
-            ImageView imageView02 = binding.imvBackGroundCard;
-            Picasso.get()
-                    .load(product.getBannerPhoto())
-                    .placeholder(R.drawable.placeholder_image)
-                    .error(R.drawable.error_image)
-                    .fit().centerCrop()
-                    .into(imageView02);
+            this.productOfWeek = product;
         });
+
+        try {
+            future.get();
+        } catch (Exception e) {
+            Log.d("ProductOfWeek", "loadData: " + e.getMessage());
+        }
     }
 
     private void addEvents() {

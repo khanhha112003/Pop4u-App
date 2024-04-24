@@ -21,6 +21,7 @@ import com.group2.adapter.BigProductCardRecyclerAdapter;
 import com.group2.api.Services.ProductService;
 import com.group2.model.Product;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
+import com.group2.pop4u_app.ProductDetailScreen.ProductDetailScreen;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.ActivityProductListCategoryBinding;
 
@@ -41,6 +42,20 @@ public class ProductListCategory extends AppCompatActivity {
         setContentView(binding.getRoot());
         setSupportActionBar(binding.tbrProductList);
         loadRecycleView();
+        addEvent();
+
+    }
+
+    private void addEvent() {
+        bigProductCardRecyclerAdapter.setOnClickListener(new BigProductCardRecyclerAdapter.OnClickListener() {
+            @Override
+            public void onClick(int position, Product product) {
+                Intent intent = new Intent(ProductListCategory.this, ProductDetailScreen.class);
+                intent.putExtra("productCode", product.getProductCode());
+                intent.putExtra("artistCode", product.getArtistCode());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

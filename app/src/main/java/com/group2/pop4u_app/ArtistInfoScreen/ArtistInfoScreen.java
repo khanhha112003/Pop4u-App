@@ -193,7 +193,6 @@ public class ArtistInfoScreen extends AppCompatActivity {
         CompletableFuture<Artist> futureArtist = ArtistService.instance.getArtistDetail(artistCode);
         CompletableFuture<ArrayList<Product>> futureProduct = ProductService.instance.getListProduct(1, "all", "asc", 10, 0, artistCode);
         futureArtist.thenAccept(artist -> {
-            this.thisArtist = artist;
             binding.txtArtistName.setText(artist.getArtistName());
             binding.txtArtistDescription.setText(artist.getArtistDescription());
             Picasso.get()
@@ -203,6 +202,7 @@ public class ArtistInfoScreen extends AppCompatActivity {
                     .fit().centerCrop()
                     .into(binding.imvArtistAvatar);
             binding.txtArtistYearDebut.append(String.valueOf(artist.getArtistYearDebut()));
+            this.thisArtist = artist;
         });
 
         futureProduct.thenAccept(products -> {

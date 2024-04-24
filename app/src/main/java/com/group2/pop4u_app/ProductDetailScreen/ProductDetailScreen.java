@@ -408,7 +408,6 @@ public class ProductDetailScreen extends AppCompatActivity {
         CompletableFuture<Product> future = ProductService.instance.getProduct(productCode);
         future.thenAccept(product -> {
             // Update UI with product data
-            this.product = product;
             if (product.getProductComparingPrice() != 0) {
                 binding.txtProductDetailPrice.setText(String.format("%s đ", product.getProductComparingPrice()));
                 binding.txtProductDetailComparingPrice.setText(String.format("%s đ", product.getProductPrice()));
@@ -423,17 +422,7 @@ public class ProductDetailScreen extends AppCompatActivity {
             binding.txtProductDetailSoldAmount.append(String.format("%s", product.getProductSoldAmount()));
             productImgAdapter.setImagesUrl(product.getListProductPhoto());
             productImgAdapter.notifyDataSetChanged();
-        });
-
-        CompletableFuture<Artist> futureArtist = ArtistService.instance.getArtistDetail(artistCode);
-        futureArtist.thenAccept(artist -> {
-            Picasso.get()
-                    .load(artist.getArtistAvatar())
-                    .placeholder(R.drawable.placeholder_image)
-                    .error(R.drawable.error_image)
-                    .fit().centerCrop()
-                    .into(binding.imvArtistAvatar);
-            binding.txtArtistYearDebut.append(" " + String.valueOf(artist.getArtistYearDebut()));
+            this.product = product;
         });
 
         CompletableFuture<ArrayList<Product>> futureRelated = ProductService.instance.getListProduct(null, "related", null, null, 0, artistCode);
@@ -441,6 +430,17 @@ public class ProductDetailScreen extends AppCompatActivity {
             productArrayList.clear();
             productArrayList.addAll(productsResponse);
             artistProductAdapter.notifyDataSetChanged();
+        });
+
+        CompletableFuture<Artist> futureArtist = ArtistService.instance.getArtistDetail(artistCode);
+        futureArtist.thenAccept(artist -> {
+            binding.txtArtistYearDebut.append(" " + String.valueOf(artist.getArtistYearDebut()));
+            Picasso.get()
+                    .load(artist.getArtistAvatar())
+                    .placeholder(R.drawable.placeholder_image)
+                    .error(R.drawable.error_image)
+                    .fit().centerCrop()
+                    .into(binding.imvArtistAvatar);
         });
 
         try {
@@ -452,6 +452,7 @@ public class ProductDetailScreen extends AppCompatActivity {
         try {
             future.get();
             futureRelated.get();
+            futureArtist.get();
         } catch (Exception e) {
             Log.d("ProductDetailScreen", "Error loading product data", e);
         }
