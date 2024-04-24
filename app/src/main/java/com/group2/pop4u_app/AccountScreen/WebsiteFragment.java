@@ -24,7 +24,7 @@ public class WebsiteFragment  extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        binding.wvSettingWebview.loadUrl("https://pop4u.vercel.app/");
+        binding.wvSettingWebview.loadUrl("https://pop4u.vercel.app/about");
     }
 
     @Override
