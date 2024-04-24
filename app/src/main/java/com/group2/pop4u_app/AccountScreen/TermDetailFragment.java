@@ -1,24 +1,19 @@
 package com.group2.pop4u_app.AccountScreen;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import androidx.fragment.app.Fragment;
-
-import com.group2.api.Services.ProductService;
-import com.group2.model.Product;
 import com.group2.pop4u_app.databinding.FragmentTermDetailBinding;
-
-import java.util.ArrayList;
-import java.util.concurrent.CompletableFuture;
 
 
 public class TermDetailFragment extends Fragment {
     FragmentTermDetailBinding binding;
-    private static final String CAT_TYPE = "term_type";
     String term_type = "buy";
     String param_type = "buy";
     public TermDetailFragment(String termType) {
@@ -38,12 +33,19 @@ public class TermDetailFragment extends Fragment {
         super.onStart();
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentTermDetailBinding.inflate(inflater,container, false);
-        loadTermWebView();
         setScreen();
+        binding.wvTermDetail.getSettings().setJavaScriptEnabled(true);
+        binding.wvTermDetail.setWebViewClient(new WebViewClient(){
+            @Override //for APIs 24 and later
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request){
+                return true;
+            }
+        });
         return binding.getRoot();
     }
 
@@ -60,19 +62,6 @@ public class TermDetailFragment extends Fragment {
         } else if ("perdata".equals(term_type)) {
             param_type = "PerData";
             binding.wvTermDetail.loadUrl("https://pop4u.vercel.app/personal_data");
-        }
-    }
-
-    private void loadTermWebView() {
-        CompletableFuture<ArrayList<Product>> future = ProductService.instance.getProductByCategory(param_type, null, null, null, null);
-        future.thenAccept(products -> {
-            binding.wvTermDetail.getSettings().setJavaScriptEnabled(true);
-        });
-
-        try {
-            future.get();
-        } catch (Exception e) {
-            Log.d("Term webpage", "Error: " + e.getMessage());
         }
     }
 }

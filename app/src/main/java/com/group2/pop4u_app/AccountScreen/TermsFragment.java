@@ -31,15 +31,15 @@ public class TermsFragment extends Fragment {
 
     private void setTabHandler() {
         FragmentActivity activity = getActivity();
-        if (!(activity instanceof MainActivity) || binding == null) {
+        if (!(activity instanceof SettingScreen) || binding == null) {
             return;
         }
 
-        MainActivity mainActivity = (MainActivity) activity;
-        binding.cdvBuyTerm.setOnClickListener(view -> mainActivity.replaceFragment(new TermDetailFragment("buy")));
-        binding.cdvShipTerm.setOnClickListener(view -> mainActivity.replaceFragment(new TermDetailFragment("ship")));
-        binding.cdvPayTerm.setOnClickListener(view -> mainActivity.replaceFragment(new TermDetailFragment("pay")));
-        binding.cdvPersonalData.setOnClickListener(view -> mainActivity.replaceFragment(new TermDetailFragment("perdata")));
+        SettingScreen settingActivity = (SettingScreen) activity;
+        binding.cdvBuyTerm.setOnClickListener(view -> settingActivity.replaceFragment(new TermDetailFragment("buy")));
+        binding.cdvShipTerm.setOnClickListener(view -> settingActivity.replaceFragment(new TermDetailFragment("ship")));
+        binding.cdvPayTerm.setOnClickListener(view -> settingActivity.replaceFragment(new TermDetailFragment("pay")));
+        binding.cdvPersonalData.setOnClickListener(view -> settingActivity.replaceFragment(new TermDetailFragment("perdata")));
     }
 
 
