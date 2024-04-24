@@ -6,6 +6,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
@@ -20,11 +21,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.group2.adapter.BigProductCardRecyclerAdapter;
 import com.group2.adapter.MiniProductCardRecyclerAdapter;
 import com.group2.api.Services.ArtistService;
 import com.group2.api.Services.ProductService;
 import com.group2.model.Artist;
 import com.group2.model.Product;
+import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetHorizontalRecycler;
 import com.group2.pop4u_app.ProductDetailScreen.CartActivity;
 import com.group2.pop4u_app.ProductDetailScreen.ProductDetailScreen;
@@ -41,7 +44,7 @@ public class ArtistInfoScreen extends AppCompatActivity {
 
     ArrayList<Product> listArtistProduct = new ArrayList<>();
 
-    MiniProductCardRecyclerAdapter artistProductAdapter;
+    BigProductCardRecyclerAdapter artistProductAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         EdgeToEdge.enable(this);
@@ -141,13 +144,14 @@ public class ArtistInfoScreen extends AppCompatActivity {
 
 
     private void setUpRecycleView() {
-        LinearLayoutManager layoutManagerNewProduct = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        ItemOffsetHorizontalRecycler itemOffsetHorizontalRecycler = new ItemOffsetHorizontalRecycler(getBaseContext(), R.dimen.item_offset);
-        binding.rccProductOfArtist.addItemDecoration(itemOffsetHorizontalRecycler);
-        binding.rccProductOfArtist.setLayoutManager(layoutManagerNewProduct);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(ArtistInfoScreen.this, 2);
+        ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(ArtistInfoScreen.this, R.dimen.item_offset);
+        binding.rccProductOfArtist.addItemDecoration(itemDecoration);
+        binding.rccProductOfArtist.setLayoutManager(gridLayoutManager);
         binding.rccProductOfArtist.setHasFixedSize(true);
+        binding.rccProductOfArtist.setNestedScrollingEnabled(false);
 
-        artistProductAdapter = new MiniProductCardRecyclerAdapter(this, listArtistProduct);
+        artistProductAdapter = new BigProductCardRecyclerAdapter(this, listArtistProduct);
         binding.rccProductOfArtist.setAdapter(artistProductAdapter);
     }
 
@@ -159,15 +163,13 @@ public class ArtistInfoScreen extends AppCompatActivity {
         futureArtist.thenAccept(artist -> {
             binding.txtArtistName.setText(artist.getArtistName());
             binding.txtArtistDescription.setText(artist.getArtistDescription());
-             Picasso
-                     .get()
-                     .load(artist.getArtistAvatar())
-                     .placeholder(R.drawable.placeholder_image)
-                     .error(R.drawable.error_image)
-                     .fit().centerInside()
-                     .into(binding.imvArtistAvatar);
-            binding.txtArtistYearDebut.setText(artist.getArtistYearDebut());
-
+            Picasso.get()
+                    .load(artist.getArtistAvatar())
+                    .placeholder(R.drawable.placeholder_image)
+                    .error(R.drawable.error_image)
+                    .fit().centerCrop()
+                    .into(binding.imvArtistAvatar);
+            binding.txtArtistYearDebut.append(String.valueOf(artist.getArtistYearDebut()));
         });
 
         futureProduct.thenAccept(products -> {

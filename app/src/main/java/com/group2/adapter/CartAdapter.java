@@ -29,6 +29,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public OnTotalPriceChangeListener totalPriceChangeListener;
     public OnQuantityChangeListener quantityChangeListener;
 
+    OnClickListener onClickListener;
+
     public CartAdapter(Context context, ArrayList<CartItem> carts) {
         this.context = context;
         this.carts = carts;
@@ -77,12 +79,35 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                         break;
                     }
                 }
-
                 if (atLeastOneUnchecked && totalPriceChangeListener != null) {
                     totalPriceChangeListener.onAtLeastOneUnchecked();
                 }
             }
         });
+
+        holder.name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onClickListener != null) {
+                    onClickListener.OnClick(position, item);
+                }
+            }
+        });
+        holder.thumb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onClickListener != null) {
+                    onClickListener.OnClick(position, item);
+                }
+            }
+        });
+    }
+
+    public void setOnClickListener(OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
+    public interface OnClickListener{
+        void OnClick(int position, CartItem cartItem);
     }
     private void calculateTotalPrice() {
         double totalPrice = 0;
@@ -153,8 +178,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     }
                 }
             });
-
-
         }
     }
     public interface OnTotalPriceChangeListener {

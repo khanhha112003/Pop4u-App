@@ -13,8 +13,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.slider.RangeSlider;
 import com.group2.adapter.BigProductCardRecyclerAdapter;
@@ -29,8 +31,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class CategoryProduct extends AppCompatActivity {
     SearchScreenCategoryProductBinding binding;
-
     BigProductCardRecyclerAdapter adapter;
+    String params = "";
+    Integer currentPage = 1;
+    Integer limit = 10;
     ArrayList<Product> productArrayList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +42,9 @@ public class CategoryProduct extends AppCompatActivity {
         binding = SearchScreenCategoryProductBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.tbrCategory);
+        setScreenTitle();
+        setLoadmore();
         loadRecycleView();
-
     }
 
     @Override
@@ -141,11 +146,17 @@ public class CategoryProduct extends AppCompatActivity {
 
         dialog.findViewById(R.id.btnApplyFilter).setOnClickListener(v -> {
             Log.d("Filter", "Apply Filter");
+            currentPage = 0;
+            limit = 100;
+            loadData();
             dialog.dismiss();
         });
 
         dialog.findViewById(R.id.btnResetFilter).setOnClickListener(v -> {
             Log.d("Filter", "Reset Filter");
+            currentPage = 0;
+            limit = 10;
+            loadData();
             rangeSlider.setValues(2010F, 2021F);
             rangeValue.setText(String.format("Year Range: %s - %s",
                     String.valueOf(rangeSlider.getValues().get(0).intValue()),
@@ -164,10 +175,28 @@ public class CategoryProduct extends AppCompatActivity {
         dialog.show();
     }
 
+    private void setScreenTitle() {
+        Intent intent = getIntent();
+        String recyclerID = getIntent().getStringExtra("recyclerID");
+        String actionBarTitle = intent.getStringExtra("recyclerName");
+        getSupportActionBar().setTitle(actionBarTitle);
+        if (recyclerID.equals("album")) {
+            params = "Album";
+        } else if (recyclerID.equals("photobook")) {
+            params = "Photobook";
+        } else if (recyclerID.equals("merch")) {
+            params = "Merch";
+        } else if (recyclerID.equals("vinyl")) {
+            params = "Vinyl";
+        } else if (recyclerID.equals("lightstick")) {
+            params = "Lightstick";
+        } else if (recyclerID.equals("all")){
+            params = null;
+        }
+    }
+
 
     private void loadRecycleView() {
-        Intent intent = getIntent();
-        getSupportActionBar().setTitle(intent.getStringExtra("recyclerName"));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(this, R.dimen.item_offset);
@@ -178,35 +207,34 @@ public class CategoryProduct extends AppCompatActivity {
         binding.rccProductCategory.setAdapter(adapter);
     }
 
+    private void setLoadmore() {
+        binding.rccProductCategory.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if (!recyclerView.canScrollVertically(1)) {
+                    // Load more data
+                    Log.d("Loadmore", "Load more data");
+                    currentPage++;
+                    loadData();
+                }
+            }
+        });
+    }
+
 
     private void loadData() {
-        String extra = getIntent().getStringExtra("recyclerID");
-        if (extra != null) {
-            String params = "";
-            if (extra.equals("album")) {
-                params = "Album";
-            } else if (extra.equals("photobook")) {
-                params = "Photobook";
-            } else if (extra.equals("merch")) {
-                params = "Merch";
-            } else if (extra.equals("vinyl")) {
-                params = "Vinyl";
-            } else if (extra.equals("lightstick")) {
-                params = "Lightstick";
-            } else if (extra.equals("all")){
-                params = "Tất cả sản phẩm";
-            }
-            CompletableFuture<ArrayList<Product>> future = ProductService.instance.getListProduct(null, params, "asc", 1000, 0, null);
-            future.thenAccept(products -> {
+        CompletableFuture<ArrayList<Product>> future = ProductService.instance.getProductByCategory(params, currentPage, null, limit, null);
+        future.thenAccept(products -> {
+            if (currentPage == 0) {
                 productArrayList.clear();
-                productArrayList.addAll(products);
-                runOnUiThread(() -> adapter.notifyDataSetChanged());
-            });
-            try {
-                future.get();
-            } catch (Exception e) {
-                Log.d("Category Product List", e.getMessage());
             }
+            productArrayList.addAll(products);
+            runOnUiThread(() -> adapter.notifyDataSetChanged());
+        });
+        try {
+            future.get();
+        } catch (Exception e) {
+            Log.d("Category Product List", e.getMessage());
         }
     }
 }

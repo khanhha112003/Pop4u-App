@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.core.widget.NestedScrollView;
 import androidx.viewpager.widget.ViewPager;
@@ -17,6 +18,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -32,6 +35,7 @@ import android.widget.Toast;
 
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
+import com.group2.adapter.BigProductCardRecyclerAdapter;
 import com.group2.adapter.MiniProductCardRecyclerAdapter;
 import com.group2.adapter.ProductImgAdapter;
 import com.group2.api.Services.ProductService;
@@ -40,6 +44,7 @@ import com.group2.database_helper.OrderDatabaseHelper;
 import com.group2.local.LoginManagerTemp;
 import com.group2.model.Product;
 import com.group2.pop4u_app.HomeScreen.FavoriteListActivity;
+import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
 import com.group2.pop4u_app.LoginScreen.LoginPage;
 import com.group2.pop4u_app.MainActivity;
 import com.group2.pop4u_app.ArtistInfoScreen.ArtistInfoScreen;
@@ -57,13 +62,14 @@ public class ProductDetailScreen extends AppCompatActivity {
 
     ActivityProductDetailScreenBinding binding;
     private ProductImgAdapter productImgAdapter;
-    MiniProductCardRecyclerAdapter artistProductAdapter;
+    BigProductCardRecyclerAdapter artistProductAdapter;
     ArrayList<Product> productArrayList = new ArrayList<>();
     Product product, thisProduct;
     Dialog optionDialog;
     int currentAmount;
     OrderDatabaseHelper databaseHelper;
     BadgeDrawable badge;
+    Vibrator vibrator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +79,7 @@ public class ProductDetailScreen extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("");
         setContentView(binding.getRoot());
+
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.ctrProductButton, (v, windowInsets) -> {
             Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -136,6 +143,8 @@ public class ProductDetailScreen extends AppCompatActivity {
             public void onClick(View view) {
                 boolean favoriteState = binding.btnAddToFavProduct.isSelected();
                 binding.btnAddToFavProduct.setSelected(!favoriteState);
+                vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                vibrator.vibrate(VibrationEffect.EFFECT_HEAVY_CLICK);
                 if (favoriteState) {
                     Snackbar.make(binding.ctnSnackBar, R.string.delete_favorite_noti, Snackbar.LENGTH_LONG).setAction(R.string.action_bar_favorite_action, new View.OnClickListener() {
                         @Override
@@ -275,12 +284,12 @@ public class ProductDetailScreen extends AppCompatActivity {
         viewPagerProductImages.setAdapter(productImgAdapter);
         updateIndicator(0, productImgAdapter.getCount());
 
-        artistProductAdapter = new MiniProductCardRecyclerAdapter(this, productArrayList);
+        artistProductAdapter = new BigProductCardRecyclerAdapter(this, productArrayList);
         binding.rccProductRelevant.setAdapter(artistProductAdapter);
-        LinearLayoutManager layoutManagerNewProduct = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        ItemOffsetHorizontalRecycler itemOffsetHorizontalRecycler = new ItemOffsetHorizontalRecycler(this, R.dimen.item_offset);
-        binding.rccProductRelevant.addItemDecoration(itemOffsetHorizontalRecycler);
-        binding.rccProductRelevant.setLayoutManager(layoutManagerNewProduct);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(ProductDetailScreen.this, 2);
+        ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(ProductDetailScreen.this, R.dimen.item_offset);
+        binding.rccProductRelevant.addItemDecoration(itemDecoration);
+        binding.rccProductRelevant.setLayoutManager(gridLayoutManager);
 
         viewPagerProductImages.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -300,10 +309,11 @@ public class ProductDetailScreen extends AppCompatActivity {
             }
         });
 
-        artistProductAdapter.setOnClickListener(new MiniProductCardRecyclerAdapter.OnClickListener() {
+        artistProductAdapter.setOnClickListener(new BigProductCardRecyclerAdapter.OnClickListener() {
             @Override
             public void onClick(int position, Product product) {
                 openProduct(product);
+
             }
         });
     }

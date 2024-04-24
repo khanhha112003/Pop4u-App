@@ -43,7 +43,7 @@ public class SettingScreen extends AppCompatActivity {
                 replaceFragment(new PaymentMethodFragment());
                 getSupportActionBar().setTitle(settingItem.getSettingTitle());
             } else if (settingItem.getSettingID().equals("website")) {
-                replaceFragment(new PaymentMethodFragment());
+                replaceFragment(new WebsiteFragment());
                 getSupportActionBar().setTitle(settingItem.getSettingTitle());
             } else if (settingItem.getSettingID().equals("termsAndPolicy")) {
                 replaceFragment(new TermsFragment());

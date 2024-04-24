@@ -1,5 +1,6 @@
 package com.group2.pop4u_app.CartScreen;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -17,6 +18,8 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +53,7 @@ public class CartFragment extends Fragment {
     int undoPosition;
     OrderDatabaseHelper databaseHelper;
 
+    Vibrator vibrator;
     public CartFragment() {
         // Required empty public constructor
     }
@@ -102,6 +106,7 @@ public class CartFragment extends Fragment {
         customAndLoadData();
         loadRecommendProduct();
         addEvents();
+
         binding.checkboxSelectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -135,6 +140,8 @@ public class CartFragment extends Fragment {
                     int position = viewHolder.getAdapterPosition();
                     CartItem undoItem = carts.get(position);
                     deleteOrder(position);
+                    vibrator = (Vibrator) requireContext().getSystemService(requireContext().VIBRATOR_SERVICE);
+                    vibrator.vibrate(VibrationEffect.EFFECT_HEAVY_CLICK);
                     Snackbar.make(binding.ctnSnackBar, "Bạn đã xóa sản phẩm khỏi giỏ hàng.", Snackbar.LENGTH_LONG).setAction(R.string.undo, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -148,14 +155,12 @@ public class CartFragment extends Fragment {
 
             @Override
             public float getSwipeThreshold(RecyclerView.ViewHolder viewHolder) {
-                return 0.75f; // Set ngưỡng lướt để hiển thị chữ "Xóa" khi lướt một nửa
+                return 0.75f;
             }
 
             @Override
             public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-                // Hiển thị chữ "Xóa" khi lướt một nửa
                 if (dX < 0) {
-                    // Tính toán vị trí và kích thước của văn bản "Xóa"
                     Paint paint = new Paint();
                     paint.setColor(Color.RED);
                     paint.setTextSize(50);

@@ -37,6 +37,7 @@ public class Payment extends AppCompatActivity {
         setSupportActionBar(binding.tbrPayment);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(binding.getRoot());
+        binding.piProgress.setProgressCompat(33, true);
         customAndLoadData();
         calculatetotalPriceOrder();
         addEvents();
