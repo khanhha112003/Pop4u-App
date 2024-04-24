@@ -1,11 +1,8 @@
 package com.group2.api.Services;
-
 import com.group2.api.DAO.LoginResponseDAO;
 import com.group2.api.DAO.ValidationResponseDAO;
 import com.group2.api.DAO.UserDAO;
-
 import java.util.HashMap;
-
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
