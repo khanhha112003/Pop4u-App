@@ -55,7 +55,11 @@ import com.group2.pop4u_app.databinding.ActivityProductDetailScreenBinding;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 
 public class ProductDetailScreen extends AppCompatActivity {
@@ -130,6 +134,7 @@ public class ProductDetailScreen extends AppCompatActivity {
     }
 
     private void addEvents() {
+        binding.txtExpectedDate.append(" " + calExpectedDate());
         binding.crdArtist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -220,6 +225,19 @@ public class ProductDetailScreen extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private String calExpectedDate() {
+        Calendar calendar = Calendar.getInstance();
+        Date currentDate = calendar.getTime();
+
+        calendar.add(Calendar.DATE, 2);
+        Date twoDaysFromNow = calendar.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd-MM-yy", Locale.getDefault());
+        String formattedDate = sdf.format(twoDaysFromNow);
+
+        return formattedDate;
     }
 
     private void createDB() {
