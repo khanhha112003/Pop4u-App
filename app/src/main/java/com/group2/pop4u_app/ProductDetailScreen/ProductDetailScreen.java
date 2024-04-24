@@ -38,10 +38,12 @@ import com.google.android.material.badge.BadgeUtils;
 import com.group2.adapter.BigProductCardRecyclerAdapter;
 import com.group2.adapter.MiniProductCardRecyclerAdapter;
 import com.group2.adapter.ProductImgAdapter;
+import com.group2.api.Services.ArtistService;
 import com.group2.api.Services.ProductService;
 import com.google.android.material.snackbar.Snackbar;
 import com.group2.database_helper.OrderDatabaseHelper;
 import com.group2.local.LoginManagerTemp;
+import com.group2.model.Artist;
 import com.group2.model.Product;
 import com.group2.pop4u_app.HomeScreen.FavoriteListActivity;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
@@ -308,6 +310,7 @@ public class ProductDetailScreen extends AppCompatActivity {
         ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(ProductDetailScreen.this, R.dimen.item_offset);
         binding.rccProductRelevant.addItemDecoration(itemDecoration);
         binding.rccProductRelevant.setLayoutManager(gridLayoutManager);
+        binding.rccProductRelevant.setNestedScrollingEnabled(false);
 
         viewPagerProductImages.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -331,7 +334,6 @@ public class ProductDetailScreen extends AppCompatActivity {
             @Override
             public void onClick(int position, Product product) {
                 openProduct(product);
-
             }
         });
     }
@@ -350,8 +352,13 @@ public class ProductDetailScreen extends AppCompatActivity {
             this.finish();
             return true;
         } else if (item.getItemId() == R.id.mnOpenCart) {
-            Intent intent = new Intent(ProductDetailScreen.this, CartActivity.class);
-            startActivity(intent);
+            if (LoginManagerTemp.isLogin) {
+                Intent intent = new Intent(ProductDetailScreen.this, CartActivity.class);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(ProductDetailScreen.this, LoginPage.class);
+                startActivity(intent);
+            }
             return true;
         } else if (item.getItemId() == R.id.mnShareProduct) {
             Intent sendIntent = new Intent();
@@ -416,6 +423,17 @@ public class ProductDetailScreen extends AppCompatActivity {
             binding.txtProductDetailSoldAmount.append(String.format("%s", product.getProductSoldAmount()));
             productImgAdapter.setImagesUrl(product.getListProductPhoto());
             productImgAdapter.notifyDataSetChanged();
+        });
+
+        CompletableFuture<Artist> futureArtist = ArtistService.instance.getArtistDetail(artistCode);
+        futureArtist.thenAccept(artist -> {
+            Picasso.get()
+                    .load(artist.getArtistAvatar())
+                    .placeholder(R.drawable.placeholder_image)
+                    .error(R.drawable.error_image)
+                    .fit().centerCrop()
+                    .into(binding.imvArtistAvatar);
+            binding.txtArtistYearDebut.append(" " + String.valueOf(artist.getArtistYearDebut()));
         });
 
         CompletableFuture<ArrayList<Product>> futureRelated = ProductService.instance.getListProduct(null, "related", null, null, 0, artistCode);
