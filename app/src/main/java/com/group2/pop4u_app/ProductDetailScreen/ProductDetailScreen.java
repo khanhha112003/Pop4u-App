@@ -38,10 +38,12 @@ import com.google.android.material.badge.BadgeUtils;
 import com.group2.adapter.BigProductCardRecyclerAdapter;
 import com.group2.adapter.MiniProductCardRecyclerAdapter;
 import com.group2.adapter.ProductImgAdapter;
+import com.group2.api.Services.ArtistService;
 import com.group2.api.Services.ProductService;
 import com.google.android.material.snackbar.Snackbar;
 import com.group2.database_helper.OrderDatabaseHelper;
 import com.group2.local.LoginManagerTemp;
+import com.group2.model.Artist;
 import com.group2.model.Product;
 import com.group2.pop4u_app.HomeScreen.FavoriteListActivity;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
@@ -55,7 +57,11 @@ import com.group2.pop4u_app.databinding.ActivityProductDetailScreenBinding;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 
 public class ProductDetailScreen extends AppCompatActivity {
@@ -130,6 +136,7 @@ public class ProductDetailScreen extends AppCompatActivity {
     }
 
     private void addEvents() {
+        binding.txtExpectedDate.append(" " + calExpectedDate());
         binding.crdArtist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -222,6 +229,19 @@ public class ProductDetailScreen extends AppCompatActivity {
         });
     }
 
+    private String calExpectedDate() {
+        Calendar calendar = Calendar.getInstance();
+        Date currentDate = calendar.getTime();
+
+        calendar.add(Calendar.DATE, 2);
+        Date twoDaysFromNow = calendar.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd-MM-yy", Locale.getDefault());
+        String formattedDate = sdf.format(twoDaysFromNow);
+
+        return formattedDate;
+    }
+
     private void createDB() {
         databaseHelper = new OrderDatabaseHelper(ProductDetailScreen.this);
     }
@@ -290,6 +310,7 @@ public class ProductDetailScreen extends AppCompatActivity {
         ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(ProductDetailScreen.this, R.dimen.item_offset);
         binding.rccProductRelevant.addItemDecoration(itemDecoration);
         binding.rccProductRelevant.setLayoutManager(gridLayoutManager);
+        binding.rccProductRelevant.setNestedScrollingEnabled(false);
 
         viewPagerProductImages.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -313,7 +334,6 @@ public class ProductDetailScreen extends AppCompatActivity {
             @Override
             public void onClick(int position, Product product) {
                 openProduct(product);
-
             }
         });
     }
@@ -332,8 +352,13 @@ public class ProductDetailScreen extends AppCompatActivity {
             this.finish();
             return true;
         } else if (item.getItemId() == R.id.mnOpenCart) {
-            Intent intent = new Intent(ProductDetailScreen.this, CartActivity.class);
-            startActivity(intent);
+            if (LoginManagerTemp.isLogin) {
+                Intent intent = new Intent(ProductDetailScreen.this, CartActivity.class);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(ProductDetailScreen.this, LoginPage.class);
+                startActivity(intent);
+            }
             return true;
         } else if (item.getItemId() == R.id.mnShareProduct) {
             Intent sendIntent = new Intent();
@@ -383,7 +408,6 @@ public class ProductDetailScreen extends AppCompatActivity {
         CompletableFuture<Product> future = ProductService.instance.getProduct(productCode);
         future.thenAccept(product -> {
             // Update UI with product data
-            this.product = product;
             if (product.getProductComparingPrice() != 0) {
                 binding.txtProductDetailPrice.setText(String.format("%s đ", product.getProductComparingPrice()));
                 binding.txtProductDetailComparingPrice.setText(String.format("%s đ", product.getProductPrice()));
@@ -398,6 +422,7 @@ public class ProductDetailScreen extends AppCompatActivity {
             binding.txtProductDetailSoldAmount.append(String.format("%s", product.getProductSoldAmount()));
             productImgAdapter.setImagesUrl(product.getListProductPhoto());
             productImgAdapter.notifyDataSetChanged();
+            this.product = product;
         });
 
         CompletableFuture<ArrayList<Product>> futureRelated = ProductService.instance.getListProduct(null, "related", null, null, 0, artistCode);
@@ -405,6 +430,17 @@ public class ProductDetailScreen extends AppCompatActivity {
             productArrayList.clear();
             productArrayList.addAll(productsResponse);
             artistProductAdapter.notifyDataSetChanged();
+        });
+
+        CompletableFuture<Artist> futureArtist = ArtistService.instance.getArtistDetail(artistCode);
+        futureArtist.thenAccept(artist -> {
+            binding.txtArtistYearDebut.append(" " + String.valueOf(artist.getArtistYearDebut()));
+            Picasso.get()
+                    .load(artist.getArtistAvatar())
+                    .placeholder(R.drawable.placeholder_image)
+                    .error(R.drawable.error_image)
+                    .fit().centerCrop()
+                    .into(binding.imvArtistAvatar);
         });
 
         try {
@@ -416,6 +452,7 @@ public class ProductDetailScreen extends AppCompatActivity {
         try {
             future.get();
             futureRelated.get();
+            futureArtist.get();
         } catch (Exception e) {
             Log.d("ProductDetailScreen", "Error loading product data", e);
         }

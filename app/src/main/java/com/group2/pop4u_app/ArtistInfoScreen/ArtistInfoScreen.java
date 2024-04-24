@@ -2,6 +2,7 @@ package com.group2.pop4u_app.ArtistInfoScreen;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -21,14 +22,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.badge.BadgeUtils;
 import com.group2.adapter.BigProductCardRecyclerAdapter;
 import com.group2.adapter.MiniProductCardRecyclerAdapter;
 import com.group2.api.Services.ArtistService;
 import com.group2.api.Services.ProductService;
+import com.group2.database_helper.OrderDatabaseHelper;
+import com.group2.local.LoginManagerTemp;
 import com.group2.model.Artist;
 import com.group2.model.Product;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetHorizontalRecycler;
+import com.group2.pop4u_app.LoginScreen.LoginPage;
 import com.group2.pop4u_app.ProductDetailScreen.CartActivity;
 import com.group2.pop4u_app.ProductDetailScreen.ProductDetailScreen;
 import com.group2.pop4u_app.R;
@@ -45,6 +51,9 @@ public class ArtistInfoScreen extends AppCompatActivity {
     ArrayList<Product> listArtistProduct = new ArrayList<>();
 
     BigProductCardRecyclerAdapter artistProductAdapter;
+    OrderDatabaseHelper databaseHelper;
+    BadgeDrawable badge;
+    Artist thisArtist;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         EdgeToEdge.enable(this);
@@ -72,12 +81,22 @@ public class ArtistInfoScreen extends AppCompatActivity {
             return insets;
         });
         setToolbarBehavior();
+        addCartBadge();
         setContentView(binding.getRoot());
         setUpRecycleView();
         getData();
         addEvents();
     }
 
+
+    private void addCartBadge() {
+        databaseHelper = new OrderDatabaseHelper(ArtistInfoScreen.this);
+        badge = BadgeDrawable.create(ArtistInfoScreen.this);
+        badge.setVisible(true);
+        badge.setNumber(databaseHelper.numOfRows());
+        Toolbar tbrArtistInfo = binding.tbrArtistInfo;
+        BadgeUtils.attachBadgeDrawable(badge, tbrArtistInfo, R.id.mnOpenCart);
+    }
 
     private void addEvents() {
         final int[] viewMoreState = {0};
@@ -95,6 +114,16 @@ public class ArtistInfoScreen extends AppCompatActivity {
                 }
             }
         });
+
+        artistProductAdapter.setOnClickListener(new BigProductCardRecyclerAdapter.OnClickListener() {
+            @Override
+            public void onClick(int position, Product product) {
+                Intent intent = new Intent(ArtistInfoScreen.this, ProductDetailScreen.class);
+                intent.putExtra("productCode", product.getProductCode());
+                intent.putExtra("artistCode", product.getArtistCode());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -110,17 +139,20 @@ public class ArtistInfoScreen extends AppCompatActivity {
             this.finish();
             return true;
         } else if (item.getItemId() == R.id.mnOpenCart) {
-            this.finish();
-            Intent intent = new Intent(ArtistInfoScreen.this, CartActivity.class);
-            startActivity(intent);
-            return true;
+            if (LoginManagerTemp.isLogin) {
+                Intent intent = new Intent(ArtistInfoScreen.this, CartActivity.class);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(ArtistInfoScreen.this, LoginPage.class);
+                startActivity(intent);
+            }
         } else if (item.getItemId() == R.id.mnShareProduct) {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(
                     Intent.EXTRA_TEXT,
-                    "Khám phá các sản phẩm nghệ sĩ " + binding.txtArtistName.getText().toString() +
-                            " tại Pop4u với mức giá siêu hời và ưu đãi vô hạn ngay.");
+                    "Khám phá các sản phẩm nghệ sĩ " + thisArtist.getArtistName() +
+                            " tại Pop4u với mức giá siêu hời và ưu đãi vô hạn ngay.\n\n" + thisArtist.getArtistAvatar());
             sendIntent.setType("text/plain");
             Intent shareIntent = Intent.createChooser(sendIntent, null);
             startActivity(shareIntent);
@@ -170,6 +202,7 @@ public class ArtistInfoScreen extends AppCompatActivity {
                     .fit().centerCrop()
                     .into(binding.imvArtistAvatar);
             binding.txtArtistYearDebut.append(String.valueOf(artist.getArtistYearDebut()));
+            this.thisArtist = artist;
         });
 
         futureProduct.thenAccept(products -> {
