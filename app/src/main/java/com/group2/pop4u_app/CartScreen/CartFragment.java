@@ -18,8 +18,10 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,7 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 import com.group2.adapter.BigProductCardRecyclerAdapter;
 import com.group2.adapter.CartAdapter;
+import com.group2.api.Services.ProductService;
 import com.group2.database_helper.OrderDatabaseHelper;
 import com.group2.model.CartItem;
 import com.group2.model.Product;
@@ -42,17 +45,17 @@ import com.group2.pop4u_app.databinding.FragmentCartBinding;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
 
 public class CartFragment extends Fragment {
     FragmentCartBinding binding;
     CartAdapter adapter;
-    ArrayList<CartItem> carts;
+    ArrayList<CartItem> carts, selectedCartItemList;
     BigProductCardRecyclerAdapter bigProductCardRecyclerAdapter;
     ArrayList<Product> productArrayList;
     CartItem undoCartItem;
     int undoPosition;
     OrderDatabaseHelper databaseHelper;
-
     Vibrator vibrator;
     public CartFragment() {
         // Required empty public constructor
@@ -87,7 +90,6 @@ public class CartFragment extends Fragment {
         databaseHelper = new OrderDatabaseHelper(requireContext());
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -110,22 +112,20 @@ public class CartFragment extends Fragment {
         binding.checkboxSelectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // Gọi phương thức selectAllItems của adapter để chọn hoặc bỏ chọn tất cả các mục hàng
                 adapter.selectAllItems(isChecked);
-                // Tính toán tổng thanh toán lại sau khi chọn hoặc bỏ chọn tất cả các mục hàng
+                selectedCartItemList = carts;
                 calculateTotalPrice();
             }
         });
+
         adapter.setOnTotalPriceChangeListener(new CartAdapter.OnTotalPriceChangeListener() {
             @Override
             public void onTotalPriceChange(double totalPrice) {
-                // Cập nhật tổng giá tiền khi có sự thay đổi trong Adapter
                 DecimalFormat df = new DecimalFormat("#,###");
                 String formattedTotal = df.format(totalPrice);
                 binding.totalPrice.setText(formattedTotal);
             }
             public void onAtLeastOneUnchecked() {
-                // Đặt checkbox "Chọn tất cả" là false khi có ít nhất một checkbox cá nhân không được chọn
                 binding.checkboxSelectAll.setChecked(false);
             }
         });
@@ -171,7 +171,6 @@ public class CartFragment extends Fragment {
                     float x = viewHolder.itemView.getRight() + dX / 2;
                     float y = viewHolder.itemView.getTop() + viewHolder.itemView.getHeight() / 2 + bounds.height() / 2;
 
-                    // Vẽ văn bản "Xóa" lên canvas
                     c.drawText(text, x, y, paint);
                 }
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
@@ -187,7 +186,6 @@ public class CartFragment extends Fragment {
         binding.rvCart.setHasFixedSize(true);
         binding.rvCart.addItemDecoration(itemOffsetVerticalRecycler);
         binding.rvCart.setNestedScrollingEnabled(false);
-
 
         carts = new ArrayList<>();
         try (Cursor cursor = databaseHelper.queryData("SELECT * FROM " + OrderDatabaseHelper.TABLE_NAME)) {
@@ -214,17 +212,14 @@ public class CartFragment extends Fragment {
         adapter.setOnQuantityChangeListener(new CartAdapter.OnQuantityChangeListener() {
             @Override
             public void onQuantityDecrease(int position) {
-                // Xử lý giảm số lượng sản phẩm
                 decreaseQuantity(position);
             }
             @Override
             public void onQuantityIncrease(int position) {
-                // Xử lý tăng số lượng sản phẩm
                 increaseQuantity(position);
             }
         });
     }
-    // Xử lý giảm số lượng sản phẩm
     private void decreaseQuantity(int position) {
         CartItem item = carts.get(position);
         int currentQuantity = item.getQuantity();
@@ -274,7 +269,19 @@ public class CartFragment extends Fragment {
 
         productArrayList = new ArrayList<>();
 
-//        productArrayList.add(new Product(1, "BAI HAT ABCD CUA NGHE SI A", R.drawable.img,"BLACKPINK", "Bán chạy", 350000, 0, 20, 5.5, 50, 30, 30, "ABC"));
+        CompletableFuture<ArrayList<Product>> saleProductFuture = ProductService.instance.getListProduct(1, "sale", "desc", 10, 0, "");
+        saleProductFuture.thenAccept(products -> {
+            productArrayList.clear();
+            productArrayList.addAll(products);
+            bigProductCardRecyclerAdapter.notifyDataSetChanged();
+        });
+
+        try {
+            saleProductFuture.get();
+        } catch (Exception e) {
+            Log.d("HomepageFragment", "loadData: " + e.getMessage());
+        }
+
 
         bigProductCardRecyclerAdapter = new BigProductCardRecyclerAdapter(requireActivity(), productArrayList);
         ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(getContext(), R.dimen.item_offset);
@@ -287,6 +294,9 @@ public class CartFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(requireContext(), Payment.class);
+                Bundle bundle = new Bundle();
+//                bundle.putParcelableArrayList("selectedItems", (ArrayList<? extends Parcelable>) selectedCartItemList);
+                intent.putExtra("selectedItems", bundle);
                 startActivity(intent);
             }
         });
