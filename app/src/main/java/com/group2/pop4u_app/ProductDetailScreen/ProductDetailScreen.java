@@ -2,11 +2,13 @@ package com.group2.pop4u_app.ProductDetailScreen;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.widget.TooltipCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.core.widget.NestedScrollView;
 import androidx.viewpager.widget.ViewPager;
@@ -16,6 +18,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -29,14 +33,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.badge.BadgeUtils;
+import com.group2.adapter.BigProductCardRecyclerAdapter;
 import com.group2.adapter.MiniProductCardRecyclerAdapter;
 import com.group2.adapter.ProductImgAdapter;
+import com.group2.api.Services.ArtistService;
 import com.group2.api.Services.ProductService;
 import com.google.android.material.snackbar.Snackbar;
 import com.group2.database_helper.OrderDatabaseHelper;
 import com.group2.local.LoginManagerTemp;
+import com.group2.model.Artist;
 import com.group2.model.Product;
 import com.group2.pop4u_app.HomeScreen.FavoriteListActivity;
+import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
 import com.group2.pop4u_app.LoginScreen.LoginPage;
 import com.group2.pop4u_app.MainActivity;
 import com.group2.pop4u_app.ArtistInfoScreen.ArtistInfoScreen;
@@ -47,19 +57,25 @@ import com.group2.pop4u_app.databinding.ActivityProductDetailScreenBinding;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 
 public class ProductDetailScreen extends AppCompatActivity {
 
     ActivityProductDetailScreenBinding binding;
     private ProductImgAdapter productImgAdapter;
-    MiniProductCardRecyclerAdapter artistProductAdapter;
+    BigProductCardRecyclerAdapter artistProductAdapter;
     ArrayList<Product> productArrayList = new ArrayList<>();
     Product product, thisProduct;
     Dialog optionDialog;
     int currentAmount;
     OrderDatabaseHelper databaseHelper;
+    BadgeDrawable badge;
+    Vibrator vibrator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +85,7 @@ public class ProductDetailScreen extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("");
         setContentView(binding.getRoot());
+
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.ctrProductButton, (v, windowInsets) -> {
             Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -88,9 +105,20 @@ public class ProductDetailScreen extends AppCompatActivity {
         });
 
         setUpToolbar();
+        createDB();
         setArtistCardClick();
         setUpProductImage();
         addEvents();
+        addCartBadge();
+
+    }
+
+    private void addCartBadge() {
+        badge = BadgeDrawable.create(ProductDetailScreen.this);
+        badge.setVisible(true);
+        badge.setNumber(databaseHelper.numOfRows());
+        Toolbar tbrProductDetail = binding.tbrProductDetail;
+        BadgeUtils.attachBadgeDrawable(badge, tbrProductDetail, R.id.mnOpenCart);
     }
 
     private void setUpToolbar() {
@@ -108,6 +136,7 @@ public class ProductDetailScreen extends AppCompatActivity {
     }
 
     private void addEvents() {
+        binding.txtExpectedDate.append(" " + calExpectedDate());
         binding.crdArtist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,6 +150,8 @@ public class ProductDetailScreen extends AppCompatActivity {
             public void onClick(View view) {
                 boolean favoriteState = binding.btnAddToFavProduct.isSelected();
                 binding.btnAddToFavProduct.setSelected(!favoriteState);
+                vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                vibrator.vibrate(VibrationEffect.EFFECT_HEAVY_CLICK);
                 if (favoriteState) {
                     Snackbar.make(binding.ctnSnackBar, R.string.delete_favorite_noti, Snackbar.LENGTH_LONG).setAction(R.string.action_bar_favorite_action, new View.OnClickListener() {
                         @Override
@@ -178,12 +209,11 @@ public class ProductDetailScreen extends AppCompatActivity {
                     btnAction.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
-                            createDB();
                             int rowsUpdated = databaseHelper.addMoreQuantity(product, currentAmount);
                             if (rowsUpdated == 0) {
                                 databaseHelper.insertData(product, currentAmount);
                             }
+                            badge.setNumber(databaseHelper.numOfRows());
                             Snackbar.make(binding.ctnSnackBar, "Bạn đã thêm " + currentAmount + " sản phẩm vào giỏ hàng.", Snackbar.LENGTH_LONG).setAction(R.string.view_cart, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -197,6 +227,19 @@ public class ProductDetailScreen extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private String calExpectedDate() {
+        Calendar calendar = Calendar.getInstance();
+        Date currentDate = calendar.getTime();
+
+        calendar.add(Calendar.DATE, 2);
+        Date twoDaysFromNow = calendar.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd-MM-yy", Locale.getDefault());
+        String formattedDate = sdf.format(twoDaysFromNow);
+
+        return formattedDate;
     }
 
     private void createDB() {
@@ -261,12 +304,13 @@ public class ProductDetailScreen extends AppCompatActivity {
         viewPagerProductImages.setAdapter(productImgAdapter);
         updateIndicator(0, productImgAdapter.getCount());
 
-        artistProductAdapter = new MiniProductCardRecyclerAdapter(this, productArrayList);
+        artistProductAdapter = new BigProductCardRecyclerAdapter(this, productArrayList);
         binding.rccProductRelevant.setAdapter(artistProductAdapter);
-        LinearLayoutManager layoutManagerNewProduct = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        ItemOffsetHorizontalRecycler itemOffsetHorizontalRecycler = new ItemOffsetHorizontalRecycler(this, R.dimen.item_offset);
-        binding.rccProductRelevant.addItemDecoration(itemOffsetHorizontalRecycler);
-        binding.rccProductRelevant.setLayoutManager(layoutManagerNewProduct);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(ProductDetailScreen.this, 2);
+        ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(ProductDetailScreen.this, R.dimen.item_offset);
+        binding.rccProductRelevant.addItemDecoration(itemDecoration);
+        binding.rccProductRelevant.setLayoutManager(gridLayoutManager);
+        binding.rccProductRelevant.setNestedScrollingEnabled(false);
 
         viewPagerProductImages.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -286,7 +330,7 @@ public class ProductDetailScreen extends AppCompatActivity {
             }
         });
 
-        artistProductAdapter.setOnClickListener(new MiniProductCardRecyclerAdapter.OnClickListener() {
+        artistProductAdapter.setOnClickListener(new BigProductCardRecyclerAdapter.OnClickListener() {
             @Override
             public void onClick(int position, Product product) {
                 openProduct(product);
@@ -308,8 +352,13 @@ public class ProductDetailScreen extends AppCompatActivity {
             this.finish();
             return true;
         } else if (item.getItemId() == R.id.mnOpenCart) {
-            Intent intent = new Intent(ProductDetailScreen.this, CartActivity.class);
-            startActivity(intent);
+            if (LoginManagerTemp.isLogin) {
+                Intent intent = new Intent(ProductDetailScreen.this, CartActivity.class);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(ProductDetailScreen.this, LoginPage.class);
+                startActivity(intent);
+            }
             return true;
         } else if (item.getItemId() == R.id.mnShareProduct) {
             Intent sendIntent = new Intent();
@@ -321,7 +370,8 @@ public class ProductDetailScreen extends AppCompatActivity {
                     "Xem ngay sản phẩm " + product.getProductName() +
                             " tại Pop4u với mức giá siêu hời chỉ " + String.valueOf(product.getProductPrice()) +
                             "₫, giảm đến " + String.valueOf(product.getProductSalePercent()) +
-                            "%\n\nFreeship cho đơn hàng từ 500K, giao ngay chỉ trong 2 ngày.\n\nCùng nhiều quà tặng hấp dẫn đang chờ đón bạn."
+                            "%.\n\nFreeship cho đơn hàng từ 500K, giao ngay chỉ trong 2 ngày.\n\nCùng nhiều quà tặng hấp dẫn đang chờ đón bạn.\n\n" +
+                            product.getBannerPhoto()
             );
             sendIntent.setType("text/plain");
             Intent shareIntent = Intent.createChooser(sendIntent, null);
@@ -358,7 +408,6 @@ public class ProductDetailScreen extends AppCompatActivity {
         CompletableFuture<Product> future = ProductService.instance.getProduct(productCode);
         future.thenAccept(product -> {
             // Update UI with product data
-            this.product = product;
             if (product.getProductComparingPrice() != 0) {
                 binding.txtProductDetailPrice.setText(String.format("%s đ", product.getProductComparingPrice()));
                 binding.txtProductDetailComparingPrice.setText(String.format("%s đ", product.getProductPrice()));
@@ -374,6 +423,7 @@ public class ProductDetailScreen extends AppCompatActivity {
             productImgAdapter.setImagesUrl(product.getListProductPhoto());
             updateIndicator(0, product.getListProductPhoto().size());
             productImgAdapter.notifyDataSetChanged();
+            this.product = product;
         });
 
         CompletableFuture<ArrayList<Product>> futureRelated = ProductService.instance.getListProduct(null, "related", null, null, 0, artistCode);
@@ -381,6 +431,17 @@ public class ProductDetailScreen extends AppCompatActivity {
             productArrayList.clear();
             productArrayList.addAll(productsResponse);
             artistProductAdapter.notifyDataSetChanged();
+        });
+
+        CompletableFuture<Artist> futureArtist = ArtistService.instance.getArtistDetail(artistCode);
+        futureArtist.thenAccept(artist -> {
+            binding.txtArtistYearDebut.append(" " + String.valueOf(artist.getArtistYearDebut()));
+            Picasso.get()
+                    .load(artist.getArtistAvatar())
+                    .placeholder(R.drawable.placeholder_image)
+                    .error(R.drawable.error_image)
+                    .fit().centerCrop()
+                    .into(binding.imvArtistAvatar);
         });
 
         try {
@@ -392,6 +453,7 @@ public class ProductDetailScreen extends AppCompatActivity {
         try {
             future.get();
             futureRelated.get();
+            futureArtist.get();
         } catch (Exception e) {
             Log.d("ProductDetailScreen", "Error loading product data", e);
         }

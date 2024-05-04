@@ -9,15 +9,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:id="@+id/ctnSnackBar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/layoutTotalPayment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:scrollbars="none"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/layoutTotalPayment"
@@ -48,7 +42,7 @@
                     android:id="@+id/rvCart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="28dp"
+                    android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/checkboxSelectAll" />
                 <TextView
@@ -136,5 +130,11 @@
                 android:fontFamily="@font/inter_semibold"
                 android:backgroundTint="@color/md_theme_onPrimaryFixedVariant"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/ctnSnackBar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/layoutTotalPayment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

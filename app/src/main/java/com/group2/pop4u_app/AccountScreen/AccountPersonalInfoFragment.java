@@ -90,8 +90,8 @@ public class AccountPersonalInfoFragment extends Fragment {
     private void setUserProfile() {
         binding.edtAccountPersonalInfoLastName.setText(user.getUserLastName());
         binding.edtAccountPersonalInfoFirstName.setText(user.getUserFirstName());
-        binding.txtAccountPersonalInfoBirthdate.setText(user.getBirthdate());
-        binding.txtAccountPersonalInfoEmail.setText(user.getEmail());
-        binding.txtAccountPersonalInfoPhoneNumber.setText(user.getPhone_number());
+        binding.edtAccountPersonalInfoBirthdate.setText(user.getBirthdate());
+        binding.edtAccountPersonalInfoEmail.setText(user.getEmail());
+        binding.edtPhoneNumber.setText(user.getPhone_number());
     }
 }

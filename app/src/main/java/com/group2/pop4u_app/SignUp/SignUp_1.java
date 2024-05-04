@@ -144,7 +144,7 @@ public class SignUp_1 extends AppCompatActivity {
 
     private boolean isValidPassword(String password) {
         // Check if the password contains at least 8 characters, includes at least one uppercase letter, one number, and one special character
-        String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+        String passwordPattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=*-.,/()_])(?=\\S+$).{8,}";
         return password.matches(passwordPattern);
     }
 

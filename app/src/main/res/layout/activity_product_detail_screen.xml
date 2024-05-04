@@ -324,8 +324,8 @@
                         app:layout_constraintDimensionRatio="1"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
-
                         <ImageView
+                            android:id="@+id/imvArtistAvatar"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"

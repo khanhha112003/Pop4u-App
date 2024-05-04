@@ -163,7 +163,7 @@ public class OrderDatabaseHelper extends SQLiteOpenHelper {
             return false;
         }
     }
-    private int numOfRows() {
+    public int numOfRows() {
         Cursor c = queryData("SELECT * FROM " + TABLE_NAME);
         int numOfRows = c.getCount();
         c.close();

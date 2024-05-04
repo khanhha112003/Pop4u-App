@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/inter_semibold"
-                android:text="Ra mắt năm 2012"
+                android:text="Ra mắt năm "
                 android:textColor="@color/md_theme_error"
                 android:textSize="17.5sp"
                 app:layout_constraintBottom_toBottomOf="@id/imvArtistAvatar"

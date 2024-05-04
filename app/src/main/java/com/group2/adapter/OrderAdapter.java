@@ -52,9 +52,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
 
 //        holder.o_thumb.setImageResource(order.getO_thumb());
+        holder.o_thumb.setImageResource(order.getO_thumb());
+        holder.o_artist.setText(order.getO_artist());
         holder.o_name.setText(order.getO_name());
-        holder.o_option.setText(order.getO_option());
-        holder.o_price.setText(String.valueOf(Math.round(order.getO_price())));
+        holder.o_price.setText(String.valueOf(Math.round(order.getO_price())) +  "₫");
         holder.o_quantity.setText(String.valueOf(Math.round(order.getO_quantity())));
     }
 
@@ -67,18 +68,14 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         ImageView o_thumb;
         TextView o_name;
         TextView o_artist;
-        TextView o_option;
         TextView o_price;
         TextView o_quantity;
         CheckBox checkbox;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-//            txtOrderID = itemView.findViewById(R.id.txtOrderID);
-//            rvDetail = itemView.findViewById(R.id.rvOrdered);
             o_thumb = itemView.findViewById(R.id.o_thumb);
             o_name = itemView.findViewById(R.id.o_name);
             o_artist = itemView.findViewById(R.id.o_artist);
-            o_option = itemView.findViewById(R.id.o_option);
             o_price = itemView.findViewById(R.id.o_pricebuy);
             o_quantity = itemView.findViewById(R.id.o_quantity);
             checkbox = itemView.findViewById(R.id.checkbox);

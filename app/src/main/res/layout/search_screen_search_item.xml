@@ -34,6 +34,7 @@
         android:text="@string/hello_blank_fragment"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/txt_search_item_subtitle"
+        app:layout_constraintEnd_toStartOf="@+id/img_search_item_arrow"
         app:layout_constraintStart_toEndOf="@+id/img_search_item_avatar"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -64,7 +65,6 @@
         android:src="@drawable/search_screen_arrow_insert_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/txt_search_item_text"
         app:layout_constraintTop_toTopOf="parent" />
 
 

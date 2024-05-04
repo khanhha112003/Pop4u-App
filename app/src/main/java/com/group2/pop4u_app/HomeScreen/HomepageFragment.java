@@ -128,7 +128,6 @@ public class HomepageFragment extends Fragment {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frgProductOfWeek, new ProductOfWeekFragment());
         fragmentTransaction.commit();
-
     }
     private static final long DELAY_MS = 0;
     private static final long PERIOD_MS = 5000;
@@ -280,7 +279,6 @@ public class HomepageFragment extends Fragment {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         binding.rccRecommendedProduct.setLayoutManager(gridLayoutManager);
         binding.rccRecommendedProduct.setHasFixedSize(true);
-
         rcmProductArrayList = new ArrayList<>();
         rcmProductAdapter = new BigProductCardRecyclerAdapter(requireActivity(), rcmProductArrayList);
         ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(getContext(), R.dimen.item_offset);
