@@ -14,6 +14,9 @@ import android.view.ViewGroup;
 
 import com.group2.adapter.SettingListAdapter;
 import com.group2.api.Services.UserService;
+import com.group2.database_helper.LoginDatabaseHelper;
+import com.group2.database_helper.OrderDatabaseHelper;
+import com.group2.local.LoginManagerTemp;
 import com.group2.model.SettingItem;
 import com.group2.model.User;
 import com.group2.pop4u_app.AddressScreen.PickAddress;
@@ -31,6 +34,9 @@ public class AccountFragment extends Fragment {
     SettingListAdapter settingAccountListAdapter, settingSystemListAdapter;
     ArrayList<SettingItem> settingAccountItems, settingSystemItems;
     SettingItem selectedItem;
+
+    LoginDatabaseHelper loginDatabaseHelper;
+    OrderDatabaseHelper orderDatabaseHelper;
     User user = new User("username", "email", "name", "birthdate", "phone_number");
     public AccountFragment() { }
     public static AccountFragment newInstance() {
@@ -47,6 +53,8 @@ public class AccountFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentAccountBinding.inflate(inflater, container, false);
+        loginDatabaseHelper = new LoginDatabaseHelper(requireActivity());
+        orderDatabaseHelper = new OrderDatabaseHelper(requireActivity());
         initData1();
         initData2();
         addEvents();
@@ -96,6 +104,10 @@ public class AccountFragment extends Fragment {
             future.thenAccept(result -> {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 if (result && mainActivity != null) {
+                    loginDatabaseHelper.clearAllData();
+                    orderDatabaseHelper.clearAllData();
+                    LoginManagerTemp.isLogin = false;
+                    LoginManagerTemp.token = "";
                     mainActivity.backHome();
                 } else {
                     Log.d("AccountFragment", "Logout failed");

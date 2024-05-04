@@ -38,13 +38,16 @@ import com.google.android.material.badge.BadgeUtils;
 import com.group2.adapter.BigProductCardRecyclerAdapter;
 import com.group2.adapter.MiniProductCardRecyclerAdapter;
 import com.group2.adapter.ProductImgAdapter;
+import com.group2.api.DAO.ValidationResponseDAO;
 import com.group2.api.Services.ArtistService;
+import com.group2.api.Services.OrderService;
 import com.group2.api.Services.ProductService;
 import com.google.android.material.snackbar.Snackbar;
 import com.group2.database_helper.OrderDatabaseHelper;
 import com.group2.local.LoginManagerTemp;
 import com.group2.model.Artist;
 import com.group2.model.Product;
+import com.group2.model.ResponseValidate;
 import com.group2.pop4u_app.HomeScreen.FavoriteListActivity;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
 import com.group2.pop4u_app.LoginScreen.LoginPage;
@@ -222,6 +225,20 @@ public class ProductDetailScreen extends AppCompatActivity {
                                 }
                             }).show();
                             optionDialog.dismiss();
+
+                            CompletableFuture<ResponseValidate> future = OrderService.instance.addProductToCart(product.getProductCode(), currentAmount);
+                            future.thenAccept(response -> {
+                                if (response.getStatus() == 1) {
+                                    Log.d("ProductDetailScreen", "Add product to cart successfully");
+                                } else {
+                                    Log.d("ProductDetailScreen", "Add product to cart failed");
+                                }
+                            });
+                            try {
+                                future.get();
+                            } catch (Exception e) {
+                                Log.d("ProductDetailScreen", "Error adding product to cart", e);
+                            }
                         }
                     });
 

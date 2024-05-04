@@ -163,6 +163,18 @@ public class OrderDatabaseHelper extends SQLiteOpenHelper {
             return false;
         }
     }
+
+    public boolean clearAllData() {
+        SQLiteDatabase db = getWritableDatabase();
+        try {
+            db.execSQL("DELETE FROM " + TABLE_NAME);
+            return true;
+        } catch (Exception e) {
+            Log.e("Error: ", e.toString());
+            return false;
+        }
+    }
+
     public int numOfRows() {
         Cursor c = queryData("SELECT * FROM " + TABLE_NAME);
         int numOfRows = c.getCount();

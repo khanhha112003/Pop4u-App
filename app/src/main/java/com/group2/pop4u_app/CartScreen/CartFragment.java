@@ -75,17 +75,6 @@ public class CartFragment extends Fragment {
         }
     }
 
-//    private void loadDB() {
-//        productArrayList = new ArrayList<>();
-//        Cursor cursor = db.queryData("SELECT * FROM " + db.TABLE_NAME);
-//        while (cursor.moveToNext()){
-//            productArrayList.add(new Product(cursor.getInt(0), cursor.getString(1), cursor.getDouble(2)));
-//        }
-//        cursor.close();
-//        adapter = new CartAdapter(CartFragment.this, R.layout.activity_item_cart, db);
-//        binding.rvCart.setAdapter(adapter);
-//    }
-
     private void createDB() {
         databaseHelper = new OrderDatabaseHelper(requireContext());
     }
