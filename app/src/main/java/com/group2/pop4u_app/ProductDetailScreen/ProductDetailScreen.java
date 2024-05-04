@@ -372,6 +372,7 @@ public class ProductDetailScreen extends AppCompatActivity {
             binding.txtProductDetailRate.setText(String.format("%s", product.getProductRating()));
             binding.txtProductDetailSoldAmount.append(String.format("%s", product.getProductSoldAmount()));
             productImgAdapter.setImagesUrl(product.getListProductPhoto());
+            updateIndicator(0, product.getListProductPhoto().size());
             productImgAdapter.notifyDataSetChanged();
         });
 
