@@ -224,6 +224,8 @@ public class ProductDetailScreen extends AppCompatActivity {
                             optionDialog.dismiss();
                         }
                     });
+
+
                 }
             }
         });

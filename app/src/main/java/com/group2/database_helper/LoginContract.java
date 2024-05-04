@@ -6,9 +6,8 @@ public final class LoginContract {
     private LoginContract() {}
 
     public static class LoginEntry implements BaseColumns {
-        public static final String TABLE_NAME = "login";
-        public static final String COLUMN_PASSWORD = "password";
-        public static final String COLUMN_GMAIL = "gmail";
+        public static final String TABLE_NAME = "credentials";
+        public static final String COLUMN_TOKEN = "token";
     }
 }
 
