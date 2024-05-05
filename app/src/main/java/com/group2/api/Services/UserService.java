@@ -7,6 +7,7 @@ import retrofit2.Call;
 import com.group2.api.DAO.LoginResponseDAO;
 import com.group2.api.DAO.ValidationResponseDAO;
 import com.group2.api.DAO.UserDAO;
+import com.group2.database_helper.LoginDatabaseHelper;
 import com.group2.local.LoginManagerTemp;
 import com.group2.model.ResponseValidate;
 import com.group2.model.User;
@@ -24,6 +25,32 @@ public class UserService {
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     private final IUserService userService = ServiceGenerator.createService(IUserService.class);
+
+    public CompletableFuture<Boolean> validateToken() {
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
+        executor.execute(() -> {
+            String authHeader = "Bearer " + LoginManagerTemp.token;
+            Call<ValidationResponseDAO> call = userService.validateToken(authHeader);
+            try {
+                Response<ValidationResponseDAO> response = call.execute();
+                if (response.isSuccessful()) {
+                    ValidationResponseDAO user = response.body();
+                    if (user != null && user.getStatus() == 1){
+                        System.out.println("Token is valid");
+                        future.complete(true); // Complete the future with true
+                    } else {
+                        System.out.println("Token is invalid");
+                        future.complete(false); // Complete the future with false
+                    }
+                } else {
+                    future.complete(false); // Complete the future with false in case of unsuccessful response
+                }
+            } catch (IOException e) {
+                future.completeExceptionally(e); // Complete the future exceptionally if an exception occurs
+            }
+        });
+        return future;
+    }
 
     public CompletableFuture<String> login(String email, String password) {
         CompletableFuture<String> future = new CompletableFuture<>();
@@ -182,7 +209,15 @@ public class UserService {
     public CompletableFuture<UserDAO> update(String email, String password, String name, String phone, String address) {
         CompletableFuture<UserDAO> future = new CompletableFuture<>();
         executor.execute(() -> {
-            Call<UserDAO> call = userService.update(email, password, name, phone, address);
+            HashMap<String, String> body = new HashMap<>();
+            body.put("new_email", email);
+            body.put("new_password", password);
+            body.put("new_birthdate", name);
+            body.put("new_phone_number", phone);
+            
+            String authHeader = "Bearer " + LoginManagerTemp.token;
+
+            Call<UserDAO> call = userService.update(authHeader, body);
             try {
                 Response<UserDAO> response = call.execute();
                 if (response.isSuccessful()) {

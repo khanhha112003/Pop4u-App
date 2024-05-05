@@ -13,6 +13,10 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface IUserService {
+
+    @GET("/api/auth/token_verification")
+    Call<ValidationResponseDAO> validateToken(@Header("Authorization") String authHeader);
+
     @FormUrlEncoded
     @POST("/api/auth/login")
     Call<LoginResponseDAO> login(
@@ -34,11 +38,8 @@ public interface IUserService {
 
     @POST("/api/user/update")
     Call<UserDAO> update(
-            @Query("email") String email,
-            @Query("password") String password,
-            @Query("name") String name,
-            @Query("phone") String phone,
-            @Query("address") String address
+            @Header("Authorization") String authHeader,
+            @Body HashMap<String, String> body
     );
 
     @GET ("/api/auth/user_profile")

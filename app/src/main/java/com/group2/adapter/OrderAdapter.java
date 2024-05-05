@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.group2.model.Order;
 import com.group2.pop4u_app.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -41,22 +42,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Order order = orders.get(position);
-//         holder.txtOrderID.setText("Đơn hàng: " + order.getO_id());
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(
-//        holder.rvDetail.getContext(), LinearLayoutManager.VERTICAL, false);
-//        layoutManager.setInitialPrefetchItemCount(orders.size());
-//        OrderDetailAdapter orderDetailAdapter = new OrderDetailAdapter(orders);
-//        holder.rvDetail.setLayoutManager(layoutManager);
-//        holder.rvDetail.setAdapter(orderDetailAdapter);
-//        holder.rvDetail.setRecycledViewPool(viewPool);
-
-
-//        holder.o_thumb.setImageResource(order.getO_thumb());
-        holder.o_thumb.setImageResource(order.getO_thumb());
+        Picasso.get()
+                .load(order.getO_thumb())
+                .placeholder(R.drawable.placeholder_image)
+                .error(R.drawable.error_image)
+                .into(holder.o_thumb);
         holder.o_artist.setText(order.getO_artist());
         holder.o_name.setText(order.getO_name());
-        holder.o_price.setText(String.valueOf(Math.round(order.getO_price())) +  "₫");
-        holder.o_quantity.setText(String.valueOf(Math.round(order.getO_quantity())));
+        holder.o_price.setText(String.format("%s₫", order.getO_price()));
+        holder.o_quantity.setText(String.valueOf(order.getO_quantity()));
     }
 
     @Override

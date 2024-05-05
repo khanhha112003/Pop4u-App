@@ -11,8 +11,10 @@ import android.util.Printer;
 import com.group2.model.CartItem;
 import com.group2.model.Product;
 
+import java.util.ArrayList;
+
 public class OrderDatabaseHelper extends SQLiteOpenHelper {
-    public static final String TABLE_NAME = "orders";
+    public final String TABLE_NAME = "orders";
     private static final String DATABASE_NAME = "order.sqlite";
     private static final int DATABASE_VERSION = 1;
 
@@ -50,6 +52,22 @@ public class OrderDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_PRODUCT_COMPARING_PRICE, product.getProductComparingPrice());
         contentValues.put(COLUMN_IMAGE, product.getBannerPhoto());
         contentValues.put(COLUMN_QUANTITY, quantity);
+
+        long result = database.insert(TABLE_NAME, null, contentValues);
+        database.close();
+        return result != -1;
+    }
+
+    public boolean insertDataWithCartItem(CartItem cartItem) {
+        SQLiteDatabase database = getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_PRODUCT_NAME, cartItem.getName());
+        contentValues.put(COLUMN_PRODUCT_CODE, cartItem.getProductCode());
+        contentValues.put(COLUMN_PRODUCT_PRICE, cartItem.getPrice());
+        contentValues.put(COLUMN_PRODUCT_COMPARING_PRICE, cartItem.getComparingPrice());
+        contentValues.put(COLUMN_IMAGE, cartItem.getThumb());
+        contentValues.put(COLUMN_QUANTITY, cartItem.getQuantity());
 
         long result = database.insert(TABLE_NAME, null, contentValues);
         database.close();
@@ -97,6 +115,29 @@ public class OrderDatabaseHelper extends SQLiteOpenHelper {
         statement.close();
         database.close();
         return rowsUpdated;
+    }
+
+    public ArrayList<CartItem> getAllData() {
+        ArrayList<CartItem> carts = new ArrayList<>();
+        try (Cursor cursor = queryData("SELECT * FROM " + OrderContract.OrderEntry.TABLE_NAME)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    int id = cursor.getInt(0);
+                    String name = cursor.getString(1);
+                    String code = cursor.getString(2);
+                    int price = cursor.getInt(3);
+                    int comparingPrice = cursor.getInt(4);
+                    String image = cursor.getString(5);;
+                    int quantity = cursor.getInt(6);
+
+                    carts.add(new CartItem(code, image, name, price, comparingPrice, quantity, false));
+                } while (cursor.moveToNext());
+            } else {
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return carts;
     }
 
     public boolean undoData(CartItem cartItem) {
@@ -163,6 +204,19 @@ public class OrderDatabaseHelper extends SQLiteOpenHelper {
             return false;
         }
     }
+
+    public boolean clearAllData() {
+        SQLiteDatabase db = getWritableDatabase();
+        try {
+            String query = "DELETE * FROM " + TABLE_NAME;
+            excecSql(query);
+            return true;
+        } catch (Exception e) {
+            Log.e("Error: ", e.toString());
+            return false;
+        }
+    }
+
     public int numOfRows() {
         Cursor c = queryData("SELECT * FROM " + TABLE_NAME);
         int numOfRows = c.getCount();
