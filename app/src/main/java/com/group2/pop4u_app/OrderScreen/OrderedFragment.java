@@ -6,30 +6,16 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListAdapter;
-
-import com.group2.adapter.BigProductCardRecyclerAdapter;
-import com.group2.adapter.CartAdapter;
 import com.group2.adapter.OrderDetailAdapter;
-import com.group2.model.CartItem;
 import com.group2.model.Order;
-import com.group2.model.Product;
-import com.group2.pop4u_app.R;
-import com.group2.pop4u_app.databinding.FragmentCartBinding;
-import com.group2.pop4u_app.databinding.FragmentHomepageBinding;
 import com.group2.pop4u_app.databinding.FragmentOrderedBinding;
 
 import java.util.ArrayList;
-import java.util.List;
-
-
 public class OrderedFragment extends Fragment {
 
     FragmentOrderedBinding binding;
