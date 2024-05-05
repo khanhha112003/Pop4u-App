@@ -15,6 +15,7 @@ import android.view.View;
 import com.group2.adapter.AddressAdapter;
 import com.group2.database_helper.LocationDatabaseHelper;
 import com.group2.model.Address;
+import com.group2.model.CartItem;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.ActivityPickAddressBinding;
 import java.util.ArrayList;
@@ -34,7 +35,8 @@ ActivityPickAddressBinding binding;
                 if (result.getResultCode() == Activity.RESULT_OK) {
                     Intent data = result.getData();
                     if (data == null) return;
-                    Address address = (Address) data.getSerializableExtra("address");
+                    Bundle args = data.getBundleExtra("data");
+                    Address address = (Address) args.getSerializable("address");
                     addNewAddressData(address);
                 }
             });

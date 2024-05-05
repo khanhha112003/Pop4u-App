@@ -34,6 +34,7 @@
             android:layout_height="wrap_content"
             android:hint="Họ và tên"
             android:padding="15dp"
+            android:id="@+id/edtAddAddressName"
             android:fontFamily="@font/inter"
             android:background="@drawable/shape_edit_text"
             android:layout_marginStart="10dp"
@@ -43,6 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Số điện thoại"
+            android:id="@+id/edtAddAddressPhone"
             android:fontFamily="@font/inter"
             android:background="@drawable/shape_edit_text"
             android:layout_marginStart="10dp"
@@ -58,7 +60,7 @@
             android:fontFamily="@font/inter_semibold"
             android:layout_marginBottom="10dp"/>
         <Spinner
-            android:id="@+id/tinh"
+            android:id="@+id/spnSelectCity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:spinnerMode="dropdown"
@@ -69,7 +71,7 @@
             android:padding="15dp"
             />
         <Spinner
-            android:id="@+id/huyen"
+            android:id="@+id/spnSelectDistrict"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:spinnerMode="dropdown"
@@ -80,7 +82,7 @@
             android:padding="15dp"
             />
         <Spinner
-            android:id="@+id/phuong"
+            android:id="@+id/spnSelectWard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:spinnerMode="dropdown"
@@ -115,6 +117,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:id="@+id/btnAddAddressConfirm"
         android:text="Hoàn tất"
         android:textSize="20dp"
         android:backgroundTint="@color/md_theme_onPrimaryFixedVariant" />

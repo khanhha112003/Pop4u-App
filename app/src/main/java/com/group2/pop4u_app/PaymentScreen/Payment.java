@@ -43,7 +43,10 @@ public class Payment extends AppCompatActivity {
                 if (result.getResultCode() == Activity.RESULT_OK) {
                     Intent data = result.getData();
                     if (data == null) return;
-                    Address address = (Address) data.getSerializableExtra("address");
+                    Bundle args = data.getBundleExtra("data");
+                    if (args == null) return;
+                    Address address = (Address) args.getSerializable("address");
+                    if (address == null) return;
                     choosenAddress(address);
                 }
             });
@@ -104,24 +107,13 @@ public class Payment extends AppCompatActivity {
             btnQuit = dialog.findViewById(R.id.btnQuit);
             btnContinue = dialog.findViewById(R.id.btnContinue);
             btnCloseDialog = dialog.findViewById(R.id.btnCloseDialog);
-            btnQuit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Payment.this.finish();
-                }
-            });
-            btnContinue.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                }
-            });
-            btnCloseDialog.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                }
-            });
+
+            btnQuit.setOnClickListener(view -> Payment.this.finish());
+
+            btnContinue.setOnClickListener(view -> dialog.dismiss());
+
+            btnCloseDialog.setOnClickListener(view -> dialog.dismiss());
+
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
             return true;
@@ -152,26 +144,17 @@ public class Payment extends AppCompatActivity {
             binding.totalPriceOrder.setText(formattedtotalPriceOrder);
         }
     private void addEvents(){
-        binding.btnChangeVoucher.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Payment.this, ShowVoucher.class);
-                startActivity(intent);
-            }
+        binding.btnChangeVoucher.setOnClickListener(v -> {
+            Intent intent = new Intent(Payment.this, ShowVoucher.class);
+            startActivity(intent);
         });
-        binding.btnViewMoreAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Payment.this, PickAddress.class);
-                openChooseAddressResult.launch(intent);
-            }
+        binding.btnViewMoreAddress.setOnClickListener(v -> {
+            Intent intent = new Intent(Payment.this, PickAddress.class);
+            openChooseAddressResult.launch(intent);
         });
-        binding.btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Payment.this, PaymentSuccess.class);
-                startActivity(intent);
-            }
+        binding.btnPlaceOrder.setOnClickListener(v -> {
+            Intent intent = new Intent(Payment.this, PaymentSuccess.class);
+            startActivity(intent);
         });
     }
 
