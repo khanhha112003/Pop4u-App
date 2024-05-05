@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -31,10 +32,13 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 import com.group2.adapter.BigProductCardRecyclerAdapter;
 import com.group2.adapter.CartAdapter;
+import com.group2.api.Services.OrderService;
 import com.group2.api.Services.ProductService;
+import com.group2.database_helper.OrderContract;
 import com.group2.database_helper.OrderDatabaseHelper;
 import com.group2.model.CartItem;
 import com.group2.model.Product;
+import com.group2.model.ResponseValidate;
 import com.group2.pop4u_app.HomeScreen.FavoriteListActivity;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetVerticalRecycler;
@@ -43,13 +47,16 @@ import com.group2.pop4u_app.ProductDetailScreen.ProductDetailScreen;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentCartBinding;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 public class CartFragment extends Fragment {
     FragmentCartBinding binding;
     CartAdapter adapter;
+    CompletableFuture<ArrayList<CartItem>> cartFuture;
     ArrayList<CartItem> carts, selectedCartItemList;
     BigProductCardRecyclerAdapter bigProductCardRecyclerAdapter;
     ArrayList<Product> productArrayList;
@@ -71,12 +78,6 @@ public class CartFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
-    }
-
-    private void createDB() {
-        databaseHelper = new OrderDatabaseHelper(requireContext());
     }
 
     @Override
@@ -84,12 +85,46 @@ public class CartFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentCartBinding.inflate(inflater, container, false);
-        createDB();
+        initDbAndCartFuture();
         return binding.getRoot();
     }
 
+    private void initDbAndCartFuture() {
+        databaseHelper = new OrderDatabaseHelper(requireContext());
+        databaseHelper.clearAllData();
+        carts = new ArrayList<>();
+        cartFuture = OrderService.instance.getCart();
+        cartFuture.thenAccept(cartItems -> {
+            if (cartItems != null) {
+                carts.clear();
+                carts.addAll(cartItems);
+            }
+            for (CartItem item : carts) {
+                databaseHelper.insertDataWithCartItem(item);
+            }
+            binding.rvCart.swapAdapter(adapter, true);
+        });
+    }
 
+    private void loadRemoteDbAndSyncData () {
+        if (networkIsConnected()) {
+            try {
+                cartFuture.get();
+            } catch (Exception e) {
+                Log.d("CartFragment", "onCreateView: " + e.getMessage());
+            }
+        } else {
+            carts.clear();
+            carts = databaseHelper.getAllData();
+            binding.rvCart.swapAdapter(adapter, true);
+        }
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadRemoteDbAndSyncData();
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -103,7 +138,7 @@ public class CartFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 adapter.selectAllItems(isChecked);
                 selectedCartItemList = carts;
-                calculateTotalPrice();
+                calculateAllProductPrice(isChecked);
             }
         });
 
@@ -175,27 +210,6 @@ public class CartFragment extends Fragment {
         binding.rvCart.setHasFixedSize(true);
         binding.rvCart.addItemDecoration(itemOffsetVerticalRecycler);
         binding.rvCart.setNestedScrollingEnabled(false);
-
-        carts = new ArrayList<>();
-        try (Cursor cursor = databaseHelper.queryData("SELECT * FROM " + OrderDatabaseHelper.TABLE_NAME)) {
-            if (cursor != null && cursor.moveToFirst()) {
-                do {
-                    int id = cursor.getInt(0);
-                    String name = cursor.getString(1);
-                    String code = cursor.getString(2);
-                    int price = cursor.getInt(3);
-                    int comparingPrice = cursor.getInt(4);
-                    String image = cursor.getString(5);;
-                    int quantity = cursor.getInt(6);
-
-                    carts.add(new CartItem(code, image, name, price, comparingPrice, quantity, false));
-                } while (cursor.moveToNext());
-            } else {
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         adapter = new CartAdapter(getContext(), carts);
         binding.rvCart.setAdapter(adapter);
         adapter.setOnQuantityChangeListener(new CartAdapter.OnQuantityChangeListener() {
@@ -217,9 +231,30 @@ public class CartFragment extends Fragment {
             item.setQuantity(currentQuantity);
             adapter.notifyItemChanged(position);
             databaseHelper.updateData(item.getProductCode(), currentQuantity);
-            calculateTotalPrice();
+        } else {
+            // TODO: Xử lý khi số lượng sản phẩm bằng 1
+            databaseHelper.deleteData(carts.get(position).getProductCode());
+            carts.remove(position);
+            binding.rvCart.swapAdapter(adapter, true);
+        }
+        calculateTotalPrice(item.isChecked());
+        CompletableFuture<ResponseValidate> future = OrderService.instance.deteleUpdateItem(item.getProductCode(), 1);
+        future.thenAccept(responseValidate -> {
+            if (responseValidate != null) {
+                if (responseValidate.getStatus() == 1) {
+                    Log.d("CartFragment", "onQuantityDecrease: " + responseValidate.getMessage());
+                } else {
+                    Log.d("CartFragment", "onQuantityDecrease: " + responseValidate.getMessage());
+                }
+            }
+        });
+        try {
+            future.get();
+        } catch (Exception e) {
+            Log.d("CartFragment", "onQuantityDecrease: " + e.getMessage());
         }
     }
+
     private void increaseQuantity(int position) {
         CartItem item = carts.get(position);
         int currentQuantity =item.getQuantity();
@@ -227,19 +262,64 @@ public class CartFragment extends Fragment {
         item.setQuantity(currentQuantity);
         adapter.notifyItemChanged(position);
         databaseHelper.updateData(item.getProductCode(), currentQuantity);
-        calculateTotalPrice();
+        calculateTotalPrice(item.isChecked());
+        CompletableFuture<ResponseValidate> future = OrderService.instance.addProductToCart(item.getProductCode(), 1);
+        future.thenAccept(responseValidate -> {
+            if (responseValidate != null) {
+                if (responseValidate.getStatus() == 1) {
+                    Log.d("CartFragment", "onQuantityDecrease: " + responseValidate.getMessage());
+                } else {
+                    Log.d("CartFragment", "onQuantityDecrease: " + responseValidate.getMessage());
+                }
+            }
+        });
+        try {
+            future.get();
+        } catch (Exception e) {
+            Log.d("CartFragment", "onQuantityDecrease: " + e.getMessage());
+        }
     }
     private void deleteOrder(int position) {
         databaseHelper.deleteData(carts.get(position).getProductCode());
-        undoCartItem = carts.get(position);
-        carts.remove(position);
+        undoCartItem = carts.remove(position);
         adapter.notifyItemRemoved(position);
-        calculateTotalPrice();
+        calculateTotalPrice(undoCartItem.isChecked());
+        CompletableFuture<ResponseValidate> future = OrderService.instance.deteleUpdateItem(undoCartItem.getProductCode(), undoCartItem.getQuantity());
+        future.thenAccept(responseValidate -> {
+            if (responseValidate != null) {
+                if (responseValidate.getStatus() == 1) {
+                    Log.d("CartFragment", "deleteOrder: " + responseValidate.getMessage());
+                } else {
+                    Log.d("CartFragment", "deleteOrder: " + responseValidate.getMessage());
+                }
+            }
+        });
+        try {
+            future.get();
+        } catch (Exception e) {
+            Log.d("CartFragment", "deleteOrder: " + e.getMessage());
+        }
     }
-    private void calculateTotalPrice() {
+    private void calculateTotalPrice(Boolean isCurrentItemChecked) {
+        if (isCurrentItemChecked) {
+            double totalPrice = 0;
+            for (CartItem item : carts) {
+                if (item.isChecked()) {
+                    totalPrice += item.getPrice() * item.getQuantity();
+                }
+            }
+            DecimalFormat decimalFormat = new DecimalFormat("#,###");
+            String formattedTotalPrice = decimalFormat.format(totalPrice);
+
+            // Hiển thị tổng thanh toán đã được định dạng trong TextView totalPrice
+            binding.totalPrice.setText(formattedTotalPrice);
+        }
+    }
+
+    private void calculateAllProductPrice(Boolean isCheckedAll) {
         double totalPrice = 0;
-        for (CartItem item : carts) {
-            if (item.isChecked()) {
+        if (isCheckedAll) {
+            for (CartItem item : carts) {
                 totalPrice += item.getPrice() * item.getQuantity();
             }
         }
@@ -249,6 +329,7 @@ public class CartFragment extends Fragment {
         // Hiển thị tổng thanh toán đã được định dạng trong TextView totalPrice
         binding.totalPrice.setText(formattedTotalPrice);
     }
+
     private void loadRecommendProduct() {
         productArrayList = new ArrayList<>();
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
@@ -285,9 +366,24 @@ public class CartFragment extends Fragment {
                 Intent intent = new Intent(requireContext(), Payment.class);
                 Bundle bundle = new Bundle();
 //                bundle.putParcelableArrayList("selectedItems", (ArrayList<? extends Parcelable>) selectedCartItemList);
+                if (selectedCartItemList == null) {
+                    selectedCartItemList = new ArrayList<>();
+                }
+                selectedCartItemList.clear();
+                for (CartItem item : carts) {
+                    if (item.isChecked()) {
+                        selectedCartItemList.add(item);
+                    }
+                }
+                bundle.putSerializable("listSelectedItem",(Serializable) selectedCartItemList);
                 intent.putExtra("selectedItems", bundle);
                 startActivity(intent);
             }
         });
+    }
+
+    private boolean networkIsConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
     }
 }

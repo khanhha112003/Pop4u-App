@@ -38,13 +38,6 @@ public interface IOrderService {
             @Body HashMap<String, Object> body
     );
 
-    @DELETE("/api/order/delete_item_in_cart")
-    Call<ValidationResponseDAO> deteleUpdateItem(
-            @Header("Authorization") String authHeader,
-            @Query("product_name") String product_name,
-            @Query("quantity") Integer quantity
-    );
-
     @DELETE("/api/order/delete_all_item_in_cart")
     Call<ValidationResponseDAO> dropCart(
             @Header("Authorization") String authHeader

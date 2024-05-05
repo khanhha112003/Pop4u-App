@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.group2.adapter.OrderAdapter;
+import com.group2.model.CartItem;
 import com.group2.model.Order;
 import com.group2.pop4u_app.AddressScreen.PickAddress;
 import com.group2.pop4u_app.R;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
 public class Payment extends AppCompatActivity {
     ActivityPaymentBinding binding;
     OrderAdapter adapter;
-    ArrayList<Order> orders;
+    ArrayList<Order> orders = new ArrayList<>() ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +42,17 @@ public class Payment extends AppCompatActivity {
         customAndLoadData();
         calculatetotalPriceOrder();
         addEvents();
+        getIntentData();
+    }
 
+    private void getIntentData() {
+        Intent intent = getIntent();
+        Bundle args = intent.getBundleExtra("selectedItems");
+        ArrayList<CartItem> object = (ArrayList<CartItem>) args.getSerializable("listSelectedItem");
+        for (int i = 0; i < object.size(); i++) {
+            CartItem cartItem = object.get(i);
+            orders.add(new Order(cartItem.getProductCode(), cartItem.getThumb(), cartItem.getName(), "", cartItem.getPrice(), cartItem.getQuantity()));
+        }
     }
 
     @Override
@@ -91,13 +102,6 @@ public class Payment extends AppCompatActivity {
                 (this, LinearLayoutManager.VERTICAL, false);
         binding.rvOrder.setLayoutManager(layoutManager);
         binding.rvOrder.setHasFixedSize(true);
-
-        orders = new ArrayList<>();
-        orders.add(new Order("101", R.drawable.img_5, "4th Album 'Face the Sun' (CARAT Ver.) (Random)", "SEVENTEEN", 350000, 3));
-        orders.add(new Order("102", R.drawable.img_3, "Official Light Stick Special Editio", "BTS", 849000, 1));
-        orders.add(new Order("103", R.drawable.img_4, "TXT Official Light Stick", "TXT", 500000, 2));
-
-
         adapter = new OrderAdapter(getApplicationContext(), orders);
         binding.rvOrder.setNestedScrollingEnabled(false);
         binding.rvOrder.setAdapter(adapter);

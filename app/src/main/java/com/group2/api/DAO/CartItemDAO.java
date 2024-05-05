@@ -23,6 +23,6 @@ public class CartItemDAO {
     private String productNane;
 
     public CartItem asCartItems() {
-        return new CartItem(productCode, productImage, productNane, price, comparingPrice, quantity, true);
+        return new CartItem(productCode, productImage, productNane, price, comparingPrice, quantity, false);
     }
 }

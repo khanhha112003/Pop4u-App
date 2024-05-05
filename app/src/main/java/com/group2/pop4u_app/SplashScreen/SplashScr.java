@@ -40,6 +40,8 @@ public class SplashScr extends AppCompatActivity {
                 finish();
             } else {
                 loginDatabaseHelper.clearAllData();
+                LoginManagerTemp.token = "";
+                LoginManagerTemp.isLogin = false;
                 this.goToOnBoarding();
             }
         });

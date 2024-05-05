@@ -1,8 +1,8 @@
 package com.group2.model;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 
-public class CartItem {
+public class CartItem implements Serializable {
     String productCode;
     String thumb;
     String name;
