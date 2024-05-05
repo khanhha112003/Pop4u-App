@@ -1,6 +1,8 @@
 package com.group2.model;
 
-public class Address {
+import java.io.Serializable;
+
+public class Address implements Serializable {
     String cus_name;
     String cus_phone;
     String cus_address;

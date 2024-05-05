@@ -1,9 +1,12 @@
 package com.group2.pop4u_app.PaymentScreen;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,6 +20,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.group2.adapter.OrderAdapter;
+import com.group2.database_helper.LocationDatabaseHelper;
+import com.group2.model.Address;
 import com.group2.model.CartItem;
 import com.group2.model.Order;
 import com.group2.pop4u_app.AddressScreen.PickAddress;
@@ -31,6 +36,19 @@ public class Payment extends AppCompatActivity {
     ActivityPaymentBinding binding;
     OrderAdapter adapter;
     ArrayList<Order> orders = new ArrayList<>() ;
+
+    ActivityResultLauncher<Intent> openChooseAddressResult = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Intent data = result.getData();
+                    if (data == null) return;
+                    Address address = (Address) data.getSerializableExtra("address");
+                    choosenAddress(address);
+                }
+            });
+
+    LocationDatabaseHelper locationDatabaseHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +61,20 @@ public class Payment extends AppCompatActivity {
         calculatetotalPriceOrder();
         addEvents();
         getIntentData();
+        initLocation();
+    }
+    private void initLocation() {
+        locationDatabaseHelper = new LocationDatabaseHelper(this);
+        if (locationDatabaseHelper.numOfRows() == 0) {
+            binding.txtCustomerName.setText("Chưa có thông tin");
+            binding.txtCustomerPhone.setText("");
+            binding.txtCustomerAddress.setText("Vui lòng lựa chọn địa chỉ của bạn");
+        } else {
+            Address displayAddress = locationDatabaseHelper.getAllAddress().get(0);
+            binding.txtCustomerName.setText(displayAddress.getCus_name());
+            binding.txtCustomerPhone.setText(displayAddress.getCus_phone());
+            binding.txtCustomerAddress.setText(displayAddress.getCus_address());
+        }
     }
 
     private void getIntentData() {
@@ -131,7 +163,7 @@ public class Payment extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Payment.this, PickAddress.class);
-                startActivity(intent);
+                openChooseAddressResult.launch(intent);
             }
         });
         binding.btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
@@ -142,4 +174,11 @@ public class Payment extends AppCompatActivity {
             }
         });
     }
+
+    private void choosenAddress(Address address) {
+        binding.txtCustomerName.setText(address.getCus_name());
+        binding.txtCustomerPhone.setText(address.getCus_phone());
+        binding.txtCustomerAddress.setText(address.getCus_address());
     }
+
+}

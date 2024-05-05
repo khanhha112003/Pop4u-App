@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
-import android.util.Printer;
 
 import com.group2.model.CartItem;
 import com.group2.model.Product;
@@ -155,11 +154,6 @@ public class OrderDatabaseHelper extends SQLiteOpenHelper {
         database.close();
         return result != -1;
     }
-    public void deleteAll() {
-        SQLiteDatabase database = getWritableDatabase();
-        database.execSQL("DELETE FROM " + TABLE_NAME);
-        database.close();
-    }
 
     public int deleteData(String cartItemCode) {
         SQLiteDatabase database = getWritableDatabase();
@@ -193,7 +187,7 @@ public class OrderDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         return  db.rawQuery(sql, null);
     }
-    public boolean excecSql(String sql){
+    public boolean execSql(String sql){
         SQLiteDatabase db = getWritableDatabase();
         try {
             db.execSQL(sql);
@@ -209,7 +203,7 @@ public class OrderDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         try {
             String query = "DELETE * FROM " + TABLE_NAME;
-            excecSql(query);
+            execSql(query);
             return true;
         } catch (Exception e) {
             Log.e("Error: ", e.toString());
@@ -223,14 +217,4 @@ public class OrderDatabaseHelper extends SQLiteOpenHelper {
         c.close();
         return numOfRows;
     }
-
-    public void createSampleData() {
-        if (numOfRows() == 0){
-            excecSql("INSERT INTO " + TABLE_NAME + " VALUES(null, 'Aespa – Savage (Photobook Version)', 'PAE1001', 214999, 1)");
-            excecSql("INSERT INTO " + TABLE_NAME + " VALUES(null, 'EXO 7th Album [EXIST] (Photo Book Ver.)', 'PEX1001', 214999, 2)");
-            excecSql("INSERT INTO " + TABLE_NAME + " VALUES(null, 'ALBUM STRAY KIDS - NOEASY', 'ASK1001', 214999, 3)");
-        }
-    }
-
-
 }
