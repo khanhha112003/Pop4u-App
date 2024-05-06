@@ -38,6 +38,7 @@ ActivityPickAddressBinding binding;
                     Bundle args = data.getBundleExtra("data");
                     Address address = (Address) args.getSerializable("address");
                     addNewAddressData(address);
+                    runOnUiThread(() -> adapter.notifyDataSetChanged());
                 }
             });
 

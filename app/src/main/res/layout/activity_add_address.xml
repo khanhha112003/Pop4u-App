@@ -62,7 +62,7 @@
         <Spinner
             android:id="@+id/spnSelectCity"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:spinnerMode="dropdown"
             android:background="@drawable/shape_edit_text"
             android:layout_marginStart="10dp"
@@ -73,7 +73,7 @@
         <Spinner
             android:id="@+id/spnSelectDistrict"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:spinnerMode="dropdown"
             android:background="@drawable/shape_edit_text"
             android:layout_marginStart="10dp"
@@ -84,7 +84,7 @@
         <Spinner
             android:id="@+id/spnSelectWard"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:spinnerMode="dropdown"
             android:background="@drawable/shape_edit_text"
             android:layout_marginStart="10dp"
