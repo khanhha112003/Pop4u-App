@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
     <RadioButton
+        android:id="@+id/rbAddressCheckbox"
         android:layout_width="50dp"
         android:layout_height="50dp"/>
     </RadioGroup>

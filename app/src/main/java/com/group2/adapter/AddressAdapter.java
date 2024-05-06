@@ -6,9 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.group2.model.Address;
+import com.group2.model.CartItem;
 import com.group2.pop4u_app.R;
 
 
@@ -19,7 +23,13 @@ public class AddressAdapter extends BaseAdapter {
     int item_list;
     List<Address> addressList;
 
-    //Constructor
+    int selectedPosition = 0;
+
+    public void setSelectedPosition(int selectedPosition) {
+        this.selectedPosition = selectedPosition;
+    }
+
+    public AddressAdapter.OnTapSelectAddressListener onTapSelectAddressListener;
 
 
     public AddressAdapter(Activity context, int item_list, List<Address> addressList) {
@@ -56,8 +66,9 @@ public class AddressAdapter extends BaseAdapter {
             holder.cus_name = view.findViewById(R.id.cus_name);
             holder.cus_phone = view.findViewById(R.id.cus_phone);
             holder.cus_address = view.findViewById(R.id.cus_address);
+            holder.radioButton = view.findViewById(R.id.rbAddressCheckbox);
             view.setTag(holder);
-        }else{
+        } else {
             holder = (AddressAdapter.ViewHolder)  view.getTag();
 
         }
@@ -66,11 +77,30 @@ public class AddressAdapter extends BaseAdapter {
         holder.cus_name.setText(b.getCus_name());
         holder.cus_phone.setText(b.getCus_phone());
         holder.cus_address.setText(b.getCus_address());
+        holder.radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                onTapSelectAddressListener.onTapCheckAddress(i, b);
+                setSelectedPosition(i);
+            }
+        });
+
+        if (selectedPosition == i) {
+            holder.radioButton.setChecked(true);
+        } else {
+            holder.radioButton.setChecked(false);
+        }
 
         return view;
     }
     public static class  ViewHolder{
         TextView cus_name, cus_phone, cus_address;
+
+        RadioButton radioButton;
+    }
+
+    public interface OnTapSelectAddressListener {
+        void onTapCheckAddress(int position, Address address);
     }
 }
 

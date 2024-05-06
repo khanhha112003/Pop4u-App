@@ -106,7 +106,7 @@ public class OrderService {
             quantity.add(String.valueOf(listItem.get(i).getQuantity()));
         }
         body.put("product_code", product_code);
-        body.put("quantity", quantity);
+        body.put("items_per_product", quantity);
         String authHeader = "Bearer " + LoginManagerTemp.token;
         executor.execute(() -> {
             Call<ValidationResponseDAO> call = apiService.createOrder(authHeader, body);

@@ -20,23 +20,36 @@
         app:menu="@menu/plain_action_bar"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <ListView
             android:id="@+id/lvAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </RadioGroup>
-    <Button
-        android:id="@+id/btnAdd"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:text="Thêm địa chỉ mới"
-        android:textColor="@color/md_theme_background"
-        android:backgroundTint="@color/md_theme_onPrimaryFixedVariant"
-        android:layout_gravity="center"
-        android:layout_margin="20dp"
-        android:fontFamily="@font/inter"
-        android:textSize="15sp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnConfirmAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="Xác nhận"
+            android:textColor="@color/md_theme_background"
+            android:backgroundTint="@color/md_theme_onPrimaryFixedVariant"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:fontFamily="@font/inter"
+            android:textSize="15sp"/>
+        <Button
+            android:id="@+id/btnAddAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="Thêm địa chỉ"
+            android:textColor="@color/md_theme_background"
+            android:backgroundTint="@color/md_theme_onPrimaryFixedVariant"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:fontFamily="@font/inter"
+            android:textSize="15sp"/>
+    </LinearLayout>
 </LinearLayout>

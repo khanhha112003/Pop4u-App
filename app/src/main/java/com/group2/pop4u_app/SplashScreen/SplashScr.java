@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.group2.api.Services.UserService;
 import com.group2.database_helper.LoginDatabaseHelper;
+import com.group2.local.AddressHelper;
 import com.group2.local.LoginManagerTemp;
 import com.group2.model.User;
 import com.group2.pop4u_app.MainActivity;
@@ -30,7 +31,7 @@ public class SplashScr extends AppCompatActivity {
         setContentView(R.layout.activity_splash_scr);
 
         loginDatabaseHelper = new LoginDatabaseHelper(this);
-
+        AddressHelper.instance.init();
         Boolean syncValue = loginDatabaseHelper.syncToken();
         CompletableFuture<Boolean> future = UserService.instance.validateToken();
         future.thenAccept(result -> {
