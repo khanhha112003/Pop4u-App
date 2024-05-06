@@ -70,10 +70,13 @@ public class AddAddress extends AppCompatActivity implements AdapterView.OnItemS
 
     private void setAddAddressHandler() {
         binding.btnAddAddressConfirm.setOnClickListener(v -> {
+            // TODO: bat dien du thong tin, check o day
             String name = binding.edtAddAddressName.getText().toString();
             String phone = binding.edtAddAddressPhone.getText().toString();
             String address = binding.spnSelectWard.getSelectedItem().toString()
+                            + " "
                             + binding.spnSelectDistrict.getSelectedItem().toString()
+                            + " "
                             + binding.spnSelectCity.getSelectedItem().toString();
             Address addressData = new Address(name, phone, address);
             Bundle bundle = new Bundle();

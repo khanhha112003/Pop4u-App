@@ -18,12 +18,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.group2.adapter.OrderAdapter;
+import com.group2.api.DAO.ValidationResponseDAO;
+import com.group2.api.Services.OrderService;
 import com.group2.database_helper.LocationDatabaseHelper;
 import com.group2.model.Address;
 import com.group2.model.CartItem;
 import com.group2.model.Order;
+import com.group2.model.ResponseValidate;
+import com.group2.pop4u_app.AddressScreen.AddAddress;
 import com.group2.pop4u_app.AddressScreen.PickAddress;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.VoucherScreen.ShowVoucher;
@@ -31,11 +36,15 @@ import com.group2.pop4u_app.databinding.ActivityPaymentBinding;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
 
 public class Payment extends AppCompatActivity {
     ActivityPaymentBinding binding;
     OrderAdapter adapter;
     ArrayList<Order> orders = new ArrayList<>() ;
+    ArrayList<CartItem> listCheckedItem = new ArrayList<>() ;
+
+    Address currentAddress;
 
     ActivityResultLauncher<Intent> openChooseAddressResult = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -73,19 +82,20 @@ public class Payment extends AppCompatActivity {
             binding.txtCustomerPhone.setText("");
             binding.txtCustomerAddress.setText("Vui lòng lựa chọn địa chỉ của bạn");
         } else {
-            Address displayAddress = locationDatabaseHelper.getAllAddress().get(0);
-            binding.txtCustomerName.setText(displayAddress.getCus_name());
-            binding.txtCustomerPhone.setText(displayAddress.getCus_phone());
-            binding.txtCustomerAddress.setText(displayAddress.getCus_address());
+            currentAddress = locationDatabaseHelper.getAllAddress().get(0);
+            binding.txtCustomerName.setText(currentAddress.getCus_name());
+            binding.txtCustomerPhone.setText(currentAddress.getCus_phone());
+            binding.txtCustomerAddress.setText(currentAddress.getCus_address());
         }
     }
 
     private void getIntentData() {
         Intent intent = getIntent();
         Bundle args = intent.getBundleExtra("selectedItems");
-        ArrayList<CartItem> object = (ArrayList<CartItem>) args.getSerializable("listSelectedItem");
-        for (int i = 0; i < object.size(); i++) {
-            CartItem cartItem = object.get(i);
+        listCheckedItem = (ArrayList<CartItem>) args.getSerializable("listSelectedItem");
+
+        for (int i = 0; i < listCheckedItem.size(); i++) {
+            CartItem cartItem = listCheckedItem.get(i);
             orders.add(new Order(cartItem.getProductCode(), cartItem.getThumb(), cartItem.getName(), "", cartItem.getPrice(), cartItem.getQuantity()));
         }
     }
@@ -131,18 +141,18 @@ public class Payment extends AppCompatActivity {
         binding.rvOrder.setAdapter(adapter);
     }
 
-        private void calculatetotalPriceOrder() {
-            double totalPriceOrder = 0;
-            for (Order item : orders) {
-                totalPriceOrder += item.getO_price() * item.getO_quantity();
-            }
-
-            DecimalFormat decimalFormat = new DecimalFormat("#,###");
-            String formattedtotalPriceOrder = decimalFormat.format(totalPriceOrder);
-
-            // Hiển thị tổng thanh toán đã được định dạng trong TextView totalPrice
-            binding.totalPriceOrder.setText(formattedtotalPriceOrder);
+    private void calculatetotalPriceOrder() {
+        double totalPriceOrder = 0;
+        for (Order item : orders) {
+            totalPriceOrder += item.getO_price() * item.getO_quantity();
         }
+
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+        String formattedtotalPriceOrder = decimalFormat.format(totalPriceOrder);
+
+        // Hiển thị tổng thanh toán đã được định dạng trong TextView totalPrice
+        binding.totalPriceOrder.setText(formattedtotalPriceOrder);
+    }
     private void addEvents(){
         binding.btnChangeVoucher.setOnClickListener(v -> {
             Intent intent = new Intent(Payment.this, ShowVoucher.class);
@@ -153,8 +163,32 @@ public class Payment extends AppCompatActivity {
             openChooseAddressResult.launch(intent);
         });
         binding.btnPlaceOrder.setOnClickListener(v -> {
-            Intent intent = new Intent(Payment.this, PaymentSuccess.class);
-            startActivity(intent);
+            if (currentAddress == null) {
+                return;
+            }
+            CompletableFuture<ResponseValidate> future = OrderService
+                    .instance
+                    .createOrder(
+                            currentAddress.getCus_address(),
+                            currentAddress.getCus_phone(),
+                            getSelectedPaymentMethod(),
+                            (String) binding.shipfee.getText(),
+                            listCheckedItem
+                    );
+            future.thenAccept(response -> {
+                if (response.getStatus() == 1) {
+                    Intent intent = new Intent(Payment.this, PaymentSuccess.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(Payment.this, response.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            try {
+                future.get();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
     }
 
@@ -162,6 +196,17 @@ public class Payment extends AppCompatActivity {
         binding.txtCustomerName.setText(address.getCus_name());
         binding.txtCustomerPhone.setText(address.getCus_phone());
         binding.txtCustomerAddress.setText(address.getCus_address());
+    }
+
+    private String getSelectedPaymentMethod() {
+        if (binding.rdbCOD.isChecked()) {
+            return "cash";
+        } else if (binding.rdbMomo.isChecked()) {
+            return "momo";
+        } else if (binding.rdbNapas.isChecked()) {
+            return "visa";
+        }
+        return "";
     }
 
 }
