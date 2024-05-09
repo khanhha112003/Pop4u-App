@@ -24,6 +24,7 @@ import com.group2.adapter.OrderAdapter;
 import com.group2.api.DAO.ValidationResponseDAO;
 import com.group2.api.Services.OrderService;
 import com.group2.database_helper.LocationDatabaseHelper;
+import com.group2.database_helper.OrderDatabaseHelper;
 import com.group2.model.Address;
 import com.group2.model.CartItem;
 import com.group2.model.Order;
@@ -61,6 +62,8 @@ public class Payment extends AppCompatActivity {
             });
 
     LocationDatabaseHelper locationDatabaseHelper;
+
+    OrderDatabaseHelper orderDatabaseHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +77,7 @@ public class Payment extends AppCompatActivity {
         addEvents();
         getIntentData();
         initLocation();
+        initDatabase();
     }
     private void initLocation() {
         locationDatabaseHelper = new LocationDatabaseHelper(this);
@@ -87,6 +91,10 @@ public class Payment extends AppCompatActivity {
             binding.txtCustomerPhone.setText(currentAddress.getCus_phone());
             binding.txtCustomerAddress.setText(currentAddress.getCus_address());
         }
+    }
+
+    private void initDatabase() {
+        orderDatabaseHelper = new OrderDatabaseHelper(this);
     }
 
     private void getIntentData() {
@@ -177,6 +185,7 @@ public class Payment extends AppCompatActivity {
                     );
             future.thenAccept(response -> {
                 if (response.getStatus() == 1) {
+                    orderDatabaseHelper.deleteListData(listCheckedItem);
                     Intent intent = new Intent(Payment.this, PaymentSuccess.class);
                     startActivity(intent);
                     finish();

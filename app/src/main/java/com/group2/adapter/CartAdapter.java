@@ -71,16 +71,24 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 item.setChecked(isChecked);
-                calculateTotalPrice();
-                boolean atLeastOneUnchecked = false;
-                for (CartItem cartItem : carts) {
-                    if (!cartItem.isChecked()) {
-                        atLeastOneUnchecked = true;
-                        break;
+                if (isChecked == false) {
+                    for (CartItem cartItem : carts) {
+                        if (cartItem.isChecked() && totalPriceChangeListener != null) {
+                            totalPriceChangeListener.onAtLeastOneUnchecked();
+                            calculateTotalPrice();
+                            return;
+                        }
                     }
-                }
-                if (atLeastOneUnchecked && totalPriceChangeListener != null) {
-                    totalPriceChangeListener.onAtLeastOneUnchecked();
+                    totalPriceChangeListener.allIsChecked(false);
+                } else {
+                    for (CartItem cartItem : carts) {
+                        if (!cartItem.isChecked() && totalPriceChangeListener != null) {
+                            totalPriceChangeListener.onAtLeastOneUnchecked();
+                            calculateTotalPrice();
+                            return;
+                        }
+                    }
+                    totalPriceChangeListener.allIsChecked(true);
                 }
             }
         });
@@ -128,10 +136,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public void setOnTotalPriceChangeListener(OnTotalPriceChangeListener listener) {
         this.totalPriceChangeListener = listener;
     }
-    public void selectAllItems(boolean isSelected) {
+    public void selectAllItems(boolean isChecked) {
         for (CartItem item : carts) {
-            item.setChecked(isSelected);
+            if (item.isChecked() != isChecked) {
+                item.setChecked(isChecked);
+            }
         }
+        calculateTotalPrice();
         notifyDataSetChanged();
     }
     @Override
@@ -183,6 +194,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public interface OnTotalPriceChangeListener {
         void onTotalPriceChange(double totalPrice);
         void onAtLeastOneUnchecked();
+        void allIsChecked(boolean isChecked);
     }
     public interface OnQuantityChangeListener {
         void onQuantityDecrease(int position);

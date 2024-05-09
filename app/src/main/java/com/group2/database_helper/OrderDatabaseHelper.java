@@ -201,14 +201,9 @@ public class OrderDatabaseHelper extends SQLiteOpenHelper {
 
     public boolean clearAllData() {
         SQLiteDatabase db = getWritableDatabase();
-        try {
-            String query = "DELETE * FROM " + TABLE_NAME;
-            execSql(query);
-            return true;
-        } catch (Exception e) {
-            Log.e("Error: ", e.toString());
-            return false;
-        }
+        db.execSQL("DELETE FROM " + TABLE_NAME);
+        db.close();
+        return true;
     }
 
     public int numOfRows() {
@@ -216,5 +211,18 @@ public class OrderDatabaseHelper extends SQLiteOpenHelper {
         int numOfRows = c.getCount();
         c.close();
         return numOfRows;
+    }
+
+    public void deleteListData(ArrayList<CartItem> listCartItem) {
+        SQLiteDatabase db = getWritableDatabase();
+        for (CartItem cartItem : listCartItem) {
+            String sql = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_PRODUCT_CODE + " = ?";
+            SQLiteStatement statement = db.compileStatement(sql);
+            statement.clearBindings();
+            statement.bindString(1, cartItem.getProductCode());
+            statement.executeUpdateDelete();
+            statement.close();
+        }
+        db.close();
     }
 }

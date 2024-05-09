@@ -14,9 +14,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.badge.BadgeDrawable;
-import com.google.android.material.badge.BadgeUtils;
-import com.google.android.material.badge.ExperimentalBadgeUtils;
-import com.google.android.material.snackbar.Snackbar;
 import com.group2.database_helper.OrderDatabaseHelper;
 import com.group2.local.LoginManagerTemp;
 import com.group2.pop4u_app.AccountScreen.AccountFragment;
@@ -25,7 +22,6 @@ import com.group2.pop4u_app.HomeScreen.HomepageFragment;
 import com.group2.pop4u_app.LoginScreen.LoginPage;
 import com.group2.pop4u_app.HomeScreen.FavoriteListActivity;
 import com.group2.pop4u_app.OrderScreen.OrderScreen;
-import com.group2.pop4u_app.ProductDetailScreen.ProductDetailScreen;
 import com.group2.pop4u_app.SearchScreen.SearchDashboardFragment;
 import com.group2.pop4u_app.databinding.ActivityMainBinding;
 
@@ -83,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setCartBadge() {
+
         BadgeDrawable badge = binding.bottomNavigationView.getOrCreateBadge(R.id.ic_cart);
         badge.setVisible(true);
         badge.setNumber(databaseHelper.numOfRows());
