@@ -64,6 +64,8 @@ public class CartFragment extends Fragment {
     int undoPosition;
     OrderDatabaseHelper databaseHelper;
     Vibrator vibrator;
+
+    Integer resetCheckAll = 0;
     public CartFragment() {
         // Required empty public constructor
     }
@@ -91,16 +93,16 @@ public class CartFragment extends Fragment {
 
     private void initDbAndCartFuture() {
         databaseHelper = new OrderDatabaseHelper(requireContext());
-        databaseHelper.clearAllData();
         carts = new ArrayList<>();
         cartFuture = OrderService.instance.getCart();
         cartFuture.thenAccept(cartItems -> {
             if (cartItems != null) {
+                databaseHelper.clearAllData();
                 carts.clear();
                 carts.addAll(cartItems);
-            }
-            for (CartItem item : carts) {
-                databaseHelper.insertDataWithCartItem(item);
+                for (CartItem item : carts) {
+                    databaseHelper.insertDataWithCartItem(item);
+                }
             }
             binding.rvCart.swapAdapter(adapter, true);
         });
@@ -136,9 +138,22 @@ public class CartFragment extends Fragment {
         binding.checkboxSelectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                adapter.selectAllItems(isChecked);
-                selectedCartItemList = carts;
-                calculateAllProductPrice(isChecked);
+                if (resetCheckAll == 0) {
+                   adapter.selectAllItems(isChecked);
+                } else {
+                    if (resetCheckAll == 1) {
+                        resetCheckAll = 0;
+                        adapter.selectAllItems(isChecked);
+                    } else if (resetCheckAll == 2 && !isChecked) {
+                        resetCheckAll = 0;
+                        adapter.selectAllItems(isChecked);
+                    } else if (resetCheckAll == 3 && isChecked) {
+                        resetCheckAll = 0;
+                        adapter.selectAllItems(isChecked);
+                    } else if (resetCheckAll == 4) {
+                        resetCheckAll = 0;
+                    }
+                }
             }
         });
 
@@ -150,8 +165,32 @@ public class CartFragment extends Fragment {
                 binding.totalPrice.setText(formattedTotal);
             }
             public void onAtLeastOneUnchecked() {
-                binding.checkboxSelectAll.setChecked(false);
+                resetCheckAll = 1;
+                if (binding.checkboxSelectAll.isChecked()) {
+                    resetCheckAll = 4;
+                    binding.checkboxSelectAll.setChecked(false);
+                }
             }
+
+            public void allIsChecked(boolean isChecked) {
+                if (isChecked) {
+                    resetCheckAll = 2;
+                } else {
+                    resetCheckAll = 3;
+                }
+                binding.checkboxSelectAll.setChecked(isChecked);
+                if (isChecked) {
+                    selectedCartItemList = new ArrayList<>();
+                    for (CartItem item : carts) {
+                        if (item.isChecked()) {
+                            selectedCartItemList.add(item);
+                        }
+                    }
+                } else {
+                    selectedCartItemList = new ArrayList<>();
+                }
+            }
+
         });
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override

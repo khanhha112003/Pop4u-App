@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.group2.api.Services.UserService;
 import com.group2.database_helper.LoginDatabaseHelper;
+import com.group2.database_helper.OrderDatabaseHelper;
 import com.group2.local.AddressHelper;
 import com.group2.local.LoginManagerTemp;
 import com.group2.model.User;
@@ -24,6 +25,7 @@ public class SplashScr extends AppCompatActivity {
     private static final int SPLASH_TIME_OUT = 1000; // 1 giây
 
     LoginDatabaseHelper loginDatabaseHelper;
+    OrderDatabaseHelper orderDatabaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,8 @@ public class SplashScr extends AppCompatActivity {
         setContentView(R.layout.activity_splash_scr);
 
         loginDatabaseHelper = new LoginDatabaseHelper(this);
+        orderDatabaseHelper = new OrderDatabaseHelper(this);
+
         AddressHelper.instance.init();
         Boolean syncValue = loginDatabaseHelper.syncToken();
         CompletableFuture<Boolean> future = UserService.instance.validateToken();
@@ -41,6 +45,7 @@ public class SplashScr extends AppCompatActivity {
                 finish();
             } else {
                 loginDatabaseHelper.clearAllData();
+                orderDatabaseHelper.clearAllData();
                 LoginManagerTemp.token = "";
                 LoginManagerTemp.isLogin = false;
                 this.goToOnBoarding();
