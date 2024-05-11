@@ -46,6 +46,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.group2.database_helper.OrderDatabaseHelper;
 import com.group2.local.LoginManagerTemp;
 import com.group2.model.Artist;
+import com.group2.model.CartItem;
 import com.group2.model.Product;
 import com.group2.model.ResponseValidate;
 import com.group2.pop4u_app.HomeScreen.FavoriteListActivity;
@@ -113,6 +114,34 @@ public class ProductDetailScreen extends AppCompatActivity {
         setUpProductImage();
         addEvents();
         addCartBadge();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (LoginManagerTemp.isJustFinishLoginSuccess) {
+            syncCartBadge();
+            LoginManagerTemp.isJustFinishLoginSuccess = false;
+        } else {
+            addCartBadge();
+        }
+    }
+
+    private void syncCartBadge() {
+        CompletableFuture<ArrayList<CartItem>> future = OrderService.instance.getCart();
+        future.thenAccept(cartItems -> {
+            databaseHelper.clearAllData();
+            for (CartItem cartItem : cartItems) {
+                databaseHelper.insertDataWithCartItem(cartItem);
+            }
+            runOnUiThread(this::addCartBadge);
+        });
+        try {
+            future.get();
+        } catch (Exception e) {
+            Log.d("MainActivity", e.getMessage());
+        }
 
     }
 

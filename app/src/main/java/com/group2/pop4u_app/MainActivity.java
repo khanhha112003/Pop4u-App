@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,8 +15,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.badge.BadgeDrawable;
+import com.group2.api.Services.OrderService;
 import com.group2.database_helper.OrderDatabaseHelper;
 import com.group2.local.LoginManagerTemp;
+import com.group2.model.CartItem;
+import com.group2.model.ResponseValidate;
 import com.group2.pop4u_app.AccountScreen.AccountFragment;
 import com.group2.pop4u_app.CartScreen.CartFragment;
 import com.group2.pop4u_app.HomeScreen.HomepageFragment;
@@ -24,6 +28,9 @@ import com.group2.pop4u_app.HomeScreen.FavoriteListActivity;
 import com.group2.pop4u_app.OrderScreen.OrderScreen;
 import com.group2.pop4u_app.SearchScreen.SearchDashboardFragment;
 import com.group2.pop4u_app.databinding.ActivityMainBinding;
+
+import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -85,6 +92,23 @@ public class MainActivity extends AppCompatActivity {
         badge.setNumber(databaseHelper.numOfRows());
     }
 
+    private void syncCartBadge() {
+        CompletableFuture<ArrayList<CartItem>> future = OrderService.instance.getCart();
+        future.thenAccept(cartItems -> {
+            databaseHelper.clearAllData();
+            for (CartItem cartItem : cartItems) {
+                databaseHelper.insertDataWithCartItem(cartItem);
+            }
+            runOnUiThread(this::setCartBadge);
+        });
+        try {
+            future.get();
+        } catch (Exception e) {
+            Log.d("MainActivity", e.getMessage());
+        }
+
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -93,11 +117,17 @@ public class MainActivity extends AppCompatActivity {
             this.savedLoginItemIndex = R.id.ic_account;
             View view = binding.bottomNavigationView.findViewById(this.savedLoginItemIndex);
             view.performClick();
+            setCartBadge();
         } else if (this.savedLoginItemIndex != -1 && navigateToAnotherActivity) {
             View view = binding.bottomNavigationView.findViewById(this.savedLoginItemIndex);
             view.performClick();
+            if (LoginManagerTemp.isJustFinishLoginSuccess) {
+                syncCartBadge();
+                LoginManagerTemp.isJustFinishLoginSuccess = false;
+            } else {
+                setCartBadge();
+            }
         }
-        setCartBadge();
     }
 
     public void replaceFragment(Fragment fragment){
