@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,49 +8,65 @@
     tools:context=".AddressScreen.PickAddress"
     android:orientation="vertical"
     android:background="@color/white">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tbrPickAddress"
-        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/md_theme_surfaceContainerLow"
         android:elevation="4dp"
-        app:title="@string/pick_address"
-        app:titleTextColor="@color/md_theme_onSurface"
-        app:titleTextAppearance="@style/TitleActionBar"
-        app:menu="@menu/plain_action_bar"
+        android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-        <ListView
-            android:id="@+id/lvAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/plain_action_bar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="@string/pick_address"
+        app:titleTextAppearance="@style/TitleActionBar"
+        app:titleTextColor="@color/md_theme_onSurface" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lvAddress"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tbrPickAddress" />
+
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
         <Button
             android:id="@+id/btnConfirmAddress"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:text="Xác nhận"
-            android:textColor="@color/md_theme_background"
-            android:backgroundTint="@color/md_theme_onPrimaryFixedVariant"
             android:layout_gravity="center"
             android:layout_margin="20dp"
+            android:backgroundTint="@color/md_theme_onPrimaryFixedVariant"
             android:fontFamily="@font/inter"
-            android:textSize="15sp"/>
+            android:text="Xác nhận"
+            android:textColor="@color/md_theme_background"
+            android:textSize="15sp" />
+
         <Button
             android:id="@+id/btnAddAddress"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:text="Thêm địa chỉ"
-            android:textColor="@color/md_theme_background"
-            android:backgroundTint="@color/md_theme_onPrimaryFixedVariant"
             android:layout_gravity="center"
             android:layout_margin="20dp"
+            android:backgroundTint="@color/md_theme_onPrimaryFixedVariant"
             android:fontFamily="@font/inter"
-            android:textSize="15sp"/>
+            android:text="Thêm địa chỉ"
+            android:textColor="@color/md_theme_background"
+            android:textSize="15sp" />
     </LinearLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

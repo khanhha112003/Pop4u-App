@@ -99,8 +99,8 @@
         android:textSize="20sp"
         android:fontFamily="@font/inter_semibold"
         android:layout_marginBottom="10dp"/>
-    <Switch
-        android:id="@+id/btnDefault"
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/swDefaultAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"

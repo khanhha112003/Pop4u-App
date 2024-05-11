@@ -11,98 +11,83 @@ import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.group2.model.Address;
 import com.group2.model.CartItem;
 import com.group2.pop4u_app.R;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class AddressAdapter extends BaseAdapter {
+public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHolder> {
     Activity context;
     int item_list;
     List<Address> addressList;
-
-    int selectedPosition = 0;
-
-    public void setSelectedPosition(int selectedPosition) {
-        this.selectedPosition = selectedPosition;
-    }
+    int selectedPosition = -1;
 
     public AddressAdapter.OnTapSelectAddressListener onTapSelectAddressListener;
-
 
     public AddressAdapter(Activity context, int item_list, List<Address> addressList) {
         this.context = context;
         this.item_list = item_list;
         this.addressList = addressList;
-    }
-
-
-    @Override
-    public int getCount() {
-        return addressList.size();
-    }
-
-    @Override
-    public Object getItem(int i) {
-        return addressList.get(i);
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        AddressAdapter.ViewHolder holder;
-        if(view ==null) {
-            holder = new AddressAdapter.ViewHolder();
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(item_list, null);
-
-
-            holder.cus_name = view.findViewById(R.id.cus_name);
-            holder.cus_phone = view.findViewById(R.id.cus_phone);
-            holder.cus_address = view.findViewById(R.id.cus_address);
-            holder.radioButton = view.findViewById(R.id.rbAddressCheckbox);
-            view.setTag(holder);
-        } else {
-            holder = (AddressAdapter.ViewHolder)  view.getTag();
-
+        for (Address address : addressList) {
+            if (address.isDefault()) {
+                selectedPosition = addressList.indexOf(address);
+            }
         }
-        //Lien ket du lieu
-        Address b = addressList.get(i);
+    }
+
+    @Override
+    public AddressAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(item_list, parent, false);
+        return new AddressAdapter.ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(AddressAdapter.ViewHolder holder, int position) {
+        Address b = addressList.get(position);
         holder.cus_name.setText(b.getCus_name());
         holder.cus_phone.setText(b.getCus_phone());
         holder.cus_address.setText(b.getCus_address());
-        holder.radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                onTapSelectAddressListener.onTapCheckAddress(i, b);
-                setSelectedPosition(i);
+        holder.radioButton.setChecked(b.isDefault());
+        holder.radioButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                for (Address address : addressList) {
+                    if (address.isDefault()) {
+                        notifyItemChanged(addressList.indexOf(address));
+                    }
+                    address.setDefault(false);
+                }
+                b.setDefault(true);
+                notifyItemChanged(position);
             }
         });
-
-        if (selectedPosition == i) {
-            holder.radioButton.setChecked(true);
-        } else {
-            holder.radioButton.setChecked(false);
-        }
-
-        return view;
     }
-    public static class  ViewHolder{
-        TextView cus_name, cus_phone, cus_address;
 
+    @Override
+    public int getItemCount() {
+        return addressList.size();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView cus_name, cus_phone, cus_address;
         RadioButton radioButton;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            cus_name = itemView.findViewById(R.id.cus_name);
+            cus_phone = itemView.findViewById(R.id.cus_phone);
+            cus_address = itemView.findViewById(R.id.cus_address);
+            radioButton = itemView.findViewById(R.id.rbAddressCheckbox);
+        }
     }
 
     public interface OnTapSelectAddressListener {
-        void onTapCheckAddress(int position, Address address);
+        void onTapCheckAddress(Address address);
     }
+
 }
-
-
-
