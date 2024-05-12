@@ -10,10 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.group2.api.Services.UserService;
 import com.group2.database_helper.LoginDatabaseHelper;
-import com.group2.database_helper.OrderDatabaseHelper;
 import com.group2.local.AddressHelper;
 import com.group2.local.LoginManagerTemp;
-import com.group2.model.User;
 import com.group2.pop4u_app.MainActivity;
 import com.group2.pop4u_app.R;
 
@@ -24,19 +22,21 @@ public class SplashScr extends AppCompatActivity {
     // Thời gian đợi trước khi chuyển hướng (miliseconds)
     private static final int SPLASH_TIME_OUT = 1000; // 1 giây
 
-    LoginDatabaseHelper loginDatabaseHelper;
-    OrderDatabaseHelper orderDatabaseHelper;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_scr);
 
-        loginDatabaseHelper = new LoginDatabaseHelper(this);
-        orderDatabaseHelper = new OrderDatabaseHelper(this);
-
         AddressHelper.instance.init();
-        Boolean syncValue = loginDatabaseHelper.syncToken();
+        Boolean syncValue = LoginManagerTemp.syncToken(this.getApplicationContext());
+        if (syncValue) {
+            this.checkToken();
+        } else {
+            this.goToOnBoarding();
+        }
+    }
+
+    private void checkToken() {
         CompletableFuture<Boolean> future = UserService.instance.validateToken();
         future.thenAccept(result -> {
             if (result) {
@@ -44,10 +44,7 @@ public class SplashScr extends AppCompatActivity {
                 startActivity(i);
                 finish();
             } else {
-                loginDatabaseHelper.clearAllData();
-                orderDatabaseHelper.clearAllData();
-                LoginManagerTemp.token = "";
-                LoginManagerTemp.isLogin = false;
+                LoginManagerTemp.clearOldCredentialAndData(this.getApplicationContext());
                 this.goToOnBoarding();
             }
         });

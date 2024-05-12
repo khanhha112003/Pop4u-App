@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.group2.database_helper.LocationDatabaseHelper;
 import com.group2.local.AddressHelper;
 import com.group2.model.Address;
 import com.group2.pop4u_app.R;
@@ -27,7 +28,7 @@ public class AddAddress extends AppCompatActivity implements AdapterView.OnItemS
     ArrayList<HashMap<String, String>> city = new ArrayList<>();
     ArrayList<HashMap<String, String>> district = new ArrayList<>();
 
-    Spinner spnSelectCity, spnSelectDistrict, spnSelectWard;
+    Spinner spnSelectCity, spnSelectDistrict;
 
     String[] cityDisplay, districtDisplay, wardDisplay;
 
@@ -78,7 +79,14 @@ public class AddAddress extends AppCompatActivity implements AdapterView.OnItemS
                             + binding.spnSelectDistrict.getSelectedItem().toString()
                             + " "
                             + binding.spnSelectCity.getSelectedItem().toString();
-            Address addressData = new Address(name, phone, address);
+            if (    name.isEmpty() ||
+                    phone.isEmpty() ||
+                    binding.spnSelectWard.getSelectedItem().toString().isEmpty() ||
+                    binding.spnSelectDistrict.getSelectedItem().toString().isEmpty() ||
+                    binding.spnSelectCity.getSelectedItem().toString().isEmpty() ) {
+                return;
+            }
+            Address addressData = new Address(name, phone, address, binding.swDefaultAddress.isChecked());
             Bundle bundle = new Bundle();
             bundle.putSerializable("address", addressData);
             Intent intent = new Intent();

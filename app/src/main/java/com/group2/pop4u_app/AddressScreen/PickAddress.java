@@ -3,30 +3,30 @@ package com.group2.pop4u_app.AddressScreen;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.widget.LinearLayout;
 
 import com.group2.adapter.AddressAdapter;
 import com.group2.database_helper.LocationDatabaseHelper;
 import com.group2.model.Address;
-import com.group2.model.CartItem;
+import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.ActivityPickAddressBinding;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class PickAddress extends AppCompatActivity {
+public class PickAddress extends AppCompatActivity implements AddressAdapter.OnTapSelectAddressListener {
 ActivityPickAddressBinding binding;
     AddressAdapter adapter;
     ArrayList<Address> addresses = new ArrayList<>();;
     LocationDatabaseHelper locationDatabaseHelper;
-
     Address choosenAddress = null;
 
     ActivityResultLauncher<Intent> openChooseAddressResult = registerForActivityResult(
@@ -38,7 +38,6 @@ ActivityPickAddressBinding binding;
                     Bundle args = data.getBundleExtra("data");
                     Address address = (Address) args.getSerializable("address");
                     addNewAddressData(address);
-                    runOnUiThread(() -> adapter.notifyDataSetChanged());
                 }
             });
 
@@ -53,20 +52,30 @@ ActivityPickAddressBinding binding;
         addEvents();
     }
 
-    private void loadData(){
+    private void loadData() {
         locationDatabaseHelper = new LocationDatabaseHelper(this);
-        adapter = new AddressAdapter(PickAddress.this, R.layout.activity_item_address, addresses);
-        binding.lvAddress.setAdapter(adapter);
         addresses.addAll(locationDatabaseHelper.getAllAddress());
-        adapter.notifyDataSetChanged();
-        if (addresses.size() > 0) {
+        for (Address address : addresses) {
+            if (address.isDefault()) {
+                choosenAddress = address;
+            }
+        }
+        if (choosenAddress == null && !addresses.isEmpty()) {
+            addresses.get(0).setDefault(true);
+            locationDatabaseHelper.setDefaultAddress(addresses.get(0));
             choosenAddress = addresses.get(0);
         }
-    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
+        ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(PickAddress.this, R.dimen.item_offset);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        binding.lvAddress.addItemDecoration(itemDecoration);
+        binding.lvAddress.setLayoutManager(layoutManager);
+        binding.lvAddress.setHasFixedSize(true);
+        binding.lvAddress.setNestedScrollingEnabled(false);
+
+        adapter = new AddressAdapter(PickAddress.this, R.layout.activity_item_address, addresses);
+        adapter.onTapSelectAddressListener = this;
+        binding.lvAddress.setAdapter(adapter);
     }
 
     private void addEvents() {
@@ -75,9 +84,7 @@ ActivityPickAddressBinding binding;
             openChooseAddressResult.launch(intent);
         });
 
-        adapter.onTapSelectAddressListener = (position, address) -> {
-            choosenAddress = address;
-        };
+        adapter.onTapSelectAddressListener = this;
 
         binding.btnConfirmAddress.setOnClickListener(v -> {
             Intent intent = new Intent();
@@ -85,15 +92,24 @@ ActivityPickAddressBinding binding;
             bundle.putSerializable("address", choosenAddress);
             intent.putExtra("data", bundle);
             setResult(Activity.RESULT_OK, intent);
-            finish();
+            if (locationDatabaseHelper.setDefaultAddress(choosenAddress)) {
+                finish();
+            }
         });
     }
 
     private void addNewAddressData(Address address) {
-        locationDatabaseHelper.insertData(address);
-        addresses.clear();
-        addresses = locationDatabaseHelper.getAllAddress();
-        adapter.notifyDataSetChanged();
+        if (locationDatabaseHelper.insertData(address)) {
+            addresses.clear();
+            addresses.addAll(locationDatabaseHelper.getAllAddress());
+            adapter.notifyDataSetChanged();
+        }
+        if (choosenAddress == null) {
+            choosenAddress = address;
+        }
+        if (address.isDefault()) {
+            choosenAddress = address;
+        }
     }
 
     @Override
@@ -101,5 +117,10 @@ ActivityPickAddressBinding binding;
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.plain_action_bar, menu);
         return true;
+    }
+
+    @Override
+    public void onTapCheckAddress(Address address) {
+        choosenAddress = address;
     }
 }

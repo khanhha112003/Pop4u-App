@@ -47,6 +47,7 @@ public class LoginPage extends AppCompatActivity {
                    loginDatabaseHelper.insertData(v);
 //                   Intent intent = new Intent(LoginPage.this, MainActivity.class); // Chuyển đến MainActivity
 //                   startActivity(intent);
+                   LoginManagerTemp.isJustFinishLoginSuccess = true;
                    this.finish();
                }
            } else {
