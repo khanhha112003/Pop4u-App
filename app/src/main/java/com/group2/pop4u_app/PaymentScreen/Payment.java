@@ -65,6 +65,7 @@ public class Payment extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityPaymentBinding.inflate(getLayoutInflater());
+        getIntentData();
         setSupportActionBar(binding.tbrPayment);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(binding.getRoot());
@@ -72,7 +73,6 @@ public class Payment extends AppCompatActivity {
         customAndLoadData();
         calculatetotalPriceOrder();
         addEvents();
-        getIntentData();
         initLocation();
         initDatabase();
     }
@@ -98,11 +98,11 @@ public class Payment extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle args = intent.getBundleExtra("selectedItems");
         listCheckedItem = (ArrayList<CartItem>) args.getSerializable("listSelectedItem");
-
         for (int i = 0; i < listCheckedItem.size(); i++) {
             CartItem cartItem = listCheckedItem.get(i);
             orders.add(new Order(cartItem.getProductCode(), cartItem.getThumb(), cartItem.getName(), "", cartItem.getPrice(), cartItem.getQuantity()));
         }
+
     }
 
     @Override
@@ -169,6 +169,7 @@ public class Payment extends AppCompatActivity {
         });
         binding.btnPlaceOrder.setOnClickListener(v -> {
             if (currentAddress == null) {
+                Toast.makeText(Payment.this, "Vui lòng chọn địa chỉ giao hàng", Toast.LENGTH_SHORT).show();
                 return;
             }
             CompletableFuture<ResponseValidate> future = OrderService
@@ -193,7 +194,7 @@ public class Payment extends AppCompatActivity {
             try {
                 future.get();
             } catch (Exception e) {
-                e.printStackTrace();
+                Toast.makeText(Payment.this, "Có lỗi xảy ra", Toast.LENGTH_SHORT).show();
             }
         });
     }
