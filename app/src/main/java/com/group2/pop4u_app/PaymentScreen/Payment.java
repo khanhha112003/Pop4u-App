@@ -86,7 +86,7 @@ public class Payment extends AppCompatActivity {
             binding.txtCustomerPhone.setText("");
             binding.txtCustomerAddress.setText("Vui lòng lựa chọn địa chỉ của bạn");
         } else {
-            currentAddress = locationDatabaseHelper.getAllAddress().get(0);
+            currentAddress = locationDatabaseHelper.getCurrentDefaultAddress();
             binding.txtCustomerName.setText(currentAddress.getCus_name());
             binding.txtCustomerPhone.setText(currentAddress.getCus_phone());
             binding.txtCustomerAddress.setText(currentAddress.getCus_address());

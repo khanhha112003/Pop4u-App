@@ -64,6 +64,9 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
                 }
                 b.setDefault(true);
                 notifyItemChanged(position);
+                if (onTapSelectAddressListener != null) {
+                    onTapSelectAddressListener.onTapCheckAddress(b);
+                }
             }
         });
     }

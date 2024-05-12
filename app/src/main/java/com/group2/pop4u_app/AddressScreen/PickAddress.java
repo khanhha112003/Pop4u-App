@@ -104,6 +104,12 @@ ActivityPickAddressBinding binding;
             addresses.addAll(locationDatabaseHelper.getAllAddress());
             adapter.notifyDataSetChanged();
         }
+        if (choosenAddress == null) {
+            choosenAddress = address;
+        }
+        if (address.isDefault()) {
+            choosenAddress = address;
+        }
     }
 
     @Override

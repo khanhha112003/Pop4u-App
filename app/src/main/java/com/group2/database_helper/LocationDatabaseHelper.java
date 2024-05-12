@@ -47,14 +47,14 @@ public class LocationDatabaseHelper extends SQLiteOpenHelper {
 
     public boolean insertData(Address address){
         SQLiteDatabase database = getWritableDatabase();
-
+        int numOfRows = numOfRows();
         ContentValues contentValues = new ContentValues();
         contentValues.put(LocationDatabaseHelper.COLUMN_ADDRESS, address.getCus_address());
         contentValues.put(LocationDatabaseHelper.COLUMN_PHONE, address.getCus_phone());
         contentValues.put(LocationDatabaseHelper.COLUMN_NAME, address.getCus_name());
-        if (address.isDefault()) {
-            contentValues.put(LocationDatabaseHelper.COLUMN_IS_DEFAULT, 1);
+        if (address.isDefault() || numOfRows == 0) {
             clearAllDefaultAddress();
+            contentValues.put(LocationDatabaseHelper.COLUMN_IS_DEFAULT, 1);
         } else {
             contentValues.put(LocationDatabaseHelper.COLUMN_IS_DEFAULT, 0);
         }
@@ -65,12 +65,17 @@ public class LocationDatabaseHelper extends SQLiteOpenHelper {
 
     public Boolean clearAllDefaultAddress() {
         SQLiteDatabase db = getWritableDatabase();
-        try {
-            db.execSQL("UPDATE " + LocationDatabaseHelper.TABLE_NAME + " SET " + LocationDatabaseHelper.COLUMN_IS_DEFAULT + " = 0");
-            return true;
-        } catch (Exception e) {
-            return false;
+        // find all default address and set it to 0
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_IS_DEFAULT, 0);
+        db.update(TABLE_NAME, values, COLUMN_IS_DEFAULT + " = 1", null);
+        int numberOfRowIsDefault = 0;
+        try (Cursor cursor = queryData("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_IS_DEFAULT + " = 1;")) {
+            if (cursor != null) {
+                numberOfRowIsDefault = cursor.getCount();
+            }
         }
+        return numberOfRowIsDefault == 0;
     }
 
     public ArrayList<Address> getAllAddress () {
@@ -79,11 +84,14 @@ public class LocationDatabaseHelper extends SQLiteOpenHelper {
         try (Cursor cursor = queryData(sql)) {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
+                    int id = cursor.getInt(0);
                     String address = cursor.getString(1);
                     String phone = cursor.getString(2);
                     String name = cursor.getString(3);
                     Boolean isDefault  = cursor.getInt(4) == 1;
-                    addresses.add(new Address(name, phone, address, isDefault));
+                    Address currentAddress = new Address(name, phone, address, isDefault);
+                    currentAddress.setId(id);
+                    addresses.add(currentAddress);
                 } while (cursor.moveToNext());
             }
         }
@@ -95,7 +103,7 @@ public class LocationDatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         if(clearAllDefaultAddress()) {
             values.put(COLUMN_IS_DEFAULT, 1);
-            return db.update(TABLE_NAME, values, COLUMN_ADDRESS + " = \"" + address.getCus_address() + "\"", new String[]{address.getCus_address()}) > 0;
+            return db.update(TABLE_NAME, values,  _ID + " = ?", new String[]{address.getId().toString()}) > 0;
         }
         return false;
     }
@@ -110,5 +118,22 @@ public class LocationDatabaseHelper extends SQLiteOpenHelper {
     public void clearAllData(){
         SQLiteDatabase db = getWritableDatabase();
         db.delete(LocationDatabaseHelper.TABLE_NAME, null, null);
+    }
+
+    public Address getCurrentDefaultAddress() {
+        String sql = "SELECT * FROM " + LocationDatabaseHelper.TABLE_NAME + " WHERE " + LocationDatabaseHelper.COLUMN_IS_DEFAULT + " = 1;";
+        try (Cursor cursor = queryData(sql)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                int id = cursor.getInt(0);
+                String address = cursor.getString(1);
+                String phone = cursor.getString(2);
+                String name = cursor.getString(3);
+                Boolean isDefault  = cursor.getInt(4) == 1;
+                Address currentAddress = new Address(name, phone, address, isDefault);
+                currentAddress.setId(id);
+                return currentAddress;
+            }
+        }
+        return null;
     }
 }
