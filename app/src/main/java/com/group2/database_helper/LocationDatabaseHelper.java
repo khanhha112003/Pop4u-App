@@ -121,19 +121,24 @@ public class LocationDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Address getCurrentDefaultAddress() {
-        String sql = "SELECT * FROM " + LocationDatabaseHelper.TABLE_NAME + " WHERE " + LocationDatabaseHelper.COLUMN_IS_DEFAULT + " = 1;";
-        try (Cursor cursor = queryData(sql)) {
-            if (cursor != null && cursor.moveToFirst()) {
-                int id = cursor.getInt(0);
-                String address = cursor.getString(1);
-                String phone = cursor.getString(2);
-                String name = cursor.getString(3);
-                Boolean isDefault  = cursor.getInt(4) == 1;
-                Address currentAddress = new Address(name, phone, address, isDefault);
-                currentAddress.setId(id);
-                return currentAddress;
-            }
+        Address address = null;
+        Cursor cursor = queryData("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_IS_DEFAULT + " = 1;");
+        if (cursor == null) return null;
+        if (cursor.getCount() == 0) {
+            Address firstAddress = getAllAddress().get(0);
+            setDefaultAddress(firstAddress);
+            return getCurrentDefaultAddress();
         }
-        return null;
+        if (cursor.moveToFirst()) {
+            int id = cursor.getInt(0);
+            String cus_address = cursor.getString(1);
+            String cus_phone = cursor.getString(2);
+            String cus_name = cursor.getString(3);
+            Boolean isDefault = cursor.getInt(4) == 1;
+            address = new Address(cus_name, cus_phone, cus_address, isDefault);
+            address.setId(id);
+        }
+        cursor.close();
+        return address;
     }
 }
