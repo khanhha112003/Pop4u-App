@@ -2,10 +2,12 @@ package com.group2.pop4u_app.VoucherScreen;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.group2.api.Services.VoucherService;
+import com.group2.model.Voucher;
 import com.group2.pop4u_app.PaymentScreen.Payment;
 import com.group2.pop4u_app.R;
 import com.group2.adapter.VoucherAdapter;
@@ -27,11 +31,14 @@ import com.group2.model.ItemVoucher;
 import com.group2.pop4u_app.databinding.ActivityShowVoucherBinding;
 
 import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
 
 public class ShowVoucher extends AppCompatActivity {
     ActivityShowVoucherBinding binding;
     VoucherAdapter adapter;
     ArrayList<ItemVoucher> vouchers;
+
+    ArrayList<Voucher> vouchersData;
     SearchView editTextSearch;
     ListView listViewVoucher;
     LinearLayout textViewNoVoucher;
@@ -70,11 +77,53 @@ public class ShowVoucher extends AppCompatActivity {
 
     private void initData(){
         vouchers = new ArrayList<>();
-        vouchers.add(new ItemVoucher("POP4U12345", "Giảm 10% giảm tối đa 20K "));
-        vouchers.add(new ItemVoucher("POP4U56789", "Giảm 20% giảm tối đa 15K"));
-        vouchers.add(new ItemVoucher("POP4U12111", "Freeship"));
+        CompletableFuture<ArrayList<Voucher>> future = VoucherService.instance.getListVoucher();
+        future.thenAccept(voucherList -> {
+            for (Voucher voucher : voucherList) {
+                vouchers.add(new ItemVoucher(voucher.getCode(), voucher.getDescription()));
+            }
+            vouchersData = voucherList;
+            runOnUiThread(() -> {
+                if (vouchers.isEmpty()) {
+                    showNoVoucher();
+                } else {
+                    showVoucher();
+                }
+            });
+        }).exceptionally(throwable -> {
+            runOnUiThread(() -> {
+                Toast.makeText(ShowVoucher.this, "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+            });
+            return null;
+        });
 
-        // Ẩn danh sách voucher và hiển thị layout "Không có voucher"
+        try {
+           future.get();
+        } catch (Exception e) {
+            Log.d("ShowVoucher", "Error: " + e.getMessage());
+        }
+    }
+
+    private void showVoucher() {
+        // Hiển thị danh sách voucher
+        listViewVoucher.setVisibility(View.VISIBLE);
+        textViewNoVoucher.setVisibility(View.GONE);
+        // Tạo adapter mới với danh sách voucher
+        adapter = new VoucherAdapter(ShowVoucher.this, R.layout.activity_item_voucher, vouchers);
+        listViewVoucher.setAdapter(adapter);
+        listViewVoucher.setOnItemClickListener((parent, view, position, id) -> {
+            Voucher choosenVoucher = vouchersData.get(position);
+            Intent intent = new Intent();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("voucher", choosenVoucher);
+            intent.putExtra("data", bundle);
+            setResult(Activity.RESULT_OK, intent);
+            finish();
+        });
+    }
+
+    private void showNoVoucher() {
+        // Hiển thị layout "Không có voucher"
         listViewVoucher.setVisibility(View.GONE);
         textViewNoVoucher.setVisibility(View.VISIBLE);
     }

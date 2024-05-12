@@ -92,7 +92,7 @@ ActivityPickAddressBinding binding;
             bundle.putSerializable("address", choosenAddress);
             intent.putExtra("data", bundle);
             setResult(Activity.RESULT_OK, intent);
-            if (locationDatabaseHelper.setDefaultAddress(choosenAddress)) {
+            if (locationDatabaseHelper.setDefaultAddress(choosenAddress) && choosenAddress.getId() != null) {
                 finish();
             }
         });
