@@ -216,7 +216,8 @@ public class Payment extends AppCompatActivity {
                             currentAddress.getCus_phone(),
                             getSelectedPaymentMethod(),
                             (String) binding.shipfee.getText(),
-                            listCheckedItem
+                            listCheckedItem,
+                            null
                     );
             future.thenAccept(response -> {
                 if (response.getStatus() == 1) {

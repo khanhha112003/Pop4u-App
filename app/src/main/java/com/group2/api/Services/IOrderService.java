@@ -25,7 +25,7 @@ public interface IOrderService {
             @Query("quantity") Integer quantity
     );
 
-    @POST("/api/order/checkout_mobile")
+    @POST("/api/order/create_order_mobile")
     Call<ValidationResponseDAO> createOrder(
             @Header("Authorization") String authHeader,
             @Body HashMap<String, Object> body

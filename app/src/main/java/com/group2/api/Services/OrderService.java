@@ -92,13 +92,14 @@ public class OrderService {
         return future;
     }
 
-    public CompletableFuture<ResponseValidate> createOrder(String address, String phone, String payment_method, String shipping_price, ArrayList<CartItem> listItem) {
+    public CompletableFuture<ResponseValidate> createOrder(String address, String phone, String payment_method, String shipping_price, ArrayList<CartItem> listItem, String voucher) {
         CompletableFuture<ResponseValidate> future = new CompletableFuture<>();
         HashMap<String, Object> body = new HashMap<>();
         body.put("address", address);
         body.put("phone", phone);
         body.put("payment_method", payment_method);
         body.put("shipping_price", shipping_price);
+        body.put("voucher", voucher);
         ArrayList<String> product_code = new ArrayList<>();
         ArrayList<String> quantity = new ArrayList<>();
         for (int i = 0; i < listItem.size(); i++) {
