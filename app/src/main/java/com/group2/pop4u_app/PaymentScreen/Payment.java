@@ -1,23 +1,24 @@
 package com.group2.pop4u_app.PaymentScreen;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.group2.adapter.OrderAdapter;
 import com.group2.api.Services.OrderService;
@@ -75,6 +76,18 @@ public class Payment extends AppCompatActivity {
         addEvents();
         initLocation();
         initDatabase();
+
+        // Retrieve voucher information from intent extras
+        String voucherId = getIntent().getStringExtra("voucher_id");
+        String voucherDescription = getIntent().getStringExtra("voucher_description");
+        Log.d("Payment", "Mã Voucher: " + voucherId);
+
+
+        // Display voucher information in TextView if available
+        if (voucherId != null) {
+            // Update the TextView with the selected voucher ID
+            binding.txtVoucherID.setText(voucherId);
+        }
     }
     private void initLocation() {
         locationDatabaseHelper = new LocationDatabaseHelper(this);
