@@ -1,5 +1,7 @@
 package com.group2.model;
 
+import java.util.ArrayList;
+
 public class Order {
     String o_id;
     String o_thumb;
@@ -7,7 +9,10 @@ public class Order {
     String o_artist;
     int o_price;
     int o_quantity;
+    int o_total_quantity;
+    int o_total_price;
 
+    ArrayList<CartItem> cartItems;
 
     public Order(String o_id, String o_thumb, String o_name, String o_artist, int o_price, int o_quantity) {
         this.o_id = o_id;
@@ -22,7 +27,6 @@ public class Order {
     public String getO_thumb() {
         return o_thumb;
     }
-
     public String getO_name() {
         return o_name;
     }
