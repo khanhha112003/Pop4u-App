@@ -9,7 +9,7 @@ import com.group2.model.Address;
 import java.util.ArrayList;
 
 public class LocationDatabaseHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "location.sqlite";
+    private static final String DATABASE_NAME = "pop4u.sqlite";
     private static final String TABLE_NAME = "location";
     private static final int DATABASE_VERSION = 1;
     private static final String _ID = "id";
