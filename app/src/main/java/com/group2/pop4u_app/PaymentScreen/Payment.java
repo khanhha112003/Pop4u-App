@@ -30,7 +30,6 @@ import com.group2.model.Order;
 import com.group2.model.ResponseValidate;
 import com.group2.model.Voucher;
 import com.group2.pop4u_app.AddressScreen.PickAddress;
-import com.group2.pop4u_app.OrderScreen.OrderScreen;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.VoucherScreen.ShowVoucher;
 import com.group2.pop4u_app.databinding.ActivityPaymentBinding;
@@ -63,7 +62,7 @@ public class Payment extends AppCompatActivity {
                 }
             });
 
-    ActivityResultLauncher<Intent> openChooseVoucerResult = registerForActivityResult(
+    ActivityResultLauncher<Intent> openChooseVoucherResult = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK) {
@@ -174,14 +173,17 @@ public class Payment extends AppCompatActivity {
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
         String formattedtotalPriceOrder = decimalFormat.format(totalPriceOrder);
         double totalPriceOrder2 = shipfee + totalPriceOrder;
+        String discountString = "0";
         if (appliedVoucher != null) {
             totalPriceOrder2 -= appliedVoucher.getDiscountAmount();
+            discountString = decimalFormat.format(appliedVoucher.getDiscountAmount());
         }
         String totalPayment = decimalFormat.format(totalPriceOrder2);
 
         // Hiển thị tổng thanh toán đã được định dạng trong TextView totalPrice
         binding.totalPriceOrder.setText(formattedtotalPriceOrder);
         binding.txtTotalPayment.setText(totalPayment);
+        binding.voucherdecrease.setText(discountString);
     }
 
     private void setRadioButtonGroup() {
@@ -200,7 +202,7 @@ public class Payment extends AppCompatActivity {
     private void addEvents(){
         binding.btnChangeVoucher.setOnClickListener(v -> {
             Intent intent = new Intent(Payment.this, ShowVoucher.class);
-            openChooseVoucerResult.launch(intent);
+            openChooseVoucherResult.launch(intent);
         });
         binding.btnViewMoreAddress.setOnClickListener(v -> {
             Intent intent = new Intent(Payment.this, PickAddress.class);
@@ -257,6 +259,7 @@ public class Payment extends AppCompatActivity {
     private void setVoucher(Voucher voucher) {
         appliedVoucher = voucher;
         binding.txtVoucherID.setText(voucher.getCode());
+        calculatetotalPriceOrder();
     }
 
     private String getSelectedPaymentMethod() {
