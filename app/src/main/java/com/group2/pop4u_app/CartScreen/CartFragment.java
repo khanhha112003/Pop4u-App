@@ -399,25 +399,22 @@ public class CartFragment extends Fragment {
         binding.rcRelativeProduct.setNestedScrollingEnabled(false);
     }
     private void addEvents(){
-        binding.btnMuangay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(requireContext(), Payment.class);
-                Bundle bundle = new Bundle();
+        binding.btnMuangay.setOnClickListener(v -> {
+            Intent intent = new Intent(requireContext(), Payment.class);
+            Bundle bundle = new Bundle();
 //                bundle.putParcelableArrayList("selectedItems", (ArrayList<? extends Parcelable>) selectedCartItemList);
-                if (selectedCartItemList == null) {
-                    selectedCartItemList = new ArrayList<>();
-                }
-                selectedCartItemList.clear();
-                for (CartItem item : carts) {
-                    if (item.isChecked()) {
-                        selectedCartItemList.add(item);
-                    }
-                }
-                bundle.putSerializable("listSelectedItem",(Serializable) selectedCartItemList);
-                intent.putExtra("selectedItems", bundle);
-                startActivity(intent);
+            if (selectedCartItemList == null) {
+                selectedCartItemList = new ArrayList<>();
             }
+            selectedCartItemList.clear();
+            for (CartItem item : carts) {
+                if (item.isChecked()) {
+                    selectedCartItemList.add(item);
+                }
+            }
+            bundle.putSerializable("listSelectedItem",(Serializable) selectedCartItemList);
+            intent.putExtra("selectedItems", bundle);
+            startActivity(intent);
         });
     }
 

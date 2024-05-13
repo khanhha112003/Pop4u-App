@@ -29,6 +29,20 @@ public class QuerySearchActivity extends AppCompatActivity {
         listSearchRes = new ArrayList<>();
         adapter = new HistorySearchAdapter(this, listSearchRes);
 
+        adapter.listener = new HistorySearchAdapter.AdapterEventListener() {
+            @Override
+            public void onDeleteHistorySearch(SearchItem searchItem) {
+                // them code xoa history search trong database
+                Log.d("Search Screen", "Delete history search: " + searchItem.getItemContext());
+            }
+
+            @Override
+            public void onTapSearchItem(SearchItem searchItem) {
+                // them code khi click vao 1 item search
+                Log.d("Search Screen", "Tap search item: " + searchItem.getItemContext());
+            }
+        };
+
         binding.lvHistorySearch.setAdapter(adapter);
 
         setSearchBarInitialValue();
@@ -38,11 +52,13 @@ public class QuerySearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 conductSearch(query);
+                // them code de luu history search vao database
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                // them code de hien thi suggest search, lay suggest search tu db
                 return false;
             }
         });
@@ -74,11 +90,16 @@ public class QuerySearchActivity extends AppCompatActivity {
 
         CompletableFuture<ArrayList<SearchItem>> searchResult = SearchService.instance.search(query);
         searchResult.thenAccept(res -> {
+            // khi code phan local search thi dung logic tuong tu o cho nay
             listSearchRes.clear();
-            // de test, neu chen code vao day thi add cai history search luu o database
+            // xoa dong nay di khi chen code that
             listSearchRes.add(new SearchItem(SearchItem.HISTORY_TYPE, query, null, null));
             // dien code lay tu database, dung model Search item lam mau
 
+            // giai thich: res la ket qua search tu server, moi item la 1 ket qua search
+            // moi item co type la SearchItem.ARTIST_TYPE hoac SearchItem.SONG_TYPE
+            // moi item co id la id cua artist hoac song
+            // khi get ve roi thi lay adapter de doi listSearchRes
 
             listSearchRes.addAll(res);
             adapter.notifyDataSetChanged();

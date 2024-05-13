@@ -21,7 +21,7 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 public class HistorySearchAdapter extends BaseAdapter {
 
     Context context;
-
+    public AdapterEventListener listener;
     ArrayList<SearchItem> listSearchResultItem;
 
     HistorySearchAdapter(Context context, ArrayList<SearchItem> listSearchResultItem){
@@ -47,7 +47,7 @@ public class HistorySearchAdapter extends BaseAdapter {
     private static class SearchViewHolder {
         TextView itemSearchText;
 
-        ImageButton copySearchText;
+        ImageButton deleteHistorySearch;
 
         ImageView itemSearchImage;
 
@@ -58,7 +58,14 @@ public class HistorySearchAdapter extends BaseAdapter {
         TextView searchItemSubtitle;
         TextView historySearchText;
 
+        public SearchItemAction listener;
+
+        SearchItem searchItem;
+
+        View view;
+
         public SearchViewHolder(View view) {
+            this.view = view;
             itemSearchText = view.findViewById(R.id.txt_search_item_text);
             itemSearchImage = view.findViewById(R.id.img_search_item_avatar);
             arrowImage = view.findViewById(R.id.img_search_item_arrow);
@@ -66,18 +73,18 @@ public class HistorySearchAdapter extends BaseAdapter {
 
             historySearchIcon = view.findViewById(R.id.imv_history_search_icon);
             historySearchText = view.findViewById(R.id.txt_history_search_text);
-            copySearchText = view.findViewById(R.id.btn_copy_history_search);
+            deleteHistorySearch = view.findViewById(R.id.btn_delete_history_search);
         }
 
         public void bind(SearchItem searchItem) {
-
+            this.searchItem = searchItem;
             if (!Objects.equals(searchItem.getItemType(), SearchItem.HISTORY_TYPE)) {
                 itemSearchText.setText(searchItem.getItemContext());
                 itemSearchImage.setVisibility(View.VISIBLE);
                 arrowImage.setVisibility(View.VISIBLE);
                 searchItemSubtitle.setVisibility(View.VISIBLE);
 
-                copySearchText.setVisibility(View.GONE);
+                deleteHistorySearch.setVisibility(View.GONE);
                 historySearchIcon.setVisibility(View.GONE);
                 historySearchText.setVisibility(View.GONE);
                 if (Objects.equals(searchItem.getItemType(), SearchItem.ARTIST_TYPE)) {
@@ -100,9 +107,10 @@ public class HistorySearchAdapter extends BaseAdapter {
                             .fit()
                             .into(itemSearchImage);
                 }
+                bindNormalEventHandler();
             } else {
                 historySearchText.setText(searchItem.getItemContext());
-                copySearchText.setVisibility(View.VISIBLE);
+                deleteHistorySearch.setVisibility(View.VISIBLE);
                 historySearchIcon.setVisibility(View.VISIBLE);
                 historySearchText.setVisibility(View.VISIBLE);
 
@@ -110,9 +118,22 @@ public class HistorySearchAdapter extends BaseAdapter {
                 itemSearchImage.setVisibility(View.GONE);
                 arrowImage.setVisibility(View.GONE);
                 searchItemSubtitle.setVisibility(View.GONE);
+                bindEventHandlerHistory();
             }
+        }
 
+        private void bindEventHandlerHistory() {
+            this.deleteHistorySearch.setOnClickListener(view -> listener.onDeleteHistorySearch(searchItem));
+            this.view.setOnClickListener(view -> listener.onSearchItemClick(searchItem));
+        }
 
+        private void bindNormalEventHandler() {
+            this.view.setOnClickListener(view -> listener.onSearchItemClick(searchItem));
+        }
+
+        public interface SearchItemAction {
+            void onSearchItemClick(SearchItem searchItem);
+            void onDeleteHistorySearch(SearchItem searchItem);
         }
     }
 
@@ -128,6 +149,23 @@ public class HistorySearchAdapter extends BaseAdapter {
             searchViewItem = (SearchViewHolder) convertView.getTag();
         }
         searchViewItem.bind(searchItem);
+        searchViewItem.listener = new SearchViewHolder.SearchItemAction() {
+            @Override
+            public void onSearchItemClick(SearchItem searchItem) {
+                listener.onTapSearchItem(searchItem);
+            }
+
+            @Override
+            public void onDeleteHistorySearch(SearchItem searchItem) {
+                listener.onDeleteHistorySearch(searchItem);
+            }
+        };
         return convertView;
+    }
+
+    public interface AdapterEventListener {
+        void onDeleteHistorySearch(SearchItem searchItem);
+
+        void onTapSearchItem(SearchItem searchItem);
     }
 }

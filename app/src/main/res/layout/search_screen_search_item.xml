@@ -95,13 +95,13 @@
         android:text="@string/placeholder"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_copy_history_search"
+        app:layout_constraintEnd_toStartOf="@+id/btn_delete_history_search"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@id/imv_history_search_icon"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/btn_copy_history_search"
+        android:id="@+id/btn_delete_history_search"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:visibility="gone"
