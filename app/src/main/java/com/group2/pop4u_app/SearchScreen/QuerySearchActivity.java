@@ -160,7 +160,6 @@ public class QuerySearchActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
             Log.e("Search", "Search failed", e);
         }
-
     }
 
     private void openArtistDetail(String artistCode) {

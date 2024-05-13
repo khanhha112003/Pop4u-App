@@ -94,4 +94,10 @@ public class HistorySearchDatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         return cursor.moveToFirst();
     }
+
+    public void deleteAllSearchHistory() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, null, null);
+        db.close();
+    }
 }
