@@ -122,32 +122,6 @@ public class SearchDashboardFragment extends Fragment implements SearchView.OnQu
         super.onStart();
     }
 
-
-//    private void setTabHandler() {
-//        MainActivity mainActivity = (MainActivity) getActivity();
-//        if (mainActivity == null) {
-//            return;
-//        }
-//        getView().findViewById(binding.searchDashboardCategoryCardAll.getId())
-//                .setOnClickListener(view ->mainActivity.replaceFragment(new CategoryProductFragment("all")));
-//
-//        getView().findViewById(binding.searchDashboardCategoryCardAlbum.getId())
-//                .setOnClickListener(view -> mainActivity.replaceFragment(new CategoryProductFragment("album")));
-//
-//        getView().findViewById(binding.searchDashboardCategoryCardMerch.getId())
-//                .setOnClickListener(view -> mainActivity.replaceFragment(new CategoryProductFragment("merch")));
-//
-//        getView().findViewById(binding.searchDashboardCategoryCardPhotobook.getId())
-//                .setOnClickListener(view -> mainActivity.replaceFragment(new CategoryProductFragment("photo")));
-//
-//        getView().findViewById(binding.searchDashboardCategoryCardVinyl.getId())
-//                .setOnClickListener(view -> mainActivity.replaceFragment(new CategoryProductFragment("vinyl")));
-//
-//        getView().findViewById(binding.searchDashboardCategoryCardLightstick.getId())
-//                .setOnClickListener(view -> mainActivity.replaceFragment(new CategoryProductFragment("lightstick")));
-//    }
-
-
     @Override
     public void onResume() {
         super.onResume();
