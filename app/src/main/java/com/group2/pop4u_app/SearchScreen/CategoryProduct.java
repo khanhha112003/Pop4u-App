@@ -1,13 +1,16 @@
 package com.group2.pop4u_app.SearchScreen;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -19,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.chip.Chip;
 import com.google.android.material.slider.RangeSlider;
 import com.group2.adapter.BigProductCardRecyclerAdapter;
 import com.group2.api.Services.ProductService;
@@ -30,6 +34,8 @@ import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.SearchScreenCategoryProductBinding;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
@@ -80,6 +86,7 @@ public class CategoryProduct extends AppCompatActivity {
             return true;
         } else if (item.getItemId() == R.id.mnFilterProduct) {
             openFilterDialog();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -89,9 +96,9 @@ public class CategoryProduct extends AppCompatActivity {
         dialog.setContentView(R.layout.dialog_filter_product);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
-        if (this.productOrder == "asc") {
+        if (this.productOrder.equals("asc")) {
             dialog.findViewById(R.id.chipAscendPrice).setSelected(true);
-        } else if (this.productOrder == "desc") {
+        } else if (this.productOrder.equals("desc")) {
             dialog.findViewById(R.id.chipDescendPrice).setSelected(true);
         }
 
@@ -125,40 +132,42 @@ public class CategoryProduct extends AppCompatActivity {
 
         dialog.findViewById(R.id.chipAscendPrice).setOnClickListener(v -> {
             this.productOrder = "asc";
+            handleChipClick((Chip) v,1);
         });
 
         dialog.findViewById(R.id.chipDescendPrice).setOnClickListener(v -> {
             this.productOrder = "desc";
+            handleChipClick((Chip) v,1);
         });
 
         dialog.findViewById(R.id.chipAllProduct).setOnClickListener(v -> {
-            this.params = "";
             this.relayoutActionBar("Tất cả");
+            handleChipClick((Chip) v,2);
         });
 
         dialog.findViewById(R.id.chipAlbum).setOnClickListener(v -> {
-            this.params = "Album";
             this.relayoutActionBar("Album");
+            handleChipClick((Chip) v,2);
         });
 
         dialog.findViewById(R.id.chipMerch).setOnClickListener(v -> {
-            this.params = "Merch";
             this.relayoutActionBar("Merch");
+            handleChipClick((Chip) v,2);
         });
 
         dialog.findViewById(R.id.chipPhotobook).setOnClickListener(v -> {
-            this.params = "Photobook";
             this.relayoutActionBar("Photobook");
+            handleChipClick((Chip) v,2);
         });
 
         dialog.findViewById(R.id.chipVinyl).setOnClickListener(v -> {
-            this.params = "Vinyl";
             this.relayoutActionBar("Vinyl");
+            handleChipClick((Chip) v,2);
         });
 
         dialog.findViewById(R.id.chipLightstick).setOnClickListener(v -> {
-            this.params = "Lightstick";
             this.relayoutActionBar("Lightstick");
+            handleChipClick((Chip) v,2);
         });
 
         RangeSlider rangeSlider = dialog.findViewById(R.id.sliderYearRangeProductRelease);
@@ -178,48 +187,60 @@ public class CategoryProduct extends AppCompatActivity {
         dialog.findViewById(R.id.chipHot).setOnClickListener(v -> {
             Log.d("Filter", "Hot");
             type_filter = "is_hot";
+            handleChipClick((Chip) v,3);
         });
 
         dialog.findViewById(R.id.chipNew).setOnClickListener(v -> {
             Log.d("Filter", "New");
             type_filter = "is_new";
+            handleChipClick((Chip) v,3);
         });
 
         dialog.findViewById(R.id.chipSale).setOnClickListener(v -> {
             Log.d("Filter", "Sale");
             type_filter = "is_sale";
+            handleChipClick((Chip) v,3);
         });
 
         dialog.findViewById(R.id.chipUnder500).setOnClickListener(v -> {
             Log.d("Filter", "Under 500");
             priceStart = null;
             priceEnd = 500000;
+            handleChipClick((Chip) v,4);
         });
 
         dialog.findViewById(R.id.chipUnder1K).setOnClickListener(v -> {
             Log.d("Filter", "500 to 1000");
             priceStart = 500000;
             priceEnd = 1000000;
+            handleChipClick((Chip) v,4);
         });
 
         dialog.findViewById(R.id.chipUnder1_5K).setOnClickListener(v -> {
             Log.d("Filter", "1000 to 2000");
             priceStart = 1000000;
             priceEnd = 1500000;
+            handleChipClick((Chip) v,4);
         });
 
         dialog.findViewById(R.id.chipUnder2K).setOnClickListener(v -> {
             Log.d("Filter", "1000 to 2000");
             priceStart = 1500000;
             priceEnd = 2000000;
+            handleChipClick((Chip) v,4);
         });
 
         dialog.findViewById(R.id.chipOver2K).setOnClickListener(v -> {
             Log.d("Filter", "Over 2000");
             priceStart = 2000000;
             priceEnd = null;
+            handleChipClick((Chip) v,4);
         });
-
+        selectedChips.clear();
+        selectedChips.put(1, null); // Assuming 1 is the section ID for product order
+        selectedChips.put(2, null);
+        selectedChips.put(3, null);
+        selectedChips.put(4, null);
         dialog.findViewById(R.id.btnApplyFilter).setOnClickListener(v -> {
             Log.d("Filter", "Apply Filter");
             currentPage = 0;
@@ -256,6 +277,17 @@ public class CategoryProduct extends AppCompatActivity {
 
         dialog.show();
     }
+    private Map<Integer, Chip> selectedChips = new HashMap<>();
+
+    private void handleChipClick(Chip chip, int sectionId) {
+        Chip previousChip = selectedChips.get(sectionId);
+        if (previousChip != null) {
+            previousChip.setChipBackgroundColorResource(R.color.md_theme_surfaceContainerLow);
+        }
+        chip.setChipBackgroundColorResource(R.color.md_theme_primaryContainer_mediumContrast);
+        selectedChips.put(sectionId, chip);
+    }
+
 
     private void setScreenTitle() {
         Intent intent = getIntent();
