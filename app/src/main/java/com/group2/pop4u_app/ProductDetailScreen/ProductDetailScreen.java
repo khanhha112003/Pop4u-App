@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.icu.text.NumberFormat;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
@@ -43,6 +44,7 @@ import com.group2.api.Services.ArtistService;
 import com.group2.api.Services.OrderService;
 import com.group2.api.Services.ProductService;
 import com.google.android.material.snackbar.Snackbar;
+import com.group2.database_helper.FavoriteDatabaseHelper;
 import com.group2.database_helper.OrderDatabaseHelper;
 import com.group2.local.LoginManagerTemp;
 import com.group2.model.Artist;
@@ -78,8 +80,11 @@ public class ProductDetailScreen extends AppCompatActivity {
     Dialog optionDialog;
     int currentAmount;
     OrderDatabaseHelper databaseHelper;
+    FavoriteDatabaseHelper favoriteDatabaseHelper;
     BadgeDrawable badge;
+    boolean favoriteState;
     Vibrator vibrator;
+    NumberFormat numberFormat;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,14 +112,13 @@ public class ProductDetailScreen extends AppCompatActivity {
             v.setPadding( 0, paddingTop, 0, 0);
             return insets;
         });
-
+        numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
         setUpToolbar();
         createDB();
         setArtistCardClick();
         setUpProductImage();
         addEvents();
         addCartBadge();
-
     }
 
     @Override
@@ -157,7 +161,7 @@ public class ProductDetailScreen extends AppCompatActivity {
         final int[] previousScrollY = {0};
         binding.nsvProductDetail.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             if (scrollY > previousScrollY[0]) {
-                int color = getResources().getColor(R.color.md_theme_surfaceContainerLow);
+                int color = ProductDetailScreen.this.getResources().getColor(R.color.md_theme_surfaceContainerLow);
                 Drawable drawable = new ColorDrawable(color);
                 getSupportActionBar().setBackgroundDrawable(drawable);
             } else if (scrollY == 0) {
@@ -168,38 +172,52 @@ public class ProductDetailScreen extends AppCompatActivity {
     }
 
     private void addEvents() {
+
         binding.txtExpectedDate.append(" " + calExpectedDate());
-        binding.crdArtist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ProductDetailScreen.this, ArtistInfoScreen.class);
-                intent.putExtra("artistName", product.getProductArtistName());
-                startActivity(intent);
-            }
-        });
+//        binding.crdArtist.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(ProductDetailScreen.this, ArtistInfoScreen.class);
+//                intent.putExtra("artistName", product.getProductArtistName());
+//                startActivity(intent);
+//            }
+//        });
+
+        String productCode = getIntent().getStringExtra("productCode");
+        favoriteState = favoriteDatabaseHelper.checkData(productCode);
+        binding.btnAddToFavProduct.setSelected(favoriteState);
         binding.btnAddToFavProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean favoriteState = binding.btnAddToFavProduct.isSelected();
-                binding.btnAddToFavProduct.setSelected(!favoriteState);
-                vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-                vibrator.vibrate(VibrationEffect.EFFECT_HEAVY_CLICK);
-                if (favoriteState) {
-                    Snackbar.make(binding.ctnSnackBar, R.string.delete_favorite_noti, Snackbar.LENGTH_LONG).setAction(R.string.action_bar_favorite_action, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent = new Intent(ProductDetailScreen.this, FavoriteListActivity.class);
-                            startActivity(intent);
-                        };
-                    }).show();
+                if (LoginManagerTemp.isLogin == false) {
+                    Toast.makeText(ProductDetailScreen.this, R.string.request_to_sign_in, Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(ProductDetailScreen.this, LoginPage.class);
+                    startActivity(intent);
                 } else {
-                    Snackbar.make(binding.ctnSnackBar, R.string.add_favorite_noti, Snackbar.LENGTH_LONG).setAction(R.string.action_bar_favorite_action, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent = new Intent(ProductDetailScreen.this, FavoriteListActivity.class);
-                            startActivity(intent);
-                        }
-                    }).show();
+                    favoriteState = binding.btnAddToFavProduct.isSelected();
+                    binding.btnAddToFavProduct.setSelected(!favoriteState);
+                    vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                    vibrator.vibrate(VibrationEffect.EFFECT_HEAVY_CLICK);
+                    if (favoriteState) {
+                        favoriteDatabaseHelper.deleteData(product.getProductCode());
+                        Snackbar.make(binding.ctnSnackBar, R.string.delete_favorite_noti, Snackbar.LENGTH_LONG).setAction(R.string.action_bar_favorite_action, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(ProductDetailScreen.this, FavoriteListActivity.class);
+                                startActivity(intent);
+                            };
+                        }).show();
+                    } else {
+                        favoriteDatabaseHelper.insertData(product);
+
+                        Snackbar.make(binding.ctnSnackBar, R.string.add_favorite_noti, Snackbar.LENGTH_LONG).setAction(R.string.action_bar_favorite_action, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(ProductDetailScreen.this, FavoriteListActivity.class);
+                                startActivity(intent);
+                            }
+                        }).show();
+                    }
                 }
             }
         });
@@ -292,6 +310,7 @@ public class ProductDetailScreen extends AppCompatActivity {
 
     private void createDB() {
         databaseHelper = new OrderDatabaseHelper(ProductDetailScreen.this);
+        favoriteDatabaseHelper = new FavoriteDatabaseHelper(ProductDetailScreen.this);
     }
 
     private void openOptionDialog() {
@@ -442,30 +461,41 @@ public class ProductDetailScreen extends AppCompatActivity {
 
     private void setArtistCardClick() {
         binding.crdArtistOfProduct.setOnClickListener(v -> {
-            String artistCode = getIntent().getStringExtra("artistCode");
-            Intent intent = new Intent(this, ArtistInfoScreen.class);
-            intent.putExtra("artistCode", artistCode);
-            startActivity(intent);
+            openArtist();
+        });
+        binding.btnViewArtistInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openArtist();
+            }
         });
     }
 
+    private void openArtist() {
+        String artistCode = getIntent().getStringExtra("artistCode");
+        Intent intent = new Intent(ProductDetailScreen.this, ArtistInfoScreen.class);
+        intent.putExtra("artistCode", artistCode);
+        startActivity(intent);
+    }
     private void loadData() {
         // Load data from server
-        String productCode = getIntent().getStringExtra("productCode");
-        String artistCode = getIntent().getStringExtra("artistCode");
+        Intent intent = getIntent();
+        String productCode = intent.getStringExtra("productCode");
+        String artistCode = intent.getStringExtra("artistCode");
         CompletableFuture<Product> future = ProductService.instance.getProduct(productCode);
         future.thenAccept(product -> {
             // Update UI with product data
             if (product.getProductComparingPrice() != 0) {
-                binding.txtProductDetailPrice.setText(String.format("%s đ", product.getProductComparingPrice()));
-                binding.txtProductDetailComparingPrice.setText(String.format("%s đ", product.getProductPrice()));
+                binding.txtProductDetailPrice.setText(String.format("%sđ", numberFormat.format(product.getProductComparingPrice())));
+                binding.txtProductDetailComparingPrice.setText(String.format("%sđ", numberFormat.format(product.getProductPrice())));
             } else {
-                binding.txtProductDetailPrice.setText(String.format("%s đ", product.getProductPrice()));
+
+                binding.txtProductDetailPrice.setText(String.format("%sđ", numberFormat.format(product.getProductPrice())));
                 binding.txtProductDetailComparingPrice.setVisibility(View.GONE);
             }
             binding.txtProductDetailName.setText(product.getProductName());
             binding.txtProductDetailArtist.setText(product.getProductArtistName());
-            binding.txtProductDetailDescription.setText(product.getProductDescription());
+            binding.txtProductDetailDescription.setText(product.getProductDescription() + "\n\n" + getString(R.string.product_des));
             binding.txtProductDetailRate.setText(String.format("%s", product.getProductRating()));
             binding.txtProductDetailSoldAmount.append(String.format("%s", product.getProductSoldAmount()));
             productImgAdapter.setImagesUrl(product.getListProductPhoto());
@@ -483,13 +513,14 @@ public class ProductDetailScreen extends AppCompatActivity {
 
         CompletableFuture<Artist> futureArtist = ArtistService.instance.getArtistDetail(artistCode);
         futureArtist.thenAccept(artist -> {
-            binding.txtArtistYearDebut.append(" " + String.valueOf(artist.getArtistYearDebut()));
+            String artistImageLink = artist.getArtistAvatar();
             Picasso.get()
-                    .load(artist.getArtistAvatar())
+                    .load(artistImageLink)
                     .placeholder(R.drawable.placeholder_image)
                     .error(R.drawable.error_image)
-                    .fit().centerCrop()
+                    .fit()
                     .into(binding.imvArtistAvatar);
+            binding.txtArtistYearDebut.setText(getString(R.string.year_debut) + " " + String.valueOf(artist.getArtistYearDebut()));
         });
 
         try {

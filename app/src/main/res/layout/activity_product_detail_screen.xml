@@ -91,8 +91,8 @@
                 app:cardBackgroundColor="@color/md_theme_errorContainer"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="0dp"
-                app:layout_constraintTop_toTopOf="@id/txtProductDetailComparingPrice"
-                app:layout_constraintBottom_toBottomOf="@id/txtProductDetailComparingPrice"
+                app:layout_constraintTop_toTopOf="@id/txtProductDetailPrice"
+                app:layout_constraintBottom_toBottomOf="@id/txtProductDetailPrice"
                 app:layout_constraintStart_toEndOf="@+id/txtProductDetailComparingPrice">
 
                 <TextView
@@ -193,7 +193,7 @@
                     app:layout_constraintStart_toEndOf="@+id/ctr02"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:tint="@drawable/button_no_filled_text_color" />
+                    app:tint="@drawable/button_no_filled_text_color"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.cardview.widget.CardView
@@ -312,8 +312,8 @@
                     android:id="@+id/crdArtistOfProduct"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:foreground="@drawable/foreground_onclick_color_change"
                     android:padding="20dp">
-
                     <androidx.cardview.widget.CardView
                         android:id="@+id/crdArtistAvatar"
                         android:layout_width="60dp"
@@ -328,8 +328,7 @@
                             android:id="@+id/imvArtistAvatar"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/img_1" />
+                            android:scaleType="centerCrop"/>
                     </androidx.cardview.widget.CardView>
 
                     <TextView

@@ -16,9 +16,9 @@ public class BannerAdapter extends PagerAdapter {
 
     Context context;
     int[] BannerImg = {
-            R.drawable.img,
-            R.drawable.img_1,
-            R.drawable.img_2,
+            R.drawable.banner_welcome,
+            R.drawable.banner_blue,
+            R.drawable.banner_sale,
     };
 
 
