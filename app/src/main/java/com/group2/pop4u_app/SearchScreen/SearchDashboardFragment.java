@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.group2.adapter.ArtistHorizontalListAdapter;
 import com.group2.api.Services.ArtistService;
 import com.group2.model.Artist;
+import com.group2.pop4u_app.ArtistInfoScreen.ArtistInfoScreen;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetHorizontalRecycler;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentSearchDashboardBinding;
@@ -144,6 +145,11 @@ public class SearchDashboardFragment extends Fragment implements SearchView.OnQu
        // Khởi tạo và thiết lập adapter
        featuredArtistAdapter = new ArtistHorizontalListAdapter(requireActivity(), featuredArtistArrayList);
        binding.rccHotArtist.setAdapter(featuredArtistAdapter);
+       featuredArtistAdapter.setOnClickListener((position, artist) -> {
+            Intent intent = new Intent(requireActivity(), ArtistInfoScreen.class);
+            intent.putExtra("artistCode", featuredArtistArrayList.get(position).getArtistCode());
+            startActivity(intent);
+       });
    }
 
     private void loadingData() {

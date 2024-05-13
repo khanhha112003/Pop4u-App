@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.group2.adapter.SettingListAdapter;
 import com.group2.api.Services.UserService;
+import com.group2.database_helper.HistorySearchDatabaseHelper;
 import com.group2.database_helper.LoginDatabaseHelper;
 import com.group2.database_helper.OrderDatabaseHelper;
 import com.group2.local.LoginManagerTemp;
@@ -34,9 +35,9 @@ public class AccountFragment extends Fragment {
     SettingListAdapter settingAccountListAdapter, settingSystemListAdapter;
     ArrayList<SettingItem> settingAccountItems, settingSystemItems;
     SettingItem selectedItem;
-
     LoginDatabaseHelper loginDatabaseHelper;
     OrderDatabaseHelper orderDatabaseHelper;
+    HistorySearchDatabaseHelper historySearchDatabaseHelper;
     User user = new User("username", "email", "name", "birthdate", "phone_number");
     public AccountFragment() { }
     public static AccountFragment newInstance() {
@@ -106,6 +107,7 @@ public class AccountFragment extends Fragment {
                 if (result && mainActivity != null) {
                     loginDatabaseHelper.clearAllData();
                     orderDatabaseHelper.clearAllData();
+                    historySearchDatabaseHelper.deleteAllSearchHistory();
                     LoginManagerTemp.isLogin = false;
                     LoginManagerTemp.token = "";
                     mainActivity.backHome();

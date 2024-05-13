@@ -1,18 +1,28 @@
 package com.group2.pop4u_app.SearchScreen;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.group2.api.Services.ProductService;
 import com.group2.api.Services.SearchService;
+import com.group2.database_helper.HistorySearchDatabaseHelper;
+import com.group2.model.Product;
+import com.group2.model.SearchHistory;
 import com.group2.model.SearchItem;
+import com.group2.pop4u_app.ArtistInfoScreen.ArtistInfoScreen;
+import com.group2.pop4u_app.ProductDetailScreen.ProductDetailScreen;
 import com.group2.pop4u_app.databinding.ActivitySearchScreenQuerySearchBinding;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 public class QuerySearchActivity extends AppCompatActivity {
@@ -20,12 +30,19 @@ public class QuerySearchActivity extends AppCompatActivity {
 
     HistorySearchAdapter adapter;
 
-    ArrayList<SearchItem> listSearchRes;
+    ArrayList<SearchItem> listSearchRes = new ArrayList<>();
+
+    ArrayList<SearchHistory> searchHistoriesFromDatabase = new ArrayList<>();
+
+    HistorySearchDatabaseHelper historySearchDatabaseHelper;
+
+    private int waitingTime = 500;
+    private CountDownTimer cntr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        historySearchDatabaseHelper = new HistorySearchDatabaseHelper(this);
         binding = ActivitySearchScreenQuerySearchBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         listSearchRes = new ArrayList<>();
@@ -36,17 +53,21 @@ public class QuerySearchActivity extends AppCompatActivity {
             public void onDeleteHistorySearch(SearchItem searchItem) {
                 // them code xoa history search trong database
                 Log.d("Search Screen", "Delete history search: " + searchItem.getItemContext());
+                historySearchDatabaseHelper.deleteSearchHistory(searchItem.getItemContext());
             }
 
             @Override
             public void onTapSearchItem(SearchItem searchItem) {
                 // them code khi click vao 1 item search
                 Log.d("Search Screen", "Tap search item: " + searchItem.getItemContext());
-            }
-
-            @Override
-            public void onTapSearchItem(Context context, SearchItem searchItem) {
-
+                if (Objects.equals(searchItem.getItemType(), SearchItem.HISTORY_TYPE)) {
+                    conductSearch(searchItem.getItemContext());
+                } else if (Objects.equals(searchItem.getItemType(), SearchItem.ARTIST_TYPE)) {
+                    openArtistDetail(searchItem.getItemCode());
+                } else {
+                    // them code khi click vao 1 item search suggest
+                    openProductDetail(searchItem.getItemCode());
+                }
             }
         };
 
@@ -66,6 +87,28 @@ public class QuerySearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 // them code de hien thi suggest search, lay suggest search tu db
+                if(cntr != null){
+                    cntr.cancel();
+                }
+                cntr = new CountDownTimer(waitingTime, 500) {
+
+                    public void onTick(long millisUntilFinished) {
+                    }
+
+                    public void onFinish() {
+                        searchHistoriesFromDatabase.clear();
+                        listSearchRes.clear();
+                        searchHistoriesFromDatabase = historySearchDatabaseHelper.getSearchHistoryByMatchingKeyword(newText);
+                        if (searchHistoriesFromDatabase.size() == 0) {
+                            searchHistoriesFromDatabase = historySearchDatabaseHelper.getRecentSearchHistory();
+                        }
+                        for (SearchHistory searchHistory : searchHistoriesFromDatabase) {
+                            listSearchRes.add(searchHistory.toSearchItem());
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                };
+                cntr.start();
                 return false;
             }
         });
@@ -92,34 +135,58 @@ public class QuerySearchActivity extends AppCompatActivity {
     }
 
     private void conductSearch(String query) {
-        // luu history search vao database
-        // dien o day
-
+        if (!historySearchDatabaseHelper.isKeywordExist(query)) {
+            historySearchDatabaseHelper.addSearchHistory(query);
+        }
+        searchHistoriesFromDatabase.clear();
+        searchHistoriesFromDatabase = historySearchDatabaseHelper.getSearchHistoryByMatchingKeyword(query);
+        listSearchRes.clear();
+        for (SearchHistory searchHistory : searchHistoriesFromDatabase) {
+            listSearchRes.add(searchHistory.toSearchItem());
+        }
         CompletableFuture<ArrayList<SearchItem>> searchResult = SearchService.instance.search(query);
         searchResult.thenAccept(res -> {
-            // khi code phan local search thi dung logic tuong tu o cho nay
-            listSearchRes.clear();
-            // xoa dong nay di khi chen code that
-            listSearchRes.add(new SearchItem(SearchItem.HISTORY_TYPE, query, null, null));
-            // dien code lay tu database, dung model Search item lam mau
-
-            // giai thich: res la ket qua search tu server, moi item la 1 ket qua search
-            // moi item co type la SearchItem.ARTIST_TYPE hoac SearchItem.SONG_TYPE
-            // moi item co id la id cua artist hoac song
-            // khi get ve roi thi lay adapter de doi listSearchRes
-
             listSearchRes.addAll(res);
             adapter.notifyDataSetChanged();
         }).exceptionally(e -> {
             Log.e("Search", "Search failed", e);
+            adapter.notifyDataSetChanged();
             return null;
         });
 
         try {
             searchResult.get();
         } catch (Exception e) {
+            adapter.notifyDataSetChanged();
             Log.e("Search", "Search failed", e);
         }
+    }
 
+    private void openArtistDetail(String artistCode) {
+        // them
+        Intent intent = new Intent(QuerySearchActivity.this, ArtistInfoScreen.class);
+        intent.putExtra("artistCode", artistCode);
+        startActivity(intent);
+        finish();
+    }
+
+    private void openProductDetail(String productCode) {
+        // them
+        CompletableFuture<Product> product = ProductService.instance.getProduct(productCode);
+        product.thenAccept(res -> {
+            Intent intent = new Intent(QuerySearchActivity.this, ProductDetailScreen.class);
+            intent.putExtra("productCode", productCode);
+            intent.putExtra("artistCode", res.getArtistCode());
+            startActivity(intent);
+            finish();
+        }).exceptionally(e -> {
+            Log.e("Search", "Get product failed", e);
+            return null;
+        });
+        try {
+            product.get();
+        } catch (Exception e) {
+            Log.e("Search", "Get product failed", e);
+        }
     }
 }

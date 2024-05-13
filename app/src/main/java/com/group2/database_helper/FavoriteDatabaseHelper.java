@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteStatement;
 import com.group2.model.Product;
 
 public class FavoriteDatabaseHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "pop4u.sqlite";
+    private static final String DATABASE_NAME = "favorite.sqlite";
     public static final String TABLE_NAME = "favorite";
     private static final int DATABASE_VERSION = 1;
     public static final String COLUMN_PRODUCT_NAME = "productName";

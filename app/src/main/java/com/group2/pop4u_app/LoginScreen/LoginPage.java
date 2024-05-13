@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.group2.api.Services.UserService;
+import com.group2.database_helper.HistorySearchDatabaseHelper;
 import com.group2.database_helper.LoginDatabaseHelper;
 import com.group2.local.LoginManagerTemp;
 import com.group2.pop4u_app.MainActivity;
@@ -26,12 +27,15 @@ public class LoginPage extends AppCompatActivity {
     ActivityLoginPageBinding binding;
 
     LoginDatabaseHelper loginDatabaseHelper;
+
+    HistorySearchDatabaseHelper historySearchDatabaseHelper;
     private boolean passwordShowing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loginDatabaseHelper = new LoginDatabaseHelper(this);
+        historySearchDatabaseHelper = new HistorySearchDatabaseHelper(this);
         binding = ActivityLoginPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         addEvents();
@@ -45,8 +49,7 @@ public class LoginPage extends AppCompatActivity {
                    LoginManagerTemp.isLogin = true;
                    LoginManagerTemp.token = v;
                    loginDatabaseHelper.insertData(v);
-//                   Intent intent = new Intent(LoginPage.this, MainActivity.class); // Chuyển đến MainActivity
-//                   startActivity(intent);
+                   historySearchDatabaseHelper.deleteAllSearchHistory();
                    LoginManagerTemp.isJustFinishLoginSuccess = true;
                    this.finish();
                }
