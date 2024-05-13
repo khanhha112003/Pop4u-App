@@ -79,9 +79,9 @@ public class AccountFragment extends Fragment {
                     startActivity(intent);
                     break;
                 }
-                case "payment_method": {
-
-                }
+//                case "payment_method": {
+//
+//                }
                 case "address_list": {
                     Intent intent = new Intent(requireActivity(), PickAddress.class);
                     startActivity(intent);
