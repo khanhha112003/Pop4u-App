@@ -19,27 +19,15 @@ public interface IOrderService {
     );
 
     @POST("/api/order/add_to_cart_mobile")
-    Call<ValidationResponseDAO> addProductToCart(
+    Call<ValidationResponseDAO> updateCart(
             @Header("Authorization") String authHeader,
             @Query("product_code") String product_code,
             @Query("quantity") Integer quantity
     );
 
-    @POST("/api/order/update_cart_mobile")
-    Call<ValidationResponseDAO> updateCart(
-            @Header("Authorization") String authHeader,
-            @Query("product_name") String product_name,
-            @Query("quantity") Integer quantity
-    );
-
-    @POST("/api/order/checkout_mobile")
+    @POST("/api/order/create_order_mobile")
     Call<ValidationResponseDAO> createOrder(
             @Header("Authorization") String authHeader,
             @Body HashMap<String, Object> body
-    );
-
-    @DELETE("/api/order/delete_all_item_in_cart")
-    Call<ValidationResponseDAO> dropCart(
-            @Header("Authorization") String authHeader
     );
 }

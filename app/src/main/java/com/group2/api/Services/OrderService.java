@@ -48,7 +48,7 @@ public class OrderService {
         CompletableFuture<ResponseValidate> future = new CompletableFuture<>();
         executor.execute(() -> {
             String authHeader = "Bearer " + LoginManagerTemp.token;
-            Call<ValidationResponseDAO> call = apiService.addProductToCart(authHeader, product_name, quantity);
+            Call<ValidationResponseDAO> call = apiService.updateCart(authHeader, product_name, quantity);
             try {
                 Response<ValidationResponseDAO> response = call.execute();
                 if (response.isSuccessful()) {
@@ -72,7 +72,7 @@ public class OrderService {
         CompletableFuture<ResponseValidate> future = new CompletableFuture<>();
         executor.execute(() -> {
             String authHeader = "Bearer " + LoginManagerTemp.token;
-            Call<ValidationResponseDAO> call = apiService.addProductToCart(authHeader, product_name, -quantity);
+            Call<ValidationResponseDAO> call = apiService.updateCart(authHeader, product_name, -quantity);
             try {
                 Response<ValidationResponseDAO> response = call.execute();
                 if (response.isSuccessful()) {
@@ -92,13 +92,14 @@ public class OrderService {
         return future;
     }
 
-    public CompletableFuture<ResponseValidate> createOrder(String address, String phone, String payment_method, String shipping_price, ArrayList<CartItem> listItem) {
+    public CompletableFuture<ResponseValidate> createOrder(String address, String phone, String payment_method, String shipping_price, ArrayList<CartItem> listItem, String voucher) {
         CompletableFuture<ResponseValidate> future = new CompletableFuture<>();
         HashMap<String, Object> body = new HashMap<>();
         body.put("address", address);
         body.put("phone", phone);
         body.put("payment_method", payment_method);
         body.put("shipping_price", shipping_price);
+        body.put("voucher", voucher);
         ArrayList<String> product_code = new ArrayList<>();
         ArrayList<String> quantity = new ArrayList<>();
         for (int i = 0; i < listItem.size(); i++) {
@@ -110,29 +111,6 @@ public class OrderService {
         String authHeader = "Bearer " + LoginManagerTemp.token;
         executor.execute(() -> {
             Call<ValidationResponseDAO> call = apiService.createOrder(authHeader, body);
-            try {
-                Response<ValidationResponseDAO> response = call.execute();
-                if (response.isSuccessful()) {
-                    ValidationResponseDAO user = response.body();
-                    if (user != null) {
-                        future.complete(user.asResponseValidate()); // Complete the future with the UserDAO object
-                    } else {
-                        future.complete(null); // Complete the future with null if the response is not successful
-                    }
-                } else {
-                    future.complete(null); // Complete the future with null if the response is not successful
-                }
-            } catch (IOException e) {
-                future.completeExceptionally(e); // Complete the future exceptionally if an exception occurs
-            }
-        });
-        return future;
-    }
-    public CompletableFuture<ResponseValidate> dropCart() {
-        CompletableFuture<ResponseValidate> future = new CompletableFuture<>();
-        executor.execute(() -> {
-            String authHeader = "Bearer " + LoginManagerTemp.token;
-            Call<ValidationResponseDAO> call = apiService.dropCart(authHeader);
             try {
                 Response<ValidationResponseDAO> response = call.execute();
                 if (response.isSuccessful()) {
