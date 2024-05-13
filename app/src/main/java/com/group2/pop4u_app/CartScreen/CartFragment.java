@@ -403,7 +403,6 @@ public class CartFragment extends Fragment {
         binding.btnMuangay.setOnClickListener(v -> {
             Intent intent = new Intent(requireContext(), Payment.class);
             Bundle bundle = new Bundle();
-//                bundle.putParcelableArrayList("selectedItems", (ArrayList<? extends Parcelable>) selectedCartItemList);
             if (selectedCartItemList == null) {
                 selectedCartItemList = new ArrayList<>();
             }

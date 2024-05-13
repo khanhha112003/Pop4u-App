@@ -62,6 +62,7 @@ import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.ActivityProductDetailScreenBinding;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -222,26 +223,30 @@ public class ProductDetailScreen extends AppCompatActivity {
             }
         });
 
-        binding.btnBuyNow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (LoginManagerTemp.isLogin == false) {
-                    Toast.makeText(ProductDetailScreen.this, R.string.request_to_sign_in, Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(ProductDetailScreen.this, LoginPage.class);
+        binding.btnBuyNow.setOnClickListener(view -> {
+            if (!LoginManagerTemp.isLogin) {
+                Toast.makeText(ProductDetailScreen.this, R.string.request_to_sign_in, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(ProductDetailScreen.this, LoginPage.class);
+                startActivity(intent);
+            } else {
+                openOptionDialog();
+                Button btnAction = optionDialog.findViewById(R.id.btnAction);
+                btnAction.setText(R.string.buy_now);
+                btnAction.setOnClickListener(view1 -> {
+                    Intent intent = new Intent(ProductDetailScreen.this, Payment.class);
+                    Bundle bundle = new Bundle();
+                    ArrayList<CartItem> selectedCartItemList = new ArrayList<>();
+                    selectedCartItemList.add(new CartItem(product.getProductCode(),
+                            product.getBannerPhoto(),
+                            product.getProductName(),
+                            product.getProductPrice(),
+                            product.getProductComparingPrice(),
+                            currentAmount,
+                            false));
+                    bundle.putSerializable("listSelectedItem",(Serializable) selectedCartItemList);
+                    intent.putExtra("selectedItems", bundle);
                     startActivity(intent);
-                } else {
-                    openOptionDialog();
-                    Button btnAction = optionDialog.findViewById(R.id.btnAction);
-                    btnAction.setText(R.string.buy_now);
-                    btnAction.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent = new Intent(ProductDetailScreen.this, Payment.class);
-                            intent.putExtra("productCode", product.getProductCode());
-                            startActivity(intent);
-                        }
-                    });
-                }
+                });
             }
         });
 
