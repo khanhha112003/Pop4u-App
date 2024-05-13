@@ -8,11 +8,13 @@
     android:background="@color/white">
 
 
-    <ListView
-        android:id="@+id/lvOrderedList"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvOrderedList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        android:paddingStart="5dp"
+        android:scrollbars="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

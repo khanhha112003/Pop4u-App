@@ -36,12 +36,17 @@ public interface IUserService {
     @POST("/api/auth/mobile_update_profile")
     Call<ValidationResponseDAO> update_profile(@Body HashMap<String, String> body);
 
-    @POST("/api/user/update")
-    Call<UserDAO> update(
-            @Header("Authorization") String authHeader,
-            @Body HashMap<String, String> body
-    );
-
     @GET ("/api/auth/user_profile")
     Call<UserDAO> getUserProfile(@Header("Authorization") String authHeader);
+
+
+    @POST("/api/auth/mobile_forgot_password")
+    Call<ValidationResponseDAO> forgot_password(
+            @Query("email") String email
+    );
+
+    @POST("/api/auth/mobile_forgot_password_update")
+    Call<ValidationResponseDAO> update_new_password(
+            @Body HashMap<String, String> body
+    );
 }
