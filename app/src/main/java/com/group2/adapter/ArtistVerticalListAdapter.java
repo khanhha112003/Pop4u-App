@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.group2.model.Artist;
 import com.group2.pop4u_app.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -36,10 +37,15 @@ public class ArtistVerticalListAdapter extends RecyclerView.Adapter<ArtistVertic
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Artist artist = artistList.get(position);
-//        holder.imvArtistAvatar.setImageResource(artist.getArtistAvatar());
+        String artistAvatar = artist.getArtistAvatar();
         holder.txtArtistName.setText(artist.getArtistName());
         holder.txtArtistYearDebut.setText("Ra mắt năm " + String.valueOf(artist.getArtistYearDebut()));
-
+        Picasso.get()
+                .load(artistAvatar)
+                .placeholder(R.drawable.placeholder_image)
+                .error(R.drawable.error_image)
+                .fit().centerCrop()
+                .into(holder.imvArtistAvatar);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

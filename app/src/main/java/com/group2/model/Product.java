@@ -54,6 +54,10 @@ public class Product {
     public Product(int anInt, String string, double aDouble) {
     }
 
+    public Product() {
+
+    }
+
     public String getProductCode() {
         return productCode;
     }
@@ -115,5 +119,53 @@ public class Product {
     public String getProductPriceInFormat() {
         DecimalFormat decimalFormat = new DecimalFormat("#,###.###");
         return decimalFormat.format(this.productPrice);
+    }
+
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public void setProductArtistName(String productArtistName) {
+        this.productArtistName = productArtistName;
+    }
+
+    public void setProductLabel(String productLabel) {
+        this.productLabel = productLabel;
+    }
+
+    public void setArtistCode(String artistCode) {
+        this.artistCode = artistCode;
+    }
+
+    public void setProductPrice(int productPrice) {
+        this.productPrice = productPrice;
+    }
+
+    public void setProductSalePercent(int productSalePercent) {
+        this.productSalePercent = productSalePercent;
+    }
+
+    public void setProductRating(Double productRating) {
+        this.productRating = productRating;
+    }
+
+    public void setProductRatingCount(int productRatingCount) {
+        this.productRatingCount = productRatingCount;
+    }
+
+    public void setProductSoldAmount(int productSoldAmount) {
+        this.productSoldAmount = productSoldAmount;
+    }
+
+    public void setProductStock(int productStock) {
+        this.productStock = productStock;
+    }
+
+    public void setListProductPhoto(ArrayList<String> listProductPhoto) {
+        this.listProductPhoto = listProductPhoto;
     }
 }
