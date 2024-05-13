@@ -76,7 +76,7 @@ public class ProductDetailScreen extends AppCompatActivity {
     private ProductImgAdapter productImgAdapter;
     BigProductCardRecyclerAdapter artistProductAdapter;
     ArrayList<Product> productArrayList = new ArrayList<>();
-    Product product, thisProduct;
+    Product product;
     Dialog optionDialog;
     int currentAmount;
     OrderDatabaseHelper databaseHelper;
@@ -473,6 +473,9 @@ public class ProductDetailScreen extends AppCompatActivity {
 
     private void openArtist() {
         String artistCode = getIntent().getStringExtra("artistCode");
+        if (artistCode == null) {
+            artistCode = product.getArtistCode();
+        }
         Intent intent = new Intent(ProductDetailScreen.this, ArtistInfoScreen.class);
         intent.putExtra("artistCode", artistCode);
         startActivity(intent);

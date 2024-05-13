@@ -79,7 +79,6 @@ public class HistorySearchAdapter extends BaseAdapter {
         public void bind(SearchItem searchItem) {
             this.searchItem = searchItem;
             if (!Objects.equals(searchItem.getItemType(), SearchItem.HISTORY_TYPE)) {
-                itemSearchText.setText(searchItem.getItemContext());
                 itemSearchImage.setVisibility(View.VISIBLE);
                 arrowImage.setVisibility(View.VISIBLE);
                 searchItemSubtitle.setVisibility(View.VISIBLE);
@@ -87,6 +86,7 @@ public class HistorySearchAdapter extends BaseAdapter {
                 deleteHistorySearch.setVisibility(View.GONE);
                 historySearchIcon.setVisibility(View.GONE);
                 historySearchText.setVisibility(View.GONE);
+                itemSearchText.setText(searchItem.getItemContext());
                 if (Objects.equals(searchItem.getItemType(), SearchItem.ARTIST_TYPE)) {
                     searchItemSubtitle.setText("Nghệ sĩ");
                     Picasso
@@ -167,7 +167,5 @@ public class HistorySearchAdapter extends BaseAdapter {
         void onDeleteHistorySearch(SearchItem searchItem);
 
         void onTapSearchItem(SearchItem searchItem);
-
-        void onTapSearchItem(Context context, SearchItem searchItem);
     }
 }

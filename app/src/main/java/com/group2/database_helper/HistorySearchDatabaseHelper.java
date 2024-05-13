@@ -16,15 +16,15 @@ import com.group2.pop4u_app.SearchScreen.HistorySearchAdapter;
 import java.util.ArrayList;
 
 public class HistorySearchDatabaseHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "pop4u.sqlite";
+    private static final String DATABASE_NAME = "search_history.sqlite";
     private static final int DATABASE_VERSION = 1;
     public static final String TABLE_NAME = "search_history";
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_KEYWORD = "keyword";
     public static final String COLUMN_TIMESTAMP = "timestamp";
 
-    public HistorySearchDatabaseHelper(@Nullable HistorySearchAdapter.AdapterEventListener context) {
-        super((Context) context, DATABASE_NAME, null, DATABASE_VERSION);
+    public HistorySearchDatabaseHelper(@Nullable Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
@@ -82,24 +82,16 @@ public class HistorySearchDatabaseHelper extends SQLiteOpenHelper {
         return getSearchHistory(query);
     }
 
-    public void deleteSearchHistory(int id) {
+    public void deleteSearchHistory(String keyword) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NAME, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
+        db.delete(TABLE_NAME, COLUMN_KEYWORD + " = ?", new String[]{keyword});
         db.close();
     }
 
-    public void insertData(SearchItem searchItem) {
-        SQLiteDatabase database = getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_KEYWORD, searchItem.getItemContext());
-        long result = database.insert(TABLE_NAME, null, contentValues);
-        if (result == -1) {
-            // Insert failed
-            Log.d("Database search", "Insert failed");
-        } else {
-            // Insert successful
-            Log.d("Database search", "Insert success");
-        }
-        database.close();
+    public boolean isKeywordExist(String keyword) {
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_KEYWORD + " = '" + keyword + "'";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        return cursor.moveToFirst();
     }
 }
