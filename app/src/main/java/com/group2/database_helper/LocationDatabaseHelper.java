@@ -45,7 +45,7 @@ public class LocationDatabaseHelper extends SQLiteOpenHelper {
         return  db.rawQuery(sql, null);
     }
 
-    public boolean insertData(Address address){
+    public long insertData(Address address){
         SQLiteDatabase database = getWritableDatabase();
         int numOfRows = numOfRows();
         ContentValues contentValues = new ContentValues();
@@ -60,7 +60,7 @@ public class LocationDatabaseHelper extends SQLiteOpenHelper {
         }
         long result = database.insert(LocationDatabaseHelper.TABLE_NAME, null, contentValues);
         database.close();
-        return result != -1;
+        return result;
     }
 
     public Boolean clearAllDefaultAddress() {

@@ -99,7 +99,9 @@ ActivityPickAddressBinding binding;
     }
 
     private void addNewAddressData(Address address) {
-        if (locationDatabaseHelper.insertData(address)) {
+        long addressId = locationDatabaseHelper.insertData(address);
+        address.setId((int) addressId);
+        if (addressId > 0) {
             addresses.clear();
             addresses.addAll(locationDatabaseHelper.getAllAddress());
             adapter.notifyDataSetChanged();
