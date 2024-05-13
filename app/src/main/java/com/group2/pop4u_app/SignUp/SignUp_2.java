@@ -32,12 +32,7 @@ public class SignUp_2 extends AppCompatActivity {
         binding = ActivitySignUp2Binding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.btnConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                otpVerification();
-            }
-        });
+        binding.btnConfirm.setOnClickListener(v -> otpVerification());
     }
 
     @Override
@@ -54,12 +49,23 @@ public class SignUp_2 extends AppCompatActivity {
             CompletableFuture<ResponseValidate> future = UserService.instance.validate_otp(email, otp);
             future.thenAccept(v -> {
                 if (v.getStatus() == 1) {
-                    Toast.makeText(SignUp_2.this, "Xác thưc thành công", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(SignUp_2.this, SignUp_3.class);
-                    intent.putExtra("username", email);
-                    intent.putExtra("otp", otp);
-                    this.finish();
-                    startActivity(intent);
+                    Boolean isFromForgotPass = getIntent().getBooleanExtra("isFromForgotPass", false);
+                    if (isFromForgotPass) {
+                        Toast.makeText(SignUp_2.this, "Xác thưc thành công", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(SignUp_2.this, SignUp_3.class);
+                        intent.putExtra("username", email);
+                        intent.putExtra("otp", otp);
+                        this.finish();
+                        startActivity(intent);
+                    } else {
+                        // TODO: Them man hinh chinh password o day
+                        Toast.makeText(SignUp_2.this, "Xác thưc thành công", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(SignUp_2.this, SignUp_3.class);
+                        intent.putExtra("email", email);
+                        intent.putExtra("otp", otp);
+                        this.finish();
+                        startActivity(intent);
+                    }
                 } else {
                     runOnUiThread(() -> {
                         Toast.makeText(SignUp_2.this, v.getMessage(), Toast.LENGTH_SHORT).show();
