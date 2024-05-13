@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,6 +27,7 @@ import com.group2.model.Address;
 import com.group2.model.CartItem;
 import com.group2.model.Order;
 import com.group2.model.ResponseValidate;
+import com.group2.model.Voucher;
 import com.group2.pop4u_app.AddressScreen.PickAddress;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.VoucherScreen.ShowVoucher;
@@ -43,6 +43,8 @@ public class Payment extends AppCompatActivity {
     ArrayList<Order> orders = new ArrayList<>() ;
     ArrayList<CartItem> listCheckedItem = new ArrayList<>() ;
 
+    int shipfee = 30000;
+    Voucher appliedVoucher = null;
     Address currentAddress;
 
     ActivityResultLauncher<Intent> openChooseAddressResult = registerForActivityResult(
@@ -59,6 +61,20 @@ public class Payment extends AppCompatActivity {
                 }
             });
 
+    ActivityResultLauncher<Intent> openChooseVoucerResult = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Intent data = result.getData();
+                    if (data == null) return;
+                    Bundle args = data.getBundleExtra("data");
+                    if (args == null) return;
+                    Voucher voucher = (Voucher) args.getSerializable("voucher");
+                    if (voucher == null) return;
+                    setVoucher(voucher);
+                }
+            });
+
     LocationDatabaseHelper locationDatabaseHelper;
 
     OrderDatabaseHelper orderDatabaseHelper;
@@ -72,22 +88,11 @@ public class Payment extends AppCompatActivity {
         setContentView(binding.getRoot());
         binding.piProgress.setProgressCompat(33, true);
         customAndLoadData();
-        calculatetotalPriceOrder();
         addEvents();
         initLocation();
         initDatabase();
-
-        // Retrieve voucher information from intent extras
-        String voucherId = getIntent().getStringExtra("voucher_id");
-        String voucherDescription = getIntent().getStringExtra("voucher_description");
-        Log.d("Payment", "Mã Voucher: " + voucherId);
-
-
-        // Display voucher information in TextView if available
-        if (voucherId != null) {
-            // Update the TextView with the selected voucher ID
-            binding.txtVoucherID.setText(voucherId);
-        }
+        calculatetotalPriceOrder();
+        setRadioButtonGroup();
     }
     private void initLocation() {
         locationDatabaseHelper = new LocationDatabaseHelper(this);
@@ -164,17 +169,36 @@ public class Payment extends AppCompatActivity {
         for (Order item : orders) {
             totalPriceOrder += item.getO_price() * item.getO_quantity();
         }
-
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
         String formattedtotalPriceOrder = decimalFormat.format(totalPriceOrder);
+        double totalPriceOrder2 = shipfee + totalPriceOrder;
+        if (appliedVoucher != null) {
+            totalPriceOrder2 -= appliedVoucher.getDiscountAmount();
+        }
+        String totalPayment = decimalFormat.format(totalPriceOrder2);
 
         // Hiển thị tổng thanh toán đã được định dạng trong TextView totalPrice
         binding.totalPriceOrder.setText(formattedtotalPriceOrder);
+        binding.txtTotalPayment.setText(totalPayment);
     }
+
+    private void setRadioButtonGroup() {
+        binding.rdgPaymentMethod.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.rdbCOD) {
+                shipfee = 30000;
+            } else if (checkedId == R.id.rdbMomo) {
+                shipfee = 0;
+            } else if (checkedId == R.id.rdbNapas) {
+                shipfee = 0;
+            }
+            calculatetotalPriceOrder();
+        });
+    }
+
     private void addEvents(){
         binding.btnChangeVoucher.setOnClickListener(v -> {
             Intent intent = new Intent(Payment.this, ShowVoucher.class);
-            startActivity(intent);
+            openChooseVoucerResult.launch(intent);
         });
         binding.btnViewMoreAddress.setOnClickListener(v -> {
             Intent intent = new Intent(Payment.this, PickAddress.class);
@@ -192,7 +216,8 @@ public class Payment extends AppCompatActivity {
                             currentAddress.getCus_phone(),
                             getSelectedPaymentMethod(),
                             (String) binding.shipfee.getText(),
-                            listCheckedItem
+                            listCheckedItem,
+                            null
                     );
             future.thenAccept(response -> {
                 if (response.getStatus() == 1) {
@@ -216,6 +241,11 @@ public class Payment extends AppCompatActivity {
         binding.txtCustomerName.setText(address.getCus_name());
         binding.txtCustomerPhone.setText(address.getCus_phone());
         binding.txtCustomerAddress.setText(address.getCus_address());
+    }
+
+    private void setVoucher(Voucher voucher) {
+        appliedVoucher = voucher;
+        binding.txtVoucherID.setText(voucher.getCode());
     }
 
     private String getSelectedPaymentMethod() {
