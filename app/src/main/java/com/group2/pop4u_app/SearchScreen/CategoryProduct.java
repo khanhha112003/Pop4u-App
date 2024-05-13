@@ -32,10 +32,16 @@ import java.util.concurrent.CompletableFuture;
 public class CategoryProduct extends AppCompatActivity {
     SearchScreenCategoryProductBinding binding;
     BigProductCardRecyclerAdapter adapter;
+    ArrayList<Product> productArrayList = new ArrayList<>();
+
+    // Search param
     String params = "";
     Integer currentPage = 1;
     Integer limit = 10;
-    ArrayList<Product> productArrayList = new ArrayList<>();
+    String productOrder = "asc";
+    Integer priceStart = null;
+    Integer priceEnd = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,35 +85,41 @@ public class CategoryProduct extends AppCompatActivity {
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
         dialog.findViewById(R.id.chipAscendPrice).setOnClickListener(v -> {
-            Log.d("Filter", "Ascend Price");
+            this.productOrder = "asc";
         });
 
         dialog.findViewById(R.id.chipDescendPrice).setOnClickListener(v -> {
-            Log.d("Filter", "Descend Price");
+            this.productOrder = "desc";
         });
 
         dialog.findViewById(R.id.chipAllProduct).setOnClickListener(v -> {
-            Log.d("Filter", "All Product");
+            this.params = "";
+            this.relayoutActionBar("Tất cả");
         });
 
         dialog.findViewById(R.id.chipAlbum).setOnClickListener(v -> {
-            Log.d("Filter", "Album");
+            this.params = "Album";
+            this.relayoutActionBar("Album");
         });
 
         dialog.findViewById(R.id.chipMerch).setOnClickListener(v -> {
-            Log.d("Filter", "Merch");
+            this.params = "Merch";
+            this.relayoutActionBar("Merch");
         });
 
         dialog.findViewById(R.id.chipPhotobook).setOnClickListener(v -> {
-            Log.d("Filter", "Photobook");
+            this.params = "Photobook";
+            this.relayoutActionBar("Photobook");
         });
 
         dialog.findViewById(R.id.chipVinyl).setOnClickListener(v -> {
-            Log.d("Filter", "Vinyl");
+            this.params = "Vinyl";
+            this.relayoutActionBar("Vinyl");
         });
 
         dialog.findViewById(R.id.chipLightstick).setOnClickListener(v -> {
-            Log.d("Filter", "Lightstick");
+            this.params = "Lightstick";
+            this.relayoutActionBar("Lightstick");
         });
 
         RangeSlider rangeSlider = dialog.findViewById(R.id.sliderYearRangeProductRelease);
@@ -126,22 +138,32 @@ public class CategoryProduct extends AppCompatActivity {
 
         dialog.findViewById(R.id.chipUnder500).setOnClickListener(v -> {
             Log.d("Filter", "Under 500");
+            priceStart = null;
+            priceEnd = 500000;
         });
 
         dialog.findViewById(R.id.chipUnder1K).setOnClickListener(v -> {
             Log.d("Filter", "500 to 1000");
+            priceStart = 500000;
+            priceEnd = 1000000;
         });
 
         dialog.findViewById(R.id.chipUnder1_5K).setOnClickListener(v -> {
             Log.d("Filter", "1000 to 2000");
+            priceStart = 1000000;
+            priceEnd = 1500000;
         });
 
         dialog.findViewById(R.id.chipUnder2K).setOnClickListener(v -> {
             Log.d("Filter", "1000 to 2000");
+            priceStart = 1500000;
+            priceEnd = 2000000;
         });
 
         dialog.findViewById(R.id.chipOver2K).setOnClickListener(v -> {
             Log.d("Filter", "Over 2000");
+            priceStart = 2000000;
+            priceEnd = null;
         });
 
         dialog.findViewById(R.id.btnApplyFilter).setOnClickListener(v -> {
@@ -158,6 +180,11 @@ public class CategoryProduct extends AppCompatActivity {
             limit = 10;
             loadData();
             rangeSlider.setValues(2010F, 2021F);
+            params = "";
+            priceStart = null;
+            priceEnd = null;
+            relayoutActionBar("Tất cả");
+            loadData();
             rangeValue.setText(String.format("Year Range: %s - %s",
                     String.valueOf(rangeSlider.getValues().get(0).intValue()),
                     String.valueOf(rangeSlider.getValues().get(1).intValue())));
@@ -223,7 +250,8 @@ public class CategoryProduct extends AppCompatActivity {
 
 
     private void loadData() {
-        CompletableFuture<ArrayList<Product>> future = ProductService.instance.getProductByCategory(params, currentPage, null, limit, null);
+//        CompletableFuture<ArrayList<Product>> future2 = ProductService.instance.getProductByCategory(params, currentPage, null, limit, null);
+        CompletableFuture<ArrayList<Product>> future = ProductService.instance.getListProduct(currentPage, "all", productOrder, limit, 0, null, priceStart, priceEnd, params);
         future.thenAccept(products -> {
             if (currentPage == 0) {
                 productArrayList.clear();
@@ -236,5 +264,9 @@ public class CategoryProduct extends AppCompatActivity {
         } catch (Exception e) {
             Log.d("Category Product List", e.getMessage());
         }
+    }
+
+    private void relayoutActionBar(String title) {
+        getSupportActionBar().setTitle(title);
     }
 }

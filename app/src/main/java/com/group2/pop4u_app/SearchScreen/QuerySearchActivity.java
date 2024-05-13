@@ -1,15 +1,17 @@
 package com.group2.pop4u_app.SearchScreen;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.SearchView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.group2.api.Services.SearchService;
 import com.group2.model.SearchItem;
 import com.group2.pop4u_app.databinding.ActivitySearchScreenQuerySearchBinding;
+
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
@@ -40,6 +42,11 @@ public class QuerySearchActivity extends AppCompatActivity {
             public void onTapSearchItem(SearchItem searchItem) {
                 // them code khi click vao 1 item search
                 Log.d("Search Screen", "Tap search item: " + searchItem.getItemContext());
+            }
+
+            @Override
+            public void onTapSearchItem(Context context, SearchItem searchItem) {
+
             }
         };
 

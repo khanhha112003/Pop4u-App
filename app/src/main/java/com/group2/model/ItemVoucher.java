@@ -1,12 +1,15 @@
 package com.group2.model;
 
 public class ItemVoucher {
-    String voucher_id;
-    String voucher_description;
+    private String voucher_id;
+    private String voucher_description;
+    private boolean isSelected;
+
 
     public ItemVoucher(String voucher_id, String voucher_description) {
         this.voucher_id = voucher_id;
         this.voucher_description = voucher_description;
+        this.isSelected = false; // By default, not selected
     }
 
     public String getVoucher_id() {
@@ -23,5 +26,13 @@ public class ItemVoucher {
 
     public void setVoucher_description(String voucher_description) {
         this.voucher_description = voucher_description;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }

@@ -1,29 +1,25 @@
 package com.group2.pop4u_app.VoucherScreen;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.group2.pop4u_app.PaymentScreen.Payment;
-import com.group2.pop4u_app.R;
 import com.group2.adapter.VoucherAdapter;
 import com.group2.model.ItemVoucher;
+import com.group2.pop4u_app.PaymentScreen.Payment;
+import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.ActivityShowVoucherBinding;
 
 import java.util.ArrayList;
@@ -36,6 +32,7 @@ public class ShowVoucher extends AppCompatActivity {
     ListView listViewVoucher;
     LinearLayout textViewNoVoucher;
     ImageView backButton;
+    private ItemVoucher selectedVoucher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +47,35 @@ public class ShowVoucher extends AppCompatActivity {
         textViewNoVoucher = binding.layoutNoVoucher;
         initData();
         setupSearch();
+        Button btnApplySearch = findViewById(R.id.btnApplySearch);
+        btnApplySearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Kiểm tra xem có voucher nào được chọn không
+                boolean isVoucherSelected = false;
+                ItemVoucher selectedVoucher = null;
+                for (ItemVoucher item : vouchers) {
+                    if (item.isSelected()) {
+                        isVoucherSelected = true;
+                        selectedVoucher = item; // Lưu trữ voucher được chọn
+                        break;
+                    }
+                }
+
+                // Nếu có voucher được chọn, chuyển đến màn hình thanh toán
+                if (isVoucherSelected) {
+                    Intent intent = new Intent(ShowVoucher.this, Payment.class);
+                    intent.putExtra("voucher_id", selectedVoucher.getVoucher_id());
+                    intent.putExtra("voucher_description", selectedVoucher.getVoucher_description());
+                    Log.d("ShowVoucher", "Mã Voucher: " + selectedVoucher.getVoucher_id());
+                    Log.d("ShowVoucher", "Mô Tả Voucher: " + selectedVoucher.getVoucher_description());
+                    startActivity(intent);
+            } else {
+                    // Nếu không có voucher nào được chọn, hiển thị toast
+                    Toast.makeText(ShowVoucher.this, "Vui lòng chọn voucher trước.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override

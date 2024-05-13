@@ -13,7 +13,10 @@ public interface IProductService {
             @Query("order") String order,
             @Query("limit") Integer limit,
             @Query("rating") Integer rating,
-            @Query("artist_code") String artist_code
+            @Query("artist_code") String artist_code,
+            @Query("p_start") Integer price_start,
+            @Query("p_end") Integer price_end,
+            @Query("category") String category
     );
 
     @GET("/api/product/product_list")

@@ -167,5 +167,7 @@ public class HistorySearchAdapter extends BaseAdapter {
         void onDeleteHistorySearch(SearchItem searchItem);
 
         void onTapSearchItem(SearchItem searchItem);
+
+        void onTapSearchItem(Context context, SearchItem searchItem);
     }
 }

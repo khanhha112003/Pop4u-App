@@ -33,4 +33,7 @@ public class SearchItem {
         this.itemCode = itemCode;
     }
 
+    public String getTimestamp() {
+        return getTimestamp();
+    }
 }

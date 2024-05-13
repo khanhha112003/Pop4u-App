@@ -93,8 +93,8 @@ public class HomepageFragment extends Fragment {
     }
 
     private void loadData() {
-        CompletableFuture<ArrayList<Product>> newProductFuture = ProductService.instance.getListProduct(1, "new", "asc", 10, 0, "");
-        CompletableFuture<ArrayList<Product>> saleProductFuture = ProductService.instance.getListProduct(1, "sale", "desc", 10, 0, "");
+        CompletableFuture<ArrayList<Product>> newProductFuture = ProductService.instance.getListProduct(1, "new", "asc", 10, 0, "", null, null, null);
+        CompletableFuture<ArrayList<Product>> saleProductFuture = ProductService.instance.getListProduct(1, "sale", "desc", 10, 0, "", null, null, null);
         CompletableFuture<ArrayList<Artist>> featuredArtistFuture = ArtistService.instance.getListArtist(1, 4, "hot");
         newProductFuture.thenAccept(products -> {
             newReleasedProductArrayList.clear();

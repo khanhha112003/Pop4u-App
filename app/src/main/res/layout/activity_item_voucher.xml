@@ -27,6 +27,7 @@
         android:text="Giam 10% tren tong don hang"/>
     </LinearLayout>
     <RadioButton
+        android:id="@+id/rdVoucher"
         android:layout_width="50dp"
         android:layout_height="50dp"/>
 
