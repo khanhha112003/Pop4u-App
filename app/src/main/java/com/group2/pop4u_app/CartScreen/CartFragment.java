@@ -30,12 +30,16 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.group2.adapter.ArtistHorizontalListAdapter;
 import com.group2.adapter.BigProductCardRecyclerAdapter;
 import com.group2.adapter.CartAdapter;
+import com.group2.adapter.MiniProductCardRecyclerAdapter;
+import com.group2.adapter.SaleProductCardRecyclerAdapter;
 import com.group2.api.Services.OrderService;
 import com.group2.api.Services.ProductService;
 import com.group2.database_helper.OrderContract;
 import com.group2.database_helper.OrderDatabaseHelper;
+import com.group2.model.Artist;
 import com.group2.model.CartItem;
 import com.group2.model.Product;
 import com.group2.model.ResponseValidate;
@@ -88,6 +92,7 @@ public class CartFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentCartBinding.inflate(inflater, container, false);
         initDbAndCartFuture();
+
         return binding.getRoot();
     }
 
@@ -126,6 +131,7 @@ public class CartFragment extends Fragment {
     public void onResume() {
         super.onResume();
         loadRemoteDbAndSyncData();
+
     }
 
     @Override
@@ -134,6 +140,7 @@ public class CartFragment extends Fragment {
         customAndLoadData();
         loadRecommendProduct();
         addEvents();
+        addItemClickEvents();
 
         binding.checkboxSelectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -421,5 +428,22 @@ public class CartFragment extends Fragment {
     private boolean networkIsConnected() {
         ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
+    }
+    private void addItemClickEvents() {
+
+        bigProductCardRecyclerAdapter.setOnClickListener(new BigProductCardRecyclerAdapter.OnClickListener() {
+            @Override
+            public void onClick(int position, Product product) {
+                openProduct(product);
+            }
+        });
+
+    }
+
+    private void openProduct(Product product) {
+        Intent intent = new Intent(requireActivity(), ProductDetailScreen.class);
+        intent.putExtra("productCode", product.getProductCode());
+        intent.putExtra("artistCode", product.getArtistCode());
+        startActivity(intent);
     }
 }
