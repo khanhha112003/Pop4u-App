@@ -504,7 +504,7 @@ public class ProductDetailScreen extends AppCompatActivity {
             this.product = product;
         });
 
-        CompletableFuture<ArrayList<Product>> futureRelated = ProductService.instance.getListProduct(null, "related", null, null, 0, artistCode, null, null);
+        CompletableFuture<ArrayList<Product>> futureRelated = ProductService.instance.getListProduct(null, "related", null, null, 0, artistCode, null, null, null);
         futureRelated.thenAccept(productsResponse -> {
             productArrayList.clear();
             productArrayList.addAll(productsResponse);

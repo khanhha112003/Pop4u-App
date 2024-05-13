@@ -19,11 +19,11 @@ public class ProductService {
 
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    public CompletableFuture<ArrayList<Product>> getListProduct(Integer page , String type_filter, String order, Integer limit, Integer rating, String artist_code, Integer price_start, Integer price_end) {
+    public CompletableFuture<ArrayList<Product>> getListProduct(Integer page , String type_filter, String order, Integer limit, Integer rating, String artist_code, Integer price_start, Integer price_end, String category) {
         CompletableFuture<ArrayList<Product>> future = new CompletableFuture<>();
         executor.execute(() -> {
             IProductService service = ServiceGenerator.createService(IProductService.class);
-            Call<ProductResponseDAO> call = service.getListProduct(page, type_filter, order, limit, rating, artist_code, price_start, price_end);
+            Call<ProductResponseDAO> call = service.getListProduct(page, type_filter, order, limit, rating, artist_code, price_start, price_end, category);
 
             try {
                 Response<ProductResponseDAO> response = call.execute();

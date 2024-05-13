@@ -203,7 +203,7 @@ public class ProductListCategory extends AppCompatActivity {
             } else if (extra.equals("newProduct")) {
                 params = "new";
             }
-            CompletableFuture<ArrayList<Product>> future = ProductService.instance.getListProduct(null, params, "asc", 1000, 0, null, null, null);
+            CompletableFuture<ArrayList<Product>> future = ProductService.instance.getListProduct(null, params, "asc", 1000, 0, null, null, null, null);
             future.thenAccept(products -> {
                 productArrayList.clear();
                 productArrayList.addAll(products);
