@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.group2.adapter.ArtistHorizontalListAdapter;
 import com.group2.api.Services.ArtistService;
 import com.group2.model.Artist;
+import com.group2.pop4u_app.ArtistInfoScreen.ArtistInfoScreen;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetHorizontalRecycler;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentSearchDashboardBinding;
@@ -122,32 +123,6 @@ public class SearchDashboardFragment extends Fragment implements SearchView.OnQu
         super.onStart();
     }
 
-
-//    private void setTabHandler() {
-//        MainActivity mainActivity = (MainActivity) getActivity();
-//        if (mainActivity == null) {
-//            return;
-//        }
-//        getView().findViewById(binding.searchDashboardCategoryCardAll.getId())
-//                .setOnClickListener(view ->mainActivity.replaceFragment(new CategoryProductFragment("all")));
-//
-//        getView().findViewById(binding.searchDashboardCategoryCardAlbum.getId())
-//                .setOnClickListener(view -> mainActivity.replaceFragment(new CategoryProductFragment("album")));
-//
-//        getView().findViewById(binding.searchDashboardCategoryCardMerch.getId())
-//                .setOnClickListener(view -> mainActivity.replaceFragment(new CategoryProductFragment("merch")));
-//
-//        getView().findViewById(binding.searchDashboardCategoryCardPhotobook.getId())
-//                .setOnClickListener(view -> mainActivity.replaceFragment(new CategoryProductFragment("photo")));
-//
-//        getView().findViewById(binding.searchDashboardCategoryCardVinyl.getId())
-//                .setOnClickListener(view -> mainActivity.replaceFragment(new CategoryProductFragment("vinyl")));
-//
-//        getView().findViewById(binding.searchDashboardCategoryCardLightstick.getId())
-//                .setOnClickListener(view -> mainActivity.replaceFragment(new CategoryProductFragment("lightstick")));
-//    }
-
-
     @Override
     public void onResume() {
         super.onResume();
@@ -170,6 +145,11 @@ public class SearchDashboardFragment extends Fragment implements SearchView.OnQu
        // Khởi tạo và thiết lập adapter
        featuredArtistAdapter = new ArtistHorizontalListAdapter(requireActivity(), featuredArtistArrayList);
        binding.rccHotArtist.setAdapter(featuredArtistAdapter);
+       featuredArtistAdapter.setOnClickListener((position, artist) -> {
+            Intent intent = new Intent(requireActivity(), ArtistInfoScreen.class);
+            intent.putExtra("artistCode", featuredArtistArrayList.get(position).getArtistCode());
+            startActivity(intent);
+       });
    }
 
     private void loadingData() {

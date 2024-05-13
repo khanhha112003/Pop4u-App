@@ -64,7 +64,7 @@
                     app:singleSelection="true">
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chipAscendPrice"
+                        android:id="@+id/chipDescendPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter"
@@ -73,7 +73,7 @@
                         app:chipIcon="@drawable/arrow_downward_fill1_wght300_grad0_opsz24" />
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chipDescendPrice"
+                        android:id="@+id/chipAscendPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/sort_by_as_price"
@@ -127,7 +127,7 @@
                         app:chipStartPadding="15dp" />
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chipMerch"
+                        android:id="@+id/chipPhotobook"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/search_dashboard_category_photobook"
@@ -137,7 +137,7 @@
                         app:chipStartPadding="15dp" />
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chipPhotobook"
+                        android:id="@+id/chipVinyl"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/search_dashboard_category_vinyl"
@@ -147,7 +147,7 @@
                         app:chipStartPadding="15dp" />
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chipVinyl"
+                        android:id="@+id/chipMerch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/search_dashboard_category_merch"

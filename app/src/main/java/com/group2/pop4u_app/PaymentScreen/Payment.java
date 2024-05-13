@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -29,6 +30,7 @@ import com.group2.model.Order;
 import com.group2.model.ResponseValidate;
 import com.group2.model.Voucher;
 import com.group2.pop4u_app.AddressScreen.PickAddress;
+import com.group2.pop4u_app.OrderScreen.OrderScreen;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.VoucherScreen.ShowVoucher;
 import com.group2.pop4u_app.databinding.ActivityPaymentBinding;
@@ -235,6 +237,15 @@ public class Payment extends AppCompatActivity {
                 Toast.makeText(Payment.this, "Có lỗi xảy ra", Toast.LENGTH_SHORT).show();
             }
         });
+        binding.btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new
+                        Intent(Payment.this, PaymentSuccess.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void choosenAddress(Address address) {

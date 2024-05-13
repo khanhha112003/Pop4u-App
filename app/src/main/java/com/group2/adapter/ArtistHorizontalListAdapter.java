@@ -59,12 +59,9 @@ public class ArtistHorizontalListAdapter extends RecyclerView.Adapter<ArtistHori
                 .into(holder.imvArtistAvatar);
         holder.txtArtistName.setText(artist.getArtistName());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (onClickListener != null) {
-                    onClickListener.onClick(position, artist);
-                }
+        holder.itemView.setOnClickListener(view -> {
+            if (onClickListener != null) {
+                onClickListener.onClick(position, artist);
             }
         });
     }
