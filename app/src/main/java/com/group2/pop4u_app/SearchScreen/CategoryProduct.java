@@ -25,6 +25,7 @@ import com.group2.api.Services.ProductService;
 import com.group2.model.Product;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
 import com.group2.pop4u_app.PaymentScreen.Payment;
+import com.group2.pop4u_app.ProductDetailScreen.ProductDetailScreen;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.SearchScreenCategoryProductBinding;
 
@@ -286,6 +287,12 @@ public class CategoryProduct extends AppCompatActivity {
         binding.rccProductCategory.setHasFixedSize(true);
         adapter = new BigProductCardRecyclerAdapter(this, productArrayList);
         binding.rccProductCategory.setAdapter(adapter);
+        adapter.setOnClickListener((position, product) -> {
+            Intent intent = new Intent(CategoryProduct.this, ProductDetailScreen.class);
+            intent.putExtra("productCode", product.getProductCode());
+            intent.putExtra("artistCode", product.getArtistCode());
+            startActivity(intent);
+        });
     }
 
     private void setLoadmore() {
