@@ -87,7 +87,7 @@ public class HomepageFragment extends Fragment {
         initData();
         addViewAllButtonEvent();
         addItemClickEvents();
-        loadProductOfWeek();
+//        loadProductOfWeek();
         setupBanner();
         loadData();
     }
@@ -133,7 +133,7 @@ public class HomepageFragment extends Fragment {
     private static final long PERIOD_MS = 5000;
 
     private void setupBanner() {
-        mSliceViewpager = binding.imsHomeBanner; // Initialize mSliceViewpager using binding
+        mSliceViewpager = binding.imsHomeBanner;
         mDotLayout = binding.BannerIndicators;
         bannerAdapter = new BannerAdapter(requireContext());
         mSliceViewpager.setAdapter(bannerAdapter);

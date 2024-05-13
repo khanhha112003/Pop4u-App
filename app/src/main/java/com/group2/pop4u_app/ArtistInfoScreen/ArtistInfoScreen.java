@@ -195,14 +195,14 @@ public class ArtistInfoScreen extends AppCompatActivity {
         futureArtist.thenAccept(artist -> {
             binding.txtArtistName.setText(artist.getArtistName());
             binding.txtArtistDescription.setText(artist.getArtistDescription());
+            String imageLink = artist.getArtistAvatar();
+            binding.txtArtistYearDebut.append("2016");
             Picasso.get()
-                    .load(artist.getArtistAvatar())
+                    .load(imageLink)
                     .placeholder(R.drawable.placeholder_image)
                     .error(R.drawable.error_image)
                     .fit().centerCrop()
                     .into(binding.imvArtistAvatar);
-            binding.txtArtistYearDebut.append(String.valueOf(artist.getArtistYearDebut()));
-            this.thisArtist = artist;
         });
 
         futureProduct.thenAccept(products -> {

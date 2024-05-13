@@ -1,6 +1,7 @@
 package com.group2.adapter;
 
 import android.app.Activity;
+import android.icu.text.NumberFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +18,14 @@ import com.group2.pop4u_app.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.Locale;
 
 public class BigProductCardRecyclerAdapter extends RecyclerView.Adapter<BigProductCardRecyclerAdapter.ViewHolder> {
     Activity activity;
     List<Product> productList;
 
     OnClickListener onClickListener;
+    NumberFormat numberFormat;
 
     public BigProductCardRecyclerAdapter(Activity activity, List<Product> productList) {
         this.activity = activity;
@@ -54,7 +57,8 @@ public class BigProductCardRecyclerAdapter extends RecyclerView.Adapter<BigProdu
         holder.txtProductLabel.setText(product.getProductLabel());
         holder.txtRating.setText(String.valueOf(product.getProductRating()));
         holder.txtProductArtist.setText(product.getProductArtistName());
-        holder.txtProductPrice.setText(String.format("%s₫", String.valueOf(product.getProductPrice())));
+        numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
+        holder.txtProductPrice.setText(String.format("%s₫", numberFormat.format(product.getProductPrice())));
         holder.txtProductName.setText(product.getProductName());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
