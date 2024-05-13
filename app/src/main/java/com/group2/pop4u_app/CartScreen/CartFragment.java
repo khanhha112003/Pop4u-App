@@ -378,7 +378,7 @@ public class CartFragment extends Fragment {
 
         productArrayList = new ArrayList<>();
 
-        CompletableFuture<ArrayList<Product>> saleProductFuture = ProductService.instance.getListProduct(1, "sale", "desc", 10, 0, "");
+        CompletableFuture<ArrayList<Product>> saleProductFuture = ProductService.instance.getListProduct(1, "sale", "desc", 10, 0, "", null, null, null);
         saleProductFuture.thenAccept(products -> {
             productArrayList.clear();
             productArrayList.addAll(products);

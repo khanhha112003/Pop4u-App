@@ -191,7 +191,7 @@ public class ArtistInfoScreen extends AppCompatActivity {
         Intent intent = getIntent();
         String artistCode = intent.getStringExtra("artistCode");
         CompletableFuture<Artist> futureArtist = ArtistService.instance.getArtistDetail(artistCode);
-        CompletableFuture<ArrayList<Product>> futureProduct = ProductService.instance.getListProduct(1, "all", "asc", 10, 0, artistCode);
+        CompletableFuture<ArrayList<Product>> futureProduct = ProductService.instance.getListProduct(1, "all", "asc", 10, 0, artistCode, null, null, null);
         futureArtist.thenAccept(artist -> {
             binding.txtArtistName.setText(artist.getArtistName());
             binding.txtArtistDescription.setText(artist.getArtistDescription());
