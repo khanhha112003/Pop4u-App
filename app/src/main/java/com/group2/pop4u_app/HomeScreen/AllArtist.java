@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,12 +16,17 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.group2.adapter.ArtistVerticalListAdapter;
+import com.group2.api.Services.ArtistService;
+import com.group2.api.Services.ProductService;
 import com.group2.model.Artist;
+import com.group2.model.Product;
+import com.group2.pop4u_app.ArtistInfoScreen.ArtistInfoScreen;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.ActivityAllArtistBinding;
 
 import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
 
 public class AllArtist extends AppCompatActivity {
 
@@ -37,6 +43,18 @@ public class AllArtist extends AppCompatActivity {
         setSupportActionBar(binding.tbrArtistList);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         loadData();
+        addEvents();
+    }
+
+    private void addEvents() {
+        artistVerticalListAdapter.setOnClickListener(new ArtistVerticalListAdapter.OnClickListener() {
+            @Override
+            public void onClick(int position, Artist artist) {
+                Intent intent = new Intent(AllArtist.this, ArtistInfoScreen.class);
+                intent.putExtra("artistCode", artist.getArtistCode());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -85,8 +103,21 @@ public class AllArtist extends AppCompatActivity {
         binding.rccAllArtist.setHasFixedSize(true);
 
         artistArrayList = new ArrayList<>();
-        // TODO
         artistVerticalListAdapter = new ArtistVerticalListAdapter(this, artistArrayList);
+        // TODO
+
+        CompletableFuture<ArrayList<Artist>> featuredArtistFuture = ArtistService.instance.getListArtist(1, 4, "hot");
+        featuredArtistFuture.thenAccept(artists -> {
+            artistArrayList.clear();
+            artistArrayList.addAll(artists);
+            artistVerticalListAdapter.notifyDataSetChanged();
+        });
+        try {
+            featuredArtistFuture.get();
+        } catch (Exception e) {
+            Log.d("ArtistList", e.getMessage());
+        }
+
         binding.rccAllArtist.setAdapter(artistVerticalListAdapter);
     }
 }

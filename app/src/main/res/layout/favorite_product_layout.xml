@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.cardview.widget.CardView
         app:layout_constraintTop_toTopOf="parent"
@@ -9,7 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
-        app:cardElevation="0dp">
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="@color/md_theme_surfaceContainerLow"
+        android:foreground="@drawable/foreground_onclick_color_change">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,6 +94,7 @@
                     app:cardBackgroundColor="@color/md_theme_errorContainer"
                     app:cardCornerRadius="6dp">
                     <TextView
+                        android:id="@+id/txtSalePercent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="-25%"
@@ -116,7 +119,8 @@
                 android:padding="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_add_to_fav_button_state"/>
+                android:src="@drawable/icon_add_to_fav_button_state"
+                app:tint="@drawable/button_no_filled_text_color"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
