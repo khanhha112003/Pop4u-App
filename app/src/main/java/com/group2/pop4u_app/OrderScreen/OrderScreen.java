@@ -43,10 +43,10 @@ public class OrderScreen extends AppCompatActivity {
 
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle());
 
-        viewPagerAdapter.addFragment(new OrderedFragment(), "Đã đặt");
-        viewPagerAdapter.addFragment(new ProcessingFragment(), "Đang xử lý");
-        viewPagerAdapter.addFragment(new SuccessfulOrderFragment(), "Th. Công");
-        viewPagerAdapter.addFragment(new CanceledOrderFragment(), "Đã hủy");
+        viewPagerAdapter.addFragment(new OrderedFragment(null), "Đã đặt");
+        viewPagerAdapter.addFragment(new OrderedFragment("Processing"), "Đang xử lý");
+        viewPagerAdapter.addFragment(new OrderedFragment("Delivered"), "Th. Công");
+        viewPagerAdapter.addFragment(new OrderedFragment("Cancelled"), "Đã hủy");
 
         viewPager.setAdapter(viewPagerAdapter);
 
