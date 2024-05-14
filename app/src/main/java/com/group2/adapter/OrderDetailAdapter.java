@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.group2.model.CartItem;
+import com.group2.model.Order;
 import com.group2.model.OrderDetail;
 import com.group2.model.Product;
 import com.group2.pop4u_app.R;
@@ -23,7 +24,7 @@ import java.util.Locale;
 public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.OrderViewHolder> {
     private final List<OrderDetail> orders;
     NumberFormat numberFormat;
-
+    OnClickListener onClickListener;
     Activity activity;
     public OrderDetailAdapter(Activity activity, List<OrderDetail> orders) {
         this.activity = activity;
@@ -58,8 +59,23 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
                     .into(holder.oThumb);
         }
         holder.oTotalPrice.setText(String.format("%s₫", numberFormat.format(order.getTotalPrice())));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onClickListener != null) {
+                    onClickListener.OnClick(position, order);
+                }
+            }
+        });
     }
 
+    public void setOnClickListener(OnClickListener onClickListener){
+        this.onClickListener = onClickListener;
+    }
+    public interface OnClickListener {
+        void OnClick(int position, OrderDetail order);
+    }
     @Override
     public int getItemCount() {
         return orders.size();
