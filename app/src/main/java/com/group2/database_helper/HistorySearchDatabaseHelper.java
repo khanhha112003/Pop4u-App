@@ -5,13 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 
 import com.group2.model.SearchHistory;
-import com.group2.model.SearchItem;
-import com.group2.pop4u_app.SearchScreen.HistorySearchAdapter;
 
 import java.util.ArrayList;
 
@@ -51,20 +48,39 @@ public class HistorySearchDatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_NAME, null, values);
         db.close();
     }
+    public void deleteEmptyAndDuplicateSearchHistory() {
+        SQLiteDatabase db = this.getWritableDatabase();
 
-    public
+        // Xóa các lịch sử tìm kiếm trống
+        db.delete(TABLE_NAME, COLUMN_KEYWORD + " = ?", new String[]{""});
 
-    // (Tùy chọn) Phương thức để lấy lịch sử tìm kiếm từ cơ sở dữ liệu
-    ArrayList<SearchHistory> getSearchHistory(String query) {
+        // Xóa các bản ghi trùng lặp, chỉ giữ lại bản ghi mới nhất
+        String subquery = "SELECT MIN(" + COLUMN_ID + ") as min_id FROM " + TABLE_NAME + " GROUP BY " + COLUMN_KEYWORD;
+        String query = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + " NOT IN (" + subquery + ")";
+        db.execSQL(query);
+
+        db.close();
+    }
+
+
+    // Phương thức để lấy lịch sử tìm kiếm từ cơ sở dữ liệu
+    public ArrayList<SearchHistory> getSearchHistory(String query) {
         ArrayList<SearchHistory> searchItems = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
+        int idIndex = cursor.getColumnIndex(COLUMN_ID);
+        int keywordIndex = cursor.getColumnIndex(COLUMN_KEYWORD);
+        int timestampIndex = cursor.getColumnIndex(COLUMN_TIMESTAMP);
+
         if (cursor.moveToFirst()) {
             do {
-                Integer searchHistoryId = cursor.getInt(0);
-                String searchHistoryText = cursor.getString(1);
-                SearchHistory searchItem = new SearchHistory(searchHistoryText, searchHistoryId);
-                searchItems.add(searchItem);
+                if (idIndex >= 0 && keywordIndex >= 0 && timestampIndex >= 0) {
+                    Integer searchHistoryId = cursor.getInt(idIndex);
+                    String searchHistoryText = cursor.getString(keywordIndex);
+                    String timestamp = cursor.getString(timestampIndex);
+                    SearchHistory searchItem = new SearchHistory(searchHistoryText, searchHistoryId, timestamp);
+                    searchItems.add(searchItem);
+                }
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -78,7 +94,7 @@ public class HistorySearchDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<SearchHistory> getSearchHistoryByMatchingKeyword(String keyword) {
-        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_KEYWORD + " LIKE '%" + keyword + "%'";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_KEYWORD + " LIKE '%" + keyword + "%' ORDER BY " + COLUMN_TIMESTAMP + " DESC";
         return getSearchHistory(query);
     }
 
@@ -92,7 +108,10 @@ public class HistorySearchDatabaseHelper extends SQLiteOpenHelper {
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_KEYWORD + " = '" + keyword + "'";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
-        return cursor.moveToFirst();
+        boolean exists = cursor.moveToFirst();
+        cursor.close();
+        db.close();
+        return exists;
     }
 
     public void deleteAllSearchHistory() {

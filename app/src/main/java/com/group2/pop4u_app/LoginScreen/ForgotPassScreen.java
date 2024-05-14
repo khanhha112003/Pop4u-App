@@ -42,7 +42,7 @@ public class ForgotPassScreen extends AppCompatActivity {
         binding.btnForgotPass.setOnClickListener(v -> {
             String email = binding.edtEmail.getText().toString();
             if (!isValidEmail(email)) {
-                binding.edtEmail.setError("Bạn đã nhập sai email. Vui lòng nhập lại");
+                binding.edtEmail.setError("Vui lòng nhập Email");
                 focusErrorView = binding.edtEmail;
                 focusErrorView.requestFocus();
                 return;
