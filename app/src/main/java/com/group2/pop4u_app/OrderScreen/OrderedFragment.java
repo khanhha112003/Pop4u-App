@@ -40,6 +40,7 @@ public class OrderedFragment extends Fragment {
         binding = FragmentOrderedBinding.inflate(inflater, container, false);
         setupRecyclerView();
         addEvents();
+        getData();
         return binding.getRoot();
     }
 
@@ -76,5 +77,9 @@ public class OrderedFragment extends Fragment {
         binding.rvOrderedList.setAdapter(orderDetailAdapter);
     }
 
+    private void getData() {
+        // Call API to get data
+
+    }
 
 }
