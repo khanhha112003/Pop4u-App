@@ -134,6 +134,7 @@ public class CartFragment extends Fragment {
         customAndLoadData();
         loadRecommendProduct();
         addEvents();
+        addItemClickEvents();
 
         binding.checkboxSelectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -402,7 +403,6 @@ public class CartFragment extends Fragment {
         binding.btnMuangay.setOnClickListener(v -> {
             Intent intent = new Intent(requireContext(), Payment.class);
             Bundle bundle = new Bundle();
-//                bundle.putParcelableArrayList("selectedItems", (ArrayList<? extends Parcelable>) selectedCartItemList);
             if (selectedCartItemList == null) {
                 selectedCartItemList = new ArrayList<>();
             }
@@ -421,5 +421,22 @@ public class CartFragment extends Fragment {
     private boolean networkIsConnected() {
         ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
+    }
+    private void addItemClickEvents() {
+
+        bigProductCardRecyclerAdapter.setOnClickListener(new BigProductCardRecyclerAdapter.OnClickListener() {
+            @Override
+            public void onClick(int position, Product product) {
+                openProduct(product);
+            }
+        });
+
+    }
+
+    private void openProduct(Product product) {
+        Intent intent = new Intent(requireActivity(), ProductDetailScreen.class);
+        intent.putExtra("productCode", product.getProductCode());
+        intent.putExtra("artistCode", product.getArtistCode());
+        startActivity(intent);
     }
 }

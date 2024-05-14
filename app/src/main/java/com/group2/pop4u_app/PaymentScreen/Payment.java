@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -61,7 +62,7 @@ public class Payment extends AppCompatActivity {
                 }
             });
 
-    ActivityResultLauncher<Intent> openChooseVoucerResult = registerForActivityResult(
+    ActivityResultLauncher<Intent> openChooseVoucherResult = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK) {
@@ -159,7 +160,7 @@ public class Payment extends AppCompatActivity {
                 (this, LinearLayoutManager.VERTICAL, false);
         binding.rvOrder.setLayoutManager(layoutManager);
         binding.rvOrder.setHasFixedSize(true);
-        adapter = new OrderAdapter(getApplicationContext(), orders);
+        adapter = new OrderAdapter(Payment.this, orders);
         binding.rvOrder.setNestedScrollingEnabled(false);
         binding.rvOrder.setAdapter(adapter);
     }
@@ -172,14 +173,17 @@ public class Payment extends AppCompatActivity {
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
         String formattedtotalPriceOrder = decimalFormat.format(totalPriceOrder);
         double totalPriceOrder2 = shipfee + totalPriceOrder;
+        String discountString = "0";
         if (appliedVoucher != null) {
             totalPriceOrder2 -= appliedVoucher.getDiscountAmount();
+            discountString = decimalFormat.format(appliedVoucher.getDiscountAmount());
         }
         String totalPayment = decimalFormat.format(totalPriceOrder2);
 
         // Hiển thị tổng thanh toán đã được định dạng trong TextView totalPrice
         binding.totalPriceOrder.setText(formattedtotalPriceOrder);
         binding.txtTotalPayment.setText(totalPayment);
+        binding.voucherdecrease.setText(discountString);
     }
 
     private void setRadioButtonGroup() {
@@ -198,7 +202,7 @@ public class Payment extends AppCompatActivity {
     private void addEvents(){
         binding.btnChangeVoucher.setOnClickListener(v -> {
             Intent intent = new Intent(Payment.this, ShowVoucher.class);
-            openChooseVoucerResult.launch(intent);
+            openChooseVoucherResult.launch(intent);
         });
         binding.btnViewMoreAddress.setOnClickListener(v -> {
             Intent intent = new Intent(Payment.this, PickAddress.class);
@@ -235,6 +239,15 @@ public class Payment extends AppCompatActivity {
                 Toast.makeText(Payment.this, "Có lỗi xảy ra", Toast.LENGTH_SHORT).show();
             }
         });
+        binding.btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new
+                        Intent(Payment.this, PaymentSuccess.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void choosenAddress(Address address) {
@@ -246,6 +259,7 @@ public class Payment extends AppCompatActivity {
     private void setVoucher(Voucher voucher) {
         appliedVoucher = voucher;
         binding.txtVoucherID.setText(voucher.getCode());
+        calculatetotalPriceOrder();
     }
 
     private String getSelectedPaymentMethod() {

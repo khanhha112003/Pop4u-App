@@ -70,7 +70,8 @@
                         android:fontFamily="@font/inter"
                         android:text="@string/sort_by_de_price"
                         app:chipBackgroundColor="@color/md_theme_surfaceContainerLow"
-                        app:chipIcon="@drawable/arrow_downward_fill1_wght300_grad0_opsz24" />
+                        app:chipIcon="@drawable/arrow_downward_fill1_wght300_grad0_opsz24"
+                        android:clickable="true"/>
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipAscendPrice"
@@ -78,7 +79,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/sort_by_as_price"
                         app:chipBackgroundColor="@color/md_theme_surfaceContainerLow"
-                        app:chipIcon="@drawable/arrow_upward_fill1_wght300_grad0_opsz24" />
+                        app:chipIcon="@drawable/arrow_upward_fill1_wght300_grad0_opsz24"
+                        android:clickable="true"/>
                 </com.google.android.material.chip.ChipGroup>
 
                 <TextView
@@ -114,7 +116,8 @@
                         app:chipBackgroundColor="@color/md_theme_surfaceContainerLow"
                         app:chipEndPadding="15dp"
                         app:chipIcon="@drawable/widgets_fill1_wght300_grad0_opsz24"
-                        app:chipStartPadding="15dp" />
+                        app:chipStartPadding="15dp"
+                        android:clickable="true"/>
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipAlbum"
@@ -124,7 +127,8 @@
                         app:chipBackgroundColor="@color/md_theme_surfaceContainerLow"
                         app:chipEndPadding="15dp"
                         app:chipIcon="@drawable/library_music_fill1_wght300_grad0_opsz24"
-                        app:chipStartPadding="15dp" />
+                        app:chipStartPadding="15dp"
+                        android:clickable="true"/>
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipPhotobook"
@@ -134,7 +138,8 @@
                         app:chipBackgroundColor="@color/md_theme_surfaceContainerLow"
                         app:chipEndPadding="15dp"
                         app:chipIcon="@drawable/art_track_fill1_wght300_grad0_opsz24"
-                        app:chipStartPadding="15dp" />
+                        app:chipStartPadding="15dp"
+                        android:clickable="true"/>
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipVinyl"
@@ -144,7 +149,8 @@
                         app:chipBackgroundColor="@color/md_theme_surfaceContainerLow"
                         app:chipEndPadding="15dp"
                         app:chipIcon="@drawable/album_fill1_wght300_grad0_opsz24"
-                        app:chipStartPadding="15dp" />
+                        app:chipStartPadding="15dp"
+                        android:clickable="true"/>
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipMerch"
@@ -152,7 +158,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/search_dashboard_category_merch"
                         app:chipBackgroundColor="@color/md_theme_surfaceContainerLow"
-                        app:chipIcon="@drawable/package_2_fill1_wght300_grad0_opsz24" />
+                        app:chipIcon="@drawable/package_2_fill1_wght300_grad0_opsz24"
+                        android:clickable="true"/>
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipLightstick"
@@ -162,7 +169,8 @@
                         app:chipBackgroundColor="@color/md_theme_surfaceContainerLow"
                         app:chipEndPadding="15dp"
                         app:chipIcon="@drawable/lightbulb_fill1_wght300_grad0_opsz24"
-                        app:chipStartPadding="15dp" />
+                        app:chipStartPadding="15dp"
+                        android:clickable="true"/>
                 </com.google.android.material.chip.ChipGroup>
 
                 <TextView
@@ -197,7 +205,8 @@
                         app:chipEndPadding="15dp"
                         app:chipIcon="@drawable/trending_up_fill1_wght700_grad0_opsz24"
                         app:chipIconTint="@color/md_theme_primary"
-                        app:chipStartPadding="15dp" />
+                        app:chipStartPadding="15dp"
+                        android:clickable="true"/>
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipNew"
@@ -208,7 +217,8 @@
                         app:chipEndPadding="15dp"
                         app:chipIcon="@drawable/local_fire_department_fill1_wght300_grad0_opsz24"
                         app:chipIconTint="@color/md_theme_tertiary"
-                        app:chipStartPadding="15dp" />
+                        app:chipStartPadding="15dp"
+                        android:clickable="true"/>
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipSale"
@@ -219,7 +229,8 @@
                         app:chipEndPadding="15dp"
                         app:chipIcon="@drawable/confirmation_number_fill1_wght300_grad0_opsz24"
                         app:chipIconTint="@color/md_theme_error"
-                        app:chipStartPadding="15dp" />
+                        app:chipStartPadding="15dp"
+                        android:clickable="true"/>
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipFeature"
@@ -230,7 +241,8 @@
                         app:chipEndPadding="15dp"
                         app:chipIcon="@drawable/award_star_fill1_wght300_grad0_opsz24"
                         app:chipIconTint="@color/md_theme_primary"
-                        app:chipStartPadding="15dp" />
+                        app:chipStartPadding="15dp"
+                        android:clickable="true"/>
                 </com.google.android.material.chip.ChipGroup>
 
                 <TextView
@@ -304,35 +316,40 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/price_under_500K"
-                        app:chipBackgroundColor="@color/md_theme_surfaceContainerLow" />
+                        app:chipBackgroundColor="@color/md_theme_surfaceContainerLow"
+                        android:clickable="true"/>
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipUnder1K"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/price_under_1M"
-                        app:chipBackgroundColor="@color/md_theme_surfaceContainerLow" />
+                        app:chipBackgroundColor="@color/md_theme_surfaceContainerLow"
+                        android:clickable="true"/>
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipUnder1.5K"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/price_under_1_5M"
-                        app:chipBackgroundColor="@color/md_theme_surfaceContainerLow" />
+                        app:chipBackgroundColor="@color/md_theme_surfaceContainerLow"
+                        android:clickable="true"/>
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipUnder2K"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/price_under_2M"
-                        app:chipBackgroundColor="@color/md_theme_surfaceContainerLow" />
+                        app:chipBackgroundColor="@color/md_theme_surfaceContainerLow"
+                        android:clickable="true"/>
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipOver2K"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/price_over_2M"
-                        app:chipBackgroundColor="@color/md_theme_surfaceContainerLow" />
+                        app:chipBackgroundColor="@color/md_theme_surfaceContainerLow"
+                        android:clickable="true"/>
                 </com.google.android.material.chip.ChipGroup>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
