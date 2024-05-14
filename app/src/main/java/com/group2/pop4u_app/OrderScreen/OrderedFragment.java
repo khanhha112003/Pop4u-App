@@ -53,13 +53,10 @@ public class OrderedFragment extends Fragment {
     }
 
     private void addEvents() {
-        orderDetailAdapter.setOnClickListener(new OrderDetailAdapter.OnClickListener() {
-            @Override
-            public void OnClick(int position, OrderDetail order) {
-                Intent intent = new Intent(requireActivity(), com.group2.pop4u_app.OrderDetailSrc.OrderDetail.class);
-                intent.putExtra("orderID", order.getId());
-                startActivity(intent);
-            }
+        orderDetailAdapter.setOnClickListener((position, order) -> {
+            Intent intent = new Intent(requireActivity(), com.group2.pop4u_app.OrderDetailSrc.OrderDetail.class);
+            intent.putExtra("orderID", order.getId());
+            startActivity(intent);
         });
     }
 

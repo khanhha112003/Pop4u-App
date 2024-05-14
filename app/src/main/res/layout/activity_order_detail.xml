@@ -122,7 +122,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:fontFamily="@font/inter_medium"
-                            android:text="Đơn hàng đã được đặt vào ngày"
+                            android:text="Thời gian"
                             android:textColor="@color/black"
                             android:textSize="15sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -368,13 +368,28 @@
                         android:paddingBottom="10dp">
 
                         <TextView
+                            android:id="@+id/tvVoucher"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginTop="3dp"
+                            android:fontFamily="@font/inter"
+                            android:paddingStart="15dp"
+                            android:text="012345678"
+                            android:textColor="@color/md_theme_outline_mediumContrast"
+                            android:textSize="15sp"
+                            app:layout_constraintStart_toEndOf="@+id/txtShipNote"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <TextView
                             android:id="@+id/txtShipNote"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="3dp"
                             android:fontFamily="@font/inter_medium"
-                            android:text="Giao hàng vào giờ hành chính"
+                            android:text="Mã giảm giá:"
                             android:textColor="@color/black"
                             android:textSize="15sp"
                             app:layout_constraintStart_toEndOf="@+id/imageView8"
