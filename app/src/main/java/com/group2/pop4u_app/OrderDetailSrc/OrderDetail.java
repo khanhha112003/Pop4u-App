@@ -7,19 +7,21 @@ import android.view.MenuItem;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.group2.adapter.OrderAdapter;
 import com.group2.adapter.OrderDetailAdapter;
 import com.group2.model.Order;
+import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetVerticalRecycler;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.ActivityOrderDetailBinding;
 
 import java.util.ArrayList;
 
 public class OrderDetail extends AppCompatActivity {
-ActivityOrderDetailBinding binding;
-OrderDetailAdapter adapter;
-ArrayList<Order> orders;
+    ActivityOrderDetailBinding binding;
+    OrderAdapter orderAdapter;
+    ArrayList<Order> orders;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,9 +34,18 @@ ArrayList<Order> orders;
     }
 
     private void loadData() {
-//        orders = new ArrayList<>();
-//        adapter = new OrderDetailAdapter(OrderDetail.this, orders);
-        binding.rvOrderList.setAdapter(adapter);
+        orders = new ArrayList<>();
+        orders.add(new Order("ABC", "https://cdn-contents.weverseshop.io/public/shop/3922e5e598bf800360b3d3a47e1969d9.png?q=95&w=720", "ALBUm", "BLACKPINK", 30000, 3));
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(OrderDetail.this, LinearLayoutManager.VERTICAL, false);
+        ItemOffsetVerticalRecycler itemOffsetVerticalRecycler = new ItemOffsetVerticalRecycler(OrderDetail.this, R.dimen.item_offset);
+        binding.rvOrderList.setNestedScrollingEnabled(false);
+        binding.rvOrderList.setLayoutManager(linearLayoutManager);
+        binding.rvOrderList.addItemDecoration(itemOffsetVerticalRecycler);
+
+        orderAdapter = new OrderAdapter(OrderDetail.this, orders);
+
+        binding.rvOrderList.setAdapter(orderAdapter);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.group2.pop4u_app.OrderScreen;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,7 +39,19 @@ public class OrderedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentOrderedBinding.inflate(inflater, container, false);
         setupRecyclerView();
+        addEvents();
         return binding.getRoot();
+    }
+
+    private void addEvents() {
+        orderDetailAdapter.setOnClickListener(new OrderDetailAdapter.OnClickListener() {
+            @Override
+            public void OnClick(int position, OrderDetail order) {
+                Intent intent = new Intent(requireActivity(), com.group2.pop4u_app.OrderDetailSrc.OrderDetail.class);
+                intent.putExtra("orderID", order.getId());
+                startActivity(intent);
+            }
+        });
     }
 
     private void setupRecyclerView() {
@@ -56,6 +69,7 @@ public class OrderedFragment extends Fragment {
         items.add(new CartItem("P123", "url_to_image", "Product Name", 10000, 12000, 2, true));
 
         OrderDetail orderDetail = new OrderDetail("120124KCMS", "bumr2405", 750000, "2024-05-13", "Processing", "123 Elm St", "555-1234", true, false, "Credit Card", items, 50000, "SUMMER2024", "ORD001", "Leave at door if not home.");
+        orderList.add(new OrderDetail("120124KCMS", "bumr2405", 750000, "2024-05-13", "Processing", "123 Elm St", "555-1234", true, false, "Credit Card", items, 50000, "SUMMER2024", "ORD001", "Leave at door if not home."));
         orderList.add(orderDetail);
 
         orderDetailAdapter = new OrderDetailAdapter(requireActivity(), orderList);

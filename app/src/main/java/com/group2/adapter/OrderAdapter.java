@@ -1,6 +1,8 @@
 package com.group2.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.icu.text.NumberFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,14 +22,15 @@ import com.group2.pop4u_app.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
-//    private RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
-    Context context;
+    Activity activity;
     ArrayList<Order> orders;
+    NumberFormat numberFormat;
 
-    public OrderAdapter(Context context, ArrayList<Order> orders) {
-        this.context = context;
+    public OrderAdapter(Activity activity, ArrayList<Order> orders) {
+        this.activity = activity;
         this.orders = orders;
     }
 
@@ -49,22 +52,22 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                 .into(holder.o_thumb);
         holder.o_artist.setText(order.getO_artist());
         holder.o_name.setText(order.getO_name());
-        holder.o_price.setText(String.format("%s₫", order.getO_price()));
+        numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
+        holder.o_price.setText(String.format("%s₫", numberFormat.format(order.getO_price())));
         holder.o_quantity.setText(String.valueOf(order.getO_quantity()));
     }
 
     @Override
     public int getItemCount() {
-        return orders.size();}
+        return orders.size();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder{
-//        TextView txtOrderID;
-//        RecyclerView rvDetail;
         ImageView o_thumb;
         TextView o_name;
         TextView o_artist;
         TextView o_price;
         TextView o_quantity;
-        CheckBox checkbox;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             o_thumb = itemView.findViewById(R.id.o_thumb);
@@ -72,7 +75,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             o_artist = itemView.findViewById(R.id.o_artist);
             o_price = itemView.findViewById(R.id.o_pricebuy);
             o_quantity = itemView.findViewById(R.id.o_quantity);
-            checkbox = itemView.findViewById(R.id.checkbox);
         }
     }
 }

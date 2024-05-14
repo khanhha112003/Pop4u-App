@@ -160,7 +160,7 @@ public class Payment extends AppCompatActivity {
                 (this, LinearLayoutManager.VERTICAL, false);
         binding.rvOrder.setLayoutManager(layoutManager);
         binding.rvOrder.setHasFixedSize(true);
-        adapter = new OrderAdapter(getApplicationContext(), orders);
+        adapter = new OrderAdapter(Payment.this, orders);
         binding.rvOrder.setNestedScrollingEnabled(false);
         binding.rvOrder.setAdapter(adapter);
     }
