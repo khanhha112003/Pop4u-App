@@ -183,7 +183,7 @@ public class ProductListCategory extends AppCompatActivity {
 
     private void loadRecycleView() {
         Intent intent = getIntent();
-        getSupportActionBar().setTitle(intent.getStringExtra("recyclerleaName"));
+        getSupportActionBar().setTitle(intent.getStringExtra("recyclerName"));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(this, R.dimen.item_offset);
