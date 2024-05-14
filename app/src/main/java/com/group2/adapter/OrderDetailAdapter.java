@@ -3,6 +3,7 @@ package com.group2.adapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.icu.text.NumberFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +44,25 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     public void onBindViewHolder(OrderViewHolder holder, int position) {
         OrderDetail order = orders.get(position);
         holder.oId.setText("Đơn hàng # " + order.getOrderCode());
-        holder.txtOrderStatus.setText(order.getStatus());
+        switch (order.getStatus()) {
+            case "Pending":
+                holder.txtOrderStatus.setTextColor(activity.getColor(R.color.md_theme_onPrimaryFixedVariant));
+                holder.txtOrderStatus.setText("Chờ xác nhận");
+                break;
+            case "Processing":
+                holder.txtOrderStatus.setTextColor(activity.getColor(R.color.md_theme_onTertiaryFixedVariant));
+                holder.txtOrderStatus.setText("Đang xử lý");
+                break;
+            case "Delivered":
+                // set green color
+                holder.txtOrderStatus.setTextColor(activity.getColor(R.color.green));
+                holder.txtOrderStatus.setText("Đã giao hàng");
+                break;
+            case "Cancelled":
+                holder.txtOrderStatus.setTextColor(activity.getColor(R.color.md_theme_error));
+                holder.txtOrderStatus.setText("Đã hủy");
+                break;
+        }
         holder.txtShipDate.setText("Dự kiến nhận hàng vào ngày " + order.getOrderDate());
         if (!order.getCartItems().isEmpty()) {
             CartItem firstProduct = order.getCartItems().get(0);
