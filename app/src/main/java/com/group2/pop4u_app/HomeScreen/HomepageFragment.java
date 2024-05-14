@@ -1,6 +1,9 @@
 package com.group2.pop4u_app.HomeScreen;
 
 import android.content.Intent;
+import android.graphics.RenderEffect;
+import android.graphics.Shader;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -36,7 +39,9 @@ import com.group2.pop4u_app.ProductDetailScreen.ProductDetailScreen;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentHomepageBinding;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
+import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.ArrayList;
@@ -56,6 +61,7 @@ public class HomepageFragment extends Fragment {
     LinearLayout mDotLayout;
     int currentPage = 0;
     TextView[] dots;
+    Product productOfWeek;
 
     private Timer timer;
 
@@ -87,7 +93,7 @@ public class HomepageFragment extends Fragment {
         initData();
         addViewAllButtonEvent();
         addItemClickEvents();
-//        loadProductOfWeek();
+        loadProductOfWeek();
         setupBanner();
         loadData();
     }
@@ -124,10 +130,37 @@ public class HomepageFragment extends Fragment {
     }
 
     private void loadProductOfWeek() {
-        FragmentManager fragmentManager = getChildFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frgProductOfWeek, new ProductOfWeekFragment());
-        fragmentTransaction.commit();
+//        FragmentManager fragmentManager = getChildFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.frgProductOfWeek, new ProductOfWeekFragment());
+//        fragmentTransaction.commit();
+        CompletableFuture<Product> productFuture = ProductService.instance.getProduct("PIU1001");
+        productFuture.thenAccept(product -> {
+            this.productOfWeek = product;
+            String bannerLink = product.getBannerPhoto();
+            DecimalFormat df = new DecimalFormat("#,###");
+            binding.txtProductPrice.setText(df.format(product.getProductPrice()) + "₫");
+            binding.txtProductName.setText(product.getProductName());
+            binding.txtProductArtist.setText(product.getProductArtistName());
+            binding.txtSalePercent.setText(product.getProductSalePercent() + "%");
+            Picasso.get()
+                    .load(bannerLink)
+                    .placeholder(R.drawable.placeholder_image)
+                    .error(R.drawable.error_image)
+                    .into(binding.imvProductImage);
+            Picasso.get()
+                    .load(bannerLink)
+                    .placeholder(R.drawable.placeholder_image)
+                    .error(R.drawable.error_image)
+                    .into(binding.imvBackGroundCard);
+        }).exceptionally(e -> {
+            Log.d("ProductOfWeek", "loadData: " + e.getMessage());
+            return null;
+        });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            binding.imvBackGroundCard.setRenderEffect(RenderEffect.createBlurEffect(150.0f, 150.0f, Shader.TileMode.CLAMP));
+        }
     }
     private static final long DELAY_MS = 0;
     private static final long PERIOD_MS = 5000;
@@ -269,6 +302,16 @@ public class HomepageFragment extends Fragment {
                 Intent intent = new Intent(requireActivity(), ProductListCategory.class);
                 intent.putExtra("recyclerID", "saleProduct");
                 intent.putExtra("recyclerName", "Sale");
+                startActivity(intent);
+            }
+        });
+
+        binding.frgProductOfWeek.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(requireActivity(), ProductDetailScreen.class);
+                intent.putExtra("productCode", productOfWeek.getProductCode());
+                intent.putExtra("artistCode", productOfWeek.getArtistCode());
                 startActivity(intent);
             }
         });

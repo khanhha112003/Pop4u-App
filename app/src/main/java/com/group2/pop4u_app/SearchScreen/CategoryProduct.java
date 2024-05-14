@@ -50,9 +50,9 @@ public class CategoryProduct extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = SearchScreenCategoryProductBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
         setSupportActionBar(binding.tbrCategory);
         setScreenTitle();
+        setContentView(binding.getRoot());
         setLoadmore();
         loadRecycleView();
     }
@@ -69,8 +69,6 @@ public class CategoryProduct extends AppCompatActivity {
         inflater.inflate(R.menu.menu_product_list_screen, menu);
         return true;
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -258,7 +256,7 @@ public class CategoryProduct extends AppCompatActivity {
 
     private void setScreenTitle() {
         Intent intent = getIntent();
-        String recyclerID = getIntent().getStringExtra("recyclerID");
+        String recyclerID = intent.getStringExtra("recyclerID");
         String actionBarTitle = intent.getStringExtra("recyclerName");
         getSupportActionBar().setTitle(actionBarTitle);
         if (recyclerID.equals("album")) {
