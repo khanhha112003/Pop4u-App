@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:paddingBottom="4dp"
+    android:background="@color/white"
+    android:paddingTop="4dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvOrder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:cardElevation="0dp"
         android:backgroundTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="10dp">
+            android:foreground="@drawable/foreground_onclick_color_change">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
@@ -29,13 +32,13 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/txtOrderID"
+                    android:id="@+id/o_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="189dp"
                     android:fontFamily="@font/inter_semibold"
                     android:text="Đơn hàng ...."
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     app:layout_constraintEnd_toStartOf="@+id/txtOrderStatus"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -48,7 +51,7 @@
                     android:fontFamily="@font/inter_semibold"
                     android:text="Đã đặt"
                     android:textColor="@color/md_theme_primary"
-                    android:textSize="15sp"
+                    android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -83,20 +86,119 @@
                     android:fontFamily="@font/inter"
                     android:text="Dự kiến nhận hàng vào ngày ..."
                     android:textColor="@color/md_theme_primary"
-                    android:textSize="15sp"
+                    android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView2"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvOrdered"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_order_represent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
                 android:layout_marginTop="10dp"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cvImageThumb"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        app:cardElevation="0dp"
+                        app:cardCornerRadius="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+                        <ImageView
+                            android:id="@+id/o_thumb"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:src="@drawable/photo_ex"
+                            android:scaleType="centerCrop"/>
+                    </androidx.cardview.widget.CardView>
+
+
+                    <TextView
+                        android:id="@+id/o_name"
+                        android:layout_width="310dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/inter"
+                        android:text="BLACKPINK THE GAME PHOTOCARD COLLECTION LOVELY VALENTINE'S EDITION "
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@+id/cvImageThumb"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/o_artist"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/inter"
+                        android:text="BLACKPINK"
+                        android:textColor="@color/md_theme_outline"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toEndOf="@+id/cvImageThumb"
+                        app:layout_constraintTop_toBottomOf="@+id/o_name" />
+
+                    <TextView
+                        android:id="@+id/o_pricebuy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="6"
+                        android:fontFamily="@font/inter_semibold"
+                        android:text="460.000"
+                        android:textColor="@color/md_theme_error"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/cvImageThumb"
+                        app:layout_constraintTop_toBottomOf="@+id/o_artist"
+                        app:layout_constraintVertical_bias="1.0" />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="55dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="140dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="2"
+                        android:fontFamily="@font/inter"
+                        android:text="Số lượng: "
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/o_pricebuy"
+                        app:layout_constraintTop_toBottomOf="@+id/o_artist"
+                        app:layout_constraintVertical_bias="1.0" />
+
+                    <TextView
+                        android:id="@+id/o_quantity"
+                        android:layout_width="19dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="2"
+                        android:fontFamily="@font/inter"
+                        android:text="2"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/textView"
+                        app:layout_constraintTop_toBottomOf="@+id/o_artist"
+                        app:layout_constraintVertical_bias="1.0" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/textView5"
@@ -107,7 +209,7 @@
                 android:fontFamily="@font/inter"
                 android:text="Tổng cộng:"
                 app:layout_constraintEnd_toStartOf="@+id/o_total_price"
-                app:layout_constraintTop_toBottomOf="@+id/rvOrdered" />
+                app:layout_constraintTop_toBottomOf="@+id/cv_order_represent" />
 
             <TextView
                 android:id="@+id/o_total_price"
@@ -116,38 +218,44 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/inter_semibold"
                 android:text="750.000"
-                android:textColor="@color/md_theme_primary"
+                android:textColor="@color/md_theme_error"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rvOrdered" />
+                app:layout_constraintTop_toBottomOf="@+id/cv_order_represent" />
 
             <TextView
                 android:id="@+id/o_total_quantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="24dp"
                 android:fontFamily="@font/inter_semibold"
                 android:text="5"
                 android:textColor="@color/md_theme_primary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/textView5"
-                app:layout_constraintTop_toBottomOf="@+id/rvOrdered" />
+                app:layout_constraintHorizontal_bias="0.433"
+                app:layout_constraintStart_toEndOf="@+id/textView6"
+                app:layout_constraintTop_toBottomOf="@+id/cv_order_represent"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="140dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="5dp"
                 android:fontFamily="@font/inter"
-                android:text="Số lượng:"
-                app:layout_constraintEnd_toStartOf="@+id/o_total_quantity"
-                app:layout_constraintHorizontal_bias="0.893"
+                android:text="Sản phẩm:"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rvOrdered" />
-
-
+                app:layout_constraintTop_toBottomOf="@+id/cv_order_represent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+    <com.google.android.material.divider.MaterialDivider
+        app:layout_constraintTop_toBottomOf="@id/cvOrder"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

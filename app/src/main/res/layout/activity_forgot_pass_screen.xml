@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/txtSignIn"
+        android:id="@+id/txtForgotPassTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="76dp"
@@ -35,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <Button
-        android:id="@+id/btnLogIn"
+        android:id="@+id/btnForgotPass"
         android:layout_width="267dp"
         android:layout_height="65dp"
         android:layout_marginTop="28dp"
@@ -48,7 +48,6 @@
         app:layout_constraintTop_toBottomOf="@+id/edtEmail" />
 
     <LinearLayout
-        android:id="@+id/lltext1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
@@ -57,10 +56,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogIn">
+        app:layout_constraintTop_toBottomOf="@+id/btnForgotPass">
 
         <TextView
-            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -69,7 +67,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/txtCreateAcc"
+            android:id="@+id/txtBacktoLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -95,7 +93,7 @@
         android:textColorHint="@color/md_theme_outline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/txtSignIn"
+        app:layout_constraintStart_toStartOf="@+id/txtForgotPassTitle"
         app:layout_constraintTop_toBottomOf="@+id/txtNoteLogin" />
 
     <TextView
@@ -110,7 +108,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtSignIn" />
+        app:layout_constraintTop_toBottomOf="@+id/txtForgotPassTitle" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

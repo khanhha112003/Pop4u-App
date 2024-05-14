@@ -10,6 +10,9 @@ public class ResponseValidate {
     }
 
     public String getMessage() {
+        if (message == null) {
+            return "Đã có lỗi xảy ra";
+        }
         return message;
     }
 

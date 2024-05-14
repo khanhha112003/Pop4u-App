@@ -1,10 +1,8 @@
 package com.group2.pop4u_app.SearchScreen;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.SearchView;
@@ -36,7 +34,7 @@ public class QuerySearchActivity extends AppCompatActivity {
 
     HistorySearchDatabaseHelper historySearchDatabaseHelper;
 
-    private int waitingTime = 500;
+    private int waitingTime = 100;
     private CountDownTimer cntr;
 
     @Override
@@ -51,21 +49,23 @@ public class QuerySearchActivity extends AppCompatActivity {
         adapter.listener = new HistorySearchAdapter.AdapterEventListener() {
             @Override
             public void onDeleteHistorySearch(SearchItem searchItem) {
-                // them code xoa history search trong database
+                // Xóa history search trong database
                 Log.d("Search Screen", "Delete history search: " + searchItem.getItemContext());
                 historySearchDatabaseHelper.deleteSearchHistory(searchItem.getItemContext());
             }
 
             @Override
             public void onTapSearchItem(SearchItem searchItem) {
-                // them code khi click vao 1 item search
+                // Thiết lập giá trị của SearchView khi nhấp vào mục lịch sử tìm kiếm
+                binding.svQuerySearchBox.setQuery(searchItem.getItemContext(), false);
+                // Gọi phương thức conductSearch để tìm kiếm
                 Log.d("Search Screen", "Tap search item: " + searchItem.getItemContext());
                 if (Objects.equals(searchItem.getItemType(), SearchItem.HISTORY_TYPE)) {
                     conductSearch(searchItem.getItemContext());
                 } else if (Objects.equals(searchItem.getItemType(), SearchItem.ARTIST_TYPE)) {
                     openArtistDetail(searchItem.getItemCode());
                 } else {
-                    // them code khi click vao 1 item search suggest
+                    // Thêm code khi click vào một item search suggest
                     openProductDetail(searchItem.getItemCode());
                 }
             }
@@ -80,18 +80,20 @@ public class QuerySearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 conductSearch(query);
-                // them code de luu history search vao database
+                // Lưu history search vào database
+                if (!historySearchDatabaseHelper.isKeywordExist(query)) {
+                    historySearchDatabaseHelper.addSearchHistory(query);
+                }
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // them code de hien thi suggest search, lay suggest search tu db
-                if(cntr != null){
+                // Hiển thị suggest search, lấy suggest search từ db
+                if (cntr != null) {
                     cntr.cancel();
                 }
                 cntr = new CountDownTimer(waitingTime, 500) {
-
                     public void onTick(long millisUntilFinished) {
                     }
 
@@ -103,7 +105,9 @@ public class QuerySearchActivity extends AppCompatActivity {
                             searchHistoriesFromDatabase = historySearchDatabaseHelper.getRecentSearchHistory();
                         }
                         for (SearchHistory searchHistory : searchHistoriesFromDatabase) {
-                            listSearchRes.add(searchHistory.toSearchItem());
+                            if (!searchHistory.getKeyword().isEmpty() && !isItemDuplicate(searchHistory)) {
+                                listSearchRes.add(searchHistory.toSearchItem());
+                            }
                         }
                         adapter.notifyDataSetChanged();
                     }
@@ -117,12 +121,12 @@ public class QuerySearchActivity extends AppCompatActivity {
     private void setSearchBarInitialValue() {
         String newString;
         Bundle extras = getIntent().getExtras();
-        if(extras == null) {
-            newString= "";
+        if (extras == null) {
+            newString = "";
         } else {
-            newString= extras.getString("start_character");
+            newString = extras.getString("start_character");
         }
-        binding.svQuerySearchBox.setQuery(newString,false);
+        binding.svQuerySearchBox.setQuery(newString, false);
     }
 
     private void setCancelSearchButton() {
@@ -163,7 +167,6 @@ public class QuerySearchActivity extends AppCompatActivity {
     }
 
     private void openArtistDetail(String artistCode) {
-        // them
         Intent intent = new Intent(QuerySearchActivity.this, ArtistInfoScreen.class);
         intent.putExtra("artistCode", artistCode);
         startActivity(intent);
@@ -171,7 +174,6 @@ public class QuerySearchActivity extends AppCompatActivity {
     }
 
     private void openProductDetail(String productCode) {
-        // them
         CompletableFuture<Product> product = ProductService.instance.getProduct(productCode);
         product.thenAccept(res -> {
             Intent intent = new Intent(QuerySearchActivity.this, ProductDetailScreen.class);
@@ -188,5 +190,14 @@ public class QuerySearchActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.e("Search", "Get product failed", e);
         }
+    }
+
+    private boolean isItemDuplicate(SearchHistory searchHistory) {
+        for (SearchItem item : listSearchRes) {
+            if (item.getItemContext().equals(searchHistory.getKeyword())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

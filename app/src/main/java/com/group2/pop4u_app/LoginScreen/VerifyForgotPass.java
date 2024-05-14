@@ -1,9 +1,8 @@
-package com.group2.pop4u_app.SignUp;
+package com.group2.pop4u_app.LoginScreen;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -15,21 +14,22 @@ import androidx.core.view.WindowInsetsCompat;
 import com.group2.api.Services.UserService;
 import com.group2.model.ResponseValidate;
 import com.group2.pop4u_app.R;
-import com.group2.pop4u_app.databinding.ActivitySignUp2Binding;
+import com.group2.pop4u_app.SignUp.SignUp_2;
+import com.group2.pop4u_app.SignUp.SignUp_3;
+import com.group2.pop4u_app.databinding.ActivityVerifyForgotPassBinding;
 
 import java.util.concurrent.CompletableFuture;
 
-public class SignUp_2 extends AppCompatActivity {
+public class VerifyForgotPass extends AppCompatActivity {
 
-    ActivitySignUp2Binding binding;
-
+    ActivityVerifyForgotPassBinding binding;
     String email = "";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
 
-        binding = ActivitySignUp2Binding.inflate(getLayoutInflater());
+        binding = ActivityVerifyForgotPassBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         binding.btnConfirm.setOnClickListener(v -> otpVerification());
@@ -44,23 +44,23 @@ public class SignUp_2 extends AppCompatActivity {
     private void otpVerification() {
         String otp = String.valueOf(binding.edtCode.getText());
         if (otp.length() != 6 || !otp.matches("[0-9]+")) {
-            Toast.makeText(SignUp_2.this, "Mã OTP không hợp lệ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(VerifyForgotPass.this, "Mã OTP không hợp lệ", Toast.LENGTH_SHORT).show();
         } else {
             CompletableFuture<ResponseValidate> future = UserService.instance.validate_otp(email, otp);
             future.thenAccept(v -> {
                 if (v.getStatus() == 1) {
                     Boolean isFromForgotPass = getIntent().getBooleanExtra("isFromForgotPass", false);
                     if (isFromForgotPass) {
-                        Toast.makeText(SignUp_2.this, "Xác thưc thành công", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(SignUp_2.this, SignUp_3.class);
+                        Toast.makeText(VerifyForgotPass.this, "Xác thưc thành công", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(VerifyForgotPass.this, CreateNewPass.class);
                         intent.putExtra("username", email);
                         intent.putExtra("otp", otp);
                         this.finish();
                         startActivity(intent);
                     } else {
                         // TODO: Them man hinh chinh password o day
-                        Toast.makeText(SignUp_2.this, "Xác thưc thành công", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(SignUp_2.this, SignUp_3.class);
+                        Toast.makeText(VerifyForgotPass.this, "Xác thưc thành công", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(VerifyForgotPass.this, CreateNewPass.class);
                         intent.putExtra("email", email);
                         intent.putExtra("otp", otp);
                         this.finish();
@@ -68,7 +68,7 @@ public class SignUp_2 extends AppCompatActivity {
                     }
                 } else {
                     runOnUiThread(() -> {
-                        Toast.makeText(SignUp_2.this, v.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(VerifyForgotPass.this, v.getMessage(), Toast.LENGTH_SHORT).show();
                     });
                 }
             });

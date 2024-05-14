@@ -49,12 +49,24 @@ public class SearchDashboardFragment extends Fragment implements SearchView.OnQu
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentSearchDashboardBinding.inflate(inflater,container,false);
+        binding = FragmentSearchDashboardBinding.inflate(inflater, container, false);
         setSearchBar();
         initData();
         loadingData();
+
+        // Chuyển hướng đến QuerySearchActivity khi nhấn vào thanh tìm kiếm
+        binding.svQuerySearchBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), QuerySearchActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return binding.getRoot();
     }
+
+
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         addViewCategoryEvent();

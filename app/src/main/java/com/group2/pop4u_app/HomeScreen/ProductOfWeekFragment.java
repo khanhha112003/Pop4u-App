@@ -80,7 +80,6 @@ public class ProductOfWeekFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         binding = FragmentProductOfWeekBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -95,14 +94,15 @@ public class ProductOfWeekFragment extends Fragment {
     private void setProductOfWeek() {
         CompletableFuture<Product> future = ProductService.instance.getProduct("PIU1001");
         future.thenAccept(product -> {
+            String bannerLink = product.getBannerPhoto();
             Picasso.get()
-                    .load(product.getBannerPhoto())
+                    .load(bannerLink)
                     .placeholder(R.drawable.placeholder_image)
                     .error(R.drawable.error_image)
                     .fit().centerCrop()
                     .into(binding.imvProductImage);
             Picasso.get()
-                    .load(product.getBannerPhoto())
+                    .load(bannerLink)
                     .placeholder(R.drawable.placeholder_image)
                     .error(R.drawable.error_image)
                     .fit().centerCrop()
@@ -113,13 +113,10 @@ public class ProductOfWeekFragment extends Fragment {
             binding.txtProductArtist.setText(product.getProductArtistName());
             binding.txtSalePercent.setText(product.getProductSalePercent() + "%");
             this.productOfWeek = product;
-        });
-
-        try {
-            future.get();
-        } catch (Exception e) {
+        }).exceptionally(e -> {
             Log.d("ProductOfWeek", "loadData: " + e.getMessage());
-        }
+            return null;
+        });
     }
 
     private void addEvents() {

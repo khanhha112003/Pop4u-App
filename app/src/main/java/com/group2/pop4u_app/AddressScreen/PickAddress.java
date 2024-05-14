@@ -19,6 +19,7 @@ import com.group2.adapter.AddressAdapter;
 import com.group2.database_helper.LocationDatabaseHelper;
 import com.group2.model.Address;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
+import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetVerticalRecycler;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.ActivityPickAddressBinding;
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ ActivityPickAddressBinding binding;
             choosenAddress = addresses.get(0);
         }
 
-        ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(PickAddress.this, R.dimen.item_offset);
+        ItemOffsetVerticalRecycler itemDecoration = new ItemOffsetVerticalRecycler(PickAddress.this, R.dimen.item_offset);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         binding.lvAddress.addItemDecoration(itemDecoration);
         binding.lvAddress.setLayoutManager(layoutManager);

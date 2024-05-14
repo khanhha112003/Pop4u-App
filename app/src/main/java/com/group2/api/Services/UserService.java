@@ -164,20 +164,6 @@ public class UserService {
         return future;
     }
 
-
-//    CompletableFuture<Boolean> logoutFuture = logout();
-//
-//    // Attach a callback to the CompletableFuture to handle the result
-//        logoutFuture.thenAccept(result -> {
-//        if (result) {
-//            // Logout was successful
-//            System.out.println("Logout successful");
-//        } else {
-//            // Logout failed
-//            System.out.println("Logout failed");
-//        }
-//    });
-
     public CompletableFuture<Boolean> logout() {
         CompletableFuture<Boolean> future = new CompletableFuture<>();
         executor.execute(() -> {
@@ -206,32 +192,6 @@ public class UserService {
         return future;
     }
 
-    public CompletableFuture<UserDAO> update(String email, String password, String name, String phone, String address) {
-        CompletableFuture<UserDAO> future = new CompletableFuture<>();
-        executor.execute(() -> {
-            HashMap<String, String> body = new HashMap<>();
-            body.put("new_email", email);
-            body.put("new_password", password);
-            body.put("new_birthdate", name);
-            body.put("new_phone_number", phone);
-            
-            String authHeader = "Bearer " + LoginManagerTemp.token;
-
-            Call<UserDAO> call = userService.update(authHeader, body);
-            try {
-                Response<UserDAO> response = call.execute();
-                if (response.isSuccessful()) {
-                    future.complete(response.body()); // Complete the future with the UserDAO object
-                } else {
-                    future.complete(null); // Complete the future with null if the response is not successful
-                }
-            } catch (IOException e) {
-                future.completeExceptionally(e); // Complete the future exceptionally if an exception occurs
-            }
-        });
-        return future;
-    }
-
     public CompletableFuture<User> getUserProfile() {
         CompletableFuture<User> future = new CompletableFuture<>();
         executor.execute(() -> {
@@ -248,6 +208,67 @@ public class UserService {
                     }
                 } else {
                     future.complete(null); // Complete the future with null if the response is not successful
+                }
+            } catch (IOException e) {
+                future.completeExceptionally(e); // Complete the future exceptionally if an exception occurs
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<ResponseValidate> forgotPassword(String email) {
+        CompletableFuture<ResponseValidate> future = new CompletableFuture<>();
+        executor.execute(() -> {
+            Call<ValidationResponseDAO> call = userService.forgot_password(email);
+            try {
+                Response<ValidationResponseDAO> response = call.execute();
+                if (response.isSuccessful()) {
+                    ValidationResponseDAO result = response.body();
+                    if (result == null) {
+                        future.complete(null); // Complete the future with false if the response body is null
+                        return;
+                    }
+                    if (result.getStatus() == 1) {
+                        Log.d("ForgotPassword", "Forgot password success");
+                    } else {
+                        Log.d("ForgotPassword", "Forgot password failed");
+                    }
+                    future.complete(result.asResponseValidate()); // Complete the future with the ResponseValidate object
+                } else {
+                    future.complete(null); // Complete the future with false in case of unsuccessful response
+                }
+            } catch (IOException e) {
+                future.completeExceptionally(e); // Complete the future exceptionally if an exception occurs
+            }
+        });
+        return future;
+    }
+
+
+    public CompletableFuture<ResponseValidate> updateNewPassword(String email, String otp, String newPassword) {
+        CompletableFuture<ResponseValidate> future = new CompletableFuture<>();
+        executor.execute(() -> {
+            HashMap<String, String> body = new HashMap<>();
+            body.put("email", email);
+            body.put("otp", otp);
+            body.put("new_password", newPassword);
+            Call<ValidationResponseDAO> call = userService.update_new_password(body);
+            try {
+                Response<ValidationResponseDAO> response = call.execute();
+                if (response.isSuccessful()) {
+                    ValidationResponseDAO result = response.body();
+                    if (result == null) {
+                        future.complete(null); // Complete the future with false if the response body is null
+                        return;
+                    }
+                    if (result.getStatus() == 1) {
+                        Log.d("UpdateNewPassword", "Update new password success");
+                    } else {
+                        Log.d("UpdateNewPassword", "Update new password failed");
+                    }
+                    future.complete(result.asResponseValidate()); // Complete the future with the ResponseValidate object
+                } else {
+                    future.complete(null); // Complete the future with false in case of unsuccessful response
                 }
             } catch (IOException e) {
                 future.completeExceptionally(e); // Complete the future exceptionally if an exception occurs
