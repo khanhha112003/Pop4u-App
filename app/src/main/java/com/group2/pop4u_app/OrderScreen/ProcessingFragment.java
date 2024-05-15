@@ -4,11 +4,17 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.group2.api.Services.OrderService;
+import com.group2.model.OrderDetail;
 import com.group2.pop4u_app.R;
+
+import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * A simple {@link Fragment} subclass.

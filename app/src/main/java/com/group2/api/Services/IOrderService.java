@@ -1,7 +1,10 @@
 package com.group2.api.Services;
 import com.group2.api.DAO.CartDAO;
+import com.group2.api.DAO.OrderDetailDAO;
 import com.group2.api.DAO.ValidationResponseDAO;
+import com.group2.model.Order;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import retrofit2.Call;
@@ -29,5 +32,23 @@ public interface IOrderService {
     Call<ValidationResponseDAO> createOrder(
             @Header("Authorization") String authHeader,
             @Body HashMap<String, Object> body
+    );
+
+    @GET("/api/order/get_list_order")
+    Call<ArrayList<OrderDetailDAO>> getOrder(
+            @Header("Authorization") String authHeader,
+            @Query("status") String status
+    );
+
+    @GET("/api/order/order_detail")
+    Call<OrderDetailDAO> getOrderDetail(
+            @Header("Authorization") String authHeader,
+            @Query("order_code") String orderCode
+    );
+
+    @POST("/api/order/cancel_order")
+    Call<ValidationResponseDAO> cancelOrder(
+            @Header("Authorization") String authHeader,
+            @Query("order_code") String orderCode
     );
 }
