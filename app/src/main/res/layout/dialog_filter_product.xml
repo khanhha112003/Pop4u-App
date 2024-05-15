@@ -68,7 +68,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter"
+                        style="@style/Widget.Material3.Chip.Filter"
                         android:text="@string/sort_by_de_price"
+                        android:checkable="true"
                         app:chipBackgroundColor="@color/md_theme_surfaceContainerLow"
                         app:chipIcon="@drawable/arrow_downward_fill1_wght300_grad0_opsz24"
                         android:clickable="true"/>
@@ -78,6 +80,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/sort_by_as_price"
+                        android:checkable="true"
+                        style="@style/Widget.Material3.Chip.Filter"
                         app:chipBackgroundColor="@color/md_theme_surfaceContainerLow"
                         app:chipIcon="@drawable/arrow_upward_fill1_wght300_grad0_opsz24"
                         android:clickable="true"/>
@@ -104,7 +108,8 @@
                     app:chipSpacingVertical="0dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/txtFilterByCategory"
-                    app:selectionRequired="true">
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipAllProduct"
@@ -121,6 +126,7 @@
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipAlbum"
+                        style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/search_dashboard_category_album"
@@ -133,6 +139,7 @@
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipPhotobook"
                         android:layout_width="wrap_content"
+                        style="@style/Widget.Material3.Chip.Filter"
                         android:layout_height="wrap_content"
                         android:text="@string/search_dashboard_category_photobook"
                         app:chipBackgroundColor="@color/md_theme_surfaceContainerLow"
@@ -144,6 +151,7 @@
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipVinyl"
                         android:layout_width="wrap_content"
+                        style="@style/Widget.Material3.Chip.Filter"
                         android:layout_height="wrap_content"
                         android:text="@string/search_dashboard_category_vinyl"
                         app:chipBackgroundColor="@color/md_theme_surfaceContainerLow"
@@ -156,6 +164,7 @@
                         android:id="@+id/chipMerch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        style="@style/Widget.Material3.Chip.Filter"
                         android:text="@string/search_dashboard_category_merch"
                         app:chipBackgroundColor="@color/md_theme_surfaceContainerLow"
                         app:chipIcon="@drawable/package_2_fill1_wght300_grad0_opsz24"
@@ -165,6 +174,7 @@
                         android:id="@+id/chipLightstick"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        style="@style/Widget.Material3.Chip.Filter"
                         android:text="@string/search_dashboard_category_lightstick"
                         app:chipBackgroundColor="@color/md_theme_surfaceContainerLow"
                         app:chipEndPadding="15dp"
@@ -194,13 +204,14 @@
                     app:chipSpacingVertical="0dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/txtFilterByTag"
-                    app:singleSelection="false">
+                    app:singleSelection="true">
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipHot"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/filter_by_tag_hot"
+                        style="@style/Widget.Material3.Chip.Filter"
                         app:chipBackgroundColor="@color/md_theme_surfaceContainerLow"
                         app:chipEndPadding="15dp"
                         app:chipIcon="@drawable/trending_up_fill1_wght700_grad0_opsz24"
@@ -213,6 +224,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/filter_by_tag_new"
+                        style="@style/Widget.Material3.Chip.Filter"
                         app:chipBackgroundColor="@color/md_theme_surfaceContainerLow"
                         app:chipEndPadding="15dp"
                         app:chipIcon="@drawable/local_fire_department_fill1_wght300_grad0_opsz24"
@@ -225,6 +237,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/filter_by_tag_sale"
+                        style="@style/Widget.Material3.Chip.Filter"
                         app:chipBackgroundColor="@color/md_theme_surfaceContainerLow"
                         app:chipEndPadding="15dp"
                         app:chipIcon="@drawable/confirmation_number_fill1_wght300_grad0_opsz24"
@@ -237,6 +250,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/filter_by_tag_featured"
+                        style="@style/Widget.Material3.Chip.Filter"
                         app:chipBackgroundColor="@color/md_theme_surfaceContainerLow"
                         app:chipEndPadding="15dp"
                         app:chipIcon="@drawable/award_star_fill1_wght300_grad0_opsz24"
@@ -309,10 +323,11 @@
                     app:chipSpacingVertical="0dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/txtFilterByPriceRange"
-                    app:singleSelection="false">
+                    app:singleSelection="true">
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipUnder500"
+                        style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/price_under_500K"
@@ -321,6 +336,7 @@
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipUnder1K"
+                        style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/price_under_1M"
@@ -329,6 +345,7 @@
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipUnder1.5K"
+                        style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/price_under_1_5M"
@@ -339,6 +356,7 @@
                         android:id="@+id/chipUnder2K"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        style="@style/Widget.Material3.Chip.Filter"
                         android:text="@string/price_under_2M"
                         app:chipBackgroundColor="@color/md_theme_surfaceContainerLow"
                         android:clickable="true"/>
@@ -346,6 +364,7 @@
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipOver2K"
                         android:layout_width="wrap_content"
+                        style="@style/Widget.Material3.Chip.Filter"
                         android:layout_height="wrap_content"
                         android:text="@string/price_over_2M"
                         app:chipBackgroundColor="@color/md_theme_surfaceContainerLow"
