@@ -3,15 +3,14 @@ package com.group2.pop4u_app.AccountScreen;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.ContextWrapper;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,30 +24,27 @@ import com.group2.api.Services.UserService;
 import com.group2.model.User;
 import com.group2.pop4u_app.databinding.FragmentAccountPersonalInfoBinding;
 
-import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 
 public class AccountPersonalInfoFragment extends Fragment {
 
-    FragmentAccountPersonalInfoBinding binding;
+    private FragmentAccountPersonalInfoBinding binding;
+    private User user = new User("", "", "", "", "");
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_PICK = 2;
 
-    User user = new User("", "", "", "", "");
-
-    public AccountPersonalInfoFragment() { }
+    public AccountPersonalInfoFragment() {}
 
     public static AccountPersonalInfoFragment newInstance() {
-        AccountPersonalInfoFragment fragment = new AccountPersonalInfoFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+        return new AccountPersonalInfoFragment();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        binding = FragmentAccountPersonalInfoBinding.inflate(inflater,container,false);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentAccountPersonalInfoBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -58,97 +54,96 @@ public class AccountPersonalInfoFragment extends Fragment {
         setUserProfile();
         addUserAccountEvents();
         loadUserAccountInfo();
+        loadImageFromStorage();
     }
-    private static final int REQUEST_IMAGE_CAPTURE = 1;
-    private static final int REQUEST_IMAGE_PICK = 2;
+
     private void addUserAccountEvents() {
-        binding.btnChangeUserAvatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Show dialog to choose between gallery and camera
-                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-                builder.setTitle("Choose an option")
-                        .setItems(new CharSequence[]{"Take Photo", "Choose from Gallery"}, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                switch (i) {
-                                    case 0:
-                                        // Take photo
-                                        dispatchTakePictureIntent();
-                                        break;
-                                    case 1:
-                                        // Choose from gallery
-                                        Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                                        startActivityForResult(pickPhoto, REQUEST_IMAGE_PICK);
-                                        break;
-                                }
-                            }
-                        });
-                builder.show();
-            }
+        binding.btnChangeUserAvatar.setOnClickListener(view -> {
+            // Show dialog to choose between gallery and camera
+            new AlertDialog.Builder(requireContext())
+                    .setTitle("Choose an option")
+                    .setItems(new CharSequence[]{"Take Photo", "Choose from Gallery"}, (dialogInterface, i) -> {
+                        if (i == 0) {
+                            dispatchTakePictureIntent();
+                        } else if (i == 1) {
+                            Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            startActivityForResult(pickPhoto, REQUEST_IMAGE_PICK);
+                        }
+                    })
+                    .show();
         });
 
-        binding.btnSaveInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveUserInfo();
-            }
-
-            private void saveUserInfo() {
-                // Lấy bitmap của hình ảnh người dùng từ ImageView
-                BitmapDrawable drawable = (BitmapDrawable) binding.imvUserAccountAvatar.getDrawable();
-                Bitmap avatarBitmap = drawable.getBitmap();
-
-                // Chuyển đổi bitmap thành mảng byte
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                avatarBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                byte[] avatarByteArray = byteArrayOutputStream.toByteArray();
-
-                // Lưu mảng byte vào cơ sở dữ liệu hoặc SharedPreferences
-                // Ví dụ: Giả sử bạn có một phương thức để lưu mảng byte trong SharedPreferences
-                saveAvatarToSharedPreferences(avatarByteArray);
-
-                // Tùy chọn, tải ảnh lên máy chủ và lưu URL trong hồ sơ của người dùng
-                // Ví dụ: UploadService.uploadImage(avatarBitmap);
-            }
-            private void saveAvatarToSharedPreferences(byte[] avatarByteArray) {
-                SharedPreferences sharedPreferences = requireContext().getSharedPreferences("user_data", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("avatar", Base64.encodeToString(avatarByteArray, Base64.DEFAULT));
-                editor.apply();
-
-                Toast.makeText(requireContext(), "Lưu thông tin thành công", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-        binding.btnDeleteAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
+        binding.btnSaveInfo.setOnClickListener(view -> saveUserInfo());
+        binding.btnDeleteAccount.setOnClickListener(view -> {
+            // Handle account deletion here
         });
     }
+
+    private void saveUserInfo() {
+        // Get the Bitmap from ImageView
+        BitmapDrawable drawable = (BitmapDrawable) binding.imvUserAccountAvatar.getDrawable();
+        Bitmap avatarBitmap = drawable.getBitmap();
+        saveToInternalStorage(avatarBitmap);
+    }
+
+    private String saveToInternalStorage(Bitmap bitmapImage){
+        ContextWrapper cw = new ContextWrapper(requireContext());
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        // Create imageDir
+        File mypath = new File(directory, "profile.jpg");
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(mypath);
+            // Use the compress method on the Bitmap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fos != null) {
+                    fos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        //Toast.makeText(requireContext(), "Lưu thông tin thành công", Toast.LENGTH_SHORT).show();
+        return directory.getAbsolutePath();
+    }
+
+    private void loadImageFromStorage() {
+        ContextWrapper cw = new ContextWrapper(requireContext());
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        File f = new File(directory, "profile.jpg");
+
+        if (f.exists()) {
+            Bitmap b = BitmapFactory.decodeFile(f.getAbsolutePath());
+            binding.imvUserAccountAvatar.setImageBitmap(b);
+        }
+    }
+
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(requireContext().getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
+
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_IMAGE_CAPTURE && data != null) {
                 Bundle extras = data.getExtras();
                 Bitmap imageBitmap = (Bitmap) extras.get("data");
-                // Process the captured image
                 processImage(imageBitmap);
             } else if (requestCode == REQUEST_IMAGE_PICK && data != null) {
                 Uri selectedImageUri = data.getData();
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), selectedImageUri);
-                    // Process the selected image from gallery
                     processImage(bitmap);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -156,10 +151,13 @@ public class AccountPersonalInfoFragment extends Fragment {
             }
         }
     }
+
     private void processImage(Bitmap bitmap) {
         binding.imvUserAccountAvatar.setImageBitmap(bitmap);
+        saveToInternalStorage(bitmap); // Save the new avatar image
     }
-        private void loadUserAccountInfo() {
+
+    private void loadUserAccountInfo() {
         // Load user account info
         CompletableFuture<User> userInfoFuture = UserService.instance.getUserProfile();
         userInfoFuture.thenAccept(user -> {
