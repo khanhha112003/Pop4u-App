@@ -6,16 +6,6 @@ import android.graphics.Shader;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.viewpager.widget.ViewPager;
-
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.viewpager.widget.ViewPager;
 
 import com.group2.adapter.ArtistHorizontalListAdapter;
 import com.group2.adapter.BannerAdapter;
@@ -34,17 +31,17 @@ import com.group2.api.Services.ProductService;
 import com.group2.model.Artist;
 import com.group2.model.Product;
 import com.group2.pop4u_app.ArtistInfoScreen.ArtistInfoScreen;
+import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetHorizontalRecycler;
 import com.group2.pop4u_app.ProductDetailScreen.ProductDetailScreen;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentHomepageBinding;
-import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
 public class HomepageFragment extends Fragment {
@@ -200,6 +197,9 @@ public class HomepageFragment extends Fragment {
         mDotLayout.removeAllViews();
 
         for (int i = 0; i < bannerAdapter.getCount(); i++) {
+            if (getContext() == null) {
+                return;
+            }
             dots[i] = new TextView(getContext());
             dots[i].setText(Html.fromHtml("&#8226;"));
             dots[i].setTextSize(35);

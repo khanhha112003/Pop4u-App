@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 
 import com.group2.api.Services.UserService;
 import com.group2.model.User;
+import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentAccountPersonalInfoBinding;
 
 import java.io.File;
@@ -122,6 +123,8 @@ public class AccountPersonalInfoFragment extends Fragment {
         if (f.exists()) {
             Bitmap b = BitmapFactory.decodeFile(f.getAbsolutePath());
             binding.imvUserAccountAvatar.setImageBitmap(b);
+        } else {
+            binding.imvUserAccountAvatar.setImageResource(R.drawable.placeholder_image);
         }
     }
 
