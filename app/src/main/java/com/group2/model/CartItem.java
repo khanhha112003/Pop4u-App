@@ -41,16 +41,8 @@ public class CartItem implements Serializable {
         return thumb;
     }
 
-    public void setThumb(String thumb) {
-        this.thumb = thumb;
-    }
-
     public int getComparingPrice() {
         return comparingPrice;
-    }
-
-    public void setComparingPrice(int comparingPrice) {
-        this.comparingPrice = comparingPrice;
     }
 
     public String getName() {
@@ -63,10 +55,6 @@ public class CartItem implements Serializable {
 
     public int getPrice() {
         return price;
-    }
-
-    public void setPrice( int price) {
-        this.price = price;
     }
 
     public int getQuantity() {

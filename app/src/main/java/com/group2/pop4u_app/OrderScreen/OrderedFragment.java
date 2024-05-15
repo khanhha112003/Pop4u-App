@@ -5,10 +5,12 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.group2.adapter.OrderDetailAdapter;
+import com.group2.api.Services.OrderService;
 import com.group2.model.CartItem;
 import com.group2.model.OrderDetail;
 import com.group2.pop4u_app.AccountScreen.AccountFragment;
@@ -18,6 +20,7 @@ import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentOrderedBinding;
 
 import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
 
 public class OrderedFragment extends Fragment {
 
@@ -25,11 +28,16 @@ public class OrderedFragment extends Fragment {
     OrderDetailAdapter orderDetailAdapter;
     ArrayList<OrderDetail> orderList;
 
-    public OrderedFragment() {
+    String param = "Pending";
+
+    public OrderedFragment(String param) {
         // Required empty public constructor
+        if (param != null) {
+            this.param = param;
+        }
     }
     public static OrderedFragment newInstance() {
-        OrderedFragment fragment = new OrderedFragment();
+        OrderedFragment fragment = new OrderedFragment(null);
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -40,17 +48,15 @@ public class OrderedFragment extends Fragment {
         binding = FragmentOrderedBinding.inflate(inflater, container, false);
         setupRecyclerView();
         addEvents();
+        getData();
         return binding.getRoot();
     }
 
     private void addEvents() {
-        orderDetailAdapter.setOnClickListener(new OrderDetailAdapter.OnClickListener() {
-            @Override
-            public void OnClick(int position, OrderDetail order) {
-                Intent intent = new Intent(requireActivity(), com.group2.pop4u_app.OrderDetailSrc.OrderDetail.class);
-                intent.putExtra("orderID", order.getId());
-                startActivity(intent);
-            }
+        orderDetailAdapter.setOnClickListener((position, order) -> {
+            Intent intent = new Intent(requireActivity(), com.group2.pop4u_app.OrderDetailSrc.OrderDetail.class);
+            intent.putExtra("orderID", order.getId());
+            startActivity(intent);
         });
     }
 
@@ -62,19 +68,25 @@ public class OrderedFragment extends Fragment {
         binding.rvOrderedList.setLayoutManager(linearLayoutManager);
         binding.rvOrderedList.addItemDecoration(itemOffsetVerticalRecycler);
         binding.rvOrderedList.setHasFixedSize(true);
-
         orderList = new ArrayList<>();
-
-        ArrayList<CartItem> items = new ArrayList<>();
-        items.add(new CartItem("P123", "url_to_image", "Product Name", 10000, 12000, 2, true));
-
-        OrderDetail orderDetail = new OrderDetail("120124KCMS", "bumr2405", 750000, "2024-05-13", "Processing", "123 Elm St", "555-1234", true, false, "Credit Card", items, 50000, "SUMMER2024", "ORD001", "Leave at door if not home.");
-        orderList.add(new OrderDetail("120124KCMS", "bumr2405", 750000, "2024-05-13", "Processing", "123 Elm St", "555-1234", true, false, "Credit Card", items, 50000, "SUMMER2024", "ORD001", "Leave at door if not home."));
-        orderList.add(orderDetail);
 
         orderDetailAdapter = new OrderDetailAdapter(requireActivity(), orderList);
         binding.rvOrderedList.setAdapter(orderDetailAdapter);
     }
 
+    private void getData() {
+        // Call API to get data
+        CompletableFuture<ArrayList<OrderDetail>> future = OrderService.instance.getListOrder(param);
+        future.thenAccept(orderDetails -> {
+            orderList.clear();
+            orderList.addAll(orderDetails);
+            orderDetailAdapter.notifyDataSetChanged();
+        });
+        try {
+            future.get();
+        } catch (Exception e) {
+            Log.d("OrderedFragment", "getData: " + e.getMessage());
+        }
+    }
 
 }

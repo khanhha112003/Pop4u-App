@@ -1,8 +1,10 @@
 package com.group2.api.Services;
 import com.group2.api.DAO.CartDAO;
+import com.group2.api.DAO.OrderDetailDAO;
 import com.group2.api.DAO.ValidationResponseDAO;
 import com.group2.local.LoginManagerTemp;
 import com.group2.model.CartItem;
+import com.group2.model.OrderDetail;
 import com.group2.model.ResponseValidate;
 
 import java.io.IOException;
@@ -111,6 +113,83 @@ public class OrderService {
         String authHeader = "Bearer " + LoginManagerTemp.token;
         executor.execute(() -> {
             Call<ValidationResponseDAO> call = apiService.createOrder(authHeader, body);
+            try {
+                Response<ValidationResponseDAO> response = call.execute();
+                if (response.isSuccessful()) {
+                    ValidationResponseDAO user = response.body();
+                    if (user != null) {
+                        future.complete(user.asResponseValidate()); // Complete the future with the UserDAO object
+                    } else {
+                        future.complete(null); // Complete the future with null if the response is not successful
+                    }
+                } else {
+                    future.complete(null); // Complete the future with null if the response is not successful
+                }
+            } catch (IOException e) {
+                future.completeExceptionally(e); // Complete the future exceptionally if an exception occurs
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<ArrayList<OrderDetail>> getListOrder(String status) {
+        CompletableFuture<ArrayList<OrderDetail>> future = new CompletableFuture<>();
+        String authHeader = "Bearer " + LoginManagerTemp.token;
+
+        executor.execute(() -> {
+            Call<ArrayList<OrderDetailDAO>> call = apiService.getOrder(authHeader, status);
+            try {
+                Response<ArrayList<OrderDetailDAO>> response = call.execute();
+                if (response.isSuccessful()) {
+                    ArrayList<OrderDetailDAO> orderData = response.body();
+                    if (orderData != null) {
+                        ArrayList<OrderDetail> orderDetails = new ArrayList<>();
+                        for (OrderDetailDAO orderDetailDAO : orderData) {
+                            orderDetails.add(orderDetailDAO.asOrderDetail());
+                        }
+                        future.complete(orderDetails); // Complete the future with the UserDAO object
+                    } else {
+                        future.complete(null); // Complete the future with null if the response is not successful
+                    }
+                } else {
+                    future.complete(null); // Complete the future with null if the response is not successful
+                }
+            } catch (IOException e) {
+                future.completeExceptionally(e); // Complete the future exceptionally if an exception occurs
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<OrderDetail> getOrderDetail(String orderCode) {
+        CompletableFuture<OrderDetail> future = new CompletableFuture<>();
+        String authHeader = "Bearer " + LoginManagerTemp.token;
+        executor.execute(() -> {
+            Call<OrderDetailDAO> call = apiService.getOrderDetail(authHeader, orderCode);
+            try {
+                Response<OrderDetailDAO> response = call.execute();
+                if (response.isSuccessful()) {
+                    OrderDetailDAO orderDetailDAO = response.body();
+                    if (orderDetailDAO != null) {
+                        future.complete(orderDetailDAO.asOrderDetail()); // Complete the future with the UserDAO object
+                    } else {
+                        future.complete(null); // Complete the future with null if the response is not successful
+                    }
+                } else {
+                    future.complete(null); // Complete the future with null if the response is not successful
+                }
+            } catch (IOException e) {
+                future.completeExceptionally(e); // Complete the future exceptionally if an exception occurs
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<ResponseValidate> cancelOrder(String orderCode) {
+        CompletableFuture<ResponseValidate> future = new CompletableFuture<>();
+        String authHeader = "Bearer " + LoginManagerTemp.token;
+        executor.execute(() -> {
+            Call<ValidationResponseDAO> call = apiService.cancelOrder(authHeader, orderCode);
             try {
                 Response<ValidationResponseDAO> response = call.execute();
                 if (response.isSuccessful()) {

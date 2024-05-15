@@ -31,7 +31,6 @@
                     android:id="@+id/imvUserAccountAvatar"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    android:src="@drawable/img_1"
                     android:scaleType="centerCrop"/>
             </androidx.cardview.widget.CardView>
             <TextView
