@@ -162,7 +162,7 @@ public class CategoryProduct extends AppCompatActivity {
         rangeSlider.addOnChangeListener((slider, value, fromUser) -> {
             String upperValue = String.valueOf(slider.getValues().get(1).intValue());
             String lowerValue = String.valueOf(slider.getValues().get(0).intValue());
-            String initRangeValue = String.format("Year Range: %s - %s", lowerValue, upperValue);
+            String initRangeValue = String.format("Khoảng năm: %s - %s", lowerValue, upperValue);
             TextView rangeValue = dialog.findViewById(R.id.txtRangeDateValue);
             rangeValue.setText(initRangeValue);
         });
