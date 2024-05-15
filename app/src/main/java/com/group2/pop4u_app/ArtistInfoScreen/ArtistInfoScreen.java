@@ -1,15 +1,5 @@
 package com.group2.pop4u_app.ArtistInfoScreen;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -22,10 +12,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.GridLayoutManager;
+
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
 import com.group2.adapter.BigProductCardRecyclerAdapter;
-import com.group2.adapter.MiniProductCardRecyclerAdapter;
 import com.group2.api.Services.ArtistService;
 import com.group2.api.Services.ProductService;
 import com.group2.database_helper.OrderDatabaseHelper;
@@ -33,7 +31,6 @@ import com.group2.local.LoginManagerTemp;
 import com.group2.model.Artist;
 import com.group2.model.Product;
 import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetDecoration;
-import com.group2.pop4u_app.ItemOffsetDecoration.ItemOffsetHorizontalRecycler;
 import com.group2.pop4u_app.LoginScreen.LoginPage;
 import com.group2.pop4u_app.ProductDetailScreen.CartActivity;
 import com.group2.pop4u_app.ProductDetailScreen.ProductDetailScreen;
