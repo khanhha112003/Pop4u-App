@@ -1,16 +1,19 @@
 package com.group2.pop4u_app.AccountScreen;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.group2.adapter.SettingListAdapter;
 import com.group2.api.Services.UserService;
@@ -26,7 +29,7 @@ import com.group2.pop4u_app.OrderScreen.OrderScreen;
 import com.group2.pop4u_app.R;
 import com.group2.pop4u_app.databinding.FragmentAccountBinding;
 
-import java.io.Serializable;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
@@ -70,6 +73,12 @@ public class AccountFragment extends Fragment {
             Log.d("AccountFragment", "Get user info failed");
         }
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadImageFromStorage();
     }
 
     private void addEvents() {
@@ -163,6 +172,21 @@ public class AccountFragment extends Fragment {
     private void setUserProfile() {
         binding.txtUserFullName.setText(user.getFullname());
         binding.txtUserEmail.setText(user.getEmail());
+        loadImageFromStorage();
+    }
+
+    private void loadImageFromStorage() {
+        ContextWrapper cw = new ContextWrapper(requireContext());
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        File f = new File(directory, "profile.jpg");
+
+        if (f.exists()) {
+            Bitmap b = BitmapFactory.decodeFile(f.getAbsolutePath());
+            binding.imvUserAccountAvatar.setImageBitmap(b);
+        } else {
+            binding.imvUserAccountAvatar.setImageResource(R.drawable.placeholder_image);
+        }
     }
 
 }
